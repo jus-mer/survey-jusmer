@@ -69,4 +69,4 @@ In the web page it is possible to see/download the paper in html and pdf formats
 
 ## Presentations
 
-[Workshop - Conjoint Experiment](https://jus-mer.github.io/survey-jusmer/edumer_template.html)
+[Workshop - Conjoint Experiment](https://jus-mer.github.io/survey-jusmer/presentations/workshop_presentation.html)
