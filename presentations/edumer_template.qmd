@@ -1,7 +1,7 @@
 ---
-pagetitle: "EDUMER Template"
+pagetitle: "Diseño Conjoint Survey Experiment"
 Author: Equipo EDUMER
-bibliography: "../input/bib/refs.bib"
+bibliography: "../input/bib/jusmer.bib"
 csl: "../input/bib/apa6.csl"
 lang: es
 
@@ -25,9 +25,12 @@ format:
 # data-background-image: images/cover.jpg
 # data-background-size: cover
     auto-play-media: true
+    mathjax: "default"
   pdf:
     format: beamer 
     keep-tex: true  # Debug LaTeX output if needed
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -60,190 +63,513 @@ rm(list = ls())
 ```
 
 
-```{r}
-#| label: data
-#| include: false
-
-load(url("https://github.com/educacion-meritocracia/market-justice-preferences-school/raw/refs/heads/main/input/data/mlm_models.RData"))
-load(url("https://github.com/educacion-meritocracia/market-justice-preferences-school/raw/refs/heads/main/input/data/dependientes.RData"))
-
-```
-
-
 ::: columns
-::: {.column width="15%"}
+::: {.column width="20%"}
 
-![](images/coes.png)
-
-
-
-![](images/edumer.png)
-
+![](images/jusmer.png)
 
 :::
 
-::: {.column .column-right width="85%"}
+::: {.column .column-right width="80%"}
 <br>
 
-# Mi increíble presentación
+# Diseño Conjoint Survey Experiment
 
-------------------------------------------------------------------------
+::: {style="font-size: 65%;"}
 
-Autores
+## Desigualdad y merecimiento en educación superior en Chile
 
-##### Afiliaciones
+-----------------------------------------------------------------------
 
-::: {.red2 .medium}
+Investigador Principal: Juan Carlos Castillo^1^
 
-FONDECYT No. 1210847 "Meritocracia en la escuela: fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile"
+Asistentes de Investigación: Andreas Laffert^2^ y René Canales^2^
+
+^1^ Departamento de Sociología, Universidad de Chile
+
+^2^ Instituto de Sociología, Pontificia Universidad Católica de Chile
+
+::: {.blue2 .medium}
+
+ANID/FONDECYT N°1250518 2025-2028 - Justicia de mercado y merecimiento del bienestar social
 
 :::
 
-Conferencia X
+Enero 2026
+
+:::
 
 :::
 :::
 
-::: {.notes}
-Aquí mis notas
+
+# Contexto del proyecto {.xlarge data-background-color="#92220C"}
+
+
+## Agenda de investigación
+
+::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+
+- Privatización y mercantilización de servicios sociales (salud, educación, pensiones) han reconfigurado las instituciones del bienestar [@gingrich_making_2011; @streeck_how_2016]
+
+:::
+
+::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+
+- En Chile: profunda comodificación con alta desigualdad y bajo gasto social [@madariaga_three_2020; @boccardo_30_2020a]
+
+:::
+
+::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+
+- Estos cambios institucionales generan **policy-feedback effects**: moldeando preferencias por justicia de mercado [@mau_inequality_2015; @lindh_public_2015a]
+
+:::
+
+::: {.box-inv-4 .fragment .sp-after .fragment style="font-size: 90%;"}
+
+- Marco CARIN: criterios de merecimiento (Control, Actitud, Reciprocidad, Identidad, Necesidad) influyen en juicios distributivos [@oorschot_who_2000]
+
 :::
 
 
-# Contexto y motivación {.xlarge}
+## Objetivo del proyecto
+
+::: {.incremental style="font-size: 120%;"}
+
+**Objetivo**: Analizar el nivel y evolución de las preferencias por justicia de mercado en Chile y su vínculo con criterios de merecimiento del bienestar
+
+**Argumento**: El alto grado de comodificación del bienestar en Chile habría reforzado normas meritocráticas (especialmente el esfuerzo), elevando el apoyo a la justicia de mercado
+
+**Método**: Combina análisis de datos secundarios y levantamiento de encuesta original.
+
+:::
+
+::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+
+En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evaluando la asignación de becas en educación superior
+
+:::
 
 
+# Conjoint Survey Experiment {.xlarge data-background-color="#92220C"}
 
-
-## Antecedentes
+## Objetivo del estudio
 
 ::: {.incremental .highlight-last style="font-size: 100%;"}
 
-- The justification of social inequality based on market-type criteria has been conceptualized as the individuals' adherence to the deservingness of social goods and services (such as health, education, and pensions) based on prices and individuals' ability to pay [@boltanski_new_2005; @lane_market_1986; @streeck_citizens_2012].
+- Estudiar cómo las personas evalúan el **merecimiento** y la **desigualdad** en el acceso a la educación superior en Chile
 
-- Research on social stratification beliefs [@kluegel_beliefs_1987], highlights that people's explanations and justifications of social inequality are closely tied to their judgments of deservingness. 
+- Aproximar un escenario de toma de decisiones: asignar un recurso escaso (beca) entre postulantes que difieren en múltiples características
 
--  The expansion of marketization has been related to a larger justification of market mechanisms, whereby societies with larger private spending on services show larger market justice preferences [@lindh_public_2015].
+- Identificar qué atributos se consideran más relevantes cuando la decisión exige **ponderar múltiples criterios simultáneamente**
+
+- A diferencia de preguntas directas aisladas, los conjoints permiten representar **elecciones multidimensionales** con trade-offs
 
 :::
 
-## Antecedentes
+## ¿Por qué conjoint?
 
 ::::: columns
 ::: {.column width="50%" .content-box-red}
 
-#### A
+### **Ventajas**
 
-- The original definition of merit is a combination of effort and talent [@young_rise_1958]
-- 2
-- 3
+- Captura decisiones multidimensionales con trade-offs reales [@bansak_breaking_2021]
+
+- Eficiencia estadística: múltiples observaciones por encuestado/a
+
+- Reducción potencial de sesgo de deseabilidad social
+
+- Posibilidad de contrastar hipótesis rivales (mérito vs necesidad vs reciprocidad)
 
 :::
 
 ::: {.column width="50%" .content-box-yellow}
 
-#### B
+### Limitaciones
 
-- Adolescents from low-socioeconomic-status families are likelier to have an egalitarian fairness view and consider an equal distribution as fair in a situation with unequal merits [@almas_fairness_2017]
-- 2
-- 3
+- Carga cognitiva y fatiga del encuestado/a
+
+- Riesgo de "masking" por omisión de atributos relevantes
+
+- La validez externa depende del universo de perfiles
+
+- Efectos promedio pueden ocultar heterogeneidad relevante
 
 :::
 :::::
 
-## Hipótesis
-
-::: {.incremental .highlight-last style="font-size: 100%;"}
-
-$H_{1}$
-
-$H_{2}$
-
-$H_{3}$
-
-$H_{n}$
 
 
-::: 
+# Aspectos básicos del diseño conjoint {.xlarge data-background-color="#92220C"}
 
-# Datos, variables y métodos {.xlarge}
+## ¿Qué es un conjoint?
 
-## Datos
+::: {.incremental .highlight-last style="font-size: 90%;"}
 
-::: {.incremental .highlight-last style="font-size: 100%;"}
--   Datos
-:::
+- Experimento factorial implementado mediante encuestas para "manejar situaciones en las que un responsable de la toma de decisiones tiene que lidiar con opciones que varían simultáneamente en dos o más atributos" [@hainmueller_causal_2014]
 
-## Variables
+- En cada tarea se presentan **perfiles** (ej: dos postulantes) construidos a partir de **atributos** (factores) y **niveles**
 
-```{r}
-#| label: tbl-desc-dependientes
-#| tbl-cap: "Variables dependientes"
-#| results: asis
-#| echo: false
+- Se solicita una respuesta: **elección** (discrete choice) o **calificación** (rating choice)
 
-df<-dfSummary(dependientes,
-               plain.ascii = FALSE,
-               style = "multiline",
-               tmp.img.dir = "/tmp",
-               headings = F,  # encabezado
-               varnumbers = F, # num variable
-               labels.col = T, # etiquetas
-               na.col = F,    # missing
-               graph.col = F, # plot
-               valid.col = T) # n valido
+- Diseñado para estudiar preferencias multidimensionales cuando los individuos ponderan información multidimensional [@bansak_breaking_2021]
 
-df$Variable <- NULL # delete variable column
-
-print(df)
-```
+- Se inscribe en el marco de los **factorial survey experiments**, desarrollados por la literatura sobre justicia distributiva [@jasso_factorial_2006]
 
 :::
 
-## Métodos
+## Componentes del diseño
 
-- Métodos
+::: {style="font-size: 90%;"}
 
+**1. Situación (escenario):** Define el rol del/la encuestado/a y el contexto de decisión
 
-# Resultados {.xlarge }
+**2. Task (tarea):** Qué debe hacer: elección forzada o calificación (rating)
 
+**3. Atributos y niveles:** Cada atributo es un criterio relevante (ej: desempeño académico, ingreso del hogar); los niveles son sus valores posibles
 
-## Modelos 
-::: {style="font-size: 100%;"}
+**4. Perfiles y rondas:** Cada perfil = combinación de niveles. Múltiples tareas por encuestado/a
 
-```{r}
-#| label: fig-lineal-reg
-#| fig-cap: "Linear mixed-effects models for meritocracy perception and market justice preferences"
-#| fig-cap-location: top
-#| fig-align: center
-#| out-width: '80%'
-#| echo: false
-#| warning: false
-#| message: false
-#| results: asis
+**5. Variable de respuesta:** Elección (0/1) y/o calificación (escala)
 
-theme_set(theme_ggdist())
+**6. Restricciones:** Combinaciones prohibidas o dependencias entre atributos
 
-sjPlot::plot_model(model = reg1_bienestar, show.values = T, show.p = T)
-
-```
+**7. Aleatorización:** Cómo se sortean los niveles y el orden de presentación
 
 :::
 
-# Discusión y conclusiones {data-background-color="#5f5758"}
 
+# Inferencia causal en conjoint {.xlarge data-background-color="#92220C"}
 
-# Discusión y conclusiones {data-background-color="#5f5758"}
+## Identificación causal
 
-::: { .incremental .highlight-last2 style="font-size: 100%;"}
+::: {style="font-size: 90%;"}
 
-- Discusión 
+- Cada atributo = componente de tratamiento; cada perfil = combinación multicomponente
 
-  - Conclusión
+- **Identificación:** asignación aleatoria de niveles de cada atributo a los perfiles
+
+- La comparación relevante no es "tratamiento vs control único", sino **entre niveles de un atributo**, promediando sobre el resto de atributos
+
 :::
 
 
-# Gracias por su atención! 
+## Supuesto central de independencia
 
--   **Github del proyecto:** <https://github.com/educacion-meritocracia>
+::: {.incremental style="font-size: 90%;"}
+
+$$X_{ijt} \perp \{Y_{ijt}(x): x \in \mathcal{X}\}$$
+
+La asignación de $X_{ijt}$ es independiente de los resultados potenciales → no hay confusión
+
+:::
+
+::: {.incremental style="font-size: 90%;"}
+
+**Supuestos adicionales:**
+
+- Estabilidad: ausencia de efectos de arrastre (carryover) entre rondas
+- Ausencia de efectos de orden (perfil y atributo)
+- Consistencia: ausencia de interferencia entre unidades (SUTVA)
+- Positividad: todos los contrastes relevantes deben tener probabilidad positiva
+
+:::
+
+## Estimandos principales
+
+::: {.incremental style="font-size: 90%;"}
+
+**Average Marginal Component Effect (AMCE):**
+
+- Cambio promedio en el resultado cuando un atributo pasa de un nivel de referencia a otro
+- Mantiene constante "en promedio" el resto de atributos (gracias a la aleatorización) [@hainmueller_causal_2014]
+- Útil cuando el espacio factorial es muy grande y el interés está en efectos de componentes
+
+:::
+
+::: {.incremental style="font-size: 90%;"}
+
+**Otros estimandos relevantes:**
+
+- **Marginal means:** nivel esperado de apoyo asociado a cada nivel del atributo (sin categoría de referencia)
+- **Efectos condicionales e interacciones:** si el peso de un atributo depende de otro
+- La elección del estimando depende de la pregunta: ¿comparativa/marginal o descriptiva en niveles?
+
+:::
+
+
+# Aleatorización y espacio factorial {.xlarge data-background-color="#92220C"}
+
+## El problema del espacio factorial
+
+::: {.incremental .highlight-last style="font-size: 90%;"}
+
+- El número de combinaciones crece exponencialmente con atributos y niveles
+
+- Ejemplo: 3 atributos binarios (2×2×2) = 8 perfiles posibles
+
+- Con 6 atributos binarios (2⁶) = 64 perfiles
+
+- Con 10 atributos binarios (2¹⁰) = **1.024 perfiles posibles**
+
+- En un conjoint realista no se "recorre" todo el espacio: se toma una **muestra aleatoria de perfiles** según una distribución definida
+
+- El "mundo" sobre el cual se interpretan los efectos es el conjunto de perfiles que el diseño define como posibles
+
+:::
+
+## Tipos de aleatorización
+
+::::: columns
+::: {.column width="50%"}
+
+### **Diseño completamente aleatorizado**
+
+- Uniforme e independiente por atributo
+- Cada nivel: probabilidad 0.5
+- Atributos sortean independientemente
+- Es el diseño más limpio metodológicamente
+
+:::
+
+::: {.column width="50%"}
+
+### **Alternativas**
+
+- **Aleatorización ponderada:** algunos niveles más probables (aproximar mundo real)
+- **Aleatorización restringida:** prohibir combinaciones inverosímiles
+- Toda propuesta debe explicitar: conjunto permitido, distribución de muestreo, y justificación
+
+:::
+:::::
+
+
+# Propuesta de diseño {.xlarge data-background-color="#92220C"}
+
+## Situación (escenario)
+
+::: {.incremental style="font-size: 85%;"}
+
+**Escenario:** Cada encuestado/a imagina que trabaja como funcionario/a público/a en un comité de becas para el primer año de educación superior
+
+**Tarea:** Evaluar solicitudes y decidir cómo distribuir un monto total fijo de apoyo entre dos postulantes
+
+**Prompt sugerido:**
+
+> "Imagine que usted trabaja en un programa público que otorga una beca para financiar el primer año de estudios en educación superior. En cada pantalla verá dos postulantes con información breve sobre sus características. Su tarea es repartir el 100% del monto total de la beca entre ambos postulantes según su criterio. No hay respuestas correctas ni incorrectas, solo nos interesa conocer cómo repartiría la beca."
+
+Este formato activa un dilema distributivo realista: el presupuesto es limitado y apoyar más a uno implica apoyar menos al otro
+
+:::
+
+## Tarea y variable de respuesta
+
+::: {style="font-size: 90%;"}
+
+**Task:** En cada tarea, el/la encuestado/a ve dos perfiles (Postulante A y Postulante B)
+
+**Outcome principal (continuo, suma constante):** asignación porcentual a cada postulante
+
+**Implementación:**
+
+- Slider de 0 a 100 para Postulante A
+- Postulante B = 100 − A (se calcula automáticamente)
+- Números grandes en pantalla para evitar errores
+- Restricción en UI: A + B = 100 siempre
+
+**Ventajas:** Fuerza trade-offs más fuertemente que un rating independiente (tipo budget allocation)
+
+:::
+
+## Atributos: Bloque CARIN
+
+::: {style="font-size: 85%;"}
+
+Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reciprocity, Identity, Need) + desigualdades estructurales. **Todos binarios** para minimizar carga cognitiva.
+
+**Bloque CARIN (5 atributos):**
+
+| Componente | Atributo | Niveles |
+|------------|----------|---------|
+| **Control** | Rendimiento académico | Sobre el promedio / Promedio |
+| **Attitude** | Dedicación al estudio | Dedicación alta / Dedicación irregular |
+| **Reciprocity** | Participación extracurricular | Participación sostenida / No participación |
+| **Identity** | Primera generación | Sí / No |
+| **Need** | Ingreso del hogar | Bajos ingresos / Ingresos medios-altos |
+
+:::
+
+## Atributos: Bloque desigualdades
+
+::: {style="font-size: 85%;"}
+
+**Bloque desigualdades (5 atributos):**
+
+| Atributo | Niveles |
+|----------|---------|
+| Sexo | Hombre / Mujer |
+| Nacionalidad | Chileno/a / No chileno/a |
+| Pertenencia a pueblo indígena | Sí / No |
+| Tipo de establecimiento | Municipal / Particular subvencionado / Particular pagado |
+| Colegio en Top 100 PAES | Sí / No |
+
+**Total:** 10 atributos binarios → 2¹⁰ = 1.024 perfiles posibles
+
+**Formato:** Tabla con filas = atributos, columnas = Postulante A/B
+
+**Orden de atributos:** Aleatorizado a nivel de encuestado/a (un orden en tarea 1, luego fijo) para reducir efectos de primacía/recencia
+
+:::
+
+## Aleatorización y generación de perfiles
+
+::: {.incremental style="font-size: 85%;"}
+
+**Diseño base:** Completamente aleatorizado
+
+- Aleatorización uniforme e independiente por atributo
+- Cada perfil: cada atributo toma uno de sus dos niveles con probabilidad 0.5
+- Dos perfiles por tarea generados independientemente
+- Regla simple para evitar perfiles idénticos
+
+**Restricciones:** Solo combinaciones lógicamente inconsistentes (no combinaciones "poco probables")
+
+- Ejemplo: si existiera "padres con educación universitaria", evitar combinar con "primera generación = sí"
+- Preferible usar **ponderación** antes que prohibición total
+
+**Ventaja metodológica:** Garantiza independencia entre atributos asignados y resultados potenciales [@hainmueller_causal_2014]
+
+:::
+
+## Tamaño muestral y número de tareas
+
+::: {.incremental style="font-size: 85%;"}
+
+**Equilibrio entre precisión y fatiga:**
+
+- **K = 8 a 10 tareas** por encuestado/a (tema normativo, tarea exigente con asignación 0-100)
+- **J = 2 perfiles** por tarea
+- **N ≈ 2.000 encuestados/as**
+- **Diseño muestral:** quota-based por edad, sexo, educación y NSE
+
+**Observaciones totales:**
+
+- Evaluaciones de perfil: N × K × J = 2.000 × 10 × 2 = **40.000 evaluaciones**
+- Con aleatorización 0.5 en binarios: cada nivel ~20.000 veces → suficiente precisión para efectos principales
+
+**Ajuste post-piloto:** Basado en tiempo por tarea, consistencia, patrones de respuesta mecánica, caída de atención
+
+:::
+
+
+# Ejemplo de tarea conjoint {.xlarge data-background-color="#92220C"}
+
+
+## Prompt para el/la encuestado/a
+
+::: {style="font-size: 80%;"}
+
+> Imagine que usted trabaja como funcionario/a público/a en un programa estatal que entrega una beca para financiar el primer año de educación superior.
+>
+> En la pantalla verá dos postulantes con información breve sobre sus características. Su tarea es repartir el 100% del monto total disponible entre ambos postulantes, según su criterio.
+>
+> No existen respuestas correctas o incorrectas. Nos interesa su juicio.
+
+:::
+
+## Ejemplo de perfiles
+
+::: {style="font-size: 70%;"}
+
+| **Atributo** | **Postulante A** | **Postulante B** |
+|--------------|------------------|------------------|
+| Control: rendimiento académico | Sobre el promedio | Promedio |
+| Attitude: dedicación al estudio | Dedicación alta | Dedicación irregular |
+| Reciprocity: participación extracurricular | Participación sostenida | No participación |
+| Identity: primera generación educación superior | Sí | No |
+| Need: ingreso del hogar | Bajos ingresos | Ingresos medios-altos |
+| Sexo | Mujer | Hombre |
+| Nacionalidad | Chilena | No chileno |
+| Pueblo indígena | Sí | No |
+| Tipo de establecimiento | Particular subvencionado | Municipal |
+| Colegio en Top 100 puntajes PAES | No | Sí |
+
+:::
+
+## Control visual (slider)
+
+::: {style="font-size: 85%;"}
+
+**Reparta el 100% del monto total entre ambos postulantes:**
+
+**Slider:** "Porcentaje para Postulante A"
+
+<div style="text-align: center; margin: 20px 0;">
+  0 —— 25 —— 50 —— 75 —— 100
+</div>
+
+**Slider:** "Porcentaje para Postulante B"
+
+<div style="text-align: center; margin: 20px 0;">
+  0 —— 25 —— 50 —— 75 —— 100
+</div>
+
+**Lectura numérica (en grande):**
+
+::: {style="text-align: center; font-size: 120%; margin: 20px 0;"}
+Postulante A: **63%** | Postulante B: **37%**
+:::
+
+(B se calcula automáticamente como 100 − A)
+
+:::
+
+
+# Próximos pasos {.xlarge data-background-color="#92220C"}
+
+## Implementación y piloto
+
+::: {.incremental .highlight-last style="font-size: 90%;"}
+
+- **Programación del experimento** en plataforma de encuestas (ej: Qualtrics, Survey.js)
+
+- **Piloto (N ≈ 100-150):** evaluar tiempo, comprensión, patrones de respuesta, fatiga
+
+- **Ajustes post-piloto:** número de tareas (K), redacción de niveles, restricciones
+
+- **Campo principal:** N ≈ 2.000, diseño muestral por cuotas
+
+- **Análisis:** AMCE, marginal means, efectos condicionales, heterogeneidad por subgrupos
+
+- **Validación:** robustez a especificaciones, diagnóstico de supuestos (orden, carryover)
+
+:::
+
+# Conclusiones y prospectos {data-background-color="#5f5758"}
+
+## Puntos clave
+
+::: {.incremental style="font-size: 90%;"}
+
+- Los **conjoint survey experiments** permiten estudiar decisiones distributivas con trade-offs multidimensionales
+
+- El diseño propuesto operacionaliza **merecimiento** (CARIN) y **desigualdades estructurales** en el contexto de educación superior en Chile
+
+- La **aleatorización** de atributos garantiza identificación causal de efectos de componentes
+
+- El formato de **asignación continua** (0-100%) fuerza trade-offs más realistas que elecciones binarias
+
+- **10 atributos binarios**, **8-10 tareas**, **N ≈ 2.000**: equilibrio entre potencia estadística y carga cognitiva
+
+- Próximos pasos: programación, piloto, ajustes, campo principal y análisis
+
+:::
+
+
+# ¡Gracias por su atención!
+
+-   **Github del proyecto:** <https://github.com/jus-mer>
 
 ## Referencias
