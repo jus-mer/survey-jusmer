@@ -108,25 +108,25 @@ Enero 2026
 
 ## Agenda de investigación
 
-::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+::: {.box-inv-4 .fragment .sp-after style="font-size: 80%;"}
 
 - Privatización y mercantilización de servicios sociales (salud, educación, pensiones) han reconfigurado las instituciones del bienestar [@gingrich_making_2011; @streeck_how_2016]
 
 :::
 
-::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+::: {.box-inv-4 .fragment .sp-after style="font-size: 80%;"}
 
 - En Chile: profunda comodificación con alta desigualdad y bajo gasto social [@madariaga_three_2020; @boccardo_30_2020a]
 
 :::
 
-::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+::: {.box-inv-4 .fragment .sp-after style="font-size: 80%;"}
 
 - Estos cambios institucionales generan **policy-feedback effects**: moldeando preferencias por justicia de mercado [@mau_inequality_2015; @lindh_public_2015a]
 
 :::
 
-::: {.box-inv-4 .fragment .sp-after .fragment style="font-size: 90%;"}
+::: {.box-inv-4 .fragment .sp-after .fragment style="font-size: 80%;"}
 
 - Marco CARIN: criterios de merecimiento (Control, Actitud, Reciprocidad, Identidad, Necesidad) influyen en juicios distributivos [@oorschot_who_2000]
 
@@ -135,7 +135,7 @@ Enero 2026
 
 ## Objetivo del proyecto
 
-::: {.incremental style="font-size: 120%;"}
+::: {.incremental style="font-size: 90%;"}
 
 **Objetivo**: Analizar el nivel y evolución de las preferencias por justicia de mercado en Chile y su vínculo con criterios de merecimiento del bienestar
 
@@ -145,7 +145,7 @@ Enero 2026
 
 :::
 
-::: {.box-inv-4 .fragment .sp-after style="font-size: 90%;"}
+::: {.box-inv-4 .fragment .sp-after style="font-size: 100%;"}
 
 En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evaluando la asignación de becas en educación superior
 
@@ -171,7 +171,7 @@ En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evalu
 ## ¿Por qué conjoint?
 
 ::::: columns
-::: {.column width="50%" .content-box-red}
+::: {.column width="50%" .content-box-red style="font-size: 80%;"}
 
 ### **Ventajas**
 
@@ -185,7 +185,7 @@ En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evalu
 
 :::
 
-::: {.column width="50%" .content-box-yellow}
+::: {.column width="50%" .content-box-yellow style="font-size: 80%;"}
 
 ### Limitaciones
 
@@ -206,7 +206,7 @@ En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evalu
 
 ## ¿Qué es un conjoint?
 
-::: {.incremental .highlight-last style="font-size: 90%;"}
+::: {.incremental .highlight-last style="font-size: 80%;"}
 
 - Experimento factorial implementado mediante encuestas para "manejar situaciones en las que un responsable de la toma de decisiones tiene que lidiar con opciones que varían simultáneamente en dos o más atributos" [@hainmueller_causal_2014]
 
@@ -222,7 +222,7 @@ En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evalu
 
 ## Componentes del diseño
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 80%;"}
 
 **1. Situación (escenario):** Define el rol del/la encuestado/a y el contexto de decisión
 
@@ -245,7 +245,7 @@ En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evalu
 
 ## Identificación causal
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 80%;"}
 
 - Cada atributo = componente de tratamiento; cada perfil = combinación multicomponente
 
@@ -258,7 +258,7 @@ En esta ocasión presentaremos un experimento conjoint sobre merecimiento. Evalu
 
 ## Supuesto central de independencia
 
-::: {.incremental style="font-size: 90%;"}
+::: {.incremental style="font-size: 80%;"}
 
 $$X_{ijt} \perp \{Y_{ijt}(x): x \in \mathcal{X}\}$$
 
@@ -266,7 +266,7 @@ La asignación de $X_{ijt}$ es independiente de los resultados potenciales → n
 
 :::
 
-::: {.incremental style="font-size: 90%;"}
+::: {.incremental style="font-size: 80%;"}
 
 **Supuestos adicionales:**
 
@@ -279,7 +279,7 @@ La asignación de $X_{ijt}$ es independiente de los resultados potenciales → n
 
 ## Estimandos principales
 
-::: {.incremental style="font-size: 90%;"}
+::: {.incremental style="font-size: 70%;"}
 
 **Average Marginal Component Effect (AMCE):**
 
@@ -289,7 +289,7 @@ La asignación de $X_{ijt}$ es independiente de los resultados potenciales → n
 
 :::
 
-::: {.incremental style="font-size: 90%;"}
+::: {.incremental style="font-size: 70%;"}
 
 **Otros estimandos relevantes:**
 
@@ -350,7 +350,7 @@ La asignación de $X_{ijt}$ es independiente de los resultados potenciales → n
 
 ## Situación (escenario)
 
-::: {.incremental style="font-size: 85%;"}
+::: {.incremental style="font-size: 70%;"}
 
 **Escenario:** Cada encuestado/a imagina que trabaja como funcionario/a público/a en un comité de becas para el primer año de educación superior
 
@@ -366,7 +366,7 @@ Este formato activa un dilema distributivo realista: el presupuesto es limitado 
 
 ## Tarea y variable de respuesta
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 80%;"}
 
 **Task:** En cada tarea, el/la encuestado/a ve dos perfiles (Postulante A y Postulante B)
 
@@ -385,7 +385,7 @@ Este formato activa un dilema distributivo realista: el presupuesto es limitado 
 
 ## Atributos: Bloque CARIN
 
-::: {style="font-size: 85%;"}
+::: {style="font-size: 70%;"}
 
 Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reciprocity, Identity, Need) + desigualdades estructurales. **Todos binarios** para minimizar carga cognitiva.
 
@@ -403,7 +403,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 
 ## Atributos: Bloque desigualdades
 
-::: {style="font-size: 85%;"}
+::: {style="font-size: 70%;"}
 
 **Bloque desigualdades (5 atributos):**
 
@@ -425,7 +425,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 
 ## Aleatorización y generación de perfiles
 
-::: {.incremental style="font-size: 85%;"}
+::: {.incremental style="font-size: 75%;"}
 
 **Diseño base:** Completamente aleatorizado
 
@@ -445,7 +445,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 
 ## Tamaño muestral y número de tareas
 
-::: {.incremental style="font-size: 85%;"}
+::: {.incremental style="font-size: 75%;"}
 
 **Equilibrio entre precisión y fatiga:**
 
@@ -469,7 +469,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 
 ## Prompt para el/la encuestado/a
 
-::: {style="font-size: 80%;"}
+::: {style="font-size: 70%;"}
 
 > Imagine que usted trabaja como funcionario/a público/a en un programa estatal que entrega una beca para financiar el primer año de educación superior.
 >
@@ -481,7 +481,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 
 ## Ejemplo de perfiles
 
-::: {style="font-size: 70%;"}
+::: {style="font-size: 60%;"}
 
 | **Atributo** | **Postulante A** | **Postulante B** |
 |--------------|------------------|------------------|
@@ -500,7 +500,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 
 ## Control visual (slider)
 
-::: {style="font-size: 85%;"}
+::: {style="font-size: 75%;"}
 
 **Reparta el 100% del monto total entre ambos postulantes:**
 
@@ -531,7 +531,7 @@ Postulante A: **63%** | Postulante B: **37%**
 
 ## Implementación y piloto
 
-::: {.incremental .highlight-last style="font-size: 90%;"}
+::: {.incremental .highlight-last style="font-size: 80%;"}
 
 - **Programación del experimento** en plataforma de encuestas (ej: Qualtrics, Survey.js)
 
@@ -551,7 +551,7 @@ Postulante A: **63%** | Postulante B: **37%**
 
 ## Puntos clave
 
-::: {.incremental style="font-size: 90%;"}
+::: {.incremental style="font-size: 80%;"}
 
 - Los **conjoint survey experiments** permiten estudiar decisiones distributivas con trade-offs multidimensionales
 
