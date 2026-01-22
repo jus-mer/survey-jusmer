@@ -181,7 +181,7 @@ Presentaremos un experimento conjoint sobre merecimiento. Evaluando la asignaci�
 
 # Conjoint Survey Experiment {.xlarge data-background-color="#92220C"}
 
-## Objetivo del estudio
+## Objetivo del experimento
 
 ::: {.incremental .highlight-last style="font-size: 100%;"}
 
@@ -270,13 +270,18 @@ Presentaremos un experimento conjoint sobre merecimiento. Evaluando la asignaci�
 
 ::: {style="font-size: 85%;"}
 
-**Lógica causal:**
+### **Lógica causal:**
 
 - Aleatorización de niveles de cada atributo → identificación causal
-- Comparación **entre niveles** de un atributo, promediando sobre el resto
-- Supuesto clave: $X_{ijt} \perp \{Y_{ijt}(x)\}$ (independencia)
 
-**Supuestos adicionales:**
+- Comparación **entre niveles** de un atributo, promediando sobre el resto
+
+### **Supuesto clave**: 
+
+$X_{ijt} \perp \{Y_{ijt}(x)\}$ (independencia)
+
+
+### **Supuestos adicionales:**
 
 - Estabilidad (no carryover), ausencia de efectos de orden, consistencia (SUTVA), positividad
 
@@ -328,7 +333,7 @@ Presentaremos un experimento conjoint sobre merecimiento. Evaluando la asignaci�
 ## Tipos de aleatorización
 
 ::::: columns
-::: {.column width="50%"}
+::: {.incremental .column width="50%"}
 
 ### **Diseño completamente aleatorizado**
 
@@ -339,7 +344,7 @@ Presentaremos un experimento conjoint sobre merecimiento. Evaluando la asignaci�
 
 :::
 
-::: {.column width="50%"}
+::: {.incremental .column width="50%"}
 
 ### **Alternativas**
 
@@ -383,7 +388,6 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 | Nacionalidad | Chileno/a / No chileno/a |
 | Pertenencia a pueblo indígena | Sí / No |
 | Tipo de establecimiento | Municipal / Particular subvencionado / Particular pagado |
-| Colegio en Top 100 PAES | Sí / No |
 
 **Total:** 10 atributos binarios → 2¹⁰ = 1.024 perfiles posibles
 
@@ -429,7 +433,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 :::
 
 
-# Ejemplo de tarea conjoint {.xlarge data-background-color="#92220C"}
+# Propuesta Conjoint {.xlarge data-background-color="#92220C"}
 
 
 ## Prompt para el/la encuestado/a
@@ -444,7 +448,7 @@ Los atributos operacionalizan criterios de merecimiento (Control, Attitude, Reci
 
 :::
 
-## Ejemplo de perfiles
+## Perfiles 
 
 ::: {style="font-size: 60%;"}
 
