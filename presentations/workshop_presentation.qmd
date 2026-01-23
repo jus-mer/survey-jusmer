@@ -205,6 +205,12 @@ Merecimiento (CARIN): el acceso al bienestar es condicional según si las person
 
 :::
 
+---
+
+<div style="text-align:center;">
+<img src="images/hain-ej.png" style="width:65%; max-width:none;">
+</div>
+
 ## Elementos del diseño de conjoint
 
 ::: {.incremental style="font-size: 110%;"}
