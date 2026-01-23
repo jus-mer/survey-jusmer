@@ -267,6 +267,30 @@ $T_{ijkl} \ \perp\kern-5pt \perp \{\,T_{ijk[-l]},\ T_{i[-j]k}\,\}$ (aleatorizaci
 
 ::::
 
+
+## Estimandos principales
+
+:::: {.incremental style="font-size: 100%;"}
+
+La elección del estimando depende de la pregunta: ¿comparativa/marginal o descriptiva en niveles? [@leeper_measuring_2020]
+
+
+::: {.fragment}
+Average Marginal Component Effect (AMCE):
+
+- Cambio promedio en el resultado cuando un atributo pasa de un nivel de referencia a otro, manteniendo constante "en promedio" el resto de atributos (gracias a la aleatorización) [@hainmueller_causal_2014]
+
+:::
+
+::: {.fragment}
+Otros estimandos:
+
+- Marginal means (MM): nivel esperado de apoyo asociado a cada nivel del atributo (sin categoría de referencia)
+
+- Efectos condicionales e interacciones (ACIE): si el efecto de un atributo depende de otro
+:::
+::::
+
 ## ¿Por qué conjoint?
 
 ::: {style="font-size: 100%;"}
