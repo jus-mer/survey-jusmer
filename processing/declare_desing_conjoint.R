@@ -25,9 +25,8 @@ set.seed(123)
 # 1. Design features
 # -----------------------------------------------------------------------------
 
-N_subjects <- 1000
-N_tasks    <- 8
-
+N_subjects <- 800
+N_tasks    <- 5
 
 # -----------------------------------------------------------------------------
 # 2. Attributes and levels (10 attributes; 1 ternary, rest binary)
@@ -41,36 +40,36 @@ levels_list <- list(
   
   # School background
   school_type = c("Municipal", "Subsidized private", "Private paid"),
-  top100      = c("Yes", "No"),
+  score_paes      = c("350", "500", "650", "800", "950"),
   
   # CARIN (one attribute per component)
   control_academic  = c("Above average", "Average"),               # Control proxy (performance)
-  attitude_study    = c("High dedication", "Irregular dedication"),# Attitude
-  reciprocity_extra = c("Sustained involvement", "No involvement"),# Reciprocity
   identity_firstgen = c("First-generation", "Not first-generation"),# Identity
   need_income       = c("Low-income household", "Middle/upper-income household") # Need
 )
 
 # Conjectured utility function (additive DGP; adjust magnitudes as needed): this is the estimated effect size
 conjoint_utility <- function(data) {
-  data |>
+  data %>% 
     mutate(
       U =
         0.20  * (gender == "Woman") +
         (-0.25) * (nationality == "Non-Chilean") +
-        (-0.15) * (ethnicity == "Indigenous") +
-        (-0.30) * (need_income == "Low-income household") +
+        0.15 * (ethnicity == "Indigenous") +
         
+        0.30  * (need_income == "Low-income household") +
         0.35  * (control_academic == "Above average") +
-        0.30  * (attitude_study == "High dedication") +
-        0.15  * (reciprocity_extra == "Sustained involvement") +
         0.20  * (identity_firstgen == "First-generation") +
         
-        # school_type: base = Municipal
-        0.10  * (school_type == "Subsidized private") +
+        # school_type: base = Subsidized private
+        0.30  * (school_type == "Municipal") +
         0.25  * (school_type == "Private paid") +
         
-        0.25  * (top100 == "Yes") +
+        # score_paes: base = 350
+        0.10  * (score_paes == "500") +
+        0.20  * (score_paes == "650") +
+        0.30  * (score_paes == "800") +
+        0.35  * (score_paes == "950") +
         
         # idiosyncratic noise at profile level
         uij
@@ -80,8 +79,8 @@ conjoint_utility <- function(data) {
 # -----------------------------------------------------------------------------
 # 3. Measurement handler for YOUR REAL TASK: allocation 0-100 (sum to 100)
 # -----------------------------------------------------------------------------
-# The task: allocate 100% between 2 profiles based on their utilities.
-# We map utilities to shares via softmax:
+# The task: allocate 100% between 2 profiles based on their attributes
+# We map attributes to shares via softmax:
 # share_ij = exp(scale*U_ij) / sum_j exp(scale*U_ij)
 # alloc_ij = 100 * share_ij
 #
@@ -91,14 +90,14 @@ conjoint_utility <- function(data) {
 conjoint_measurement_allocation <- function(data, utility_fn, scale = 1) {
   data2 <- utility_fn(data)
   
-  data2 |>
-    group_by(subject, task) |>
+  data2 %>% 
+    group_by(subject, task) %>%
     mutate(
       expU  = exp(scale * U),
       share = expU / sum(expU),
       alloc = 100 * share
-    ) |>
-    ungroup() |>
+    ) %>%
+    ungroup() %>%
     select(-expU) # keep U, share, alloc if you want
 }
 
@@ -117,45 +116,13 @@ base_model <- declare_model(
 )
 
 # Helper: formula including all attributes
-f_all <- choice ~ gender + nationality + ethnicity +
-  school_type + top100 +
-  control_academic + attitude_study + reciprocity_extra + identity_firstgen + need_income
 
 f_all_alloc <- alloc ~ gender + nationality + ethnicity +
-  school_type + top100 +
-  control_academic + attitude_study + reciprocity_extra + identity_firstgen + need_income
+  school_type + score_paes +
+  control_academic + identity_firstgen + need_income
 
 # -----------------------------------------------------------------------------
-# 5A. Declaration A: STANDARD conjoint (binary choice) using rdss measurement
-# -----------------------------------------------------------------------------
-declaration_choice <-
-  base_model +
-  declare_inquiry(
-    handler    = conjoint_inquiries,
-    levels_list = levels_list,
-    utility_fn = conjoint_utility
-  ) +
-  declare_assignment(
-    handler    = conjoint_assignment,
-    levels_list = levels_list
-    # fully randomized: no weights, no restrictions
-  ) +
-  declare_measurement(
-    handler    = conjoint_measurement,
-    utility_fn = conjoint_utility
-  ) +
-  declare_estimator(
-    f_all,
-    respondent.id = "subject",
-    .method = amce
-  )
-
-# Diagnose
-diagnosis_choice <- diagnose_design(declaration_choice, future.seed = FALSE)
-diagnosis_choice
-
-# -----------------------------------------------------------------------------
-# 5B. Declaration B: YOUR TASK (allocation 0-100) with custom measurement
+# 5. Declaration: YOUR TASK (allocation 0-100) with custom measurement
 # -----------------------------------------------------------------------------
 declaration_alloc <-
   base_model +
@@ -180,8 +147,15 @@ declaration_alloc <-
     .method = amce
   )
 
-diagnosis_alloc <- diagnose_design(declaration_alloc, future.seed = FALSE)
+sims <- 500
+bootstrap_sims <- 500
+
+diagnosis_alloc <- declaration_alloc %>%  
+  diagnose_design(future.seed = FALSE, sims = sims, bootstrap_sims = bootstrap_sims)
+
 diagnosis_alloc
+
+
 
 # -----------------------------------------------------------------------------
 # 6. Optional: Sensitivity to determinism in allocations (scale)

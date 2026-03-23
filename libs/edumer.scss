@@ -1,6 +1,8 @@
 // Include theme-specific fonts
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');/* Updated font import */
+@import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url(./fonts/league-gothic/league-gothic.css);
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:ital@0;1&display=swap');/* Updated font import */
 
 /*-- scss:defaults --*/
 // Override theme settings (see ../template/settings.scss)
@@ -12,7 +14,19 @@ $backgroundColor: #ffffff;
 
 // Primary/body text
 $mainFont: 'Noto Serif', sans-serif; /* Updated font */
-$mainFontSize: 35px;
+
+// Style for slides with first-level headings
+.reveal .slides section h1 {
+  &:first-child {
+    & + p, & + div {
+      // This targets slides where h1 is the first element
+      & ~ * {
+        background-color: #62190a; // Light version of #92220C (the heading color)
+      }
+    }
+  }
+}
+$mainFontSize: 28px;
 $mainColor: #272828;
 
 // Vertical spacing between blocks of text
@@ -20,8 +34,8 @@ $blockMargin: 20px;
 
 // Headings
 $headingMargin: 0 0 $blockMargin 0;
-$headingFont: 'Roboto', Impact, sans-serif; /* Updated font */
-$headingColor: #D91A2A;
+$presentation-heading-font: "Montserrat", sans-serif !default;
+$headingColor: #92220C;
 $headingLineHeight: 1.2;
 $headingLetterSpacing: normal;
 $headingTextTransform: none;
@@ -31,7 +45,7 @@ $heading1TextShadow: $headingTextShadow;
 
 
 $heading1Size: 1.70em;
-$heading2Size: 1.30em;
+$heading2Size: 1.70em;
 $heading3Size: 1.00em;
 $heading4Size: 0.5em;
 
@@ -152,7 +166,7 @@ $selectionColor: #fff;
 
 
 .content-box-red {
-	background-color: #f9dbdb;
+	background-color: #e8ebeb;
 }
 
 .content-box-yellow {
@@ -173,10 +187,11 @@ $selectionColor: #fff;
 .yellow { color: yellow; }
 .orange { color: orange; }
 .purple { color: purple; }
-.gray { color: #758686; }
+.gray { color: #e8ebeb; }
 .grey { color: #F2A0A7; }
 .white{ color: white; }
 .red2 { color: #D91A2A;}
+.blue2 { color: #92220C;}
 
 
 .bold { font-weight: bold; }
@@ -234,17 +249,6 @@ iframe {
 
 .sp-after {
   margin-bottom: 1em !important;
-}
-
-.box-inv-4,
-.section-title-inv-4 {
-  background-color: #F9D6D8;
-}
-
-.box-inv-4,
-.title-inv-4 h1,
-.section-title-inv-4 h1 {
-  color: #E0343E;
 }
 
 
@@ -351,28 +355,36 @@ blockquote {
   padding-left: 1em;
 }
 
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+float-left .box-4, .float-left .box-inv-4,
+.float-right .box-4, .float-right .box-inv-4 {
+  display: inline;
 }
 
-
-.highlight-container-red {
-  background-color: rgb(230, 111, 111);
-  padding: 15px;
-  border-radius: 5px;
-  color: black; /* Optional: Adjust text color for contrast */
+.sp-after-half {
+  margin-bottom: 0.7em !important;
 }
 
-.reveal .slide .our-turn {
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  margin-bottom: 6px;
-  margin-top: 6px;
-  border-left: solid 5px #5A799D;
-  background-color: #5A799D50;
+.sp-after {
+  margin-bottom: 1em !important;
+}
+
+.box-inv-4,
+.section-title-inv-4 {
+  background-color: #f2d9d9;
+}
+
+.box-inv-4,
+.title-inv-4 h1,
+.section-title-inv-4 h1 {
+  color: #6e1a09;
+}
+
+.box-inv-5,
+.section-title-inv-5 {
+  background-color: #92220C;
+}
+.box-inv-5,
+.title-inv-5 h1,
+.section-title-inv-5 h1 {
+  color: #FFFFFF;
 }
