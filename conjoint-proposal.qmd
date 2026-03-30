@@ -96,7 +96,6 @@ Attributes operationalize deservingness criteria drawn from the **CARIN framewor
 |---|---|---|
 | Control | Academic performance | 1. Above average<br>2. Average<br>3. Below average |
 | Identity | First-generation college student | 1. No<br>2. Yes |
-| Need | Employment status | 1. Not working<br>2. Works to finance studies |
 | — (inequality) | Sex | 1. Male<br>2. Female |
 | — (inequality) | Nationality | 1. Chilean<br>2. Non-Chilean |
 | — (inequality) | Ethnic origin | 1. Non-indigenous<br>2. Indigenous |
