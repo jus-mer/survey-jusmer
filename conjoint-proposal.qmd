@@ -92,17 +92,15 @@ respondent) to reduce primacy effects.
 
 Attributes operationalize deservingness criteria drawn from the **CARIN framework** (Control, Attitude, Reciprocity, Identity, Need). All attributes are binary to minimize cognitive load.
 
-| CARIN Dimension | Attribute | Level 0 | Level 1 |
-|---|---|---|---|
-| Control | Academic performance | Above average | Below average |
-| Attitude / Reciprocity | Career oriented toward public service | No | Yes |
-| Reciprocity | Volunteering or community activity | None | Has volunteered |
-| Identity | First-generation college student | No | Yes |
-| Need | Employment status | Not working | Works to finance studies |
-| — (inequality) | Sex | Male | Female |
-| — (inequality) | Nationality | Chilean | Non-Chilean |
-| — (inequality) | Ethnic origin | Non-indigenous | Indigenous |
-| — (inequality) | Type of secondary school | Public (*municipal*) | Private (*particular pagado*) |
+| CARIN Dimension | Attribute | Options |
+|---|---|---|
+| Control | Academic performance | 1. Above average<br>2. Average<br>3. Below average |
+| Identity | First-generation college student | 1. No<br>2. Yes |
+| Need | Employment status | 1. Not working<br>2. Works to finance studies |
+| — (inequality) | Sex | 1. Male<br>2. Female |
+| — (inequality) | Nationality | 1. Chilean<br>2. Non-Chilean |
+| — (inequality) | Ethnic origin | 1. Non-indigenous<br>2. Indigenous |
+| — (inequality) | Type of secondary school | 1. Public (*municipal*)<br>2. Subsidized private (*particular subvencionado*)<br>3. Private (*particular pagado*) |
 
 > **Note on income:** Household income was excluded as an attribute to preserve
 > multidimensionality. Since all applicants attend non-*gratuidad* institutions,
@@ -124,16 +122,14 @@ Attributes operationalize deservingness criteria drawn from the **CARIN framewor
 |---|---|---|
 | Academic performance | Above average | Below average |
 | First-generation college student | Yes | No |
-| Employment status | Works to finance studies | Not working |
-| Career oriented toward public service | Yes | No |
-| Volunteering or community activity | Has volunteered | None |
 | Sex | Female | Male |
 | Nationality | Non-Chilean | Chilean |
 | Ethnic origin | Indigenous | Non-indigenous |
 | Type of secondary school | Public | Private |
 
-**Response:** Slider → Applicant A: [**63%** — $1,512,000] / Applicant B: [**37%** —
-$888,000]
+![](presentations/images/slide_bar.png)
+
+Applicant A: [**63%** — $1,512,000] / Applicant B: [**37%** —$888,000]
 
 ---
 
