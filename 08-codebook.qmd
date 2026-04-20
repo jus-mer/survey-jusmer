@@ -1,0 +1,10 @@
+---
+title: "Libro de Códigos"
+format: html
+---
+
+# Libro de códigos {#codebook}
+
+## Introducción
+
+## Instrucciones

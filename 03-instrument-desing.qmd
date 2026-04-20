@@ -1,0 +1,10 @@
+---
+title: "Diseño del instrumento"
+format: html
+---
+
+# Diseño del instrumento {#dis-instrument}
+
+## Diseño de cuestionarios
+
+## Lista de variables

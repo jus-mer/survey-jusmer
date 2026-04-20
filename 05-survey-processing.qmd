@@ -1,0 +1,16 @@
+---
+format: html
+editor: visual
+---
+
+# Metodología de procesamiento de datos {#dataproc}
+
+## Clasificación y codificación de datos
+
+## Análisis de consistencia de datos y edición
+
+## Procedimientos de edición
+
+## Imputación y derivación de variables
+
+## Cálculo y ajustes de factores de expansión

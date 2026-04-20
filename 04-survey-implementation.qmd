@@ -1,0 +1,48 @@
+---
+title: "Implementación del Instrumento"
+format: html
+---
+
+# Implementación del instrumento {#imp-instrument}
+
+
+## Características generales del levantamiento
+
+
+### Técnica y métodos de recolección de datos
+
+
+### Proceso de contacto inicial
+
+
+### Métodos de contacto inicial
+
+
+### Aplicación de los cuestionarios
+
+
+## Diseño del instrumento de captura de la información
+
+
+## Método para la capacitación para la recolección de datos
+
+
+### Pretest
+
+
+### Preparación del material para el trabajo de campo
+
+
+### Reclutamiento del personal de campo
+
+
+### Capacitación del equipo de encuestadores
+
+
+## Métodos de supervisión
+
+
+## Incidencias en la aplicación del levantamiento
+
+
+## Indicadores levantamiento

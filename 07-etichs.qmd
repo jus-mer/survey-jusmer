@@ -1,0 +1,18 @@
+---
+title: "Ética"
+format: html
+---
+
+# Ética {#etica}
+
+## Aprobación Comité de Ética
+
+El estudio "XXXXXX", correspondiente al FONDECYT N° XXXX, cuenta con aprobación ética del Comité de Ética de la Investigación.
+
+El proyecto fue revisado en conformidad con las normativas éticas y los lineamientos establecidos para investigaciones que involucran a seres humanos, y se considera que cumple con los principios éticos fundamentales para la protección, respeto y dignidad de los participantes. En este sentido, se ha garantizado que el proyecto cuente con mecanismos adecuados de consentimiento informado y protección de datos.
+
+El comité ha aprobado el protocolo con fecha DD/MM/AAAA y se autoriza su ejecución conforme a los términos establecidos en el proyecto original.
+
+## Consentimientos informados
+
+Los participantes del proyecto firmaron un Consentimiento Informado por escrito, en el que se detallan los objetivos del estudio, en qué consiste su participación, qué se hará y cómo se resguardará la información y los datos entregados. Dicho Consentimiento Informado fue firmado el XXXX.

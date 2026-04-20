@@ -1,0 +1,10 @@
+---
+title: "Bases de Datos"
+format: html
+---
+
+# Bases de datos {#databases}
+
+### Descarga de bases de datos
+
+### **Protocolo de uso**
