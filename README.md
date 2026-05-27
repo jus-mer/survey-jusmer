@@ -1,74 +1,54 @@
-#  EDUMER TEMPLATE
- 
-This is the template for academic articles and presentations for the Fondecyt project No. 1210847 “Meritocracia en la escuela: fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile” EDUMER.
+# Survey Fondecyt N° 1250518: Market Justice and Deservingness of Social Welfare
 
-### Abstract:
-
-My abstract.
-
-### Pre-analysis:
-
-Here is the description of the pre-registration of the analysis plan in the Open Science Framework, you can see it directly [here:](lkink). To cite: XXXX. Retrieved from XXX
-
+This repository contains the survey design, documentation, and analysis code for the Fondecyt project N° 1250518 **"Market Justice and Deservingness of Social Welfare"** (JusMer). It includes the conjoint survey experiment design, survey implementation, fieldwork documentation, and working papers produced within the project.
 
 ### Repository structure:
 
 ```
+survey-jusmer/
 │   README.md
-│   edumer-template.Rproj
-│   paper.qmd
-|   paper-blinded.qmd
-|   01-introduction.qmd
-|   02-antecedents.qmd
-|   03-method.qmd
-|   04-analisis.qmd
-|   05-discussion.qmd
-|   06-conclusion.qmd
-|   07-supplementary-material.qmd
-|   cover_letter.qmd
+│   survey-jusmer.Rproj
 │
-|───_extensions
-|
-├───submission
-│       README-submit.md
-|
-└───libs
-|
-├───input
-|       bib
-|       data
-│       img    
-|
-├───output
-|       figures
-│       tables    
+├── conjoint/
+│   ├── design/
+│   └── surveydown/
 │
-└───processing
-|       01-proc-data.qmd
-|       02-analysis.qmd
-|
-└───presentations
-|       edumer_template.qmd
-|       images
-|
-└───
-
+├── documentation/
+│   ├── 01-antecedents.qmd
+│   ├── 02-sample-desing.qmd
+│   ├── 03-instrument-desing.qmd
+│   ├── 04-survey-implementation.qmd
+│   ├── 05-survey-processing.qmd
+│   ├── 06-database.qmd
+│   ├── 07-etichs.qmd
+│   ├── 08-codebook.qmd
+│   ├── 09-questionnaires.qmd
+│   └── 10-technical-sheet.qmd
+│
+├── input/
+│   ├── bib/
+│   └── data/
+│
+├── output/
+│   ├── figures/
+│   └── tables/
+│
+├── presentations/
+│
+├── processing/
+│
+├── questionnaire/
+│
+└── working-papers/
+    ├── deservingness/
+    └── market-justice/
 ```
-
 
 ### Repository and reproducibility:
 
-In the web page it is possible to see/download the paper in html and pdf formats. The data and analysis files are in the Github repo [repo-name](link) and follow the logic of the [IPO protocol](https://github.com/juancarloscastillo/ipo) for academic workflows, based on three main components = **I**nput -> **P**rocessing -> **O**utput.
+The repository follows the logic of the [IPO protocol](https://github.com/juancarloscastillo/ipo) for academic workflows, based on three main components: **I**nput -> **P**rocessing -> **O**utput. The full repository is available at [jus-mer/survey-jusmer](https://github.com/jus-mer/survey-jusmer).
 
+### Files:
 
-## Files:
-
-- [File 1](link)
-- [File 2](link)
-- [File N](link)
-
-## Presentations
-
-[Workshop - Conjoint Experiment](https://jus-mer.github.io/survey-jusmer/presentations/workshop_presentation.html)
-
-[Handout - Conjoint Experiment](https://jus-mer.github.io/survey-jusmer/conjoint-proposal.html)
+- [Working Paper - Merecimiento y Justicia de Mercado](https://jus-mer.github.io/survey-jusmer/working-papers/deservingness/paper.html)
+- [Working Paper - Design of Conjoint Survey Experiment](https://jus-mer.github.io/survey-jusmer/conjoint/design/conjoint-working-paper.html)

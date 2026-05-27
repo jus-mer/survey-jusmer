@@ -1,0 +1,156 @@
+---
+title: "Pre-Analysis Plan: Deservingness and Distributive Preferences in Higher Education Scholarships"
+author:
+  - name: Andreas Laffert
+    affiliation: University of Chile
+date: today
+lang: es
+bibliography: "../input/bib/jusmer.bib"
+csl: "../input/bib/apa6.csl"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE, 
+                      warning = FALSE,
+                      message = FALSE, 
+                      cache = TRUE,
+                      out.width = '85%',
+                      fig.pos= "H")
+options(scipen=999)
+options(kableExtra.auto_format = FALSE)
+options(knitr.kable.NA = '')
+options(knitr.graphics.error = FALSE)
+Sys.setlocale("LC_ALL", "ES_ES.UTF-8")
+table_format = if (knitr::is_html_output()) {
+   #conditional instructions for kable
+   "html" #if html set "html" in format
+ } else if (knitr::is_latex_output()) {
+   "latex"#if latex set "latex" in format
+ }
+
+```
+
+```{r}
+#| echo: false
+library(here)
+
+source(file = here("processing/cjpow.R"))
+
+```
+
+
+# Introduction
+
+Access to welfare benefits and services is rarely universal. Even in broadly solidaristic welfare states, entitlement to social provision involves criteria of selectivity: economic, administrative, and normative, that determine who qualifies and who does not. This conditionality is not merely technical: it reflects deeper moral judgments about who deserves collective support and on what grounds, what the literature terms conditional solidarity (van Oorschot, 2000; Mau & Veghte, 2007). At the center of this conditionality sits the concept of deservingness; the evaluations citizens make about whether certain benefits, penalties, or recognitions are justly merited (van Oorschot, 2000; Sachweh & Eicher, 2023). These judgments draw on criteria such as individual effort, perceived morality, group membership, and social status (Bay & Pedersen, 2006), and they vary systematically across target groups, benefit types, and national contexts (van Oorschot, 2006; van Oorschot et al., 2017; Mau & Veghte, 2007). Understanding how these criteria operate is therefore central not only to explaining public opinion on redistribution, but to grasping the normative conditions under which welfare institutions remain politically legitimate.
+
+A substantial body of research has examined the structure of deservingness judgments. Wim van Oorschot CARIN framework identifies five criteria through which citizens evaluate competing welfare claims: control over one’s situation, attitude toward receiving assistance, reciprocity, identity proximity, and need. Cross-national research consistently shows that older adults and people with disabilities are perceived as the most deserving groups, whereas immigrants and unemployed individuals are viewed as the least deserving, reflecting how these groups are evaluated across the CARIN dimensions (van Oorschot, 2006; van Oorschot & Roosma, 2017). More recent experimental research employing factorial and conjoint designs demonstrates that attributes associated with need and lack of control increase support for granting access to or allocating resources toward claimants (Dietrich et al., 2023; Gilgen, 2022), whereas identity cues such as nationality reduce such support (Dietrich et al., 2023). Similarly, racial and ethnic signals have been shown to structure preferences in immigration and welfare contexts in comparable ways (Zhirkov et al., 2025; Hoffmann & Velasco, 2024; Meuleman et al., 2020). Yet this growing experimental literature shares an important limitation: respondents typically evaluate claimants in isolation or select between them through binary forced-choice tasks, without confronting the distributive trade-offs imposed by genuinely scarce resources. When allocating more resources to one claimant necessarily entails allocating fewer resources to another, the relative weight citizens assign to competing deservingness criteria may differ substantially from what conventional attitudinal or preference-based measures capture. This study addresses that gap directly by connecting the deservingness literature with experimental research on distributive preferences and allocation decisions (Gilgen, 2022; Almås et al., 2020; Dietrich et al., 2026).
+
+We administer a pre-registered paired-profile distributive conjoint experiment to a Chilean sample. Respondents allocate a partial higher education scholarship between two applicants whose profiles vary simultaneously on academic merit, economic need, structural disadvantage of origin, and identity. Rather than choosing between applicants, respondents divide a fixed fund using a continuous slider, so that giving more to one means giving less to the other. This design, adapted from Gilgen's (2022) Distributional Survey Experiment, replicates the scarcity and interdependence of real allocative decisions, forces respondents to reveal how they prioritize competing normative criteria when trade-offs are concrete, and allows causal estimation of each deservingness dimension's effect on allocation behavior.
+
+Drawing on NICER (Knotz et al., 2021) and experimental evidence from Gilgen (2022), we expect need-related criteria to exert the strongest average effect on allocations. Merit, operationalized through relative school performance, is expected to operate as a significant secondary driver, particularly among respondents with strong meritocratic beliefs. For identity criteria, indigenous origin and foreign nationality, the direction of effects is theoretically open: respondents may activate compensatory logics favoring historically disadvantaged groups, or penalize identity distance from the perceived majority. We further expect meritocratic beliefs and ideological position to moderate these effects, with more strongly meritocratic respondents assigning greater weight to academic performance and less to need or structural disadvantage.
+
+Chile provides a theoretically compelling setting. Its higher education system combines some of the highest private household expenditure shares in the OECD with acute stratification by socioeconomic origin, in which students from underfunded municipal schools and first-generation families compete for admission to the same institutions as those from elite private schools (OECD, 2023; Madariaga, 2020). A contested scholarship system and the politically charged expansion of free tuition since 2016 make the question of who deserves educational support both institutionally salient and normatively contested. Additionally, Chile exhibits unusually strong meritocratic beliefs relative to its level of inequality (Castillo et al., 2025, 2026), making it a demanding test case: if need dominates even here, its primacy as a distributive principle appears robust; if merit prevails, it reveals how commodification and meritocratic ideology jointly reshape citizens' distributive moral frameworks.
+
+# Study Information
+
+## Research question
+
+**_To what extent do academic merit, economic need, social origin, and identity influence preferences over the allocation of partial higher education scholarships in Chile?_**
+
+## Hypotheses
+
+$H1$ (Merit/Control): Applicants with above-average school performance will receive a larger share of the scholarship than applicants with average or below-average performance, reflecting the operation of meritocratic criteria of effort and individual control.
+
+$H2$ (Economic need): Applicants from households that struggle to make ends meet will receive a larger share of the scholarship than applicants from financially comfortable households, reflecting the operation of the need criterion.
+
+$H3$ (Structural disadvantage): Applicants from municipal schools and without parental higher education will receive a larger share of the scholarship than applicants from fee-paying private schools or with college-educated parents, reflecting the operation of equality-of-opportunity criteria.
+
+$H4$ (Identity): Applicants' foreign nationality and indigenous origin will affect scholarship allocation. The direction of these effects is theoretically open: respondents may penalize applicants who differ from the dominant group identity, or alternatively activate compensatory criteria that favor historically disadvantaged groups.
+
+$H5$ (Moderation by meritocratic beliefs): Respondents with stronger meritocratic beliefs will assign greater relative weight to school performance and lower weight to economic need and structural disadvantage when allocating the scholarship.
+
+
+# Design Plan
+
+## Study type
+
+## Blinding
+
+# Experimental design
+
+# Sampling plan
+
+## Existing data
+
+## Data collection procedure
+
+## Sample size
+
+# Variables
+
+## Attributes and levels
+
+## Outcome
+
+## Controls and moderadores
+
+# Analysis Plan
+
+## Estimates
+
+## Models
+
+## Inference criteria
+
+## Missing data
+
+# Randomization 
+
+## Strategy
+
+## Restrictions
+
+# Power analysis
+
+## Strategy
+
+## Parameters
+
+## Reported indicators
+
+# Quality control
+
+## Attention checks
+
+## Time filters
+
+## Response patterns
+
+## Practice trials
+
+## Validty tests
+
+# Ethical approval
+
+
+
+
+
+
+{{< pagebreak >}}
+
+# References
+
+::: {#refs}
+:::
+
+

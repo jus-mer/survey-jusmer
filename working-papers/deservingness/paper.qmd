@@ -1,0 +1,124 @@
+---
+title: "Merecimiento y Justicia de Mercado"
+subtitle: "Concepciones, medición y factores asociados"
+author: 
+  - René Canales
+  - Juan Carlos Castillo
+format:
+  html:
+    toc: true
+    toc-location: right
+    toc-depth: 2
+    toc-expand: 2
+    toc-title: Contents
+    number-sections: true
+    number-depth: 3
+    theme:
+      - cosmo
+    code-link: true
+    title-block-banner: true
+abstract: |
+  El presente documento de trabajo tiene como objetivo sistematizar la conceptualización del merecimiento, revisar las estrategias metodológicas para su medición, y analizar los factores determinantes que moldean estas percepciones, integrando tanto la literatura sobre bienestar como los nuevos hallazgos sobre desigualdad y acumulación de riqueza.
+keywords: 
+  - Merecimiento
+  - Estado de Bienestar
+  - Medición
+  - Justicia Distributiva
+bibliography: "../bib/jusmer.bib"
+csl: "../bib/apa6.csl"
+link-citations: true
+linestretch: 1.15       
+mainfont: Times New Roman
+fontsize: 13pt          
+geometry: "left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm"
+papersize: letter
+colorlinks: true
+fig-height: 4
+fig-width: 7.5
+---
+
+# Introducción
+
+En un contexto marcado por crisis económicas, aumento de la desigualdad y transformaciones demográficas, la pregunta sobre "¿quién recibe qué y por qué?" ha retornado con fuerza a la agenda pública y académica, situándose en el centro del debate sobre política social y de los estudios sobre percepciones y preferencias de la desigualdad [@meuleman_welfare_2020]. Más cuando gran parte de la legitimidad de los Estados de bienestar y de sus procesos de transformación no depende únicamente de la eficiencia económica o del diseño institucional, sino que está profundamente anclada en la percepción ciudadana sobre la justicia distributiva y la solidaridad [@brooks_why_2006]. Sin embargo, estas percepciones a menudo divergen de la realidad, lo que revela una brecha significativa entre los indicadores económicos y la forma en que los ciudadanos perciben y evalúan las desigualdades multidimensionales [@kulic_comprehensive_2025]. 
+
+En este marco, el concepto de merecimiento emerge como una herramienta analítica clave para comprender por qué el apoyo público varía de manera tan significativa según el tipo de beneficiario, tanto en la provisión de ayuda social como en el acceso a distintos bienes en diversas áreas [@vanoorschot_social_2017]. Las teorías del merecimiento postulan que la solidaridad es condicional: los ciudadanos no apoyan la redistribución de manera abstracta, sino que distinguen entre grupos "merecedores" y "no merecedores" con base en criterios morales y en evaluaciones de justicia [@gift_deservingness_2023].  La evidencia reciente refina esta distinción, sugiriendo que los ciudadanos aplican una suerte de evaluación responsable mediante la cual tienden a compensar la mala "suerte bruta" (fuera del control individual), pero penalizan la derivada de la "suerte opcional" o de riesgos asumidos [@chancel_world_2022]. 
+
+La literatura se ha centrado en el estudio de los criterios de merecimiento de los desfavorecidos; investigaciones recientes han ampliado este enfoque hacia el "merecimiento de la riqueza", cuestionando la legitimidad de las fortunas acumuladas y su tributación [@becker_taxing_2025; @sachweh_deserving_2023; @mccall_undeserving_2013]. Por lo mismo, resulta crucial considerar que las propias creencias sobre el merecimiento son endógenas al estatus económico: el éxito sesgaría las percepciones individuales, llevando a los "ganadores" a atribuir su posición al esfuerzo y a subestimar el rol de la suerte, legitimando así niveles más altos de desigualdad [@deng_its_2025; @fehr_misperceiving_2025].
+
+A pesar de la relevancia del concepto de merecimiento, persiste cierta confusión en su medición. A menudo, el merecimiento se ha tratado como un heurístico no medido o se ha inferido a partir de preferencias de política pública [@meuleman_welfare_2020; @vanoorschot_social_2017], en lugar de operacionalizarse como un constructo multidimensional con escalas validadas (Meuleman et al., 2020) o mediante nuevos módulos de encuesta capaces de distinguir con precisión entre aversión a la desigualdad y altruismo [@epper_measuring_2025]. 
+
+El presente documento de trabajo tiene como objetivo sistematizar la conceptualización del merecimiento, revisar las estrategias metodológicas para su medición y analizar los factores determinantes que moldean estas percepciones, integrando tanto la literatura sobre bienestar como los nuevos hallazgos sobre desigualdad y acumulación de riqueza.
+
+# Conceptualización del merecimiento
+
+## La estructura moral del merecimiento
+
+Hay que comenzar recordando que el merecimiento se entiende como aquellas evaluaciones que las personas realizan sobre si se merecen o no ciertos beneficios, castigos o reconocimientos [@oorschot_who_2000]. Esto es especialmente relevante en la literatura sobre “policy feedback effects” de los Estados de bienestar y de mercantilización [@busemeyer_policy_2020; @lindh_public_2015], pues hace referencia específica a lo que las personas evalúan como justo en el acceso, la distribución o mercantilización de esos servicios desde una economía moral. El elemento principal de esta economía moral es la distinción entre merecedores y no merecedores, que se basa en juicios morales sobre la responsabilidad individual, la contribución a la sociedad, la identidad grupal y la necesidad; es decir, en criterios que van más allá de la simple evaluación de la utilidad o del interés económico.
+
+La conceptualización del merecimiento ha evolucionado desde ser considerada una intuición vaga hasta establecerse como una estructura cognitiva compleja. Van Oorschot et al. [@vanoorschot_social_2017; @oorschot_who_2000] sostienen que la solidaridad pública no es ciega, sino que está fuertemente condicionada por criterios normativos que la ciudadanía aplica para juzgar a los beneficiarios de la protección social. Este marco teórico se basa en el modelo Control, Attitude, Reciprocity, Identity, and Need (CARIN), que postula que las evaluaciones de merecimiento se construyen a partir de estas cinco dimensiones interrelacionadas: 
+
+- Control: se refiere a la percepción de la responsabilidad personal ante la situación de necesidad. Según Meuelemann [@meuleman_welfare_2020], esta dimensión es a menudo la más determinante, pues aquellos cuya necesidad es percibida como ajena a su voluntad —como los ancianos o los enfermos— gozan de mayor legitimidad en términos de merecimiento que quienes son considerados responsables de su propia situación, lo que penaliza sistemáticamente a los desempleados. La investigación reciente ha refinado esta dimensión, sugiriendo que la ciudadanía aplica un "corte de responsabilidad" que distingue no solo el control general, sino también el tipo de azar involucrado: se tiende a compensar la "suerte bruta" (eventos incontrolables), pero no la "suerte opcional" derivada de riesgos asumidos [@chanel_preferences_2025]. Además, esta percepción de control está sujeta a sesgos cognitivos importantes; por ejemplo, el éxito económico propio lleva a los individuos a sobreestimar el papel del esfuerzo y subestimar el de la suerte, lo que distorsiona sus juicios sobre quién merece qué [@deng_its_2025; @fehr_misperceiving_2025; @gugushvili_what_2026].
+
+- Actitud:  evalúa la **disposición** del beneficiario hacia la sociedad y su **gratitud** por la ayuda recibida, mientras que la Reciprocidad mide si el individuo ha contribuido previamente al sistema (mediante impuestos o trabajo) o si tiene potencial para hacerlo en el futuro [@meuleman_welfare_2020]. 
+  
+- Recipricidad: evalúa la **contribución** pasada o futura del beneficiario al sistema, lo que implica una expectativa de **retorno** por la ayuda que reciben las personas. Este criterio es especialmente relevante en el caso de los desempleados, quienes son percibidos como menos merecedores no solo por su falta de control sobre su situación, sino también por la ausencia de contribuciones pasadas o potenciales al sistema [@meuleman_welfare_2020].
+
+- Identidad: delimita las fronteras morales de la comunidad, favoreciendo a los miembros del propio grupo (ingroup) sobre quienes están fuera (outgroup). Esto explica las brechas recurrentes de apoyo hacia ciertos grupos, como la población inmigrante, una tendencia que persiste incluso en contextos donde se reconoce la existencia de desigualdades estructurales severas [@kulic_comprehensive_2025; @oorschot_who_2000]. 
+
+- Necesidad: Finalmente, la dimensión de la necesidad se centra en la **urgencia** y **magnitud** de la situación del beneficiario. El concepto de “discapacidad” añade que las personas necesitadas merecen apoyo cuando, además, carecen de la capacidad para mejorar su propia situación. La discapacidad presupone la existencia de una necesidad, pero pone el foco también en la capacidad de la persona afectada. De manera similar, las personas son consideradas más merecedoras de ayuda cuando su situación de necesidad es causada por factores externos que escapan a su control [@meuleman_welfare_2020].
+
+Sin embargo, esta formulación original no está exenta de problemas. Knotz et al. [-@knotz_recast_2022] señalan que los criterios de actitud y reciprocidad, tal como los define van Oorschot, adolecen de insuficiente diferenciación interna: la actitud puede expresarse tanto mediante gestos simbólicos (una sonrisa, una expresión de gratitud) como mediante conductas orientadas a metas concretas (buscar activamente empleo), y estas últimas se solapan con lo que el propio marco entiende por reciprocidad. El resultado es que comportamientos como la búsqueda activa de trabajo cuentan simultáneamente como evidencia de actitud y de reciprocidad, lo que hace imposible distinguir empíricamente cuál de los dos criterios está operando. Para resolver esto, los autores proponen reservar la actitud exclusivamente para expresiones simbólicas de gratitud, separar la reciprocidad pasada (contribuciones previas al sistema) de la reciprocidad presente —que denominan esfuerzo (effort)—, y mantener sin cambios los criterios de control, identidad y necesidad. El marco resultante, que los autores denominan NICER (Need, Identity, Control, Effort, Reciprocity), fue validado mediante experimentos de viñetas en Alemania y Estados Unidos, con resultados que muestran que el criterio de actitud, cuando se operacionaliza de forma estricta como expresión simbólica de gratitud, no tiene efecto significativo sobre las percepciones de merecimiento. Son el control y el esfuerzo los criterios con mayor peso, seguidos de la reciprocidad y la identidad.
+
+La operacionalización de estos conceptos plantea desafíos metodológicos importantes. Como señalan Meuleman et al. [@meuleman_welfare_2020], gran parte de la investigación aborda el merecimiento como un concepto heurístico, infiriendo las opiniones de los ciudadanos a partir de sus preferencias por políticas concretas, lo que genera confusión conceptual entre la evaluación moral de un grupo y el apoyo ideológico al Estado de bienestar [@vanoorschot_social_2017].
+
+Para superar esta limitación, Meuleman et al. [@meuleman_welfare_2020] desarrollaron y validaron una **Escala de Principios de Merecimiento CARIN**, demostrando que los cinco criterios son dimensiones distintas que pueden operar de manera independiente o incluso contradictoria en la evaluación moral de ciertos contextos. Este avance permite investigar cómo la adhesión a principios abstractos de merecimiento tiene un poder predictivo significativo sobre las actitudes hacia políticas de bienestar específicas. 
+
+# Medición del merecimiento
+
+Como se esbozó anteriormente, la operacionalización empírica del merecimiento hasido problemática, caracterizada por una desconexión entre la riqueza del concepto y la precisión de sus instrumentos de medición. La investigación en opinión pública tiende a tratar el merecimiento como una "caja negra", mas no necesariamente se estudiaba en profundidad [@meuleman_welfare_2020]. En este enfoque tradicional, las percepciones de merecimiento se inferían a partir de variables proxy, principalmente del apoyo a políticas sociales específicas o de la preferencia por el gasto público dirigido a ciertos grupos. Sin embargo, esta estrategia de inferencia indirecta presenta graves problemas de validez de constructo: el apoyo a una política no depende exclusivamente de la evaluación moral de los beneficiarios, sino que está influido ---como muestra la evidencia--- por consideraciones ideológicas sobre el tamaño del Estado, la eficiencia burocrática o el interés económico propio. Por lo tanto, medir el merecimiento a través del apoyo a políticas confunde el juicio moral sobre el "quién" con las preferencias políticas sobre el "cómo" [@meuleman_welfare_2020].
+
+Meuleman et al. [@meuleman_welfare_2020] sistematizan este panorama identificando cuatro estrategias predominantes, cada una con limitaciones conceptuales específicas. 
+
+| Enfoque | Descripción | Ejemplo | Limitación principal |
+|---------|-------------|---------|----------------------|
+| **Esfuerzo de política** (*policy effort approach*) | Mide el apoyo a políticas dirigidas a grupos específicos y construye rankings interpretados como reflejo de los criterios de merecimiento dominantes | Laenen y Meuleman (2017): el mayor apoyo a los ancianos se interpreta como preferencia por la reciprocidad | Asume que las preferencias de política están *íntegramente* determinadas por juicios de merecimiento, sin testear empíricamente esa relación |
+| **Merecimiento del grupo primario** (*primary target group approach*) | Pregunta directamente sobre cuán merecedores son grupos específicos, o cuánta preocupación generan sus condiciones de vida | [@oorschot_who_2000]: preguntas sobre la preocupación por las condiciones de vida de distintos grupos | Captura el *estatus* percibido de merecimiento del grupo, no los *principios* subyacentes |
+| **Merecimiento del grupo secundario** (*secondary target group approach*) | Evalúa grupos colocados en situaciones diseñadas para elicitar distintos criterios CARIN; en su versión más sofisticada, utiliza experimentos de viñetas con asignación aleatoria | [@jeene_dynamics_2014]: discapacitados por accidente laboral vs. por conducta irresponsable propia (criterio de control) | Las características de los grupos suelen contener elementos de múltiples dimensiones CARIN simultáneamente, dificultando la separación analítica |
+| **Imágenes públicas** (*public images approach*) | Mide el merecimiento mediante afirmaciones sobre grupos beneficiarios que reflejan si estos cumplen los criterios CARIN | [@summers_claiming_2025]: "los desempleados no hacen suficientes esfuerzos por encontrar trabajo" | Confunde *percepciones* sobre si los grupos cumplen un criterio con *opiniones normativas* sobre si ese criterio debería importar |
+
+Estas limitaciones son precisamente lo que motiva el trabajo de Knotz et al. [@knotz_recast_2022], quienes argumentan que la falta de claridad conceptual en las definiciones de los criterios CARIN se traslada directamente a las operacionalizaciones empíricas, generando inconsistencias entre estudios que hacen muy difícil la acumulación de evidencia. Su revisión de la literatura muestra, por ejemplo, que distintos estudios han medido el criterio de reciprocidad de formas radicalmente distintas —como la edad del beneficiario, la duración del empleo previo, o la intensidad de la búsqueda de trabajo actual— y que en algunos casos un mismo indicador (como la búsqueda activa de empleo) se ha usado para operacionalizar simultáneamente actitud y reciprocidad dentro del mismo diseño.
+
+## Enfoques de operacionalización del merecimiento y sus limitaciones {#tbl-enfoques}
+
+El denominador común es que ninguno mide los principios de merecimiento *en sí mismos*: todos operan sobre variables proxy. Esta distinción es conceptualmente crucial, pues una persona puede adherir con fuerza al principio de reciprocidad en abstracto y al mismo tiempo considerar que los desempleados de su entorno sí han contribuido al sistema ---o puede rechazar el principio y aun así apoyar
+restricciones de acceso por razones ideológicas independientes.
+
+Para superar estas limitaciones, Meuleman et al. [@meuleman_welfare_2020] proponen la *escala de principios de merecimiento CARIN*, un instrumento multi-ítem con escala Likert de cinco puntos que mide directamente los principios abstractos que los ciudadanos consideran legítimos para condicionar el acceso a las prestaciones sociales, sin referencia a grupos concretos ni a preferencias de política.
+
+| Dimensión | Lógica subyacente | Ítems representativos |
+|-----------|-------------------|-----------------------|
+| **Control** | ¿Es el beneficiario responsable de su situación de necesidad? | "Las personas que caen en la pobreza por sus propios errores no deberían tener derecho a una renta mínima" |
+| **Actitud** (*Attitude*) | ¿Muestra el beneficiario gratitud y cumplimiento hacia el sistema? | "Las personas que reciben prestaciones deberían mostrar más gratitud" |
+| **Reciprocidad** | ¿Ha contribuido el beneficiario al sistema del que ahora extrae? | "La seguridad social debería estar reservada para quienes han contribuido a la prosperidad colectiva" |
+| **Identidad** | ¿Pertenece el beneficiario al grupo de referencia (*ingroup*)? | "Las personas nacidas aquí deberían tener prioridad sobre las no nacidas aquí en la concesión de prestaciones" |
+| **Necesidad** (*Need*) | ¿Es genuina y suficientemente intensa la necesidad del beneficiario? | "Las prestaciones sociales deberían reservarse exclusivamente para quienes viven en pobreza real" |
+
+Frente a esta propuesta de escala, cabe señalar que la propia estructura del CARIN ha sido objeto de revisión. Knotz et al. [@knotz_recast_2022] demostraron mediante experimentos de viñetas con muestras representativas en Alemania (N = 396) y Estados Unidos (N = 356) que separar el comportamiento recíproco pasado del presente —es decir, distinguir reciprocidad de esfuerzo— mejora el ajuste de los modelos empíricos respecto al CARIN original en ambos contextos. Esta evidencia sugiere que la escala CARIN, pese a su avance en la medición de principios abstractos, podría beneficiarse de una revisión que desagregue los ítems de reciprocidad y actitud en función de esta distinción temporal y conductual.
+
+## Dimensiones de la escala CARIN y ejemplos de ítems
+
+La validación mediante Análisis Factorial Confirmatorio (AFC) sobre datos del Estudio Electoral Nacional Belga 2014 (N = 1.400) confirma la estructura de cinco dimensiones con muy buen ajuste (RMSEA = 0,044; CFI = 0,982; TLI = 0,974) [@meuleman_welfare_2020]. Crucialmente, los cinco principios se relacionan de forma diferenciada tanto con características sociodemográficas como con preferencias de política: la reciprocidad y la actitud reducen el apoyo a las prestaciones por desempleo, la identidad erosiona el apoyo a políticas antidiscriminatorias, y la necesidad muestra el patrón más independiente, con escasa correlación con el resto de dimensiones y sin gradiente educativo claro. Este último hallazgo es teóricamente relevante: sugiere que la necesidad sigue una lógica de justicia distributiva distinta, más próxima al igualitarismo universal que a los criterios condicionales del resto de dimensiones CARIN.
+
+Más allá de la escala CARIN, la literatura reciente ha avanzado hacia estrategias de validación experimental que complementan la medición por encuesta. Un hito reciente es el desarrollo del módulo de encuesta "Hearts and Minds" por Epper y Mitrouchev [@epper_measuring_2025], quienes demuestran que un conjunto parsimonioso de preguntas puede predecir el comportamiento real con la misma precisión que los costosos experimentos incentivados, permitiendo desagregar motivaciones que antes se confundían, como el altruismo y la aversión a la desigualdad.
+
+Paralelamente, el uso de diseños experimentales sofisticados ha permitido aislar mecanismos causales: desde procedimientos de votación secuencial que distinguen entre principios de justicia y autointerés [@chanel_preferences_2025], hasta la asignación aleatoria del éxito económico para demostrar cómo este moldea causalmente las creencias meritocráticas, resolviendo los problemas de endogeneidad y de  asignación no aleatoria típicos de los estudios observacionales [@fehr_misperceiving_2025].
+
+# Conclusiones
+
+El merecimiento emerge como un constructo multidimensional que estructura las percepciones ciudadanas sobre la justicia distributiva en el Estado de bienestar contemporáneo. Lejos de ser un juicio moral simple, las evaluaciones de merecimiento operan a través de múltiples dimensiones (Control, Actitud, Reciprocidad, Identidad y Necesidad) que pueden activarse de manera independiente o contradictoria según el contexto. La investigación más reciente ha permitido refinar este marco, demostrando que la ciudadanía aplica criterios de justicia sofisticados, como el "corte de responsabilidad", para distinguir entre la suerte bruta y la opcional [@chanel_preferences_2025], y que es posible desagregar empíricamente si el apoyo redistributivo nace de la aversión a la desigualdad o del altruismo puro [@epper_measuring_2025].
+
+La expansión del concepto desde los "pobres no merecedores" hacia los "ricos no merecedores" representa un avance teórico crucial, pues reconoce que la legitimidad de la redistribución se juega en ambos extremos de la estructura social. Sin embargo, este juicio no es neutral: el éxito económico genera un sesgo de autojustificación que lleva a las élites a subestimar el papel de la suerte en sus logros, reforzando los ciclos de desigualdad mediante creencias meritocráticas distorsionadas [@fehr_misperceiving_2025]. Afortunadamente, los avances metodológicos —desde escalas validadas hasta módulos de encuesta y experimentos de votación incentivada— permiten ahora capturar estas dinámicas con una precisión inédita, superando las limitaciones históricas de la inferencia indirecta.
+
+En el plano conceptual, la propuesta de Knotz et al. [@knotz_recast_2022] representa un paso adicional en esta dirección: al demostrar empíricamente que actitud y reciprocidad son dimensiones que se solapan cuando no se definen con precisión, y que la distinción entre comportamiento recíproco pasado y presente tiene consecuencias reales para los juicios de merecimiento, su trabajo instala la necesidad de que los avances en medición vayan acompañados de una depuración conceptual equivalente. Sin esa depuración, incluso los instrumentos más sofisticados corren el riesgo de medir con precisión constructos mal delimitados.
+
+Finalmente, persisten desafíos importantes. La evidencia sobre la discrepancia entre la percepción y la realidad de las desigualdades [@kulic_comprehensive_2025], sumada a la "ignorancia motivada" de los exitosos ante información correctiva [@fehr_misperceiving_2025], sugiere que la formación de preferencias es un proceso cognitivamente sesgado. Además, la capacidad del merecimiento para penetrar incluso en los ámbitos de los derechos universales indica que la solidaridad ciudadana es más frágil y condicional de lo que se asume. Comprender estas dinámicas es esencial para diseñar Estados de bienestar que no solo sean eficientes, sino que también logren navegar las complejas intuiciones morales de una ciudadanía que exige, ante todo, justicia en los procesos.

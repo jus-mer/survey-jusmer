@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Juan Carlos Castillo">
+<meta name="author" content="Andreas Laffert">
+<meta name="author" content="René Canales">
+<meta name="author" content="Tomás Urzúa">
+<meta name="dcterms.date" content="2026-03-30">
+
+<title>Conjoint Survey Experiment Proposal: Deservingness and Inequality in Chile</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="conjoint-proposal_files/libs/clipboard/clipboard.min.js"></script>
+<script src="conjoint-proposal_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="conjoint-proposal_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="conjoint-proposal_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="conjoint-proposal_files/libs/quarto-html/popper.min.js"></script>
+<script src="conjoint-proposal_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="conjoint-proposal_files/libs/quarto-html/anchor.min.js"></script>
+<link href="conjoint-proposal_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="conjoint-proposal_files/libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="conjoint-proposal_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="conjoint-proposal_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="conjoint-proposal_files/libs/bootstrap/bootstrap-1e8058f548f4d8e886ddbecda6d61d62.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Conjoint Survey Experiment Proposal: Deservingness and Inequality in Chile</h1>
+                      </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Juan Carlos Castillo </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Universidad de Chile
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">Andreas Laffert </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Universidad de Chile
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">René Canales </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Universidad de Chile
+            </p>
+        </div>
+      <div class="quarto-title-meta-contents">
+      <p class="author">Tomás Urzúa </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Universidad de Chile
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 30, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#deservingness-and-inequality-in-higher-education-access-a-conjoint-survey-experiment" id="toc-deservingness-and-inequality-in-higher-education-access-a-conjoint-survey-experiment" class="nav-link active" data-scroll-target="#deservingness-and-inequality-in-higher-education-access-a-conjoint-survey-experiment"><span class="header-section-number">1</span> Deservingness and Inequality in Higher Education Access: A Conjoint Survey Experiment</a>
+  <ul class="collapse">
+  <li><a href="#research-question-motivation" id="toc-research-question-motivation" class="nav-link" data-scroll-target="#research-question-motivation"><span class="header-section-number">1.1</span> Research Question &amp; Motivation</a></li>
+  <li><a href="#conjoint-design-overview" id="toc-conjoint-design-overview" class="nav-link" data-scroll-target="#conjoint-design-overview"><span class="header-section-number">1.2</span> Conjoint Design Overview</a></li>
+  <li><a href="#attributes-levels" id="toc-attributes-levels" class="nav-link" data-scroll-target="#attributes-levels"><span class="header-section-number">1.3</span> Attributes &amp; Levels</a></li>
+  </ul></li>
+  <li><a href="#example-task" id="toc-example-task" class="nav-link" data-scroll-target="#example-task"><span class="header-section-number">2</span> Example Task</a>
+  <ul class="collapse">
+  <li><a href="#analytical-strategy-estimands" id="toc-analytical-strategy-estimands" class="nav-link" data-scroll-target="#analytical-strategy-estimands"><span class="header-section-number">2.1</span> Analytical Strategy &amp; Estimands</a></li>
+  </ul></li>
+  <li><a href="#selected-references" id="toc-selected-references" class="nav-link" data-scroll-target="#selected-references"><span class="header-section-number">3</span> Selected References</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="conjoint-proposal.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="deservingness-and-inequality-in-higher-education-access-a-conjoint-survey-experiment" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Deservingness and Inequality in Higher Education Access: A Conjoint Survey Experiment</h1>
+<section id="research-question-motivation" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="research-question-motivation"><span class="header-section-number">1.1</span> Research Question &amp; Motivation</h2>
+<p>Access to higher education in Chile is shaped by a complex interplay of merit, need, and institutional constraints. While public policy debates often invoke abstract principles of fairness, little is known about how individuals <em>actually</em> weigh competing criteria when forced to make distributive decisions under scarcity.</p>
+<p>This project uses a <strong>conjoint survey experiment</strong> to study how people evaluate deservingness and inequality in access to higher education in Chile. Specifically, we ask:</p>
+<ul>
+<li>What attributes of applicants (merit signals, need, reciprocity, identity) drive scholarship allocation decisions?</li>
+<li>How do respondents navigate trade-offs when multiple criteria pull in different directions?</li>
+<li>Do preferences vary systematically across respondent subgroups?</li>
+</ul>
+<p>The focus is on institutions <strong>not covered by the <em>gratuidad</em> system</strong>, where students lack access to free state financing — a segment that remains understudied despite representing a meaningful share of Chilean enrollment.</p>
+<hr>
+</section>
+<section id="conjoint-design-overview" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="conjoint-design-overview"><span class="header-section-number">1.2</span> Conjoint Design Overview</h2>
+<p>Respondents are asked to imagine they serve on a public committee allocating a <strong>first-year scholarship</strong> ($2,400,000 CLP, equivalent to 75% of annual tuition) between two applicants admitted to the same program (<em>Ingeniería Comercial</em>, annual tuition: $3,200,000 CLP) at a non-<em>gratuidad</em> institution. Both applicants share the same PAES score (60th percentile), which is held constant to isolate the effects of the remaining attributes.</p>
+<p><strong>Task format:</strong> Rather than a binary forced choice, respondents allocate the full budget between the two applicants using a <strong>continuous slider</strong> (0–100%), with Applicant B automatically set to <span class="math inline">\(100 - A\)</span>. This budget-allocation format makes trade-offs explicit and yields a continuous outcome variable.</p>
+<p><strong>Design parameters:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Profiles per task (<span class="math inline">\(J\)</span>)</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Tasks per respondent (<span class="math inline">\(K\)</span>)</td>
+<td>8–10</td>
+</tr>
+<tr class="odd">
+<td>Target sample (<span class="math inline">\(N\)</span>)</td>
+<td>~2,000</td>
+</tr>
+<tr class="even">
+<td>Total profile evaluations</td>
+<td>~40,000</td>
+</tr>
+<tr class="odd">
+<td>Randomization</td>
+<td>Uniform, independent per attribute (<span class="math inline">\(p = 0.5\)</span>)</td>
+</tr>
+<tr class="even">
+<td>Sampling design</td>
+<td>Quota-based (age, gender, education, SES)</td>
+</tr>
+</tbody>
+</table>
+<p>Attribute order is randomized at the respondent level (fixed across tasks within a respondent) to reduce primacy effects.</p>
+<hr>
+</section>
+<section id="attributes-levels" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="attributes-levels"><span class="header-section-number">1.3</span> Attributes &amp; Levels</h2>
+<p>Attributes operationalize deservingness criteria drawn from the <strong>CARIN framework</strong> (Control, Attitude, Reciprocity, Identity, Need). All attributes are binary to minimize cognitive load.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>CARIN Dimension</th>
+<th>Attribute</th>
+<th>Options</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Control</td>
+<td>Academic performance</td>
+<td>1. Above average<br>2. Average<br>3. Below average</td>
+</tr>
+<tr class="even">
+<td>Identity</td>
+<td>First-generation college student</td>
+<td>1. No<br>2. Yes</td>
+</tr>
+<tr class="odd">
+<td>— (inequality)</td>
+<td>Sex</td>
+<td>1. Male<br>2. Female</td>
+</tr>
+<tr class="even">
+<td>— (inequality)</td>
+<td>Nationality</td>
+<td>1. Chilean<br>2. Non-Chilean</td>
+</tr>
+<tr class="odd">
+<td>— (inequality)</td>
+<td>Ethnic origin</td>
+<td>1. Non-indigenous<br>2. Indigenous</td>
+</tr>
+<tr class="even">
+<td>— (inequality)</td>
+<td>Type of secondary school</td>
+<td>1. Public (<em>municipal</em>)<br>2. Subsidized private (<em>particular subvencionado</em>)<br>3. Private (<em>particular pagado</em>)</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Note on income:</strong> Household income was excluded as an attribute to preserve multidimensionality. Since all applicants attend non-<em>gratuidad</em> institutions, including income would risk reducing the experiment to a near-unidimensional evaluation of financial need. Employment status captures economic burden more subtly while allowing other criteria to express their weight.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="example-task" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Example Task</h1>
+<blockquote class="blockquote">
+<p><em>“You work in a public program that allocates a new first-year scholarship for students at non-gratuidad institutions. Both applicants have been admitted to Ingeniería Comercial at the same institution (annual tuition: $3,200,000 CLP). Their PAES scores are equivalent (60th percentile). The total amount to distribute is $2,400,000 CLP. Allocate 100% of this amount between the two applicants according to your criteria.”</em></p>
+</blockquote>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Applicant A</th>
+<th>Applicant B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Academic performance</td>
+<td>Above average</td>
+<td>Below average</td>
+</tr>
+<tr class="even">
+<td>First-generation college student</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td>Sex</td>
+<td>Female</td>
+<td>Male</td>
+</tr>
+<tr class="even">
+<td>Nationality</td>
+<td>Non-Chilean</td>
+<td>Chilean</td>
+</tr>
+<tr class="odd">
+<td>Ethnic origin</td>
+<td>Indigenous</td>
+<td>Non-indigenous</td>
+</tr>
+<tr class="even">
+<td>Type of secondary school</td>
+<td>Public</td>
+<td>Private</td>
+</tr>
+</tbody>
+</table>
+<p><img src="presentations/images/slide_bar.png" class="img-fluid"></p>
+<p>Applicant A: [<strong>63%</strong> — $1,512,000] / Applicant B: [<strong>37%</strong> —$888,000]</p>
+<hr>
+<section id="analytical-strategy-estimands" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="analytical-strategy-estimands"><span class="header-section-number">2.1</span> Analytical Strategy &amp; Estimands</h2>
+<p>The primary estimand is the <strong>Average Marginal Component Effect (AMCE)</strong>: the average change in the share allocated to a profile when an attribute shifts from its reference level to another, marginalizing over the distribution of all other attributes induced by randomization (Hainmueller, Hopkins &amp; Yamamoto, 2014).</p>
+<p>Identification rests on the <strong>random assignment of attribute levels</strong> to profiles, which ensures independence between each assigned level and potential outcomes — analogous to random treatment assignment in classical experiments.</p>
+<p>Complementary estimands include:</p>
+<ul>
+<li><strong>Marginal means:</strong> Expected allocation associated with each attribute level, independent of a reference category. Preferred for subgroup comparisons and substantive communication.</li>
+<li><strong>Conditional AMCEs / interactions:</strong> To test whether the weight of one attribute (e.g., academic performance) varies depending on another (e.g., first-generation status), in line with theoretical predictions about how merit and need interact.</li>
+</ul>
+<p>Estimation proceeds via <strong>OLS with cluster-robust standard errors</strong> at the respondent level, given the repeated-measures structure. Heterogeneity analyses will examine whether AMCEs differ across respondent subgroups (e.g., by SES, education level, or political orientation).</p>
+<p><strong>Key identification assumptions:</strong> stable preferences across tasks (no carryover effects), no pure order effects, SUTVA analog for factorial designs, and positivity (all contrasts occur with positive probability under the uniform randomization scheme).</p>
+<hr>
+</section>
+</section>
+<section id="selected-references" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Selected References</h1>
+<p>Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2014). Causal inference in conjoint analysis. <em>Political Analysis</em>, 22(1), 1–30.</p>
+<p>Bansak, K., Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2019). The number of choice tasks and survey satisficing. <em>Political Analysis</em>, 27(1), 112–119.</p>
+<p>Leeper, T. J., Hobolt, S. B., &amp; Tilley, J. (2020). Measuring subgroup preferences in conjoint experiments. <em>Political Analysis</em>, 28(2), 207–221.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

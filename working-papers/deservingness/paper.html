@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.23">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="René Canales">
+<meta name="author" content="Juan Carlos Castillo">
+<meta name="keywords" content="Merecimiento, Estado de Bienestar, Medición, Justicia Distributiva">
+
+<title>Merecimiento y Justicia de Mercado</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="paper_files/libs/clipboard/clipboard.min.js"></script>
+<script src="paper_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="paper_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="paper_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="paper_files/libs/quarto-html/popper.min.js"></script>
+<script src="paper_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="paper_files/libs/quarto-html/anchor.min.js"></script>
+<link href="paper_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="paper_files/libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="paper_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="paper_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="paper_files/libs/bootstrap/bootstrap-29fb1418d3a41ed152adddc157ed0897.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Merecimiento y Justicia de Mercado</h1>
+            <p class="subtitle lead">Concepciones, medición y factores asociados</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Authors</div>
+      <div class="quarto-title-meta-contents">
+               <p>René Canales </p>
+               <p>Juan Carlos Castillo </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="block-title">Abstract</div>
+      <p>El presente documento de trabajo tiene como objetivo sistematizar la conceptualización del merecimiento, revisar las estrategias metodológicas para su medición, y analizar los factores determinantes que moldean estas percepciones, integrando tanto la literatura sobre bienestar como los nuevos hallazgos sobre desigualdad y acumulación de riqueza.</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="keywords">
+      <div class="block-title">Keywords</div>
+      <p>Merecimiento, Estado de Bienestar, Medición, Justicia Distributiva</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#conceptualización-del-merecimiento" id="toc-conceptualización-del-merecimiento" class="nav-link" data-scroll-target="#conceptualización-del-merecimiento"><span class="header-section-number">2</span> Conceptualización del merecimiento</a>
+  <ul class="collapse">
+  <li><a href="#la-estructura-moral-del-merecimiento" id="toc-la-estructura-moral-del-merecimiento" class="nav-link" data-scroll-target="#la-estructura-moral-del-merecimiento"><span class="header-section-number">2.1</span> La estructura moral del merecimiento</a></li>
+  </ul></li>
+  <li><a href="#medición-del-merecimiento" id="toc-medición-del-merecimiento" class="nav-link" data-scroll-target="#medición-del-merecimiento"><span class="header-section-number">3</span> Medición del merecimiento</a>
+  <ul class="collapse">
+  <li><a href="#tbl-enfoques" id="toc-tbl-enfoques" class="nav-link" data-scroll-target="#tbl-enfoques"><span class="header-section-number">3.1</span> Enfoques de operacionalización del merecimiento y sus limitaciones</a></li>
+  <li><a href="#dimensiones-de-la-escala-carin-y-ejemplos-de-ítems" id="toc-dimensiones-de-la-escala-carin-y-ejemplos-de-ítems" class="nav-link" data-scroll-target="#dimensiones-de-la-escala-carin-y-ejemplos-de-ítems"><span class="header-section-number">3.2</span> Dimensiones de la escala CARIN y ejemplos de ítems</a></li>
+  </ul></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones"><span class="header-section-number">4</span> Conclusiones</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
+<p>En un contexto marcado por crisis económicas, aumento de la desigualdad y transformaciones demográficas, la pregunta sobre “¿quién recibe qué y por qué?” ha retornado con fuerza a la agenda pública y académica, situándose en el centro del debate sobre política social y de los estudios sobre percepciones y preferencias de la desigualdad <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>. Más cuando gran parte de la legitimidad de los Estados de bienestar y de sus procesos de transformación no depende únicamente de la eficiencia económica o del diseño institucional, sino que está profundamente anclada en la percepción ciudadana sobre la justicia distributiva y la solidaridad <span class="citation" data-cites="brooks_why_2006">(<a href="#ref-brooks_why_2006" role="doc-biblioref">Brooks &amp; Manza, 2006</a>)</span>. Sin embargo, estas percepciones a menudo divergen de la realidad, lo que revela una brecha significativa entre los indicadores económicos y la forma en que los ciudadanos perciben y evalúan las desigualdades multidimensionales <span class="citation" data-cites="kulic_comprehensive_2025">(<a href="#ref-kulic_comprehensive_2025" role="doc-biblioref">Kulic et al., 2025</a>)</span>.</p>
+<p>En este marco, el concepto de merecimiento emerge como una herramienta analítica clave para comprender por qué el apoyo público varía de manera tan significativa según el tipo de beneficiario, tanto en la provisión de ayuda social como en el acceso a distintos bienes en diversas áreas <span class="citation" data-cites="vanoorschot_social_2017">(<a href="#ref-vanoorschot_social_2017" role="doc-biblioref">Van Oorschot et al., 2017</a>)</span>. Las teorías del merecimiento postulan que la solidaridad es condicional: los ciudadanos no apoyan la redistribución de manera abstracta, sino que distinguen entre grupos “merecedores” y “no merecedores” con base en criterios morales y en evaluaciones de justicia <span class="citation" data-cites="gift_deservingness_2023">(<a href="#ref-gift_deservingness_2023" role="doc-biblioref">Gift &amp; Lastra-Anadón, 2023</a>)</span>. La evidencia reciente refina esta distinción, sugiriendo que los ciudadanos aplican una suerte de evaluación responsable mediante la cual tienden a compensar la mala “suerte bruta” (fuera del control individual), pero penalizan la derivada de la “suerte opcional” o de riesgos asumidos <span class="citation" data-cites="chancel_world_2022">(<a href="#ref-chancel_world_2022" role="doc-biblioref">Chancel et al., 2022</a>)</span>.</p>
+<p>La literatura se ha centrado en el estudio de los criterios de merecimiento de los desfavorecidos; investigaciones recientes han ampliado este enfoque hacia el “merecimiento de la riqueza”, cuestionando la legitimidad de las fortunas acumuladas y su tributación <span class="citation" data-cites="becker_taxing_2025 sachweh_deserving_2023 mccall_undeserving_2013">(<a href="#ref-becker_taxing_2025" role="doc-biblioref">Becker et al., 2025</a>; <a href="#ref-mccall_undeserving_2013" role="doc-biblioref">McCall, 2013</a>; <a href="#ref-sachweh_deserving_2023" role="doc-biblioref"><strong>sachweh_deserving_2023?</strong></a>)</span>. Por lo mismo, resulta crucial considerar que las propias creencias sobre el merecimiento son endógenas al estatus económico: el éxito sesgaría las percepciones individuales, llevando a los “ganadores” a atribuir su posición al esfuerzo y a subestimar el rol de la suerte, legitimando así niveles más altos de desigualdad <span class="citation" data-cites="deng_its_2025 fehr_misperceiving_2025">(<a href="#ref-deng_its_2025" role="doc-biblioref">Deng &amp; Wang, 2025</a>; <a href="#ref-fehr_misperceiving_2025" role="doc-biblioref">Fehr &amp; Vollmann, 2025</a>)</span>.</p>
+<p>A pesar de la relevancia del concepto de merecimiento, persiste cierta confusión en su medición. A menudo, el merecimiento se ha tratado como un heurístico no medido o se ha inferido a partir de preferencias de política pública <span class="citation" data-cites="meuleman_welfare_2020 vanoorschot_social_2017">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>; <a href="#ref-vanoorschot_social_2017" role="doc-biblioref">Van Oorschot et al., 2017</a>)</span>, en lugar de operacionalizarse como un constructo multidimensional con escalas validadas (Meuleman et al., 2020) o mediante nuevos módulos de encuesta capaces de distinguir con precisión entre aversión a la desigualdad y altruismo <span class="citation" data-cites="epper_measuring_2025">(<a href="#ref-epper_measuring_2025" role="doc-biblioref">Epper &amp; Mitrouchev, 2025</a>)</span>.</p>
+<p>El presente documento de trabajo tiene como objetivo sistematizar la conceptualización del merecimiento, revisar las estrategias metodológicas para su medición y analizar los factores determinantes que moldean estas percepciones, integrando tanto la literatura sobre bienestar como los nuevos hallazgos sobre desigualdad y acumulación de riqueza.</p>
+</section>
+<section id="conceptualización-del-merecimiento" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Conceptualización del merecimiento</h1>
+<section id="la-estructura-moral-del-merecimiento" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="la-estructura-moral-del-merecimiento"><span class="header-section-number">2.1</span> La estructura moral del merecimiento</h2>
+<p>Hay que comenzar recordando que el merecimiento se entiende como aquellas evaluaciones que las personas realizan sobre si se merecen o no ciertos beneficios, castigos o reconocimientos <span class="citation" data-cites="oorschot_who_2000">(<a href="#ref-oorschot_who_2000" role="doc-biblioref">Oorschot, 2000</a>)</span>. Esto es especialmente relevante en la literatura sobre “policy feedback effects” de los Estados de bienestar y de mercantilización <span class="citation" data-cites="busemeyer_policy_2020 lindh_public_2015">(<a href="#ref-busemeyer_policy_2020" role="doc-biblioref">Busemeyer &amp; Goerres, 2020</a>; <a href="#ref-lindh_public_2015" role="doc-biblioref">Lindh, 2015</a>)</span>, pues hace referencia específica a lo que las personas evalúan como justo en el acceso, la distribución o mercantilización de esos servicios desde una economía moral. El elemento principal de esta economía moral es la distinción entre merecedores y no merecedores, que se basa en juicios morales sobre la responsabilidad individual, la contribución a la sociedad, la identidad grupal y la necesidad; es decir, en criterios que van más allá de la simple evaluación de la utilidad o del interés económico.</p>
+<p>La conceptualización del merecimiento ha evolucionado desde ser considerada una intuición vaga hasta establecerse como una estructura cognitiva compleja. Van Oorschot et al. <span class="citation" data-cites="vanoorschot_social_2017 oorschot_who_2000">(<a href="#ref-oorschot_who_2000" role="doc-biblioref">Oorschot, 2000</a>; <a href="#ref-vanoorschot_social_2017" role="doc-biblioref">Van Oorschot et al., 2017</a>)</span> sostienen que la solidaridad pública no es ciega, sino que está fuertemente condicionada por criterios normativos que la ciudadanía aplica para juzgar a los beneficiarios de la protección social. Este marco teórico se basa en el modelo Control, Attitude, Reciprocity, Identity, and Need (CARIN), que postula que las evaluaciones de merecimiento se construyen a partir de estas cinco dimensiones interrelacionadas:</p>
+<ul>
+<li><p>Control: se refiere a la percepción de la responsabilidad personal ante la situación de necesidad. Según Meuelemann <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>, esta dimensión es a menudo la más determinante, pues aquellos cuya necesidad es percibida como ajena a su voluntad —como los ancianos o los enfermos— gozan de mayor legitimidad en términos de merecimiento que quienes son considerados responsables de su propia situación, lo que penaliza sistemáticamente a los desempleados. La investigación reciente ha refinado esta dimensión, sugiriendo que la ciudadanía aplica un “corte de responsabilidad” que distingue no solo el control general, sino también el tipo de azar involucrado: se tiende a compensar la “suerte bruta” (eventos incontrolables), pero no la “suerte opcional” derivada de riesgos asumidos <span class="citation" data-cites="chanel_preferences_2025">(<a href="#ref-chanel_preferences_2025" role="doc-biblioref">Chanel et al., 2025</a>)</span>. Además, esta percepción de control está sujeta a sesgos cognitivos importantes; por ejemplo, el éxito económico propio lleva a los individuos a sobreestimar el papel del esfuerzo y subestimar el de la suerte, lo que distorsiona sus juicios sobre quién merece qué <span class="citation" data-cites="deng_its_2025 fehr_misperceiving_2025 gugushvili_what_2026">(<a href="#ref-deng_its_2025" role="doc-biblioref">Deng &amp; Wang, 2025</a>; <a href="#ref-fehr_misperceiving_2025" role="doc-biblioref">Fehr &amp; Vollmann, 2025</a>; <a href="#ref-gugushvili_what_2026" role="doc-biblioref">Gugushvili &amp; Van Hootegem, 2026</a>)</span>.</p></li>
+<li><p>Actitud: evalúa la <strong>disposición</strong> del beneficiario hacia la sociedad y su <strong>gratitud</strong> por la ayuda recibida, mientras que la Reciprocidad mide si el individuo ha contribuido previamente al sistema (mediante impuestos o trabajo) o si tiene potencial para hacerlo en el futuro <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>.</p></li>
+<li><p>Recipricidad: evalúa la <strong>contribución</strong> pasada o futura del beneficiario al sistema, lo que implica una expectativa de <strong>retorno</strong> por la ayuda que reciben las personas. Este criterio es especialmente relevante en el caso de los desempleados, quienes son percibidos como menos merecedores no solo por su falta de control sobre su situación, sino también por la ausencia de contribuciones pasadas o potenciales al sistema <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>.</p></li>
+<li><p>Identidad: delimita las fronteras morales de la comunidad, favoreciendo a los miembros del propio grupo (ingroup) sobre quienes están fuera (outgroup). Esto explica las brechas recurrentes de apoyo hacia ciertos grupos, como la población inmigrante, una tendencia que persiste incluso en contextos donde se reconoce la existencia de desigualdades estructurales severas <span class="citation" data-cites="kulic_comprehensive_2025 oorschot_who_2000">(<a href="#ref-kulic_comprehensive_2025" role="doc-biblioref">Kulic et al., 2025</a>; <a href="#ref-oorschot_who_2000" role="doc-biblioref">Oorschot, 2000</a>)</span>.</p></li>
+<li><p>Necesidad: Finalmente, la dimensión de la necesidad se centra en la <strong>urgencia</strong> y <strong>magnitud</strong> de la situación del beneficiario. El concepto de “discapacidad” añade que las personas necesitadas merecen apoyo cuando, además, carecen de la capacidad para mejorar su propia situación. La discapacidad presupone la existencia de una necesidad, pero pone el foco también en la capacidad de la persona afectada. De manera similar, las personas son consideradas más merecedoras de ayuda cuando su situación de necesidad es causada por factores externos que escapan a su control <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>.</p></li>
+</ul>
+<p>Sin embargo, esta formulación original no está exenta de problemas. Knotz et al. <span class="citation" data-cites="knotz_recast_2022">(<a href="#ref-knotz_recast_2022" role="doc-biblioref">2022</a>)</span> señalan que los criterios de actitud y reciprocidad, tal como los define van Oorschot, adolecen de insuficiente diferenciación interna: la actitud puede expresarse tanto mediante gestos simbólicos (una sonrisa, una expresión de gratitud) como mediante conductas orientadas a metas concretas (buscar activamente empleo), y estas últimas se solapan con lo que el propio marco entiende por reciprocidad. El resultado es que comportamientos como la búsqueda activa de trabajo cuentan simultáneamente como evidencia de actitud y de reciprocidad, lo que hace imposible distinguir empíricamente cuál de los dos criterios está operando. Para resolver esto, los autores proponen reservar la actitud exclusivamente para expresiones simbólicas de gratitud, separar la reciprocidad pasada (contribuciones previas al sistema) de la reciprocidad presente —que denominan esfuerzo (effort)—, y mantener sin cambios los criterios de control, identidad y necesidad. El marco resultante, que los autores denominan NICER (Need, Identity, Control, Effort, Reciprocity), fue validado mediante experimentos de viñetas en Alemania y Estados Unidos, con resultados que muestran que el criterio de actitud, cuando se operacionaliza de forma estricta como expresión simbólica de gratitud, no tiene efecto significativo sobre las percepciones de merecimiento. Son el control y el esfuerzo los criterios con mayor peso, seguidos de la reciprocidad y la identidad.</p>
+<p>La operacionalización de estos conceptos plantea desafíos metodológicos importantes. Como señalan Meuleman et al. <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>, gran parte de la investigación aborda el merecimiento como un concepto heurístico, infiriendo las opiniones de los ciudadanos a partir de sus preferencias por políticas concretas, lo que genera confusión conceptual entre la evaluación moral de un grupo y el apoyo ideológico al Estado de bienestar <span class="citation" data-cites="vanoorschot_social_2017">(<a href="#ref-vanoorschot_social_2017" role="doc-biblioref">Van Oorschot et al., 2017</a>)</span>.</p>
+<p>Para superar esta limitación, Meuleman et al. <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span> desarrollaron y validaron una <strong>Escala de Principios de Merecimiento CARIN</strong>, demostrando que los cinco criterios son dimensiones distintas que pueden operar de manera independiente o incluso contradictoria en la evaluación moral de ciertos contextos. Este avance permite investigar cómo la adhesión a principios abstractos de merecimiento tiene un poder predictivo significativo sobre las actitudes hacia políticas de bienestar específicas.</p>
+</section>
+</section>
+<section id="medición-del-merecimiento" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Medición del merecimiento</h1>
+<p>Como se esbozó anteriormente, la operacionalización empírica del merecimiento hasido problemática, caracterizada por una desconexión entre la riqueza del concepto y la precisión de sus instrumentos de medición. La investigación en opinión pública tiende a tratar el merecimiento como una “caja negra”, mas no necesariamente se estudiaba en profundidad <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>. En este enfoque tradicional, las percepciones de merecimiento se inferían a partir de variables proxy, principalmente del apoyo a políticas sociales específicas o de la preferencia por el gasto público dirigido a ciertos grupos. Sin embargo, esta estrategia de inferencia indirecta presenta graves problemas de validez de constructo: el apoyo a una política no depende exclusivamente de la evaluación moral de los beneficiarios, sino que está influido —como muestra la evidencia— por consideraciones ideológicas sobre el tamaño del Estado, la eficiencia burocrática o el interés económico propio. Por lo tanto, medir el merecimiento a través del apoyo a políticas confunde el juicio moral sobre el “quién” con las preferencias políticas sobre el “cómo” <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>.</p>
+<p>Meuleman et al. <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span> sistematizan este panorama identificando cuatro estrategias predominantes, cada una con limitaciones conceptuales específicas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 24%">
+<col style="width: 16%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Enfoque</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+<th>Limitación principal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Esfuerzo de política</strong> (<em>policy effort approach</em>)</td>
+<td>Mide el apoyo a políticas dirigidas a grupos específicos y construye rankings interpretados como reflejo de los criterios de merecimiento dominantes</td>
+<td>Laenen y Meuleman (2017): el mayor apoyo a los ancianos se interpreta como preferencia por la reciprocidad</td>
+<td>Asume que las preferencias de política están <em>íntegramente</em> determinadas por juicios de merecimiento, sin testear empíricamente esa relación</td>
+</tr>
+<tr class="even">
+<td><strong>Merecimiento del grupo primario</strong> (<em>primary target group approach</em>)</td>
+<td>Pregunta directamente sobre cuán merecedores son grupos específicos, o cuánta preocupación generan sus condiciones de vida</td>
+<td><span class="citation" data-cites="oorschot_who_2000">(<a href="#ref-oorschot_who_2000" role="doc-biblioref">Oorschot, 2000</a>)</span>: preguntas sobre la preocupación por las condiciones de vida de distintos grupos</td>
+<td>Captura el <em>estatus</em> percibido de merecimiento del grupo, no los <em>principios</em> subyacentes</td>
+</tr>
+<tr class="odd">
+<td><strong>Merecimiento del grupo secundario</strong> (<em>secondary target group approach</em>)</td>
+<td>Evalúa grupos colocados en situaciones diseñadas para elicitar distintos criterios CARIN; en su versión más sofisticada, utiliza experimentos de viñetas con asignación aleatoria</td>
+<td><span class="citation" data-cites="jeene_dynamics_2014">(<a href="#ref-jeene_dynamics_2014" role="doc-biblioref">Jeene et al., 2014</a>)</span>: discapacitados por accidente laboral vs.&nbsp;por conducta irresponsable propia (criterio de control)</td>
+<td>Las características de los grupos suelen contener elementos de múltiples dimensiones CARIN simultáneamente, dificultando la separación analítica</td>
+</tr>
+<tr class="even">
+<td><strong>Imágenes públicas</strong> (<em>public images approach</em>)</td>
+<td>Mide el merecimiento mediante afirmaciones sobre grupos beneficiarios que reflejan si estos cumplen los criterios CARIN</td>
+<td><span class="citation" data-cites="summers_claiming_2025">(<a href="#ref-summers_claiming_2025" role="doc-biblioref">Summers et al., 2025</a>)</span>: “los desempleados no hacen suficientes esfuerzos por encontrar trabajo”</td>
+<td>Confunde <em>percepciones</em> sobre si los grupos cumplen un criterio con <em>opiniones normativas</em> sobre si ese criterio debería importar</td>
+</tr>
+</tbody>
+</table>
+<p>Estas limitaciones son precisamente lo que motiva el trabajo de Knotz et al. <span class="citation" data-cites="knotz_recast_2022">(<a href="#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>, quienes argumentan que la falta de claridad conceptual en las definiciones de los criterios CARIN se traslada directamente a las operacionalizaciones empíricas, generando inconsistencias entre estudios que hacen muy difícil la acumulación de evidencia. Su revisión de la literatura muestra, por ejemplo, que distintos estudios han medido el criterio de reciprocidad de formas radicalmente distintas —como la edad del beneficiario, la duración del empleo previo, o la intensidad de la búsqueda de trabajo actual— y que en algunos casos un mismo indicador (como la búsqueda activa de empleo) se ha usado para operacionalizar simultáneamente actitud y reciprocidad dentro del mismo diseño.</p>
+<section id="tbl-enfoques" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="tbl-enfoques"><span class="header-section-number">3.1</span> Enfoques de operacionalización del merecimiento y sus limitaciones</h2>
+<p>El denominador común es que ninguno mide los principios de merecimiento <em>en sí mismos</em>: todos operan sobre variables proxy. Esta distinción es conceptualmente crucial, pues una persona puede adherir con fuerza al principio de reciprocidad en abstracto y al mismo tiempo considerar que los desempleados de su entorno sí han contribuido al sistema —o puede rechazar el principio y aun así apoyar restricciones de acceso por razones ideológicas independientes.</p>
+<p>Para superar estas limitaciones, Meuleman et al. <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span> proponen la <em>escala de principios de merecimiento CARIN</em>, un instrumento multi-ítem con escala Likert de cinco puntos que mide directamente los principios abstractos que los ciudadanos consideran legítimos para condicionar el acceso a las prestaciones sociales, sin referencia a grupos concretos ni a preferencias de política.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 35%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimensión</th>
+<th>Lógica subyacente</th>
+<th>Ítems representativos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Control</strong></td>
+<td>¿Es el beneficiario responsable de su situación de necesidad?</td>
+<td>“Las personas que caen en la pobreza por sus propios errores no deberían tener derecho a una renta mínima”</td>
+</tr>
+<tr class="even">
+<td><strong>Actitud</strong> (<em>Attitude</em>)</td>
+<td>¿Muestra el beneficiario gratitud y cumplimiento hacia el sistema?</td>
+<td>“Las personas que reciben prestaciones deberían mostrar más gratitud”</td>
+</tr>
+<tr class="odd">
+<td><strong>Reciprocidad</strong></td>
+<td>¿Ha contribuido el beneficiario al sistema del que ahora extrae?</td>
+<td>“La seguridad social debería estar reservada para quienes han contribuido a la prosperidad colectiva”</td>
+</tr>
+<tr class="even">
+<td><strong>Identidad</strong></td>
+<td>¿Pertenece el beneficiario al grupo de referencia (<em>ingroup</em>)?</td>
+<td>“Las personas nacidas aquí deberían tener prioridad sobre las no nacidas aquí en la concesión de prestaciones”</td>
+</tr>
+<tr class="odd">
+<td><strong>Necesidad</strong> (<em>Need</em>)</td>
+<td>¿Es genuina y suficientemente intensa la necesidad del beneficiario?</td>
+<td>“Las prestaciones sociales deberían reservarse exclusivamente para quienes viven en pobreza real”</td>
+</tr>
+</tbody>
+</table>
+<p>Frente a esta propuesta de escala, cabe señalar que la propia estructura del CARIN ha sido objeto de revisión. Knotz et al. <span class="citation" data-cites="knotz_recast_2022">(<a href="#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span> demostraron mediante experimentos de viñetas con muestras representativas en Alemania (N = 396) y Estados Unidos (N = 356) que separar el comportamiento recíproco pasado del presente —es decir, distinguir reciprocidad de esfuerzo— mejora el ajuste de los modelos empíricos respecto al CARIN original en ambos contextos. Esta evidencia sugiere que la escala CARIN, pese a su avance en la medición de principios abstractos, podría beneficiarse de una revisión que desagregue los ítems de reciprocidad y actitud en función de esta distinción temporal y conductual.</p>
+</section>
+<section id="dimensiones-de-la-escala-carin-y-ejemplos-de-ítems" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="dimensiones-de-la-escala-carin-y-ejemplos-de-ítems"><span class="header-section-number">3.2</span> Dimensiones de la escala CARIN y ejemplos de ítems</h2>
+<p>La validación mediante Análisis Factorial Confirmatorio (AFC) sobre datos del Estudio Electoral Nacional Belga 2014 (N = 1.400) confirma la estructura de cinco dimensiones con muy buen ajuste (RMSEA = 0,044; CFI = 0,982; TLI = 0,974) <span class="citation" data-cites="meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>. Crucialmente, los cinco principios se relacionan de forma diferenciada tanto con características sociodemográficas como con preferencias de política: la reciprocidad y la actitud reducen el apoyo a las prestaciones por desempleo, la identidad erosiona el apoyo a políticas antidiscriminatorias, y la necesidad muestra el patrón más independiente, con escasa correlación con el resto de dimensiones y sin gradiente educativo claro. Este último hallazgo es teóricamente relevante: sugiere que la necesidad sigue una lógica de justicia distributiva distinta, más próxima al igualitarismo universal que a los criterios condicionales del resto de dimensiones CARIN.</p>
+<p>Más allá de la escala CARIN, la literatura reciente ha avanzado hacia estrategias de validación experimental que complementan la medición por encuesta. Un hito reciente es el desarrollo del módulo de encuesta “Hearts and Minds” por Epper y Mitrouchev <span class="citation" data-cites="epper_measuring_2025">(<a href="#ref-epper_measuring_2025" role="doc-biblioref">Epper &amp; Mitrouchev, 2025</a>)</span>, quienes demuestran que un conjunto parsimonioso de preguntas puede predecir el comportamiento real con la misma precisión que los costosos experimentos incentivados, permitiendo desagregar motivaciones que antes se confundían, como el altruismo y la aversión a la desigualdad.</p>
+<p>Paralelamente, el uso de diseños experimentales sofisticados ha permitido aislar mecanismos causales: desde procedimientos de votación secuencial que distinguen entre principios de justicia y autointerés <span class="citation" data-cites="chanel_preferences_2025">(<a href="#ref-chanel_preferences_2025" role="doc-biblioref">Chanel et al., 2025</a>)</span>, hasta la asignación aleatoria del éxito económico para demostrar cómo este moldea causalmente las creencias meritocráticas, resolviendo los problemas de endogeneidad y de asignación no aleatoria típicos de los estudios observacionales <span class="citation" data-cites="fehr_misperceiving_2025">(<a href="#ref-fehr_misperceiving_2025" role="doc-biblioref">Fehr &amp; Vollmann, 2025</a>)</span>.</p>
+</section>
+</section>
+<section id="conclusiones" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Conclusiones</h1>
+<p>El merecimiento emerge como un constructo multidimensional que estructura las percepciones ciudadanas sobre la justicia distributiva en el Estado de bienestar contemporáneo. Lejos de ser un juicio moral simple, las evaluaciones de merecimiento operan a través de múltiples dimensiones (Control, Actitud, Reciprocidad, Identidad y Necesidad) que pueden activarse de manera independiente o contradictoria según el contexto. La investigación más reciente ha permitido refinar este marco, demostrando que la ciudadanía aplica criterios de justicia sofisticados, como el “corte de responsabilidad”, para distinguir entre la suerte bruta y la opcional <span class="citation" data-cites="chanel_preferences_2025">(<a href="#ref-chanel_preferences_2025" role="doc-biblioref">Chanel et al., 2025</a>)</span>, y que es posible desagregar empíricamente si el apoyo redistributivo nace de la aversión a la desigualdad o del altruismo puro <span class="citation" data-cites="epper_measuring_2025">(<a href="#ref-epper_measuring_2025" role="doc-biblioref">Epper &amp; Mitrouchev, 2025</a>)</span>.</p>
+<p>La expansión del concepto desde los “pobres no merecedores” hacia los “ricos no merecedores” representa un avance teórico crucial, pues reconoce que la legitimidad de la redistribución se juega en ambos extremos de la estructura social. Sin embargo, este juicio no es neutral: el éxito económico genera un sesgo de autojustificación que lleva a las élites a subestimar el papel de la suerte en sus logros, reforzando los ciclos de desigualdad mediante creencias meritocráticas distorsionadas <span class="citation" data-cites="fehr_misperceiving_2025">(<a href="#ref-fehr_misperceiving_2025" role="doc-biblioref">Fehr &amp; Vollmann, 2025</a>)</span>. Afortunadamente, los avances metodológicos —desde escalas validadas hasta módulos de encuesta y experimentos de votación incentivada— permiten ahora capturar estas dinámicas con una precisión inédita, superando las limitaciones históricas de la inferencia indirecta.</p>
+<p>En el plano conceptual, la propuesta de Knotz et al. <span class="citation" data-cites="knotz_recast_2022">(<a href="#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span> representa un paso adicional en esta dirección: al demostrar empíricamente que actitud y reciprocidad son dimensiones que se solapan cuando no se definen con precisión, y que la distinción entre comportamiento recíproco pasado y presente tiene consecuencias reales para los juicios de merecimiento, su trabajo instala la necesidad de que los avances en medición vayan acompañados de una depuración conceptual equivalente. Sin esa depuración, incluso los instrumentos más sofisticados corren el riesgo de medir con precisión constructos mal delimitados.</p>
+<p>Finalmente, persisten desafíos importantes. La evidencia sobre la discrepancia entre la percepción y la realidad de las desigualdades <span class="citation" data-cites="kulic_comprehensive_2025">(<a href="#ref-kulic_comprehensive_2025" role="doc-biblioref">Kulic et al., 2025</a>)</span>, sumada a la “ignorancia motivada” de los exitosos ante información correctiva <span class="citation" data-cites="fehr_misperceiving_2025">(<a href="#ref-fehr_misperceiving_2025" role="doc-biblioref">Fehr &amp; Vollmann, 2025</a>)</span>, sugiere que la formación de preferencias es un proceso cognitivamente sesgado. Además, la capacidad del merecimiento para penetrar incluso en los ámbitos de los derechos universales indica que la solidaridad ciudadana es más frágil y condicional de lo que se asume. Comprender estas dinámicas es esencial para diseñar Estados de bienestar que no solo sean eficientes, sino que también logren navegar las complejas intuiciones morales de una ciudadanía que exige, ante todo, justicia en los procesos.</p>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-becker_taxing_2025" class="csl-entry" role="listitem">
+Becker, B., Castanho Silva, B., &amp; Lierse, H. (2025). Taxing your cake and growing it too: Public beliefs on the dual benefits of progressive taxation. <em>Journal of Public Policy</em>, 1–20. <a href="https://doi.org/10.1017/S0143814X25100858">https://doi.org/10.1017/S0143814X25100858</a>
+</div>
+<div id="ref-brooks_why_2006" class="csl-entry" role="listitem">
+Brooks, C., &amp; Manza, J. (2006). Why <span>Do Welfare States Persist</span>? <em>The Journal of Politics</em>, <em>68</em>(4), 816–827. <a href="https://doi.org/10.1111/j.1468-2508.2006.00472.x">https://doi.org/10.1111/j.1468-2508.2006.00472.x</a>
+</div>
+<div id="ref-busemeyer_policy_2020" class="csl-entry" role="listitem">
+Busemeyer, M., &amp; Goerres, A. (2020). Policy feedback in the local context: Analysing fairness perceptions of public childcare fees in a <span>German</span> town. <em>Journal of Public Policy</em>, <em>40</em>(3), 513–533. <a href="https://doi.org/10.1017/S0143814X18000491">https://doi.org/10.1017/S0143814X18000491</a>
+</div>
+<div id="ref-chancel_world_2022" class="csl-entry" role="listitem">
+Chancel, L., Piketty, T., Saez, E., &amp; Zucman, G. (2022). <em><span>WORLD INEQUALITY REPORT</span> 2022</em> (p. 230).
+</div>
+<div id="ref-chanel_preferences_2025" class="csl-entry" role="listitem">
+Chanel, O., Luchini, S., Teschl, M., &amp; Trannoy, A. (2025). Preferences for redistributive justice: <span>A</span> participatory-democracy experiment. <em>The Journal of Economic Inequality</em>, <em>23</em>(3), 717–747. <a href="https://doi.org/10.1007/s10888-025-09706-4">https://doi.org/10.1007/s10888-025-09706-4</a>
+</div>
+<div id="ref-deng_its_2025" class="csl-entry" role="listitem">
+Deng, Y., &amp; Wang, F. (2025). It’s my fault, <span>I</span> should try harder! <span>The</span> narratives of self-made upward mobility sustain belief in meritocracy in low social mobility context. <em>British Journal of Psychology</em>, bjop.70015. <a href="https://doi.org/10.1111/bjop.70015">https://doi.org/10.1111/bjop.70015</a>
+</div>
+<div id="ref-epper_measuring_2025" class="csl-entry" role="listitem">
+Epper, T. F., &amp; Mitrouchev, I. (2025). Measuring hearts and minds: <span>A</span> validated survey module on inequality aversion and altruism. <em>The Journal of Economic Inequality</em>, <em>23</em>(3), 777–808. <a href="https://doi.org/10.1007/s10888-025-09697-2">https://doi.org/10.1007/s10888-025-09697-2</a>
+</div>
+<div id="ref-fehr_misperceiving_2025" class="csl-entry" role="listitem">
+Fehr, D., &amp; Vollmann, M. (2025). Misperceiving economic success: Experimental evidence on meritocratic beliefs and inequality acceptance. <em>The Journal of Economic Inequality</em>, <em>23</em>(3), 835–855. <a href="https://doi.org/10.1007/s10888-025-09696-3">https://doi.org/10.1007/s10888-025-09696-3</a>
+</div>
+<div id="ref-gift_deservingness_2023" class="csl-entry" role="listitem">
+Gift, T., &amp; Lastra-Anadón, C. X. (2023). <span>“<span>Deservingness</span>”</span> and <span>Public Support</span> for <span>Universal Public Goods</span>: <span>A Survey Experiment</span>. <em>Public Opinion Quarterly</em>, <em>87</em>(1), 44–68. <a href="https://doi.org/10.1093/poq/nfad007">https://doi.org/10.1093/poq/nfad007</a>
+</div>
+<div id="ref-gugushvili_what_2026" class="csl-entry" role="listitem">
+Gugushvili, A., &amp; Van Hootegem, A. (2026). What <span>Are</span> the <span>Channels</span> of <span>Equality</span> of <span>Opportunity Perceptions</span> in <span>Germany</span>, <span>Sweden</span>, and the <span>United Kingdom</span>? <em>Social Psychology Quarterly</em>, <em>89</em>(1), 1–22. <a href="https://doi.org/10.1177/01902725251396778">https://doi.org/10.1177/01902725251396778</a>
+</div>
+<div id="ref-jeene_dynamics_2014" class="csl-entry" role="listitem">
+Jeene, M., Van Oorschot, W., &amp; Uunk, W. (2014). The <span>Dynamics</span> of <span>Welfare Opinions</span> in <span>Changing Economic</span>, <span>Institutional</span> and <span>Political Contexts</span>: <span>An Empirical Analysis</span> of <span>Dutch Deservingness Opinions</span>, 1975–2006. <em>Social Indicators Research</em>, <em>115</em>(2), 731–749. <a href="https://doi.org/10.1007/s11205-012-0230-6">https://doi.org/10.1007/s11205-012-0230-6</a>
+</div>
+<div id="ref-knotz_recast_2022" class="csl-entry" role="listitem">
+Knotz, C. M., Gandenberger, M. K., Fossati, F., &amp; Bonoli, G. (2022). A <span>Recast Framework</span> for <span>Welfare Deservingness Perceptions</span>. <em>Social Indicators Research</em>, <em>159</em>(3), 927–943. <a href="https://doi.org/10.1007/s11205-021-02774-9">https://doi.org/10.1007/s11205-021-02774-9</a>
+</div>
+<div id="ref-kulic_comprehensive_2025" class="csl-entry" role="listitem">
+Kulic, N., Griaznova, O., Clerici, E., Bellani, D., Mantovani, D., Vergolini, L., &amp; Scervini, F. (2025). A comprehensive overview of a large-scale survey on inequality perceptions (<span>IneqPer</span>) in <span>Italy</span>. <em>Frontiers in Sociology</em>, <em>10</em>, 1620096. <a href="https://doi.org/10.3389/fsoc.2025.1620096">https://doi.org/10.3389/fsoc.2025.1620096</a>
+</div>
+<div id="ref-lindh_public_2015" class="csl-entry" role="listitem">
+Lindh, A. (2015). Public <span>Opinion</span> against <span>Markets</span>? <span>Attitudes</span> towards <span>Market Distribution</span> of <span>Social Services</span> – <span>A Comparison</span> of 17 <span>Countries</span>. <em>Social Policy &amp; Administration</em>, <em>49</em>(7), 887–910. <a href="https://doi.org/10.1111/spol.12105">https://doi.org/10.1111/spol.12105</a>
+</div>
+<div id="ref-mccall_undeserving_2013" class="csl-entry" role="listitem">
+McCall, L. (2013). <em>The <span>Undeserving</span> rich: <span>American</span> beliefs about inequality, opportunity, and redistribution</em>. Cambridge: Cambridge University Press.
+</div>
+<div id="ref-meuleman_welfare_2020" class="csl-entry" role="listitem">
+Meuleman, B., Roosma, F., &amp; Abts, K. (2020). Welfare deservingness opinions from heuristic to measurable concept: <span>The CARIN</span> deservingness principles scale. <em>Social Science Research</em>, <em>85</em>, 102352. <a href="https://doi.org/10.1016/j.ssresearch.2019.102352">https://doi.org/10.1016/j.ssresearch.2019.102352</a>
+</div>
+<div id="ref-oorschot_who_2000" class="csl-entry" role="listitem">
+Oorschot, W. V. (2000). Who should get what, and why? <span>On</span> deservingness criteria and the conditionality of solidarity among the public. <em>Policy &amp; Politics</em>, <em>28</em>(1), 33–48. <a href="https://doi.org/10.1332/0305573002500811">https://doi.org/10.1332/0305573002500811</a>
+</div>
+<div id="ref-summers_claiming_2025" class="csl-entry" role="listitem">
+Summers, K., Edmiston, D., Geiger, B. B., Ingold, J., Scullion, L., de Vries, R., &amp; Young, D. (2025). Claiming deservingness: <span>The</span> durability of social security claimant discourses during the <span>Covid-19</span> pandemic. <em>The Sociological Review</em>, 00380261251336544. <a href="https://doi.org/10.1177/00380261251336544">https://doi.org/10.1177/00380261251336544</a>
+</div>
+<div id="ref-vanoorschot_social_2017" class="csl-entry" role="listitem">
+Van Oorschot, W., Roosma, F., Meuleman, B., &amp; Reeskens, T. (Eds.). (2017). <em>The <span>Social Legitimacy</span> of <span>Targeted Welfare</span>: <span>Attitudes</span> to <span>Welfare Deservingness</span></em>. Edward Elgar Publishing. <a href="https://doi.org/10.4337/9781785367212">https://doi.org/10.4337/9781785367212</a>
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
