@@ -1,0 +1,10 @@
+name: my_survey
+title:
+username: juan-carlos-castillo
+account: juan-carlos-castillo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17424047
+bundleId: 12046612
+url: https://jusmer.shinyapps.io/my_survey/
+version: 1
