@@ -1,9 +1,9 @@
 ---
 title: "Conjoint Survey Experiment Proposal: Deservingness and Inequality in Chile"
 author:
-  - name: Juan Carlos Castillo
-    affiliation: Universidad de Chile
   - name: Andreas Laffert
+    affiliation: Universidad de Chile
+  - name: Juan Carlos Castillo
     affiliation: Universidad de Chile
   - name: René Canales
     affiliation: Universidad de Chile

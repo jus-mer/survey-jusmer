@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andreas Laffert">
+
+<title>Propuestas de diseño de conjoint survey experiment distributivo con CARIN y NICER</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="conjoint-carin-nicer_files/libs/clipboard/clipboard.min.js"></script>
+<script src="conjoint-carin-nicer_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="conjoint-carin-nicer_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="conjoint-carin-nicer_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="conjoint-carin-nicer_files/libs/quarto-html/popper.min.js"></script>
+<script src="conjoint-carin-nicer_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="conjoint-carin-nicer_files/libs/quarto-html/anchor.min.js"></script>
+<link href="conjoint-carin-nicer_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="conjoint-carin-nicer_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="conjoint-carin-nicer_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="conjoint-carin-nicer_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="conjoint-carin-nicer_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#propuesta-de-atributos-y-niveles-para-un-diseño-carin-y-nicer" id="toc-propuesta-de-atributos-y-niveles-para-un-diseño-carin-y-nicer" class="nav-link" data-scroll-target="#propuesta-de-atributos-y-niveles-para-un-diseño-carin-y-nicer"><span class="header-section-number">2</span> Propuesta de atributos y niveles para un diseño CARIN y NICER</a></li>
+  <li><a href="#ejemplos-de-experimentos" id="toc-ejemplos-de-experimentos" class="nav-link" data-scroll-target="#ejemplos-de-experimentos"><span class="header-section-number">3</span> Ejemplos de experimentos</a>
+  <ul class="collapse">
+  <li><a href="#diseño-carin" id="toc-diseño-carin" class="nav-link" data-scroll-target="#diseño-carin"><span class="header-section-number">3.1</span> Diseño CARIN</a></li>
+  <li><a href="#diseño-nicer" id="toc-diseño-nicer" class="nav-link" data-scroll-target="#diseño-nicer"><span class="header-section-number">3.2</span> Diseño NICER</a></li>
+  </ul></li>
+  <li><a href="#espacio-factorial-y-análisis-de-poder" id="toc-espacio-factorial-y-análisis-de-poder" class="nav-link" data-scroll-target="#espacio-factorial-y-análisis-de-poder"><span class="header-section-number">4</span> Espacio factorial y análisis de poder</a></li>
+  <li><a href="#comparación-y-trade-offs-entre-los-diseños-carin-y-nicer" id="toc-comparación-y-trade-offs-entre-los-diseños-carin-y-nicer" class="nav-link" data-scroll-target="#comparación-y-trade-offs-entre-los-diseños-carin-y-nicer"><span class="header-section-number">5</span> Comparación y trade-offs entre los diseños CARIN y NICER</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">6</span> References</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Propuestas de diseño de conjoint survey experiment distributivo con CARIN y NICER</h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Autor/a</div>
+  <div class="quarto-title-meta-heading">Afiliación</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Andreas Laffert </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Universidad de Chile
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">1 de junio de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
+<p>Este documento presenta dos diseños adicionales de un conjoint survey experiment distributivo sobre merecimiento y asignación de becas en educación superior en Chile. Estos diseños buscan representar en sus atributos los criterios de merecimiento de los marcos CARIN <span class="citation" data-cites="oorschot_who_2000 meuleman_welfare_2020">(<a href="#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et&nbsp;al., 2020</a>; <a href="#ref-oorschot_who_2000" role="doc-biblioref">Oorschot, 2000</a>)</span> y NICER <span class="citation" data-cites="knotz_recast_2022">(<a href="#ref-knotz_recast_2022" role="doc-biblioref">Knotz et&nbsp;al., 2022</a>)</span>, respectivamente, y se proponen como alternativas al diseño original basado en el marco CARIN presentado en el <a href="https://jus-mer.github.io/survey-jusmer/conjoint/design/conjoint-working-paper.html">documento anterior</a>.</p>
+<p>El objetivo de este experimento es estudiar cómo las personas ponderan criterios de merecimiento cuando deben distribuir un recurso escaso entre dos postulantes que compiten por financiamiento para su primer año de estudios. El diseño usa un outcome continuo (porcentaje de beca asignado a cada postulante mediante un slider) que obliga a revelar prioridades bajo trade-offs reales, a diferencia de los conjoints de elección forzada o las preguntas actitudinales directas.</p>
+</section>
+<section id="propuesta-de-atributos-y-niveles-para-un-diseño-carin-y-nicer" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Propuesta de atributos y niveles para un diseño CARIN y NICER</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header" style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.5rem 0.6rem; width: 10%;">Criterio</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.5rem 0.6rem; width: 8%;">Diseño</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.5rem 0.6rem; width: 18%;">Etiqueta en el perfil</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.5rem 0.6rem; width: 32%;">Niveles</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 0.5rem 0.6rem; width: 32%;">Qué busca medir</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd" style="border-bottom:1px solid #ddd;">
+<td style="padding: 0.5rem 0.6rem; vertical-align: top"><strong>Control</strong></td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Ambos</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Situación laboral del principal sostenedor del hogar</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">«...se ha quedado sin trabajo porque...»<br>
+(1) Su empresa tuvo que despedir a trabajadores<br>
+(2) Renunció voluntariamente a su empleo</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Si el encuestado penaliza o premia al postulante según si la situación de necesidad del hogar es atribuible a circunstancias externas o a una decisión propia. Mide responsabilidad causal percibida, no el nivel de necesidad.</td>
+</tr>
+<tr class="even" style="border-bottom:1px solid #ddd; background:#fafafa;">
+<td style="padding: 0.5rem 0.6rem; vertical-align: top"><strong>Attitude</strong></td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Solo CARIN</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Actitud ante la beca</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">«...Ve la beca como...»<br>
+(1) Una ayuda que agradece<br>
+(2) Un derecho que le corresponde</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Si el encuestado valora la disposición agradecida del postulante hacia el apoyo recibido. Captura la dimensión disposicional del merecimiento, análoga a cómo Knotz et al. (2022) miden si el desempleado ve el beneficio como ayuda o como derecho adquirido.</td>
+</tr>
+<tr class="odd" style="border-bottom:1px solid #ddd; background:#fafafa;">
+<td style="padding: 0.5rem 0.6rem; vertical-align: top"><strong>Effort</strong></td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Solo NICER</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Dedicación al estudio</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">(1) Estudia más que sus compañeros<br>
+(2) Estudia igual que sus compañeros<br>
+(3) Estudia menos que sus compañeros</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Si el encuestado premia el esfuerzo conductual observable relativo al grupo, desvinculado del rendimiento como outcome. Sigue la lógica de Gilgen de rendimiento relativo pero operacionalizado como comportamiento, no como nota.</td>
+</tr>
+<tr class="even" style="border-bottom:1px solid #ddd;">
+<td style="padding: 0.5rem 0.6rem; vertical-align: top"><strong>Reciprocity</strong></td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Ambos</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Participación comunitaria durante la enseñanza media</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">(1) Participó activamente en voluntariado o apoyo comunitario<br>
+(2) No tuvo participación comunitaria</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Si el encuestado premia contribuciones pasadas al colectivo social. Operacionaliza la reciprocidad como comportamiento previo orientado al bien común, análogo a los años de cotizaciones al sistema en estudios de desempleo (Knotz et al., 2022).</td>
+</tr>
+<tr class="odd" style="border-bottom:1px solid #ddd; background:#fafafa;">
+<td style="padding: 0.5rem 0.6rem; vertical-align: top"><strong>Identity</strong></td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Ambos</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">País de nacimiento</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">«...Nació en...»<br>
+(1) Chile<br>
+(2) Venezuela<br>
+(3) Perú<br>
+(4) Haití</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Si la distancia social y cultural percibida entre el postulante y el grupo mayoritario afecta la asignación, independientemente de sus demás atributos.</td>
+</tr>
+<tr class="even" style="border-bottom:2px solid #000;">
+<td style="padding: 0.5rem 0.6rem; vertical-align: top"><strong>Need</strong></td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Ambos</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Situación económica del hogar</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">(1) El hogar llega con dificultad a fin de mes<br>
+(2) El hogar llega con holgura a fin de mes</td>
+<td style="padding: 0.5rem 0.6rem; vertical-align: top">Si el encuestado asigna más recursos a quien enfrenta mayor carencia material. Mide el nivel actual de necesidad económica del hogar, no su origen.</td>
+</tr>
+</tbody>
+</table>
+
+<p style="font-size:0.8rem; color:#555; margin-top:0.8rem;"><em>Nota: Espacio factorial CARIN: 2 (Control) × 2 (Attitude) × 2 (Reciprocity) × 4 (Identity) × 2 (Need) = 64 perfiles. Espacio factorial NICER: 2 (Control) × 3 (Effort) × 2 (Reciprocity) × 4 (Identity) × 2 (Need) = 96 perfiles. Ambos diseños son between-subjects.</em></p>
+</section>
+<section id="ejemplos-de-experimentos" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Ejemplos de experimentos</h1>
+<section id="diseño-carin" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="diseño-carin"><span class="header-section-number">3.1</span> Diseño CARIN</h2>
+<div style="font-family: sans-serif; font-size: 0.92em; max-width: 780px; margin: 2em auto;">
+
+  <!-- CARIN -->
+  <div style="margin-bottom: 0.6em;">
+    <span style="background:#1a5276; color:white; font-weight:700; font-size:0.8em; letter-spacing:0.08em; padding:0.3em 0.8em; border-radius:3px; text-transform:uppercase;">Diseño CARIN — Ejemplo de tarea</span>
+  </div>
+
+  <div style="border:1px solid #dee2e6; border-radius:8px; padding:1.6em; background:#fff; margin-bottom:2.5em;">
+    <p style="margin-bottom:0.4em;">Imagine que usted forma parte de un comité universitario encargado de asignar una beca de apoyo para estudiantes de primer año.</p>
+    <p style="margin-bottom:0.4em;">Los dos postulantes que verá a continuación fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar. La beca disponible es de <strong>$1.500.000</strong> para el primer año.</p>
+    <p style="margin-bottom:1.4em; font-style:italic;"><strong>Reparta el 100% de la beca entre ambos postulantes según su criterio.</strong></p>
+
+    
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px 14px; width: 36%; background: #f8f9fa; border-bottom: 2px solid #dee2e6;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 10px 14px; width: 32%; background: #d5f5e3; color: #1e8449; border-bottom: 2px solid #a9dfbf;">Valentina</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 10px 14px; width: 32%; background: #d6eaf8; color: #1a5276; border-bottom: 2px solid #aed6f1;">Matías</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">El sostenedor del hogar se ha quedado sin empleo porque...</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Su empresa tuvo que despedir trabajadores</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">Renunció voluntariamente a su empleo</td>
+</tr>
+<tr class="even">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">Ve la beca como...</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Una ayuda que agradece</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">Un derecho que le corresponde</td>
+</tr>
+<tr class="odd">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">Participación comunitaria en enseñanza media</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Participó activamente en voluntariado</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">No tuvo participación comunitaria</td>
+</tr>
+<tr class="even">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">País de nacimiento</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Chile</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">Venezuela</td>
+</tr>
+<tr class="odd">
+<td style="padding: 9px 14px; font-weight: bold; background: #f8f9fa">Situación económica del hogar</td>
+<td style="text-align: center; padding: 9px 14px; background: #eafaf1;">Llega con dificultad a fin de mes</td>
+<td style="text-align: center; padding: 9px 14px; background: #eaf4fb;">Llega con holgura a fin de mes</td>
+</tr>
+</tbody>
+</table>
+
+
+    <div style="background:#f8f9fa; border-radius:6px; padding:1.4em 1.6em;">
+      <p style="text-align:center; font-weight:600; margin-bottom:1em; color:#333;">¿Cuánto dinero (beca) le daría a cada postulante?</p>
+      <input type="range" min="0" max="100" value="50" step="1" style="width:100%; cursor:pointer;" id="slider-carin" oninput="
+          var v = parseInt(this.value);
+          document.getElementById('pct-carin-a').textContent = v + '%';
+          document.getElementById('pct-carin-b').textContent = (100-v) + '%';
+          document.getElementById('monto-carin-a').textContent = '$' + (v * 15000).toLocaleString('es-CL');
+          document.getElementById('monto-carin-b').textContent = '$' + ((100-v) * 15000).toLocaleString('es-CL');
+        ">
+      <div style="display:flex; justify-content:space-between; font-size:0.78em; color:#888; margin-top:0.2em; margin-bottom:1em;">
+        <span>Todo a Valentina</span><span>Mitad y mitad</span><span>Todo a Matías</span>
+      </div>
+      <div style="display:flex; gap:1em;">
+        <div style="flex:1; background:white; border:2px solid #1e8449; border-radius:6px; padding:0.9em; text-align:center;">
+          <div style="font-weight:700; color:#1e8449; margin-bottom:0.3em;">Valentina</div>
+          <div style="font-size:1.4em; font-weight:700; color:#1e8449;" id="monto-carin-a">$750.000</div>
+          <div style="font-size:0.85em; color:#888;" id="pct-carin-a">50%</div>
+        </div>
+        <div style="flex:1; background:white; border:2px solid #1a5276; border-radius:6px; padding:0.9em; text-align:center;">
+          <div style="font-weight:700; color:#1a5276; margin-bottom:0.3em;">Matías</div>
+          <div style="font-size:1.4em; font-weight:700; color:#1a5276;" id="monto-carin-b">$750.000</div>
+          <div style="font-size:0.85em; color:#888;" id="pct-carin-b">50%</div>
+        </div>
+      </div>
+      <p style="text-align:center; color:#888; font-size:0.8em; margin-top:0.9em;">La suma siempre es igual a $1.500.000 (100%)</p>
+    </div>
+  </div>
+
+</div>
+</section>
+<section id="diseño-nicer" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="diseño-nicer"><span class="header-section-number">3.2</span> Diseño NICER</h2>
+<div style="font-family: sans-serif; font-size: 0.92em; max-width: 780px; margin: 2em auto;">
+
+  <!-- NICER -->
+  <div style="margin-bottom:0.6em;">
+    <span style="background:#1e8449; color:white; font-weight:700; font-size:0.8em; letter-spacing:0.08em; padding:0.3em 0.8em; border-radius:3px; text-transform:uppercase;">Diseño NICER — Ejemplo de tarea</span>
+  </div>
+
+  <div style="border:1px solid #dee2e6; border-radius:8px; padding:1.6em; background:#fff;">
+    <p style="margin-bottom:0.4em;">Imagine que usted forma parte de un comité universitario encargado de asignar una beca de apoyo para estudiantes de primer año.</p>
+    <p style="margin-bottom:0.4em;">Los dos postulantes que verá a continuación fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar. La beca disponible es de <strong>$1.500.000</strong> para el primer año.</p>
+    <p style="margin-bottom:1.4em; font-style:italic;"><strong>Reparta el 100% de la beca entre ambos postulantes según su criterio.</strong></p>
+
+    
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; padding: 10px 14px; width: 36%; background: #f8f9fa; border-bottom: 2px solid #dee2e6;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 10px 14px; width: 32%; background: #d5f5e3; color: #1e8449; border-bottom: 2px solid #a9dfbf;">Sofía</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 10px 14px; width: 32%; background: #d6eaf8; color: #1a5276; border-bottom: 2px solid #aed6f1;">Diego</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">El sostenedor del hogar se ha quedado sin empleo porque...</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Su empresa tuvo que despedir trabajadores</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">Renunció voluntariamente a su empleo</td>
+</tr>
+<tr class="even">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">Dedicación al estudio</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Estudia más que sus compañeros</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">Estudia menos que sus compañeros</td>
+</tr>
+<tr class="odd">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">Participación comunitaria en enseñanza media</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Participó activamente en voluntariado</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">No tuvo participación comunitaria</td>
+</tr>
+<tr class="even">
+<td style="padding: 9px 14px; border-bottom: 1px solid #dee2e6; font-weight: bold; background: #f8f9fa">País de nacimiento</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #a9dfbf; background: #eafaf1;">Haití</td>
+<td style="text-align: center; padding: 9px 14px; border-bottom: 1px solid #aed6f1; background: #eaf4fb;">Chile</td>
+</tr>
+<tr class="odd">
+<td style="padding: 9px 14px; font-weight: bold; background: #f8f9fa">Situación económica del hogar</td>
+<td style="text-align: center; padding: 9px 14px; background: #eafaf1;">Llega con dificultad a fin de mes</td>
+<td style="text-align: center; padding: 9px 14px; background: #eaf4fb;">Llega con holgura a fin de mes</td>
+</tr>
+</tbody>
+</table>
+
+
+    <div style="background:#f8f9fa; border-radius:6px; padding:1.4em 1.6em;">
+      <p style="text-align:center; font-weight:600; margin-bottom:1em; color:#333;">¿Cuánto dinero (beca) le daría a cada postulante?</p>
+      <input type="range" min="0" max="100" value="50" step="1" style="width:100%; cursor:pointer;" id="slider-nicer" oninput="
+          var v = parseInt(this.value);
+          document.getElementById('pct-nicer-a').textContent = v + '%';
+          document.getElementById('pct-nicer-b').textContent = (100-v) + '%';
+          document.getElementById('monto-nicer-a').textContent = '$' + (v * 15000).toLocaleString('es-CL');
+          document.getElementById('monto-nicer-b').textContent = '$' + ((100-v) * 15000).toLocaleString('es-CL');
+        ">
+      <div style="display:flex; justify-content:space-between; font-size:0.78em; color:#888; margin-top:0.2em; margin-bottom:1em;">
+        <span>Todo a Sofía</span><span>Mitad y mitad</span><span>Todo a Diego</span>
+      </div>
+      <div style="display:flex; gap:1em;">
+        <div style="flex:1; background:white; border:2px solid #1e8449; border-radius:6px; padding:0.9em; text-align:center;">
+          <div style="font-weight:700; color:#1e8449; margin-bottom:0.3em;">Sofía</div>
+          <div style="font-size:1.4em; font-weight:700; color:#1e8449;" id="monto-nicer-a">$750.000</div>
+          <div style="font-size:0.85em; color:#888;" id="pct-nicer-a">50%</div>
+        </div>
+        <div style="flex:1; background:white; border:2px solid #1a5276; border-radius:6px; padding:0.9em; text-align:center;">
+          <div style="font-weight:700; color:#1a5276; margin-bottom:0.3em;">Diego</div>
+          <div style="font-size:1.4em; font-weight:700; color:#1a5276;" id="monto-nicer-b">$750.000</div>
+          <div style="font-size:0.85em; color:#888;" id="pct-nicer-b">50%</div>
+        </div>
+      </div>
+      <p style="text-align:center; color:#888; font-size:0.8em; margin-top:0.9em;">La suma siempre es igual a $1.500.000 (100%)</p>
+    </div>
+  </div>
+
+</div>
+</section>
+</section>
+<section id="espacio-factorial-y-análisis-de-poder" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Espacio factorial y análisis de poder</h1>
+<p>El diseño CARIN produce un espacio factorial de <span class="math inline">\(2 \times 2 \times 2 \times 4 \times 2 = 64\)</span> perfiles; el diseño NICER, al reemplazar Attitude (2 niveles) por Effort (3 niveles), produce <span class="math inline">\(2 \times 3 \times 2 \times 4 \times 2 = 96\)</span> perfiles. En ambos casos el espacio es suficientemente reducido para implementar aleatorización completa e independiente por atributo, sin necesidad de un diseño D-eficiente, lo que garantiza la independencia entre asignación de atributos y resultados potenciales requerida para la identificación causal de los AMCEs <span class="citation" data-cites="hainmueller_causal_2014">(<a href="#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et&nbsp;al., 2014</a>)</span>.</p>
+<p>Los efectos mínimos de interés se derivan de los estimados de <span class="citation" data-cites="knotz_recast_2022">Knotz et&nbsp;al. (<a href="#ref-knotz_recast_2022" role="doc-biblioref">2022</a>)</span>, ajustados a la mitad en magnitud porque la restricción <span class="math inline">\(A + B = 100\)</span> implica que asignar un punto porcentual a un postulante lo resta al otro, comprimiendo la varianza efectiva del estimador: Control (<span class="math inline">\(\delta \approx 5\)</span> pp), Effort (<span class="math inline">\(\delta \approx 5\)</span> pp), Reciprocity (<span class="math inline">\(\delta \approx 3\)</span>–<span class="math inline">\(4\)</span> pp), Identity (<span class="math inline">\(\delta \approx 2\)</span>–<span class="math inline">\(3\)</span> pp) y Need (<span class="math inline">\(\delta \approx 2\)</span> pp). El atributo dimensionante en ambos diseños es Identity, por tener <span class="math inline">\(K = 4\)</span> niveles y el <span class="math inline">\(\delta\)</span> más pequeño. Aplicando la fórmula de <span class="citation" data-cites="schuessler_power_2020">Schuessler &amp; Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> con <span class="math inline">\(\alpha = 0.05\)</span> y poder <span class="math inline">\(= 0.80\)</span>:</p>
+<p><span class="math display">\[N_{\text{perfiles}} = \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta^2}\]</span></p>
+<p>Para Identity con <span class="math inline">\(\delta = 3\)</span> pp se requieren aproximadamente <span class="math inline">\(10.453\)</span> evaluaciones, equivalentes a <span class="math inline">\(N \approx 871\)</span> respondentes con <span class="math inline">\(K = 6\)</span> tareas y <span class="math inline">\(J = 2\)</span> perfiles por tarea. Con <span class="math inline">\(\delta = 2\)</span> pp el requerimiento sube a <span class="math inline">\(N \approx 1.960\)</span>. Dado que los cálculos son conservadores por el supuesto de varianza máxima de outcome binario, la recomendación práctica es <span class="math inline">\(N = 1.500\)</span> para efectos principales y <span class="math inline">\(N = 2.000\)</span> para análisis de heterogeneidad con moderadores binarios <span class="citation" data-cites="schuessler_power_2020">(<a href="#ref-schuessler_power_2020" role="doc-biblioref">Schuessler &amp; Freitag, 2020</a>)</span>.</p>
+</section>
+<section id="comparación-y-trade-offs-entre-los-diseños-carin-y-nicer" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Comparación y trade-offs entre los diseños CARIN y NICER</h1>
+<p>Los dos diseños difieren únicamente en un atributo: Attitude en CARIN y Effort en NICER. La evidencia empírica de <span class="citation" data-cites="knotz_recast_2022">Knotz et&nbsp;al. (<a href="#ref-knotz_recast_2022" role="doc-biblioref">2022</a>)</span> favorece el diseño NICER: Attitude, operacionalizado como disposición agradecida separada de cualquier conducta, produce efectos débiles o insignificantes en ambos países estudiados, mientras que Effort tiene efectos fuertes y consistentes, similar a lo encontrado por <span class="citation" data-cites="gilgen_disentangling_2022">Gilgen (<a href="#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span>. Esto sugiere que las personas ligan el merecimiento a la conducta observable más que a la disposición declarada, lo que en el diseño CARIN implicaría un atributo con escaso poder explicativo. En términos factoriales, el tercer nivel de Effort expande el espacio de perfiles de 64 a 96 y eleva el <span class="math inline">\(N\)</span> mínimo en aproximadamente un 50%, aunque el atributo dimensionante en ambos diseños es Identity y no Effort, como se muestra en la sección anterior. La ventaja sustantiva del tercer nivel es que permite estimar si el efecto del esfuerzo es lineal o si existe un umbral entre niveles. Finalmente, en términos de validez de contenido, Effort tiene mayor alineación con las tensiones normativas del contexto chileno que el estudio busca capturar, esto es, las percepciones y preferencias por meritocracia y privilegio<span class="citation" data-cites="castillo_multidimensional_2023">(<a href="#ref-castillo_multidimensional_2023" role="doc-biblioref">Castillo et&nbsp;al., 2023</a>)</span>.</p>
+<p>La recomendación es priorizar NICER para el estudio principal y mantener CARIN como batería aparte en el cuestionario.</p>
+</section>
+<section id="references" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-castillo_multidimensional_2023" class="csl-entry" role="listitem">
+Castillo, J. C., Iturra, J., Maldonado, L., Atria, J., &amp; Meneses, F. (2023). A <span>Multidimensional Approach</span> for <span>Measuring Meritocratic Beliefs</span>: <span>Advantages</span>, <span>Limitations</span> and <span>Alternatives</span> to the <span>ISSP Social Inequality Survey</span>. <em>International Journal of Sociology</em>, <em>53</em>(6), 448-472. <a href="https://doi.org/10.1080/00207659.2023.2274712">https://doi.org/10.1080/00207659.2023.2274712</a>
+</div>
+<div id="ref-gilgen_disentangling_2022" class="csl-entry" role="listitem">
+Gilgen, S. (2022). <em>Disentangling <span>Justice</span>: <span>Needs</span>, <span>Equality</span> or <span>Merit</span>? <span>On</span> the <span>Situation-Dependency</span> of <span>Distributive Justice</span></em> (1. Auflage). Baden-Baden: Nomos Verlagsgesellschaft mbH &amp; Co. KG. <a href="https://doi.org/10.5771/9783748926955">https://doi.org/10.5771/9783748926955</a>
+</div>
+<div id="ref-hainmueller_causal_2014" class="csl-entry" role="listitem">
+Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2014). Causal <span>Inference</span> in <span>Conjoint Analysis</span>: <span>Understanding Multidimensional Choices</span> via <span>Stated Preference Experiments</span>. <em>Political Analysis</em>, <em>22</em>(1), 1-30. <a href="https://doi.org/10.1093/pan/mpt024">https://doi.org/10.1093/pan/mpt024</a>
+</div>
+<div id="ref-knotz_recast_2022" class="csl-entry" role="listitem">
+Knotz, C. M., Gandenberger, M. K., Fossati, F., &amp; Bonoli, G. (2022). A <span>Recast Framework</span> for <span>Welfare Deservingness Perceptions</span>. <em>Social Indicators Research</em>, <em>159</em>(3), 927-943. <a href="https://doi.org/10.1007/s11205-021-02774-9">https://doi.org/10.1007/s11205-021-02774-9</a>
+</div>
+<div id="ref-meuleman_welfare_2020" class="csl-entry" role="listitem">
+Meuleman, B., Roosma, F., &amp; Abts, K. (2020). Welfare Deservingness Opinions from Heuristic to Measurable Concept: <span>The CARIN</span> Deservingness Principles Scale. <em>Social Science Research</em>, <em>85</em>, 102352. <a href="https://doi.org/10.1016/j.ssresearch.2019.102352">https://doi.org/10.1016/j.ssresearch.2019.102352</a>
+</div>
+<div id="ref-oorschot_who_2000" class="csl-entry" role="listitem">
+Oorschot, W. V. (2000). Who Should Get What, and Why? <span>On</span> Deservingness Criteria and the Conditionality of Solidarity among the Public. <em>Policy &amp; Politics</em>, <em>28</em>(1), 33-48. <a href="https://doi.org/10.1332/0305573002500811">https://doi.org/10.1332/0305573002500811</a>
+</div>
+<div id="ref-schuessler_power_2020" class="csl-entry" role="listitem">
+Schuessler, J., &amp; Freitag, M. (2020). Power <span>Analysis</span> for <span>Conjoint Experiments</span>. SocArXiv. <a href="https://doi.org/10.31235/osf.io/9yuhp">https://doi.org/10.31235/osf.io/9yuhp</a>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
