@@ -13,6 +13,7 @@ format:
     toc-depth: 3
     number-sections: true
     theme: cosmo
+    embed-resources: true
 editor_options:
   chunk_output_type: console
 ---
