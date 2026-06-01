@@ -15,6 +15,7 @@ format:
     number-depth: 3
     theme:
       - cosmo
+      - edumer_html.scss
     code-link: true
     title-block-banner: true
 abstract: |
