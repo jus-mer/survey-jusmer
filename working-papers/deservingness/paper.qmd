@@ -160,6 +160,10 @@ Para subsanar este déficit de validez de constructo, el marco **NICER** (*Need,
 1. **La purificación de la Actitud:** Se redefine el criterio de actitud de forma restrictiva, limitándolo exclusivamente a gestos simbólicos y discursos que señalan gratitud y docilidad ("*talk*"), segregándolo por completo de cualquier comportamiento orientado a la acción o la productividad ("*action*").
 2. **La desagregación temporal de la Reciprocidad:** Se introduce una fractura analítica entre el comportamiento cooperativo histórico y las acciones presentes del individuo. El criterio de **Reciprocidad (R)** se reserva de manera estricta para las contribuciones pasadas al sistema colectivizado (como los años de empleo formal y pago de impuestos). Por su parte, se acuña el criterio de **Esfuerzo (E)** como una dimensión independiente que captura la conducta activa y presente del beneficiario destinada a enmendar su situación o retornar valor a la sociedad en el futuro cercano (v.gr., buscar trabajo activamente o cumplir protocolos médicos).
 
+A diferencia de la escala CARIN, que se operacionaliza mediante ítems Likert de encuesta que miden principios abstractos de merecimiento, el marco NICER no cuenta con una escala de medición equivalente. Su operacionalización empírica se realiza exclusivamente a través de experimentos de viñetas factoriales, donde se presentan a los encuestados perfiles hipotéticos de beneficiarios construidos mediante la combinación ortogonal de los cinco criterios (Necesidad, Identidad, Control, Esfuerzo y Reciprocidad), cada uno con niveles discretos asignados aleatoriamente. Esta estrategia permite aislar el efecto causal de cada dimensión sobre el juicio de merecimiento, controlando simultáneamente por el resto, algo que los diseños de encuesta convencionales no pueden garantizar. En consecuencia, el aporte de NICER no es instrumental —no provee un cuestionario listo para aplicar— sino conceptual y metodológico: clarifica qué se debe medir y cómo diseñar los estímulos experimentales para evitar los solapamientos que afectan al CARIN clásico.
+
+Desde su publicación, el marco NICER ha comenzado a articular una línea de investigación propia en la literatura sobre merecimiento. Su adopción más directa proviene de estudios que han extendido los criterios de merecimiento a nuevas categorías de beneficiarios no contempleados por CARIN. [@bae_unpacking_2026] aplica el marco para estudiar la percepción de merecimiento de los trabajadores de plataformas digitales (gig workers), demostrando mediante experimentos de encuesta pre-registrados que este grupo enfrenta una penalización sistemática respecto a trabajadores tradicionales en el acceso a seguro de desempleo y salud pública, penalización que se explica precisamente por la ambigüedad del criterio de control que NICER permite desagregar con mayor precisión. En una dirección complementaria, anteriormente un experimento de encuesta conducido en seis países occidentales (Dinamarca, Suecia, Alemania, Suiza, Reino Unido y Estados Unidos) por [@bonoli_who_2026] orientó el foco desde las transferencias monetarias hacia los servicios sociales, estudiando las percepciones de merecimiento en el acceso a cuidado infantil subsidiado y encontrando que los criterios clásicos de merecimiento operan de manera diferenciada según el tipo de régimen de inversión social. Por otra parte, [@sowula_deservingness_2024] aplica una lógica similar al estudiar las actitudes de jóvenes suizos hacia el Estado de bienestar, replicando el hallazgo de que el criterio de actitud no tiene efecto independiente significativo sobre las preferencias redistributivas, lo que refuerza la pertinencia de la depuración conceptual propuesta por NICER. En conjunto, esta evidencia sugiere que el marco NICER está siendo utilizado principalmente como referencia conceptual para orientar el diseño de viñetas y la interpretación de resultados, más que como una escala cerrada de medición, lo que es consistente con su naturaleza experimental.
+
 ### Estructura de Operacionalización del Modelo NICER
 
 Para asegurar una medición limpia y libre de colisiones analíticas, el marco NICER delimita formalmente el alcance de cada componente de la economía moral del merecimiento, estableciendo indicadores específicos que evitan que un mismo comportamiento compute en dos dimensiones simultáneamente [@knotz_recast_2022].
@@ -178,7 +182,7 @@ Para asegurar una medición limpia y libre de colisiones analíticas, el marco N
 
 La validación empírica del tránsito de CARIN a NICER requiere la implementación de diseños factoriales donde las subdimensiones operen bajo una asignación ortogonal [@knotz_recast_2022]. A continuación, se detalla la configuración interna de la escala a partir de los niveles y viñetas experimentales implementados para aislar el juicio moral ciudadano en el marco de la protección al desempleo.
 
-#### Construcción de la escala NICER por subdimensión y niveles de ítems factoriales
+#### Construcción del marco NICER
 
 | Subdimensión NICER | Nivel Factorial | Ítems / Viñetas de Estímulo Experimental | Lógica de Activación Moral |
 | :--- | :---: | :--- | :--- |
@@ -200,6 +204,118 @@ Cuando el criterio de actitud se despoja de los solapamientos conductuales y se 
 **2. La Dualidad Condicional del Intercambio Social**
 
 El desglose de la dimensión cooperativa en dos vectores temporales —pasado (*Reciprocidad*) y presente (*Esfuerzo*)— altera los rankings de importancia relativa del merecimiento. Los coeficientes de regresión revelan que el *Esfuerzo* y el *Control* operan como los predictores con mayor fuerza de asociación en la evaluación ciudadana, seguidos de forma más rezagada por la *Reciprocidad* histórica y la *Identidad*. Ello implica que la opinión pública prioriza la agencia actual del sujeto para salir de la vulnerabilidad por sobre su historial de contribuciones previas, una distinción analítica que el CARIN clásico asimilaba de forma monolítica.
+
+# Hacia una propuesta de medición
+
+## Justificación de la propuesta
+
+Anteriormente se mencionó que la medición del merecimiento ha oscilado entre dos polos problemáticos: la inferencia indirecta a través de preferencias de política pública, y la captura de percepciones sobre grupos específicos sin referencia a los principios abstractos que subyacen a esas evaluaciones. La escala CARIN de Meuleman et al. [-@meuleman_welfare_2020] representa el avance más sistemático hacia una medición directa de los principios de merecimiento como constructos ideológicos suceptibles al contexto. Sin embargo, como ha demostrado Knotz et al. [-@knotz_recast_2022], esta escala trae algunas ambigüedades conceptuales del marco original, en particular el solapamiento entre actitud y reciprocidad, y la incapacidad de distinguir entre contribuciones pasadas y esfuerzo presente.
+
+La propuesta que se presenta a continuación busca integrar ambas tradiciones en un instrumento único que: (a) conserve la lógica de medición directa de principios abstractos inaugurada por Meuleman et al. [-@meuleman_welfare_2020]; (b) incorpore la distinción conceptual entre Esfuerzo y Reciprocidad introducida por el marco NICER [@knotz_recast_2022]; y (c) adapte la formulación de los ítems al contexto de estudio, donde el sistema de protección social combina elementos contributivos con transferencias no contributivas, generando una economía moral específica que no puede capturarse con instrumentos diseñados íntegramente para el contexto europeo.
+
+Todos los ítems se presentan en escala Likert de cinco puntos (1 = Muy en desacuerdo; 5 = Muy de acuerdo). Los ítems marcados con **(R)** están formulados en dirección inversa al constructo latente y deben ser recodificados antes del análisis (reverse code: 1→5, 2→4, 3→3, 4→2, 5→1), de modo que una puntuación alta en todos los ítems indique mayor adhesión al principio de condicionalidad correspondiente. Esta decisión de frasear los ítems en una misma dirección sustantiva —condicionalidad del acceso a beneficios— sigue la recomendación metodológica de Meuleman et al. [-@meuleman_welfare_2020] de mantener coherencia en la dirección del constructo latente para evitar artefactos de respuesta.
+
+## Escala CARIN: traducción y adaptación
+
+Los ítems que se presentan a continuación constituyen una traducción directa y adaptación contextual de la escala original validada por Meulemann y autores [-@meuleman_welfare_2020]. La adaptación al contexto del presente estudio implica tres decisiones: (1) reemplazar referencias institucionales específicas por sus equivalentes funcionales (subsidios sociales, seguro de cesantía, sistema de protección social); (2) ajustar los ejemplos de grupos de referencia en la dimensión de Identidad para reflejar las fronteras morales más salientes en el debate público chileno —donde la migración reciente, especialmente proveniente de Venezuela, Haití y Colombia, ha adquirido alta centralidad política—; y (3) mantener la formulación abstracta de los principios en la medida de lo posible, evitando anclar los ítems a grupos específicos cuando el objetivo es capturar la adhesión al principio y no la percepción sobre el grupo.
+
+### Control
+
+Este principio mide en qué medida el encuestado considera que la responsabilidad personal sobre la situación de necesidad debería condicionar el acceso a los beneficios sociales. Una puntuación alta indica mayor adhesión a la condicionalidad basada en responsabilidad individual.
+
+| Código | Ítem | Dirección |
+|--------|------|-----------|
+| CON_1 | Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado. | **(R)** |
+| CON_2 | Quienes son responsables de sus propios problemas no merecen recibir beneficios sociales. | Directa |
+| CON_3 | El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos. | **(R)** |
+
+*Nota: CON_1 y CON_3 están formulados en dirección favorable al acceso universal; deben recodificarse para que la escala refleje consistentemente la adhesión al principio de condicionalidad por control.*
+
+### Actitud
+
+Este principio captura la expectativa de que los beneficiarios demuestren gratitud y docilidad hacia el sistema que los apoya. Siguiendo la precisión conceptual de Knotz et al. [-@knotz_recast_2022], los ítems se restringen exclusivamente a expresiones simbólicas de gratitud ("talk"), excluyendo cualquier referencia a conductas instrumentales como la búsqueda de empleo, que quedan reservadas para la dimensión de Esfuerzo.
+
+| Código | Ítem | Dirección |
+|--------|------|-----------|
+| ACT_1 | Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben. | Directa |
+| ACT_2 | Quienes reciben subsidios o ayudas sociales no tienen derecho a quejarse de las condiciones en que los reciben. | Directa |
+| ACT_3 | Está bien que las personas que reciben apoyo del Estado expresen su descontento con las condiciones de los beneficios. | **(R)** |
+
+*Nota: La dimensión de Actitud, cuando se operacionaliza de forma estrictamente simbólica como se hace aquí, tiende a no alcanzar significación estadística en los modelos de merecimiento [@knotz_recast_2022]. Se recomienda retenerla en el instrumento con fines comparativos y de validación cruzada, pero no debe interpretarse como el principal predictor de las percepciones de merecimiento.*
+
+---
+
+### Reciprocidad
+
+En coherencia con la distinción introducida por el marco NICER, esta dimensión se restringe exclusivamente a las contribuciones *pasadas* al sistema colectivo (cotizaciones previas, historial laboral, pago de impuestos). Las acciones *presentes* orientadas a salir de la situación de vulnerabilidad se capturan por separado en la dimensión de Esfuerzo.
+
+| Código | Ítem | Dirección |
+|--------|------|-----------|
+| REC_1 | Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos. | Directa |
+| REC_2 | No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho. | Directa |
+| REC_3 | Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada. | Directa |
+| REC_4 | El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado. | **(R)** |
+
+---
+
+### Identidad
+
+Esta dimensión mide la tendencia a delimitar la comunidad de beneficiarios según criterios de pertenencia grupal, nacional o cultural. En el contexto chileno, el debate sobre el acceso de la población migrante a los beneficios del sistema de protección social ha adquirido alta visibilidad pública desde 2018, lo que justifica anclar operacionalmente esta dimensión a la distinción entre nacionales y migrantes, sin perjuicio de que en investigaciones futuras se explore también la relevancia de otras fronteras identitarias (clase social, etnia, ruralidad).
+
+| Código | Ítem | Dirección |
+|--------|------|-----------|
+| IDE_1 | Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países. | Directa |
+| IDE_2 | Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos. | **(R)** |
+| IDE_3 | Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado. | Directa |
+
+---
+
+### Necesidad
+
+Esta dimensión captura la adhesión al principio de que los beneficios sociales deben reservarse para quienes se encuentran en situación de mayor urgencia o carencia material. Es la dimensión que muestra mayor independencia respecto de las demás en la estructura factorial de Meuleman et al. [-@meuleman_welfare_2020], operando bajo una lógica distributiva de carácter más humanitario.
+
+| Código | Ítem | Dirección |
+|--------|------|-----------|
+| NEC_1 | Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real. | Directa |
+| NEC_2 | Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado. | Directa |
+| NEC_3 | Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales. | Directa |
+| NEC_4 | El Estado debería apoyar a las personas que lo necesitan, independientemente de cuánto tengan o no tengan. | **(R)** |
+
+---
+
+## Propuesta de ítems para la dimensión de Esfuerzo (marco NICER)
+
+La dimensión de Esfuerzo no forma parte de la escala CARIN original y, por lo tanto, no cuenta con ítems validados mediante análisis factorial confirmatorio en formato de encuesta. Su operacionalización experimental ha sido demostrada por Knotz et al. [-@knotz_recast_2022] exclusivamente a través de viñetas factoriales. La propuesta que se presenta a continuación constituye una traducción de esa lógica al formato de ítems Likert de principios abstractos, siguiendo el mismo espíritu metodológico de Meuleman et al. [-@meuleman_welfare_2020]: medir la adhesión al principio normativo y no la percepción sobre un grupo concreto.
+
+El Esfuerzo se define aquí como la agencia activa y presente del beneficiario orientada a superar su situación de vulnerabilidad o a contribuir de algún modo a la sociedad en el momento en que recibe apoyo. Esta definición excluye explícitamente las contribuciones pasadas (Reciprocidad) y las expresiones simbólicas de gratitud (Actitud).
+
+| Código | Ítem | Dirección |
+|--------|------|-----------|
+| ESF_1 | Las personas que reciben beneficios sociales deberían estar haciendo algo activamente para mejorar su situación, como buscar trabajo o capacitarse. | Directa |
+| ESF_2 | Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan. | Directa |
+| ESF_3 | El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación. | **(R)** |
+| ESF_4 | Es razonable que el monto o la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo. | Directa |
+| ESF_5 | No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual. | **(R)** |
+
+*Nota metodológica: Dado que esta dimensión no cuenta aún con validación psicométrica en formato de escala Likert, se recomienda someterla a un análisis factorial exploratorio previo antes de incorporarla a un modelo confirmatorio conjunto con las dimensiones CARIN. Una vez establecida su estructura factorial, debería evaluarse su discriminación empírica respecto a las dimensiones de Reciprocidad y Control, que son las más conceptualmente cercanas.*
+
+---
+
+## Estructura integrada del instrumento: resumen de dimensiones e ítems
+
+| Dimensión | Marco | N° ítems | Ítems reverse code |
+|-----------|-------|----------|--------------------|
+| Control | CARIN | 3 | CON_1, CON_3 |
+| Actitud | CARIN | 3 | ACT_3 |
+| Reciprocidad | CARIN / NICER | 4 | REC_4 |
+| Identidad | CARIN | 3 | IDE_2 |
+| Necesidad | CARIN | 4 | NEC_4 |
+| Esfuerzo | NICER | 5 | ESF_3, ESF_5 |
+| **Total** | | **22** | **8** |
+
+La estructura propuesta de 22 ítems permite, en una primera fase analítica, replicar el modelo de cinco factores de Meuleman et al. [@meuleman_welfare_2020] usando únicamente los ítems CARIN (17 ítems), y en una segunda fase ampliar el modelo incorporando la dimensión de Esfuerzo para evaluar si su adición mejora el ajuste y si sus ítems discriminan empíricamente de las dimensiones de Reciprocidad y Control. Este diseño escalonado permite además comparar los resultados con los de la literatura europea sin necesidad de renunciar a la innovación conceptual que representa el marco NICER.
+
+Se recomienda complementar esta escala con al menos una pregunta de anclaje que identifique el grupo o política pública respecto del cual el encuestado está respondiendo, a fin de poder evaluar si los principios abstractos tienen efectos diferenciados según el grupo beneficiario que se tenga en mente —un hallazgo recurrente en la literatura comparada [@meuleman_welfare_2020; @vanoorschot_social_2017].
 
 # Conclusiones
 
