@@ -51,6 +51,6 @@ The repository follows the logic of the [IPO protocol](https://github.com/juanca
 ### Files:
 
 - [Working Paper - Merecimiento y Justicia de Mercado](https://jus-mer.github.io/survey-jusmer/working-papers/deservingness/paper.html)
-- [Working Paper - Design of Conjoint Survey Experiment](https://jus-mer.github.io/survey-jusmer/conjoint/design/conjoint-working-paper.html)
+- [Working Paper - Conjoint Survey Experiment](https://jus-mer.github.io/survey-jusmer/working-papers/conjoint/conjoint-working-paper.html)
 - [Working Paper - CARIN and NICER Designs of Conjoint Survey Experiment](https://jus-mer.github.io/survey-jusmer/conjoint/design/conjoint-carin-nicer.html)
 - [Surveydown pre-pilot](https://jusmer.shinyapps.io/my_survey/)
