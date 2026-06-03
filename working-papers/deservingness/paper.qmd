@@ -1,5 +1,5 @@
 ---
-title: "Merecimiento y Justicia de Mercado"
+title: "Merecimiento"
 subtitle: "Concepciones, medición y factores asociados"
 author: 
   - René Canales
