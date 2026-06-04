@@ -26,10 +26,12 @@ system-messages:
 ---
 
 ```{r}
+Sys.setlocale("LC_ALL", "en_US.UTF-8")
 library(surveydown)
 library(dplyr)
 library(kableExtra)
 library(htmltools)
+library(here)
 source("code/slider_widget.R")
 ```
 
@@ -437,25 +439,26 @@ sd_nav(
 
 A continuación, encontrará una pregunta de ejemplo para practicar la tarea a realizar en las siguientes secciones. 
 
-- Imagine que usted forma parte de un comité encargado de asignar una beca de apoyo para estudiantes de primer año de la universidad. Para ello, se le presentan dos postulantes con diferentes características académicas y socioeconómicas. Usted debe decidir cómo repartir el monto limitado de la beca entre ambos postulantes. 
+- Imagine que usted forma parte de un comité universitario encargado de asignar una beca de apoyo para estudiantes de primer año.
 
-- Los dos postulantes que verá a continuación fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar. La beca disponible es de $1.500.000 para el primer año.
+- Los dos postulantes que verá a continuación fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar. La beca disponible es de $2.000.000 para el primer año.
 
 - Su tarea consiste en repartir esta beca entre los postulantes tomando en consideración las características de ambos, y asignando un porcentaje del monto total a cada uno. Por ejemplo, podría asignar el 70% de la beca a un postulante y el 30% restante al otro postulante, o cualquier otra combinación que sume el 100% y que a Ud. le parezca apropiada. 
 
-Para hacer la asignación, debe mover el **control deslizante** (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle; margin-left: 4px;"}) debajo de la tabla que muestra las características de cada postulante. El monto total asignado ($1.500.000) aparece en principio distribuido a la mitad ($750.000 para c/u), y su distribución cambiará a medida que mueva el control deslizante hacia la izquierda o hacia la derecha. 
-
-
+Para hacer la asignación, debe mover el **control deslizante** (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle; margin-left: 4px;"}) debajo de la tabla que muestra las características de cada postulante. El monto total asignado ($2.000.000) aparece en principio distribuido a la mitad ($1.000.000 para c/u), y su distribución cambiará a medida que mueva el control deslizante hacia la izquierda o hacia la derecha. 
 
 
 ```{r}
 # Make a fixed data frame for the options
 
 df <- tibble::tibble(
-  altID = c(1, 2),
-  rendimiento = c("Sobre el promedio", "Bajo el promedio"),
-  situacion_hogar = c("Llega con dificultad a fin de mes", "Llega con holgura a fin de mes"),
-  educ_padres = c("Ninguno tiene educación superior", "Al menos uno tiene educación superior")
+  altID       = c(1, 2),
+  need        = c("El hogar llega con dificultad a fin de mes", "El hogar llega con holgura a fin de mes"),
+  identity    = c("Chile", "Chile"),
+  control     = c("Postuló a otras becas pero no obtuvo financiamiento", "Postuló a otras becas pero no obtuvo financiamiento"),
+  effort      = c("Estudia más que sus compañeros", "Estudia igual que sus compañeros"),
+  reciprocity = c("Participó activamente en voluntariado o apoyo comunitario", "Participó activamente en voluntariado o apoyo comunitario"),
+  attitude    = c("Una ayuda que agradece", "Una ayuda que agradece"),
 )
 
 male_names <- c("Mateo", "Lucas", "Benjamín", "Nicolás", "Daniel", "Santiago", "Tomás", "Joaquín")
@@ -476,9 +479,12 @@ alts <- df |>
   # Make nicer attribute labels
   select(
     `Postulante:` = nombre_formatted,
-    `Rendimiento:` = rendimiento,
-    `Situación en el hogar:` = situacion_hogar,
-    `Educación de los padres:` = educ_padres
+    `Situación económica del hogar:` = need,
+    `País de nacimiento:` = identity,
+    `Requiere la beca porque:` = control,
+    `Dedicación al estudio:` = effort,
+    `Participación comunitaria:` = reciprocity,
+    `Ve la beca como:` = attitude
   )
 
 row.names(alts) <- NULL # Drop row names
@@ -723,7 +729,7 @@ A continuación se presentan algunas preguntas adicionales, el objetivo es recib
 
 ```{r}
 # Construct the list of years
-
+ 
 years <- as.character(2003:1920)
 names(years) <- years
 years <- c("Prefiero no decir" = "prefer_not_say", years)

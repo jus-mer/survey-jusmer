@@ -1,7 +1,11 @@
 # Helper function to render the allocation slider widget.
 # id: the surveydown question id (e.g. "cbc_q1", "cbc_practice")
 # nombre1, nombre2: optional names to display instead of "Opción 1" and "Opción 2"
-allocation_slider <- function(id, total_budget = 1500000, nombre1 = "Opción 1", nombre2 = "Opción 2") {
+allocation_slider <- function(id, total_budget = 2000000, nombre1 = "Opción 1", nombre2 = "Opción 2") {
+  step_size   <- 100000
+  default_val <- total_budget / 2  # 1.000.000 — punto medio exacto con $2.000.000
+  fmt_clp <- function(x) paste0("$", format(x, big.mark = ".", scientific = FALSE))
+
   htmltools::browsable(htmltools::tagList(
     # Slider
     shiny::div(
@@ -10,9 +14,9 @@ allocation_slider <- function(id, total_budget = 1500000, nombre1 = "Opción 1",
         type    = "slider_numeric",
         id      = id,
         label   = "",
-        option  = 0:100,
+        option  = seq(0, total_budget, by = step_size),
         grid    = FALSE,
-        default = 50,
+        default = default_val,
         width   = "100%"
       )
     ),
@@ -26,7 +30,7 @@ allocation_slider <- function(id, total_budget = 1500000, nombre1 = "Opción 1",
         shiny::div(
           style = "position: relative; z-index: 1;",
           shiny::h4(shiny::span(id = paste0(id, "_name1"), nombre1, style = "color: #28a745; font-weight: 800;"), style = "margin: 0 0 4px 0; font-size: 0.9rem;"),
-          shiny::h3(shiny::span(id = paste0(id, "_opt1"), "$750.000", style = ""), style = "color: #28a745; margin: 4px 0; font-weight: 900; font-size: 1.1rem;"),
+          shiny::h3(shiny::span(id = paste0(id, "_opt1"), fmt_clp(default_val), style = ""), style = "color: #28a745; margin: 4px 0; font-weight: 900; font-size: 1.1rem;"),
           shiny::p(shiny::span(id = paste0(id, "_opt1_pct"), "50%", style = ""), style = "color: #28a745; font-size: 14px; margin: 2px 0; font-weight: 800;")
         )
       ),
@@ -36,7 +40,7 @@ allocation_slider <- function(id, total_budget = 1500000, nombre1 = "Opción 1",
         shiny::div(
           style = "position: relative; z-index: 1;",
           shiny::h4(shiny::span(id = paste0(id, "_name2"), nombre2, style = "color: #007bff; font-weight: 800;"), style = "margin: 0 0 4px 0; font-size: 0.9rem;"),
-          shiny::h3(shiny::span(id = paste0(id, "_opt2"), "$750.000", style = ""), style = "color: #007bff; margin: 4px 0; font-weight: 900; font-size: 1.1rem;"),
+          shiny::h3(shiny::span(id = paste0(id, "_opt2"), fmt_clp(default_val), style = ""), style = "color: #007bff; margin: 4px 0; font-weight: 900; font-size: 1.1rem;"),
           shiny::p(shiny::span(id = paste0(id, "_opt2_pct"), "50%", style = ""), style = "color: #007bff; font-size: 14px; margin: 2px 0; font-weight: 800;")
         )
       )
@@ -69,29 +73,22 @@ allocation_slider <- function(id, total_budget = 1500000, nombre1 = "Opción 1",
       "  const sliderId = '", id, "';",
       "  const totalBudget = ", total_budget, ";",
       "  ",
-      "  function parsePct(x) {",
-      "    const n = parseInt(String(x).replace('%', '').trim(), 10);",
-      "    return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : null;",
-      "  }",
-      "  ",
-      "  function getSliderValue() {",
+      "  function getRawValue() {",
       "    const sliderEl = document.getElementById(sliderId);",
-      "    if (!sliderEl) return 50;",
-      "    const fromValue = parsePct(sliderEl.value);",
-      "    if (fromValue !== null) return fromValue;",
-      "    const dataFrom = parsePct(sliderEl.getAttribute('data-from'));",
-      "    if (dataFrom !== null) return dataFrom;",
-      "    const irsFrom = sliderEl.parentElement ? sliderEl.parentElement.querySelector('.irs-from') : null;",
-      "    const fromText = parsePct(irsFrom ? irsFrom.textContent : null);",
-      "    if (fromText !== null) return fromText;",
-      "    return 50;",
+      "    if (!sliderEl) return totalBudget / 2;",
+      "    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };",
+      "    const v = parse(sliderEl.value);",
+      "    if (v !== null) return Math.max(0, Math.min(totalBudget, v));",
+      "    const d = parse(sliderEl.getAttribute('data-from'));",
+      "    if (d !== null) return Math.max(0, Math.min(totalBudget, d));",
+      "    return totalBudget / 2;",
       "  }",
       "  ",
       "  function updateAllocation() {",
-      "    const pct1 = getSliderValue();",
+      "    const opt1 = getRawValue();",
+      "    const opt2 = totalBudget - opt1;",
+      "    const pct1 = Math.round(opt1 / totalBudget * 100);",
       "    const pct2 = 100 - pct1;",
-      "    const opt1 = totalBudget * (pct1 / 100);",
-      "    const opt2 = totalBudget * (pct2 / 100);",
       "    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');",
       "    const opt1El = document.getElementById('", id, "_opt1');",
       "    const opt2El = document.getElementById('", id, "_opt2');",

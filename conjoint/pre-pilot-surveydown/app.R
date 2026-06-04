@@ -1,3 +1,5 @@
+Sys.setlocale("LC_ALL", "en_US.UTF-8")
+
 # Package setup ---------------------------------------------------------------
 
 # Install required packages:
@@ -101,18 +103,20 @@ ui <- tagList(
         var sliderEl = document.getElementById(sliderId);
         if (!sliderEl) return null;
 
-        var fromValue = parsePctValue(sliderEl.value);
-        if (fromValue !== null) return fromValue;
+        var rawVal = parseInt(String(sliderEl.value).replace(/[^0-9]/g, ''), 10);
+        if (!Number.isFinite(rawVal)) {
+          var dataFrom = parseInt(String(sliderEl.getAttribute('data-from') || '').replace(/[^0-9]/g, ''), 10);
+          if (!Number.isFinite(dataFrom)) return null;
+          rawVal = dataFrom;
+        }
 
-        var dataFrom = parsePctValue(sliderEl.getAttribute('data-from'));
-        if (dataFrom !== null) return dataFrom;
-
-        var wrapper = sliderEl.parentElement;
-        var fromEl = wrapper ? wrapper.querySelector('.irs-from') : null;
-        var fromText = parsePctValue(fromEl ? fromEl.textContent : null);
-        if (fromText !== null) return fromText;
-
-        return null;
+        // Slider en pesos directos (rango > 100): convertir a porcentaje
+        var sliderMax = parseInt(sliderEl.getAttribute('data-max') || '100', 10);
+        if (sliderMax > 100) {
+          var total = getTotalBudget(sliderId);
+          return Math.round(rawVal / total * 100);
+        }
+        return Math.max(0, Math.min(100, rawVal));
       }
 
       function getTotalBudget(sliderId) {
@@ -121,7 +125,7 @@ ui <- tagList(
         var v1 = parseMoneyValue(o1 ? o1.textContent : null);
         var v2 = parseMoneyValue(o2 ? o2.textContent : null);
         if (v1 !== null && v2 !== null && (v1 + v2) > 0) return v1 + v2;
-        return 1500000;
+        return 2000000;
       }
 
       function formatMoneyCLP(n) {
@@ -348,19 +352,19 @@ make_cbc_table <- function(df) {
   male_names <- c("Mateo", "Lucas", "Benjamin", "Nicolas", "Daniel", "Santiago", "Tomas", "Joaquin")
   female_names <- c("Sofia", "Valentina", "Isidora", "Martina", "Camila", "Florencia", "Catalina", "Antonia")
 
-  # Assign random person names (mix of men/women) to each alternative id.
+  # Guarantee exactly one male and one female name per question pair.
   alt_ids <- sort(unique(df$altID))
-  n_alts <- length(alt_ids)
-  pool <- c(sample(male_names, length(male_names)), sample(female_names, length(female_names)))
-  assigned <- sample(pool, n_alts, replace = FALSE)
+  male_pick   <- sample(male_names, 1)
+  female_pick <- sample(female_names, 1)
+  assigned <- sample(c(male_pick, female_pick))  # randomize which alt is male/female
   name_map <- stats::setNames(assigned, as.character(alt_ids))
 
-  has_custom_cols <- all(c("rendimiento", "situacion_hogar", "educ_padres") %in% names(df))
+  has_custom_cols <- all(c("need", "identity", "control", "effort", "reciprocity", "attitude") %in% names(df))
 
   if (has_custom_cols) {
     slider_id <- paste0("cbc_q", unique(df$qID)[1])
     names_vec <- unname(name_map[as.character(alt_ids)])
-    
+
     alts <- df |>
       mutate(
         nombre = name_map[as.character(altID)],
@@ -372,9 +376,12 @@ make_cbc_table <- function(df) {
       ) |>
       select(
         `Postulante:` = nombre_formatted,
-        `Rendimiento:` = rendimiento,
-        `Situacion en el hogar:` = situacion_hogar,
-        `Educacion de los padres:` = educ_padres
+        `Situación económica del hogar:` = need,
+        `País de nacimiento:` = identity,
+        `Requiere la beca porque:` = control,
+        `Dedicación al estudio:` = effort,
+        `Participación comunitaria:` = reciprocity,
+        `Ve la beca como:` = attitude
       )
   } else {
     # Backward-compatible rendering for the original apple template
@@ -411,33 +418,60 @@ make_cbc_table <- function(df) {
   )
 }
 
-build_default_conjoint_design <- function(resp_id, n_questions = 6) {
+build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2) {
   niveles <- list(
-    rendimiento = c("Sobre el promedio", "En el promedio", "Bajo el promedio"),
-    situacion_hogar = c(
-      "Llega con dificultad a fin de mes",
-      "Llega justo a fin de mes",
-      "Llega con holgura a fin de mes"
+    need = c(
+      "El hogar llega con dificultad a fin de mes",
+      "El hogar llega con holgura a fin de mes"
     ),
-    educ_padres = c(
-      "Ninguno tiene educacion superior",
-      "Al menos uno tiene educacion superior"
-    )
+    identity = c("Chile", "Venezuela", "Perú"),
+    control = c(
+      "Postuló a otras becas pero no obtuvo financiamiento",
+      "No alcanzó a postular a otras becas porque se venció el plazo"
+    ),
+    effort = c(
+      "Estudia más que sus compañeros",
+      "Estudia igual que sus compañeros",
+      "Estudia menos que sus compañeros"
+    ),
+    reciprocity = c(
+      "Participó activamente en voluntariado o apoyo comunitario",
+      "No tuvo participación comunitaria"
+    ),
+    attitude = c("Una ayuda que agradece", "Algo que se merece")
   )
 
-  tidyr::expand_grid(
-    qID = seq_len(n_questions),
-    altID = 1:2
-  ) |>
-    mutate(
-      profileID = row_number(),
-      respID = resp_id,
-      obsID = qID,
-      rendimiento = sample(niveles$rendimiento, n(), replace = TRUE),
-      situacion_hogar = sample(niveles$situacion_hogar, n(), replace = TRUE),
-      educ_padres = sample(niveles$educ_padres, n(), replace = TRUE)
-    ) |>
-    select(profileID, respID, qID, altID, obsID, rendimiento, situacion_hogar, educ_padres)
+  # Generate a pair of profiles that differ in at least min_diff attributes
+  generate_pair <- function() {
+    repeat {
+      alt1 <- sapply(niveles, function(lvls) sample(lvls, 1))
+      alt2 <- sapply(niveles, function(lvls) sample(lvls, 1))
+      if (sum(alt1 != alt2) >= min_diff) return(list(alt1 = alt1, alt2 = alt2))
+    }
+  }
+
+  rows <- lapply(seq_len(n_questions), function(q) {
+    pair <- generate_pair()
+    data.frame(
+      profileID   = NA_integer_,
+      respID      = resp_id,
+      qID         = q,
+      altID       = 1:2,
+      obsID       = q,
+      need        = c(pair$alt1[["need"]],        pair$alt2[["need"]]),
+      identity    = c(pair$alt1[["identity"]],    pair$alt2[["identity"]]),
+      control     = c(pair$alt1[["control"]],     pair$alt2[["control"]]),
+      effort      = c(pair$alt1[["effort"]],      pair$alt2[["effort"]]),
+      reciprocity = c(pair$alt1[["reciprocity"]], pair$alt2[["reciprocity"]]),
+      attitude    = c(pair$alt1[["attitude"]],    pair$alt2[["attitude"]]),
+      stringsAsFactors = FALSE
+    )
+  })
+
+  result <- do.call(rbind, rows)
+  result$profileID <- seq_len(nrow(result))
+  result[, c("profileID", "respID", "qID", "altID", "obsID",
+             "need", "identity", "control", "effort", "reciprocity", "attitude")]
 }
 
 # Server setup ----------------------------------------------------------------
