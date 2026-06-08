@@ -136,10 +136,12 @@ ui <- tagList(
         var sliders = document.querySelectorAll('input[id^=cbc_]');
         sliders.forEach(function(sliderEl) {
           var sliderId = sliderEl.id;
-          var pct1 = getSliderPct(sliderId);
-          if (pct1 === null) return;
+          var sliderPct = getSliderPct(sliderId);
+          if (sliderPct === null) return;
 
-          var pct2 = 100 - pct1;
+          // Slider invertido: mover derecha = más para opt2 (derecha/azul)
+          var pct2 = sliderPct;
+          var pct1 = 100 - pct2;
           var totalBudget = getTotalBudget(sliderId);
           var opt1 = totalBudget * (pct1 / 100);
           var opt2 = totalBudget * (pct2 / 100);
@@ -348,15 +350,16 @@ ui <- tagList(
 # - Modify the formatting/layout of each option as desired
 # - Modify the number of alternatives appropriately to your study (alt1, alt2, alt3)
 
-make_cbc_table <- function(df) {
+make_cbc_table <- function(df, attr_order = NULL) {
   male_names <- c("Mateo", "Lucas", "Benjamin", "Nicolas", "Daniel", "Santiago", "Tomas", "Joaquin")
   female_names <- c("Sofia", "Valentina", "Isidora", "Martina", "Camila", "Florencia", "Catalina", "Antonia")
 
-  # Guarantee exactly one male and one female name per question pair.
+  # Each profile independently draws a male or female name with p = 0.5.
   alt_ids <- sort(unique(df$altID))
-  male_pick   <- sample(male_names, 1)
-  female_pick <- sample(female_names, 1)
-  assigned <- sample(c(male_pick, female_pick))  # randomize which alt is male/female
+  assigned <- sapply(alt_ids, function(i) {
+    pool <- if (runif(1) < 0.5) male_names else female_names
+    sample(pool, 1)
+  })
   name_map <- stats::setNames(assigned, as.character(alt_ids))
 
   has_custom_cols <- all(c("need", "identity", "control", "effort", "reciprocity", "attitude") %in% names(df))
@@ -383,6 +386,10 @@ make_cbc_table <- function(df) {
         `Participación comunitaria:` = reciprocity,
         `Ve la beca como:` = attitude
       )
+
+    if (!is.null(attr_order)) {
+      alts <- alts[, c("Postulante:", attr_order)]
+    }
   } else {
     # Backward-compatible rendering for the original apple template
     alts <- df |>
@@ -496,9 +503,19 @@ server <- function(input, output, session) {
     df <- build_default_conjoint_design(respondentID, n_questions = 6)
   }
 
+  # Random attribute order fixed for this respondent across all 6 questions
+  attr_order <- sample(c(
+    "Situación económica del hogar:",
+    "País de nacimiento:",
+    "Requiere la beca porque:",
+    "Dedicación al estudio:",
+    "Participación comunitaria:",
+    "Ve la beca como:"
+  ))
+
   # Create the options for each choice question (using the helper function above)
   # NOTE: This example contains 6 choice questions - update as needed for your study
-  tables <- lapply(1:6, function(q) make_cbc_table(df |> filter(qID == q)))
+  tables <- lapply(1:6, function(q) make_cbc_table(df |> filter(qID == q), attr_order = attr_order))
   for (q in 1:6) {
     local({
       tbl <- tables[[q]]
