@@ -439,25 +439,33 @@ sd_nav(
 
 A continuación, encontrará una pregunta de ejemplo para practicar la tarea a realizar en las siguientes secciones. 
 
-- Imagine que usted forma parte de un comité universitario encargado de asignar una beca de apoyo para estudiantes de primer año.
 
-- Los dos postulantes que verá a continuación fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar. La beca disponible es de $2.000.000 para el primer año.
 
-- Su tarea consiste en repartir esta beca entre los postulantes tomando en consideración las características de ambos, y asignando un porcentaje del monto total a cada uno. Por ejemplo, podría asignar el 70% de la beca a un postulante y el 30% restante al otro postulante, o cualquier otra combinación que sume el 100% y que a Ud. le parezca apropiada. 
+**Contexto:**
 
-Para hacer la asignación, debe mover el **control deslizante** (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle; margin-left: 4px;"}) debajo de la tabla que muestra las características de cada postulante. El monto total asignado ($2.000.000) aparece en principio distribuido a la mitad ($1.000.000 para c/u), y su distribución cambiará a medida que mueva el control deslizante hacia la izquierda o hacia la derecha. 
+- Imagine que forma parte de un comité universitario encargado de asignar una beca de apoyo a estudiantes de primer año.
+- Los dos postulantes que vera a continuación fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar.
+- La información sobre cada postulante fue proporcionada y validad por su colegio de egreso.
+- La beca disponible es de $2.000.000 para el primer año.
 
+**Su tarea:**
+
+Reparta la beca entre los dos postulantes tomando en consideración las características de ambos, y asignando un porcentaje del monto total a cada uno. La distribución debe sumar el 100%. Por ejemplo: 70% a uno y 30% al otro.
+
+**¿Cómo hacer la asignación?**
+
+Mueva el control deslizante (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle;"}) bajo la tabla. El monto aparece inicialmente distribuido en partes iguales ($1.000.000 c/u) y cambiará según cómo mueva el control.
 
 ```{r}
 # Make a fixed data frame for the options
 
 df <- tibble::tibble(
   altID       = c(1, 2),
-  need        = c("El hogar llega con dificultad a fin de mes", "El hogar llega con holgura a fin de mes"),
+  need        = c("Dificultad", "Holgura"),
   identity    = c("Chile", "Chile"),
-  control     = c("Postuló a otras becas pero no obtuvo financiamiento", "Postuló a otras becas pero no obtuvo financiamiento"),
-  effort      = c("Estudia más que sus compañeros", "Estudia igual que sus compañeros"),
-  reciprocity = c("Participó activamente en voluntariado o apoyo comunitario", "Participó activamente en voluntariado o apoyo comunitario"),
+  control     = c("Postuló a otras becas pero no obtuvo financiamiento", "No alcanzó a postular a tiempo a otras becas"),
+  effort      = c("Más que sus compañeros", "Igual que sus compañeros"),
+  reciprocity = c("Ha hecho voluntariado", "No ha hecho voluntariado"),
   attitude    = c("Una ayuda que agradece", "Una ayuda que agradece"),
 )
 
@@ -479,11 +487,11 @@ alts <- df |>
   # Make nicer attribute labels
   select(
     `Postulante:` = nombre_formatted,
-    `Situación económica del hogar:` = need,
+    `Su hogar llega a fin de mes con:` = need,
     `País de nacimiento:` = identity,
     `Requiere la beca porque:` = control,
-    `Dedicación al estudio:` = effort,
-    `Participación comunitaria:` = reciprocity,
+    `Estudia:` = effort,
+    `Fuera de sus estudios:` = reciprocity,
     `Ve la beca como:` = attitude
   )
 

@@ -172,23 +172,23 @@ ui <- tagList(
       });
     ")),
     tags$style(HTML("
-      /* Nuclear option - override EVERYTHING about IonRangeSlider appearance */
+      /* Slider track: neutral grey, sin colores que confundan */
       .irs-bar, .irs-bar--single, .irs-bar-edge,
-      .irs--shiny .irs-bar, .irs--shiny .irs-bar-edge { 
-        background-color: #28a745 !important; 
-        background: #28a745 !important;
-        border-top-color: #28a745 !important;
-        border-bottom-color: #28a745 !important;
+      .irs--shiny .irs-bar, .irs--shiny .irs-bar-edge {
+        background-color: #adb5bd !important;
+        background: #adb5bd !important;
+        border-top-color: #adb5bd !important;
+        border-bottom-color: #adb5bd !important;
         height: 8px !important;
         border: none !important;
       }
       .irs-line,
       .irs--shiny .irs-line {
-        background-color: #007bff !important;
-        background: #007bff !important;
-        border-color: #007bff !important;
+        background-color: #adb5bd !important;
+        background: #adb5bd !important;
+        border-color: #adb5bd !important;
         background-image: none !important;
-        height: 6px !important;
+        height: 8px !important;
       }
       .irs--shiny .irs-line::before {
         background: transparent !important;
@@ -307,8 +307,8 @@ ui <- tagList(
 
           bar.style.left = '0%';
           bar.style.width = pct + '%';
-          bar.style.background = '#28a745';
-          bar.style.backgroundColor = '#28a745';
+          bar.style.background = '#adb5bd';
+          bar.style.backgroundColor = '#adb5bd';
         });
       }
 
@@ -340,15 +340,6 @@ ui <- tagList(
 )
 
 # Helper functions ------------------------------------------------------------
-#
-# Function to create the question options based on design values
-#
-# CUSTOMIZE THIS FUNCTION FOR YOUR STUDY:
-#
-# - Replace the attributes (type, price, freshness) with your own product features
-# - Update the image display if needed (or remove if not using images)
-# - Modify the formatting/layout of each option as desired
-# - Modify the number of alternatives appropriately to your study (alt1, alt2, alt3)
 
 make_cbc_table <- function(df, attr_order = NULL) {
   male_names <- c("Mateo", "Lucas", "Benjamin", "Nicolas", "Daniel", "Santiago", "Tomas", "Joaquin")
@@ -368,6 +359,16 @@ make_cbc_table <- function(df, attr_order = NULL) {
     slider_id <- paste0("cbc_q", unique(df$qID)[1])
     names_vec <- unname(name_map[as.character(alt_ids)])
 
+    attr_labels <- c(
+      need        = "Su hogar llega a fin de mes con:",
+      identity    = "País de nacimiento:",
+      control     = "Requiere la beca porque:",
+      effort      = "Estudia:",
+      reciprocity = "Fuera de sus estudios:",
+      attitude    = "Ve la beca como:"
+    )
+    ordered <- if (!is.null(attr_order)) attr_order else names(attr_labels)
+
     alts <- df |>
       mutate(
         nombre = name_map[as.character(altID)],
@@ -379,17 +380,8 @@ make_cbc_table <- function(df, attr_order = NULL) {
       ) |>
       select(
         `Postulante:` = nombre_formatted,
-        `Situación económica del hogar:` = need,
-        `País de nacimiento:` = identity,
-        `Requiere la beca porque:` = control,
-        `Dedicación al estudio:` = effort,
-        `Participación comunitaria:` = reciprocity,
-        `Ve la beca como:` = attitude
+        !!!setNames(rlang::syms(ordered), attr_labels[ordered])
       )
-
-    if (!is.null(attr_order)) {
-      alts <- alts[, c("Postulante:", attr_order)]
-    }
   } else {
     # Backward-compatible rendering for the original apple template
     alts <- df |>
@@ -428,24 +420,31 @@ make_cbc_table <- function(df, attr_order = NULL) {
 build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2) {
   niveles <- list(
     need = c(
-      "El hogar llega con dificultad a fin de mes",
-      "El hogar llega con holgura a fin de mes"
+      "Dificultad",
+      "Holgura"
     ),
-    identity = c("Chile", "Venezuela", "Perú"),
+    identity = c(
+      "Chile", 
+      "Venezuela", 
+      "Perú"
+    ),
     control = c(
       "Postuló a otras becas pero no obtuvo financiamiento",
-      "No alcanzó a postular a otras becas porque se venció el plazo"
+      "No alcanzó a postular a tiempo a otras becas"
     ),
     effort = c(
-      "Estudia más que sus compañeros",
-      "Estudia igual que sus compañeros",
-      "Estudia menos que sus compañeros"
+      "Más que sus compañeros",
+      "Igual que sus compañeros",
+      "Menos que sus compañeros"
     ),
     reciprocity = c(
-      "Participó activamente en voluntariado o apoyo comunitario",
-      "No tuvo participación comunitaria"
+      "Ha hecho voluntariado",
+      "No ha hecho voluntariado"
     ),
-    attitude = c("Una ayuda que agradece", "Algo que se merece")
+    attitude = c(
+      "Una ayuda que agradece", 
+      "Algo que se merece"
+    )
   )
 
   # Generate a pair of profiles that differ in at least min_diff attributes
@@ -496,25 +495,17 @@ server <- function(input, output, session) {
   df <- design |>
     filter(respID == respondentID)
 
-  # If the design file still uses the original apple template columns,
-  # auto-generate a Spanish conjoint design so pages cbc_q1 ... cbc_q6
+
   # match the new survey content.
   if (!all(c("rendimiento", "situacion_hogar", "educ_padres") %in% names(df))) {
     df <- build_default_conjoint_design(respondentID, n_questions = 6)
   }
 
   # Random attribute order fixed for this respondent across all 6 questions
-  attr_order <- sample(c(
-    "Situación económica del hogar:",
-    "País de nacimiento:",
-    "Requiere la beca porque:",
-    "Dedicación al estudio:",
-    "Participación comunitaria:",
-    "Ve la beca como:"
-  ))
+  attr_order <- sample(c("need", "identity", "control", "effort", "reciprocity", "attitude"))
 
   # Create the options for each choice question (using the helper function above)
-  # NOTE: This example contains 6 choice questions - update as needed for your study
+  # NOTE: This example contains 6 choice questions 
   tables <- lapply(1:6, function(q) make_cbc_table(df |> filter(qID == q), attr_order = attr_order))
   for (q in 1:6) {
     local({
