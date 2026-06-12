@@ -226,7 +226,7 @@ Este principio mide en qué medida el encuestado considera que la responsabilida
 | Código | Ítem | Dirección |
 |--------|------|-----------|
 | CON_1 | Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado. | **(R)** |
-| CON_2 | Quienes son responsables de sus propios problemas no merecen recibir beneficios sociales. | Directa |
+| CON_2 | Quienes son responsables de sus propios problemas merecen recibir beneficios sociales. | (Refraseo) |
 | CON_3 | El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos. | **(R)** |
 
 *Nota: CON_1 y CON_3 están formulados en dirección favorable al acceso universal; deben recodificarse para que la escala refleje consistentemente la adhesión al principio de condicionalidad por control.*
@@ -238,8 +238,7 @@ Este principio captura la expectativa de que los beneficiarios demuestren gratit
 | Código | Ítem | Dirección |
 |--------|------|-----------|
 | ACT_1 | Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben. | Directa |
-| ACT_2 | Quienes reciben subsidios o ayudas sociales no tienen derecho a quejarse de las condiciones en que los reciben. | Directa |
-| ACT_3 | Está bien que las personas que reciben apoyo del Estado expresen su descontento con las condiciones de los beneficios. | **(R)** |
+| ACT_2 | Está bien que las personas que reciben apoyo del Estado expresen su descontento con las condiciones de los beneficios. | **(R)** |
 
 *Nota: La dimensión de Actitud, cuando se operacionaliza de forma estrictamente simbólica como se hace aquí, tiende a no alcanzar significación estadística en los modelos de merecimiento [@knotz_recast_2022]. Se recomienda retenerla en el instrumento con fines comparativos y de validación cruzada, pero no debe interpretarse como el principal predictor de las percepciones de merecimiento.*
 
@@ -294,7 +293,7 @@ El Esfuerzo se define aquí como la agencia activa y presente del beneficiario o
 | ESF_1 | Las personas que reciben beneficios sociales deberían estar haciendo algo activamente para mejorar su situación, como buscar trabajo o capacitarse. | Directa |
 | ESF_2 | Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan. | Directa |
 | ESF_3 | El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación. | **(R)** |
-| ESF_4 | Es razonable que el monto o la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo. | Directa |
+| ESF_4 | Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo. | Directa |
 | ESF_5 | No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual. | **(R)** |
 
 *Nota metodológica: Dado que esta dimensión no cuenta aún con validación psicométrica en formato de escala Likert, se recomienda someterla a un análisis factorial exploratorio previo antes de incorporarla a un modelo confirmatorio conjunto con las dimensiones CARIN. Una vez establecida su estructura factorial, debería evaluarse su discriminación empírica respecto a las dimensiones de Reciprocidad y Control, que son las más conceptualmente cercanas.*
