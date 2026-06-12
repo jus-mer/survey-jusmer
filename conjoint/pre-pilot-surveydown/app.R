@@ -1,3 +1,5 @@
+Sys.setlocale("LC_ALL", "en_US.UTF-8")
+
 # Package setup ---------------------------------------------------------------
 
 # Install required packages:
@@ -101,18 +103,20 @@ ui <- tagList(
         var sliderEl = document.getElementById(sliderId);
         if (!sliderEl) return null;
 
-        var fromValue = parsePctValue(sliderEl.value);
-        if (fromValue !== null) return fromValue;
+        var rawVal = parseInt(String(sliderEl.value).replace(/[^0-9]/g, ''), 10);
+        if (!Number.isFinite(rawVal)) {
+          var dataFrom = parseInt(String(sliderEl.getAttribute('data-from') || '').replace(/[^0-9]/g, ''), 10);
+          if (!Number.isFinite(dataFrom)) return null;
+          rawVal = dataFrom;
+        }
 
-        var dataFrom = parsePctValue(sliderEl.getAttribute('data-from'));
-        if (dataFrom !== null) return dataFrom;
-
-        var wrapper = sliderEl.parentElement;
-        var fromEl = wrapper ? wrapper.querySelector('.irs-from') : null;
-        var fromText = parsePctValue(fromEl ? fromEl.textContent : null);
-        if (fromText !== null) return fromText;
-
-        return null;
+        // Slider en pesos directos (rango > 100): convertir a porcentaje
+        var sliderMax = parseInt(sliderEl.getAttribute('data-max') || '100', 10);
+        if (sliderMax > 100) {
+          var total = getTotalBudget(sliderId);
+          return Math.round(rawVal / total * 100);
+        }
+        return Math.max(0, Math.min(100, rawVal));
       }
 
       function getTotalBudget(sliderId) {
@@ -121,7 +125,7 @@ ui <- tagList(
         var v1 = parseMoneyValue(o1 ? o1.textContent : null);
         var v2 = parseMoneyValue(o2 ? o2.textContent : null);
         if (v1 !== null && v2 !== null && (v1 + v2) > 0) return v1 + v2;
-        return 1500000;
+        return 2000000;
       }
 
       function formatMoneyCLP(n) {
@@ -132,10 +136,12 @@ ui <- tagList(
         var sliders = document.querySelectorAll('input[id^=cbc_]');
         sliders.forEach(function(sliderEl) {
           var sliderId = sliderEl.id;
-          var pct1 = getSliderPct(sliderId);
-          if (pct1 === null) return;
+          var sliderPct = getSliderPct(sliderId);
+          if (sliderPct === null) return;
 
-          var pct2 = 100 - pct1;
+          // Slider invertido: mover derecha = más para opt2 (derecha/azul)
+          var pct2 = sliderPct;
+          var pct1 = 100 - pct2;
           var totalBudget = getTotalBudget(sliderId);
           var opt1 = totalBudget * (pct1 / 100);
           var opt2 = totalBudget * (pct2 / 100);
@@ -166,23 +172,23 @@ ui <- tagList(
       });
     ")),
     tags$style(HTML("
-      /* Nuclear option - override EVERYTHING about IonRangeSlider appearance */
+      /* Slider track: neutral grey, sin colores que confundan */
       .irs-bar, .irs-bar--single, .irs-bar-edge,
-      .irs--shiny .irs-bar, .irs--shiny .irs-bar-edge { 
-        background-color: #28a745 !important; 
-        background: #28a745 !important;
-        border-top-color: #28a745 !important;
-        border-bottom-color: #28a745 !important;
+      .irs--shiny .irs-bar, .irs--shiny .irs-bar-edge {
+        background-color: #adb5bd !important;
+        background: #adb5bd !important;
+        border-top-color: #adb5bd !important;
+        border-bottom-color: #adb5bd !important;
         height: 8px !important;
         border: none !important;
       }
       .irs-line,
       .irs--shiny .irs-line {
-        background-color: #007bff !important;
-        background: #007bff !important;
-        border-color: #007bff !important;
+        background-color: #adb5bd !important;
+        background: #adb5bd !important;
+        border-color: #adb5bd !important;
         background-image: none !important;
-        height: 6px !important;
+        height: 8px !important;
       }
       .irs--shiny .irs-line::before {
         background: transparent !important;
@@ -301,8 +307,8 @@ ui <- tagList(
 
           bar.style.left = '0%';
           bar.style.width = pct + '%';
-          bar.style.background = '#28a745';
-          bar.style.backgroundColor = '#28a745';
+          bar.style.background = '#adb5bd';
+          bar.style.backgroundColor = '#adb5bd';
         });
       }
 
@@ -334,33 +340,35 @@ ui <- tagList(
 )
 
 # Helper functions ------------------------------------------------------------
-#
-# Function to create the question options based on design values
-#
-# CUSTOMIZE THIS FUNCTION FOR YOUR STUDY:
-#
-# - Replace the attributes (type, price, freshness) with your own product features
-# - Update the image display if needed (or remove if not using images)
-# - Modify the formatting/layout of each option as desired
-# - Modify the number of alternatives appropriately to your study (alt1, alt2, alt3)
 
-make_cbc_table <- function(df) {
+make_cbc_table <- function(df, attr_order = NULL) {
   male_names <- c("Mateo", "Lucas", "Benjamin", "Nicolas", "Daniel", "Santiago", "Tomas", "Joaquin")
   female_names <- c("Sofia", "Valentina", "Isidora", "Martina", "Camila", "Florencia", "Catalina", "Antonia")
 
-  # Assign random person names (mix of men/women) to each alternative id.
+  # Each profile independently draws a male or female name with p = 0.5.
   alt_ids <- sort(unique(df$altID))
-  n_alts <- length(alt_ids)
-  pool <- c(sample(male_names, length(male_names)), sample(female_names, length(female_names)))
-  assigned <- sample(pool, n_alts, replace = FALSE)
+  assigned <- sapply(alt_ids, function(i) {
+    pool <- if (runif(1) < 0.5) male_names else female_names
+    sample(pool, 1)
+  })
   name_map <- stats::setNames(assigned, as.character(alt_ids))
 
-  has_custom_cols <- all(c("rendimiento", "situacion_hogar", "educ_padres") %in% names(df))
+  has_custom_cols <- all(c("need", "identity", "control", "effort", "reciprocity", "attitude") %in% names(df))
 
   if (has_custom_cols) {
     slider_id <- paste0("cbc_q", unique(df$qID)[1])
     names_vec <- unname(name_map[as.character(alt_ids)])
-    
+
+    attr_labels <- c(
+      need        = "Su hogar llega a fin de mes con:",
+      identity    = "País de nacimiento:",
+      control     = "Requiere la beca porque:",
+      effort      = "Estudia:",
+      reciprocity = "Fuera de sus estudios:",
+      attitude    = "Ve la beca como:"
+    )
+    ordered <- if (!is.null(attr_order)) attr_order else names(attr_labels)
+
     alts <- df |>
       mutate(
         nombre = name_map[as.character(altID)],
@@ -372,9 +380,7 @@ make_cbc_table <- function(df) {
       ) |>
       select(
         `Postulante:` = nombre_formatted,
-        `Rendimiento:` = rendimiento,
-        `Situacion en el hogar:` = situacion_hogar,
-        `Educacion de los padres:` = educ_padres
+        !!!setNames(rlang::syms(ordered), attr_labels[ordered])
       )
   } else {
     # Backward-compatible rendering for the original apple template
@@ -411,33 +417,67 @@ make_cbc_table <- function(df) {
   )
 }
 
-build_default_conjoint_design <- function(resp_id, n_questions = 6) {
+build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2) {
   niveles <- list(
-    rendimiento = c("Sobre el promedio", "En el promedio", "Bajo el promedio"),
-    situacion_hogar = c(
-      "Llega con dificultad a fin de mes",
-      "Llega justo a fin de mes",
-      "Llega con holgura a fin de mes"
+    need = c(
+      "Dificultad",
+      "Holgura"
     ),
-    educ_padres = c(
-      "Ninguno tiene educacion superior",
-      "Al menos uno tiene educacion superior"
+    identity = c(
+      "Chile", 
+      "Venezuela", 
+      "Perú"
+    ),
+    control = c(
+      "Postuló a otras becas pero no obtuvo financiamiento",
+      "No alcanzó a postular a tiempo a otras becas"
+    ),
+    effort = c(
+      "Más que sus compañeros",
+      "Igual que sus compañeros",
+      "Menos que sus compañeros"
+    ),
+    reciprocity = c(
+      "Ha hecho voluntariado",
+      "No ha hecho voluntariado"
+    ),
+    attitude = c(
+      "Una ayuda que agradece", 
+      "Algo que se merece"
     )
   )
 
-  tidyr::expand_grid(
-    qID = seq_len(n_questions),
-    altID = 1:2
-  ) |>
-    mutate(
-      profileID = row_number(),
-      respID = resp_id,
-      obsID = qID,
-      rendimiento = sample(niveles$rendimiento, n(), replace = TRUE),
-      situacion_hogar = sample(niveles$situacion_hogar, n(), replace = TRUE),
-      educ_padres = sample(niveles$educ_padres, n(), replace = TRUE)
-    ) |>
-    select(profileID, respID, qID, altID, obsID, rendimiento, situacion_hogar, educ_padres)
+  # Generate a pair of profiles that differ in at least min_diff attributes
+  generate_pair <- function() {
+    repeat {
+      alt1 <- sapply(niveles, function(lvls) sample(lvls, 1))
+      alt2 <- sapply(niveles, function(lvls) sample(lvls, 1))
+      if (sum(alt1 != alt2) >= min_diff) return(list(alt1 = alt1, alt2 = alt2))
+    }
+  }
+
+  rows <- lapply(seq_len(n_questions), function(q) {
+    pair <- generate_pair()
+    data.frame(
+      profileID   = NA_integer_,
+      respID      = resp_id,
+      qID         = q,
+      altID       = 1:2,
+      obsID       = q,
+      need        = c(pair$alt1[["need"]],        pair$alt2[["need"]]),
+      identity    = c(pair$alt1[["identity"]],    pair$alt2[["identity"]]),
+      control     = c(pair$alt1[["control"]],     pair$alt2[["control"]]),
+      effort      = c(pair$alt1[["effort"]],      pair$alt2[["effort"]]),
+      reciprocity = c(pair$alt1[["reciprocity"]], pair$alt2[["reciprocity"]]),
+      attitude    = c(pair$alt1[["attitude"]],    pair$alt2[["attitude"]]),
+      stringsAsFactors = FALSE
+    )
+  })
+
+  result <- do.call(rbind, rows)
+  result$profileID <- seq_len(nrow(result))
+  result[, c("profileID", "respID", "qID", "altID", "obsID",
+             "need", "identity", "control", "effort", "reciprocity", "attitude")]
 }
 
 # Server setup ----------------------------------------------------------------
@@ -455,16 +495,18 @@ server <- function(input, output, session) {
   df <- design |>
     filter(respID == respondentID)
 
-  # If the design file still uses the original apple template columns,
-  # auto-generate a Spanish conjoint design so pages cbc_q1 ... cbc_q6
+
   # match the new survey content.
   if (!all(c("rendimiento", "situacion_hogar", "educ_padres") %in% names(df))) {
     df <- build_default_conjoint_design(respondentID, n_questions = 6)
   }
 
+  # Random attribute order fixed for this respondent across all 6 questions
+  attr_order <- sample(c("need", "identity", "control", "effort", "reciprocity", "attitude"))
+
   # Create the options for each choice question (using the helper function above)
-  # NOTE: This example contains 6 choice questions - update as needed for your study
-  tables <- lapply(1:6, function(q) make_cbc_table(df |> filter(qID == q)))
+  # NOTE: This example contains 6 choice questions 
+  tables <- lapply(1:6, function(q) make_cbc_table(df |> filter(qID == q), attr_order = attr_order))
   for (q in 1:6) {
     local({
       tbl <- tables[[q]]
