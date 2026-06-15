@@ -237,8 +237,8 @@ Este principio captura la expectativa de que los beneficiarios demuestren gratit
 
 | Código | Ítem | Dirección |
 |--------|------|-----------|
-| ACT_1 | Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben. | Directa |
-| ACT_2 | Está bien que las personas que reciben apoyo del Estado expresen su descontento con las condiciones de los beneficios. | **(R)** |
+| ACT_1 | Las personas que reciben beneficios sociales deberían mostrar más gratitud por la ayuda que reciben. | Directa |
+| ACT_2 | Está bien que las personas que reciben beneficios sociales expresen su descontento con las condiciones de los beneficios. | **(R)** |
 
 *Nota: La dimensión de Actitud, cuando se operacionaliza de forma estrictamente simbólica como se hace aquí, tiende a no alcanzar significación estadística en los modelos de merecimiento [@knotz_recast_2022]. Se recomienda retenerla en el instrumento con fines comparativos y de validación cruzada, pero no debe interpretarse como el principal predictor de las percepciones de merecimiento.*
 
@@ -278,7 +278,41 @@ Esta dimensión captura la adhesión al principio de que los beneficios sociales
 | NEC_1 | Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real. | Directa |
 | NEC_2 | Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado. | Directa |
 | NEC_3 | Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales. | Directa |
-| NEC_4 | El Estado debería apoyar a las personas que lo necesitan, independientemente de cuánto tengan o no tengan. | **(R)** |
+
+---
+
+---
+
+## Preguntas adicionales
+
+*¿En qué medida cree que el gobierno debería ser responsable de las siguientes tareas?
+(0 = El gobierno no tiene ninguna responsabilidad; 10 = El gobierno tiene plena responsabilidad)*
+
+| Código | Ítem |
+|--------|------|
+| q53 | Asegurar que los adultos mayores tengan una pensión razonable. |
+| q54 | Asegurar que haya atención médica asequible para todos. |
+| q55 | Asegurar que los desempleados tengan un nivel de vida razonable. |
+| q65 | Asegurar que las minorías étnicas no sean discriminadas. |
+
+*¿Cuál de las siguientes afirmaciones describe mejor su situación actual,
+considerando el total de ingresos que tiene actualmente?*
+
+| Código | Ítem |
+|--------|------|
+| Q97_1 | Tenemos más que suficiente, podemos ahorrar fácilmente. |
+| Q97_2 | Tenemos suficiente para vivir sin dificultades. |
+| Q97_3 | Tenemos justo lo suficiente para vivir. |
+| Q97_4 | No tenemos suficiente y frecuentemente tenemos dificultades para vivir. |
+
+*¿Cómo ve su futuro? ¿Le preocupa alguna de las siguientes cosas?
+(1 = Nunca; 2 = Raramente; 3 = A veces; 4 = Regularmente; 5 = A menudo)*
+
+| Código | Ítem |
+|--------|------|
+| Q98_1 | ...que sus preocupaciones financieras aumenten en los próximos años. |
+| Q98_2 | ...que tendrá dificultades para mantener su posición socioeconómica. |
+| Q98_3 | ...que sus hijos y las próximas generaciones lo tendrán mucho más difícil. |
 
 ---
 
