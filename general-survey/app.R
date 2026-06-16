@@ -14,8 +14,6 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 #   'tidyr'
 # ))
 
-setwd("general-survey") # seteo de ruta del proyecto
-
 # Load packages
 library(shiny)
 library(surveydown)
@@ -27,7 +25,7 @@ library(kableExtra)
 library(tidyr)
 
 # Read in the full survey design file
-design <- read_csv(here("conjoint", "pre-pilot-surveydown", "data", "choice_questions.csv"))
+design <- read_csv("data/choice_questions.csv")
 
 db <- sd_db_connect(ignore = TRUE)
 
