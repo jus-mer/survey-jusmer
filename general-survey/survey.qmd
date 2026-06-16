@@ -18,7 +18,6 @@ survey-settings:
   capture-metadata: true
   all-required: false
   required:
-    - consent_age
     - consent_understand
 
 

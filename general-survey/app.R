@@ -523,8 +523,7 @@ server <- function(input, output, session) {
 
   # Define any conditional skip logic here (skip to page if a condition is true)
   sd_skip_if(
-    sd_value("consent_age") == "no" ~ "end_consent",
-    sd_value("consent_understand") == "no" ~ "end_consent"
+    input$consent_understand == "no" ~ "end_consent"
   )
 
   # Define any conditional display logic here (show a question if a condition is true)

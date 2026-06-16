@@ -20,7 +20,7 @@ survey-settings:
   highlight-unanswered: yes
   highlight-color: orange
   capture-metadata: yes
-  required-questions: []
+  required-questions: consent_understand
 
 system-messages:
   cancel: Cancelar
