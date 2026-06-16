@@ -1,0 +1,1522 @@
+---
+theme-settings:
+  theme: flatly
+  barcolor: "#841414"
+  barposition: top
+  footer-left: "Hecho con [surveydown](https://surveydown.org)"
+  footer-right: '[<i class="bi bi-github"></i> Repositorio GitHub](https://github.com/surveydown-dev/template_default)'
+  footer-center: "JUSMER – Proyecto FONDECYT"
+
+
+survey-settings:
+  show-previous: true
+  use-cookies: true
+  auto-scroll: true
+  rate-survey: false
+  system-language: es
+  highlight-unanswered: true
+  highlight-color: orange
+  capture-metadata: true
+  all-required: false
+  required:
+    - consent_age
+    - consent_understand
+
+
+system-messages:
+  warning: "Advertencia"
+  previous: "Página anterior"
+  next: "Página siguiente"
+  exit: "Finalizar encuesta"
+---
+
+```{r}
+library(surveydown)
+```
+
+--- welcome
+
+<center>
+# Pre-Piloto Encuesta justicia y merecimiento
+</center>
+
+Muchas gracias por participar en esta encuesta del proyecto FONDECYT "Justicia de Mercado y Merecimiento del Bienestar Social - [JUSMER](https://jusmer.com/)". El objetivo de esta encuesta es entender mejor las opiniones de las personas sobre la justicia y el merecimiento en el contexto de la desigualdad social.
+
+Estamos pre-testeando una sección de la encuesta y nos gustaría mucho que pudiera responderla y nos hiciera comentarios, no debería tomar más de 5 minutos. Sus respuestas serán completamente anónimas y se utilizarán únicamente con fines de investigación.
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'consent_understand',
+  label = "Acepto participar en esta encuesta y entiendo que mis respuestas serán anónimas y utilizadas únicamente con fines de investigación.",
+  option = c(
+    'Si' = 'yes',
+    'No'  = 'no'
+  )
+)
+```
+
+
+```{r}
+sd_nav(page_next = "clasicos",
+  label_next = "Siguiente")
+```
+
+--- clasicos
+
+<center>
+## Items clásicos justicia de mercado 
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'mj_1',
+  label = "Es justo que las personas con mayores ingresos tengan acceso a mejores servicios de salud",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'mj_2',
+  label = "Es justo que las personas con mayores ingresos tengan acceso a mejores servicios de educación",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'mj_3',
+  label = "Es justo que las personas con mayores ingresos tengan acceso a mejores servicios de pensiones",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "reflex",
+  label_next = "Siguiente")
+```
+
+--- reflex
+
+<center>
+## Items reflexivos justicia de mercado 
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'ref_1',
+  label = "Es justo que yo tenga acceso a mejor salud si puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'ref_2',
+  label = "Es justo que yo tenga acceso a mejor educación si puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'ref_3',
+  label = "Es justo que yo tenga acceso a mejor pensión si puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+<center>
+## Items proyectivos justicia de mercado 
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'proy_1',
+  label = "Está bien que mis hijos tengan acceso a mejores servicios de salud que otros niños si es que puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'proy_2',
+  label = "Está bien que mis hijos tengan acceso a mejores servicios de educación que otros niños si es que puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'proy_3',
+  label = "Está bien que mis hijos tengan acceso a mejores servicios de pensiones que otros niños si es que puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'proy_4',
+  label = "Está bien que mis hijos puedan acceder a la educación privada, a pesar de que esto signifique que niños con menos recursos no puedan pagar por una educación de mayor calidad",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'proy_4',
+  label = "Está bien que mis hijos puedan acceder a salud privada, a pesar de que esto signifique que niños con menos recursos no puedan pagar por una educación de mayor calidad",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "ranking",
+  label_next = "Siguiente")
+```
+
+--- ranking
+
+<center>
+## Ranking de inversión pública en políticas 
+</center>
+
+```{r}
+sd_question(
+  type   = "matrix",
+  id     = "ranking_politicas",
+  label  = "Asigne una prioridad a cada área de inversión de fondos públicos:",
+  row    = c(
+    "Educación"        = "educacion",
+    "Salud"            = "salud",
+    "Pensiones"        = "pensiones",
+    "Salas cunas" = "cuidado_ninos",
+    "Carreteras" = "carreteras"
+  ),
+  option = c(
+    "1° prioridad" = "1",
+    "2° prioridad" = "2",
+    "3° prioridad" = "3",
+    "4° prioridad" = "4",
+    "5° prioridad" = "5"
+  )
+)
+```
+
+<center>
+## Propuesta de priorización de políticas (Busemeyer et al., 2018)
+</center>
+
+*A continuación, voy a mencionar varios ámbitos de la actividad gubernamental. Por favor, dígame si le gustaría que se aumentara o se redujera el gasto público en cada uno de ellos. Tenga en cuenta que «más» o «mucho más» podría implicar un alza de impuestos.*
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'rank_1',
+  label = "Educación",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'El mismo gasto'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'rank_2',
+  label = "Salud",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'El mismo gasto'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'rank_3',
+  label = "Pensiones",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'El mismo gasto'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'rank_4',
+  label = "Salas cuna",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'El mismo gasto'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'rank_5',
+  label = "Carreteras",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'El mismo gasto'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "marketizacion",
+  label_next = "Siguiente")
+```
+
+--- marketizacion
+
+<center>
+## Percepción de marketización de prestaciones sociales
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_1',
+  label = "En general, ¿cree que el acceso a servicios de salud es muy desigual, algo desigual, algo igual o muy igual?",
+  option = c(
+    'Muy igual' = '4',
+    'Algo igual'    = '3',
+    'Algo desigual' = '2',
+    'Muy desigual' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_2',
+  label = "En general, ¿cree que el acceso a servicios de educación es muy desigual, algo desigual, algo igual o muy igual?",
+  option = c(
+    'Muy igual' = '4',
+    'Algo igual'    = '3',
+    'Algo desigual' = '2',
+    'Muy desigual' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_3',
+  label = "En general, ¿cree que el acceso a servicios de pensiones es muy desigual, algo desigual, algo igual o muy igual?",
+  option = c(
+    'Muy igual' = '4',
+    'Algo igual'    = '3',
+    'Algo desigual' = '2',
+    'Muy desigual' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_4',
+  label = "¿Cree que la desigualdad en el acceso a servicios de salud es algo buena, algo mala, muy buena o muy mala?",
+  option = c(
+    'Muy buena' = '4',
+    'Algo buena'    = '3',
+    'Algo mala' = '2',
+    'Muy mala' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_5',
+  label = "¿Cree que la desigualdad en el acceso a servicios de educación es algo buena, algo mala, muy buena o muy mala?",
+  option = c(
+    'Muy buena' = '4',
+    'Algo buena'    = '3',
+    'Algo mala' = '2',
+    'Muy mala' = '1'
+  )
+)
+```
+
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_6',
+  label = "¿Cree que la desigualdad en el acceso a servicios de pensiones es algo buena, algo mala, muy buena o muy mala?",
+  option = c(
+    'Muy buena' = '4',
+    'Algo buena'    = '3',
+    'Algo mala' = '2',
+    'Muy mala' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_7',
+  label = "¿Cree que la desigualdad en el acceso a servicios de salud es algo justa, algo injusta, muy justa o muy injusta?",
+  option = c(
+    'Muy justa' = '4',
+    'Algo justa'    = '3',
+    'Algo injusta' = '2',
+    'Muy injusta' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_8',
+  label = "¿Cree que la desigualdad en el acceso a servicios de educación es algo justa, algo injusta, muy justa o muy injusta?",
+  option = c(
+    'Muy justa' = '4',
+    'Algo justa'    = '3',
+    'Algo injusta' = '2',
+    'Muy injusta' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_9',
+  label = "¿Cree que la desigualdad en el acceso a servicios de pensiones es algo justa, algo injusta, muy justa o muy injusta?",
+  option = c(
+    'Muy justa' = '4',
+    'Algo justa'    = '3',
+    'Algo injusta' = '2',
+    'Muy injusta' = '1'
+  )
+)
+```
+
+
+```{r}
+sd_nav(page_next = "valor",
+  label_next = "Siguiente")
+```
+
+--- valor
+
+<center>
+## Valor de la provisión pública
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'valor_1',
+  label = "¿Estaría bien que los hospitales públicos se concesionaran a privados si ellos son capaces de ofrecer un mejor servicio?",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'valor_2',
+  label = "¿Estaría bien que los liceos municipales se concesionaran a agentes privados si ellos son capaces de ofrecer un mejor servicio?",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'valor_3',
+  label = "La calidad del servicio en salud debería ser igual para todos, aunque esto implique que mi familia no pueda acceder a mejores servicios si pudiera pagar por ellos",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'valor_4',
+  label = "La calidad del servicio en educación debería ser igual para todos, aunque esto implique que mi familia no pueda acceder a mejores servicios si pudiera pagar por ellos",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'valor_5',
+  label = "La calidad del servicio en pensiones debería ser igual para todos, aunque esto implique que mi familia no pueda acceder a mejores servicios si pudiera pagar por ellos",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "decomodifica",
+  label_next = "Siguiente")
+```
+
+--- decomodifica
+
+<center>
+## Decomodificación de servicios sociales
+</center>
+
+
+```{r}
+sd_nav(page_next = "lucro",
+  label_next = "Siguiente")
+```
+
+--- lucro 
+
+<center>
+## Lucro de servicios sociales
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'lucro_1',
+  label = "¿Qué tan justo le parece que empresas privadas obtengan ganancias monetarias administrando fondos de pensiones?",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'lucro_2',
+  label = "¿Qué tan justo le parece que instituciones privadas obtengan ganancias monetarias ofreciendo servicios de educación?",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'lucro_3',
+  label = "¿Qué tan justo le parece que instituciones privadas obtengan ganancias monetarias ofreciendo servicios de salud?",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "participa",
+  label_next = "Siguiente")
+```
+
+--- participa
+
+<center>
+## Percepción de provisión privada y pública
+</center>
+
+*En Chile, algunos ámbitos de prestaciones y beneficios sociales están más a cargo del estado, en otras existe una participación de privados. Al respecto...*
+
+¿Quién es más **eficiente** en la provisión de los siguientes servicios?
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'efic_1',
+  label  = "Salud",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'efic_2',
+  label  = "Educación",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'efic_3',
+  label  = "Pensiones",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'efic_4',
+  label  = "Salas cuna",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'efic_5',
+  label  = "Carreteras",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+¿Quién es más **responsable** en la provisión los siguientes servicios?:
+
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'resp_1',
+  label  = "Salud",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'resp_2',
+  label  = "Educación",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'resp_3',
+  label  = "Pensiones",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'resp_4',
+  label  = "Salas cuna",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'resp_5',
+  label  = "Carreteras",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+Considerando la realidad Chilena, ¿quién debería participar más en en la provisión de los siguientes servicios?:
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'part_1',
+  label  = "Salud",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'part_2',
+  label  = "Educación",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'part_3',
+  label  = "Pensiones",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'part_4',
+  label  = "Salas cuna",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'part_5',
+  label  = "Carreteras",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+Considerando la realidad Chilena, ¿en qué medida se hacen cargo el estado o los privados de los siguientes servicios?
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_1',
+  label  = "Salud",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_2',
+  label  = "Educación",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_3',
+  label  = "Pensiones",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_4',
+  label  = "Salas cuna",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_5',
+  label  = "Carreteras",
+  option = c(
+    "Estado"   = "estado",
+    " "        = "estado_medio", 
+    "  "       = "neutral_izq", # espacio único
+    "Neutral"  = "neutral",
+    "   "      = "neutral_der",
+    "    "     = "privados_medio",  # doble espacio único
+    "Privados" = "privados"
+  ),
+  selected = 'neutral'
+)
+```
+
+```{r}
+sd_nav(page_next = "neoliberal",
+  label_next = "Siguiente")
+```
+
+--- neoliberal
+
+<center>
+## Escala de anti-neoliberalismo (Factor 2)
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_1',
+  label = "El Gobierno debería proporcionar a toda la población servicios básicos como la asistencia sanitaria y la asistencia jurídica de forma gratuita",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_2',
+  label = "Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería hacerlo",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_3',
+  label = "La sociedad debería proporcionar recursos y servicios gratuitos a las personas que no pueden permitírselos",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_4',
+  label = "Las personas con ingresos más elevados deberían pagar más impuestos que las que tienen ingresos más bajos",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_5',
+  label = "Las personas acomodadas de este país deberían ayudar a las menos afortunadas",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_6',
+  label = "No está bien que haya gente que pase hambre en este país",
+  option = c(
+    'Muy de acuerdo' = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+--- control
+
+<center>
+## Control 
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'control_1',
+  label = "Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'control_2',
+  label = "Quienes son responsables de sus propios problemas merecen recibir beneficios sociales.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'control_3',
+  label = "El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "actitud",
+  label_next = "Siguiente")
+```
+
+--- actitud
+
+<center>
+## Actitud
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'actitud_1',
+  label = "Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'actitud_2',
+  label = "Está bien que las personas que reciben apoyo del Estado expresen su descontento con las condiciones de los beneficios.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "reciproc",
+  label_next = "Siguiente")
+```
+
+--- reciproc
+
+<center>
+## Reciprocidad
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'reciproc_1',
+  label = "Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'reciproc_2',
+  label = "No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'reciproc_3',
+  label = "Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'actitud_4',
+  label = "El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "id",
+  label_next = "Siguiente")
+```
+
+--- id
+
+<center>
+## Identidad
+</center>
+
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'id_1',
+  label = "Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'id_2',
+  label = "Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'id_3',
+  label = "Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "necesidad",
+  label_next = "Siguiente")
+```
+
+
+--- necesidad
+
+<center>
+## Necesidad
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'nec_1',
+  label = "Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'nec_2',
+  label = "Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'nec_3',
+  label = "Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales.",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+
+```{r}
+sd_nav(page_next = "esfuerzo",
+  label_next = "Siguiente")
+```
+
+--- esfuerzo
+
+<center>
+## Esfuerzo (NICER)
+</center>
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'esf_1',
+  label = "Las personas que reciben beneficios sociales deberían estar haciendo algo activamente para mejorar su situación, como buscar trabajo o capacitarse",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'esf_2',
+  label = "Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'esf_3',
+  label = "El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'esf_4',
+  label = "Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'esf_5',
+  label = "No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual",
+  option = c(
+    'Muy de acuerdo'    = '5',
+    'De acuerdo' = '4',
+    'Ni de acuerdo ni en desacuerdo'    = '3',
+    'En desacuerdo' = '2',
+    'Muy en desacuerdo' = '1'
+  )
+)
+```
+
+```{r}
+sd_nav(page_next = "final",
+  label_next = "Siguiente")
+```
+
+--- final
+
+<center>
+## Final de la encuesta
+</center>
+
+¡La encuesta ha finalizado! ¡Gracias por su participación!
+
+Puede cerrar la ventana ahora.
+
+```{r}
+sd_close()
+```
