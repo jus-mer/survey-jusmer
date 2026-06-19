@@ -435,22 +435,21 @@ sd_nav(
 
 --- cbc_practice_page
 
-# Pregunta de práctica
+# Tarea de asignación
 
-A continuación, encontrará una pregunta de ejemplo para practicar la tarea a realizar en las siguientes secciones. 
+A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
 
+Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice con la tarea.
 
+**La situación:**
 
-**Contexto:**
-
-- Imagine que forma parte de un comité universitario encargado de asignar una beca de apoyo a estudiantes de primer año.
-- Los dos postulantes que vera a continuación fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar.
-- La información sobre cada postulante fue proporcionada y validad por su colegio de egreso.
-- La beca disponible es de $2.000.000 para el primer año.
+Imagine que Ud. forma parte de un comité universitario encargado de asignar una beca de apoyo a estudiantes de primer año. A lo largo de esta sección Ud. verá varios pares de postulantes distintos. En cada par, ambos postulantes fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar, y la información que verá sobre cada uno fue proporcionada y validada por su colegio de egreso. La beca disponible es de $2.000.000 para el primer año.
 
 **Su tarea:**
 
-Reparta la beca entre los dos postulantes tomando en consideración las características de ambos, y asignando un porcentaje del monto total a cada uno. La distribución debe sumar el 100%. Por ejemplo: 70% a uno y 30% al otro.
+En cada par, Ud. debe repartir la beca asignando un porcentaje a cada postulante. La distribución debe sumar siempre el 100%, lo que significa que darle más a uno implica darle menos a otro. Puede asignar la proporción que estime conveniente, incluido un reparto igualitario.
+
+No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.
 
 **¿Cómo hacer la asignación?**
 
@@ -506,7 +505,7 @@ kbl(t(alts), escape = FALSE) |>
   column_spec(1, bold = TRUE)
 
 shiny::p(
-  "¿Cuánto dinero (beca) le daría a cada postulante?",
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
   style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
 )
 
@@ -544,14 +543,14 @@ sd_nav(
 --- cbc_q1_page
 
 <center>
-## Pregunta 1
+## Tarea 1
 </center>
 
 ```{r}
 sd_output("cbc1_table")
 
 shiny::p(
-  "¿Cuánto dinero (beca) le daría a cada postulante?",
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
   style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
 )
 
@@ -575,14 +574,14 @@ sd_nav(
 --- cbc_q2_page
 
 <center>
-## Pregunta 2
+## Tarea 2
 </center>
 
 ```{r}
 sd_output("cbc2_table")
 
 shiny::p(
-  "¿Cuánto dinero (beca) le daría a cada postulante?",
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
   style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
 )
 
@@ -606,14 +605,14 @@ sd_nav(
 --- cbc_q3_page
 
 <center>
-## Pregunta 3
+## Tarea 3
 </center>
 
 ```{r}
 sd_output("cbc3_table")
 
 shiny::p(
-  "¿Cuánto dinero (beca) le daría a cada postulante?",
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
   style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
 )
 
@@ -637,14 +636,14 @@ sd_nav(
 --- cbc_q4_page
 
 <center>
-## Pregunta 4
+## Tarea 4
 </center>
 
 ```{r}
 sd_output("cbc4_table")
 
 shiny::p(
-  "¿Cuánto dinero (beca) le daría a cada postulante?",
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
   style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
 )
 
@@ -668,14 +667,14 @@ sd_nav(
 --- cbc_q5_page
 
 <center>
-## Pregunta 5
+## Tarea 5
 </center>
 
 ```{r}
 sd_output("cbc5_table")
 
 shiny::p(
-  "¿Cuánto dinero (beca) le daría a cada postulante?",
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
   style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
 )
 
@@ -699,14 +698,14 @@ sd_nav(
 --- cbc_q6_page
 
 <center>
-## Pregunta 6
+## Tarea 6
 </center>
 
 ```{r}
 sd_output("cbc6_table")
 
 shiny::p(
-  "¿Cuánto dinero (beca) le daría a cada postulante?",
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
   style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
 )
 

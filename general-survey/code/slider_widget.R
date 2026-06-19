@@ -25,7 +25,7 @@ allocation_slider <- function(id, total_budget = 2000000, nombre1 = "Opción 1",
     shiny::div(
       style = "display: flex; gap: 8px; justify-content: center; margin-top: 14px;",
       shiny::div(
-        style = "border: 2px solid #28a745; padding: 8px 4px; border-radius: 5px; text-align: center; flex: 1; min-width: 0; background-color: #f0fff4; position: relative; overflow: hidden;",
+        style = "border: 2px solid #28a745; padding: 8px 4px; border-radius: 5px; text-align: left; flex: 1; min-width: 0; background-color: #f0fff4; position: relative; overflow: hidden;",
         shiny::div(id = paste0(id, "_shade1"), style = "position: absolute; left: 0; right: 0; bottom: 0; height: 50%; background: rgba(40, 167, 69, 0.18); pointer-events: none; transition: height 120ms linear; z-index: 0;"),
         shiny::div(
           style = "position: relative; z-index: 1;",
@@ -35,7 +35,7 @@ allocation_slider <- function(id, total_budget = 2000000, nombre1 = "Opción 1",
         )
       ),
       shiny::div(
-        style = "border: 2px solid #007bff; padding: 8px 4px; border-radius: 5px; text-align: center; flex: 1; min-width: 0; background-color: #f0f8ff; position: relative; overflow: hidden;",
+        style = "border: 2px solid #007bff; padding: 8px 4px; border-radius: 5px; text-align: right; flex: 1; min-width: 0; background-color: #f0f8ff; position: relative; overflow: hidden;",
         shiny::div(id = paste0(id, "_shade2"), style = "position: absolute; left: 0; right: 0; bottom: 0; height: 50%; background: rgba(0, 123, 255, 0.18); pointer-events: none; transition: height 120ms linear; z-index: 0;"),
         shiny::div(
           style = "position: relative; z-index: 1;",
