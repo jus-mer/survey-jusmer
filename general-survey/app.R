@@ -25,7 +25,7 @@ library(kableExtra)
 library(tidyr)
 
 # Read in the full survey design file
-design <- read_csv(here("general-survey/data/choice_questions.csv"))
+design <- read_csv("data/choice_questions.csv")
 
 db <- sd_db_connect(ignore = TRUE)
 
