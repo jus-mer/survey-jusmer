@@ -22,7 +22,7 @@ sexo:
     Femenino: '1'
 year_of_birth:
   type: select
-  label: (1) ¿En qué año nació?
+  label: ¿En qué año nació?
   options:
     Prefiero no decir: prefer_not_say
     '2003': '2003'
@@ -111,8 +111,8 @@ year_of_birth:
     '1920': '1920'
 education:
   type: select
-  label: (4) ¿Cuál es el nivel educativo más alto que ha completado? Si actualmente
-    está estudiando, use el grado más alto que haya obtenido.
+  label: ¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está
+    estudiando, use el grado más alto que haya obtenido.
   options:
     Menos que primaria: less_than_high_school
     Educación media: high_school

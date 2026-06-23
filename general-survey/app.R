@@ -1,5 +1,5 @@
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
-setwd("general-survey")
+
 # Package setup ---------------------------------------------------------------
 
 # Install required packages:
