@@ -5,9 +5,9 @@ theme-settings:
   theme: flatly
   barposition: top
   barcolor: '#841414'
-  footer-left: Hecho con [surveydown](https://surveydown.org)
-  footer-center: JUSMER – Proyecto FONDECYT
-  footer-right: '[<i class="bi bi-github"></i> Repositorio GitHub](https://github.com/surveydown-dev/template_default)'
+  footer-left: ''
+  footer-center: ''
+  footer-right: ''
 
 survey-settings:
   show-previous: yes
@@ -20,7 +20,13 @@ survey-settings:
   highlight-unanswered: yes
   highlight-color: orange
   capture-metadata: yes
-  required-questions: consent_understand
+  required-questions:
+  - consent_understand
+  - ranking_politicas_educacion
+  - ranking_politicas_salud
+  - ranking_politicas_pensiones
+  - ranking_politicas_cuidado_ninos
+  - ranking_politicas_carreteras
 
 system-messages:
   cancel: Cancelar
@@ -32,7 +38,7 @@ system-messages:
   rating-title: Antes de irse...
   rating-text: 'Califique su experiencia en la encuesta:'
   rating-scale: de 1-malo a 5-excelente
-  previous: Página anterior
+  previous: Anterior
   next: Página siguiente
   exit: Finalizar encuesta
   close-tab: Por favor, cierre esta pestaña manualmente para salir de la encuesta.

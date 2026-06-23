@@ -237,6 +237,39 @@ ui <- tagList(
       .question-container[data-question-id='dec_2'] {
         display: none;
       }
+      /* No sabe/no responde is always coded as value=99 across the
+         survey's mc questions - set it apart from the substantive scale
+         above it with extra spacing. */
+      .shiny-options-group .radio:has(input[value='99']) {
+        margin-top: 18px !important;
+      }
+      /* Estado-vs-privados sliders (cargo_/efic_/part_): show a label only
+         at both extremes and the midpoint. The 4 unlabeled stops in
+         between (js-grid-text-1/2/4/5) stay fully selectable as
+         intermediate points - they just don't get a tick or label. */
+      .question-container[data-question-id^='cargo_'] .irs-grid-pol,
+      .question-container[data-question-id^='efic_'] .irs-grid-pol,
+      .question-container[data-question-id^='part_'] .irs-grid-pol,
+      .question-container[data-question-id^='cargo_'] .js-grid-text-1,
+      .question-container[data-question-id^='cargo_'] .js-grid-text-2,
+      .question-container[data-question-id^='cargo_'] .js-grid-text-4,
+      .question-container[data-question-id^='cargo_'] .js-grid-text-5,
+      .question-container[data-question-id^='efic_'] .js-grid-text-1,
+      .question-container[data-question-id^='efic_'] .js-grid-text-2,
+      .question-container[data-question-id^='efic_'] .js-grid-text-4,
+      .question-container[data-question-id^='efic_'] .js-grid-text-5,
+      .question-container[data-question-id^='part_'] .js-grid-text-1,
+      .question-container[data-question-id^='part_'] .js-grid-text-2,
+      .question-container[data-question-id^='part_'] .js-grid-text-4,
+      .question-container[data-question-id^='part_'] .js-grid-text-5 {
+        display: none !important;
+      }
+      .question-container[data-question-id^='cargo_'] .irs-grid-text,
+      .question-container[data-question-id^='efic_'] .irs-grid-text,
+      .question-container[data-question-id^='part_'] .irs-grid-text {
+        font-size: 11px !important;
+        line-height: 11px !important;
+      }
       /* Match conjoint table option columns with option box colors */
       .cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(2),
       .cell-output-display table.table.table-condensed > thead > tr > th:nth-child(2),
@@ -294,22 +327,9 @@ ui <- tagList(
         });
       }
 
-      function hideBlankSliderLabels() {
-        var prefixes = ['efic_', 'resp_', 'part_', 'cargo_'];
-        prefixes.forEach(function(prefix) {
-          document.querySelectorAll(\".question-container[data-question-id^='\" + prefix + \"'] .irs-grid-text\").forEach(function(el) {
-            var txt = el.textContent;
-            if (txt.trim() === '' || /^\\s*[\\d.]+\\s*$/.test(txt)) {
-              el.style.visibility = 'hidden';
-            }
-          });
-        });
-      }
-
       function applyUiPolish() {
         localizeNavButtons();
         paintSliderFill();
-        hideBlankSliderLabels();
       }
 
       if (document.readyState === 'loading') {
@@ -524,6 +544,18 @@ server <- function(input, output, session) {
     input$consent_understand == "no" ~ "end_consent"
   )
 
+  # Block advancing past the ranking page until at least 3 of the 5 rows
+  # have a priority assigned.
+  sd_stop_if(
+    (sum(c(
+      !is.null(input$ranking_politicas_educacion),
+      !is.null(input$ranking_politicas_salud),
+      !is.null(input$ranking_politicas_pensiones),
+      !is.null(input$ranking_politicas_cuidado_ninos),
+      !is.null(input$ranking_politicas_carreteras)
+    )) < 3) ~ "Hay preguntas sin responder"
+  )
+
   # Define any conditional display logic here (show a question if a condition is true)
   sd_show_if()
 
@@ -545,6 +577,7 @@ server <- function(input, output, session) {
   # Enforce unique priority selection across the ranking matrix rows.
   # When a priority is chosen in one row, that same value is disabled
   # (greyed out) in the other two rows so it cannot be assigned twice.
+  ranking_filled_count <- reactiveVal(0)
   observe({
     rows <- c("educacion", "salud", "pensiones", "cuidado_ninos", "carreteras")
     selected <- setNames(
@@ -578,13 +611,40 @@ server <- function(input, output, session) {
         ))
       }
     }
+
+    # Once exactly 4 of the 5 rows have a priority, the remaining row and
+    # remaining priority value are both forced (only one combination is
+    # left), so auto-assign it instead of waiting for the user to do it.
+    # Only do this when the 4th row was just *added* (count rising to 4),
+    # not when it's the result of clearing the 5th row to make a change -
+    # otherwise deselecting a row while all 5 are filled would instantly
+    # get re-filled, making it look like deselection is broken.
+    filled_rows <- rows[!sapply(selected, is.null)]
+    current_count <- length(filled_rows)
+    previous_count <- isolate(ranking_filled_count())
+    if (current_count == 4 && previous_count < current_count) {
+      missing_row <- setdiff(rows, filled_rows)
+      missing_priority <- setdiff(as.character(1:5), unlist(selected[filled_rows]))
+      if (length(missing_row) == 1 && length(missing_priority) == 1) {
+        updateRadioButtons(
+          session,
+          paste0("ranking_politicas_", missing_row),
+          selected = missing_priority
+        )
+      }
+    }
+    ranking_filled_count(current_count)
   })
 
+  # dec_2 only applies if dec_1's answer is not 0 (i.e. some students would
+  # be admitted for free, so paying extra to support them is a real choice).
   observeEvent(input$confirm_dec1, {
-    runjs("
-      var el = document.querySelector(\".question-container[data-question-id='dec_2']\");
-      if (el) el.style.display = 'block';
-    ")
+    show_dec2 <- !is.null(input$dec_1) && input$dec_1 != 0
+    runjs(sprintf(
+      "var el = document.querySelector(\".question-container[data-question-id='dec_2']\");
+       if (el) el.style.display = '%s';",
+      if (show_dec2) "block" else "none"
+    ))
   }, ignoreNULL = TRUE)
 
   # Run surveydown server and define database
@@ -593,4 +653,5 @@ server <- function(input, output, session) {
 
 # Launch the app
 shiny::shinyApp(ui = ui, server = server)
+
 
