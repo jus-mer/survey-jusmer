@@ -1,5 +1,5 @@
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
-
+setwd("general-survey")
 # Package setup ---------------------------------------------------------------
 
 # Install required packages:
@@ -237,10 +237,10 @@ ui <- tagList(
       .question-container[data-question-id='dec_2'] {
         display: none;
       }
-      /* No sabe/no responde is always coded as value=99 across the
-         survey's mc questions - set it apart from the substantive scale
-         above it with extra spacing. */
-      .shiny-options-group .radio:has(input[value='99']) {
+      /* No sé/Prefiero no responder are always coded as value=98/99
+         across the survey's mc questions - set them apart from the
+         substantive scale above them with extra spacing. */
+      .shiny-options-group .radio:has(input[value='98']) {
         margin-top: 18px !important;
       }
       /* Estado-vs-privados sliders (cargo_/efic_/part_): show a label only

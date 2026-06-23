@@ -126,9 +126,6 @@ feedback:
   type: unknown
   label: ¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar
     cualquier observación de forma, contenido o diseño en el cuadro a continuación.
-cmt_cbc_preambulo:
-  type: unknown
-  label: Comentarios (opcional)
 cbc_practice:
   type: slider_numeric
   label: []
@@ -334,83 +331,79 @@ cbc_q6_comment:
   label: Comentarios
 mj_1:
   type: mc
-  label: Es justo que las personas de altos ingresos puedan acceder a una mejor atención
-    de salud que las personas con ingresos más bajos
+  label: (1) Es justo que las personas de altos ingresos puedan acceder a una mejor
+    atención de salud que las personas con ingresos más bajos
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 mj_2:
   type: mc
-  label: Es justo que las personas de altos ingresos tengan una mejor educación para
-    sus hijos que las personas con ingresos más bajos
+  label: (2) Es justo que las personas de altos ingresos tengan una mejor educación
+    para sus hijos que las personas con ingresos más bajos
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 mj_3:
   type: mc
-  label: Es justo que las personas de altos ingresos tengan mejores pensiones que
-    las personas con ingresos más bajos
+  label: (3) Es justo que las personas de altos ingresos tengan mejores pensiones
+    que las personas con ingresos más bajos
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_reflex:
   type: unknown
   label: Comentarios (opcional)
 ref_1:
   type: mc
-  label: Es justo que yo tenga acceso a mejor salud si puedo pagar por ello
+  label: (4) Es justo que yo tenga acceso a mejor salud si puedo pagar por ello
   options:
     Muy justo: '5'
     Justo: '4'
     Ni justo ni injusto: '3'
     Injusto: '2'
     Muy injusto: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
 ref_2:
   type: mc
-  label: Es justo que yo tenga acceso a mejor educación si puedo pagar por ello
+  label: (5) Es justo que yo tenga acceso a mejor educación si puedo pagar por ello
   options:
     Muy justo: '5'
     Justo: '4'
     Ni justo ni injusto: '3'
     Injusto: '2'
     Muy injusto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 ref_3:
   type: mc
-  label: Es justo que yo tenga acceso a mejor pensión si puedo pagar por ello
+  label: (6) Es justo que yo tenga acceso a mejor pensión si puedo pagar por ello
   options:
     Muy justo: '5'
     Justo: '4'
     Ni justo ni injusto: '3'
     Injusto: '2'
     Muy injusto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 proy_1:
   type: mc
-  label: Está bien que mis hijos tengan acceso a mejores servicios de salud que otros
-    niños si es que puedo pagar por ello
-  options:
-    Muy justo: '5'
-    Justo: '4'
-    Ni justo ni injusto: '3'
-    Injusto: '2'
-    Muy injusto: '1'
-    No sabe/no responde: '99'
-proy_2:
-  type: mc
-  label: Está bien que mis hijos tengan acceso a mejores servicios de educación que
+  label: (7) Está bien que mis hijos tengan acceso a mejores servicios de salud que
     otros niños si es que puedo pagar por ello
   options:
     Muy justo: '5'
@@ -418,10 +411,23 @@ proy_2:
     Ni justo ni injusto: '3'
     Injusto: '2'
     Muy injusto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
+proy_2:
+  type: mc
+  label: (8) Está bien que mis hijos tengan acceso a mejores servicios de educación
+    que otros niños si es que puedo pagar por ello
+  options:
+    Muy justo: '5'
+    Justo: '4'
+    Ni justo ni injusto: '3'
+    Injusto: '2'
+    Muy injusto: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
 ranking_politicas:
   type: matrix
-  label: 'Asigne una prioridad a cada área de inversión de fondos públicos:'
+  label: '(9) Asigne una prioridad a cada área de inversión de fondos públicos:'
   options:
     1° prioridad: '1'
     2° prioridad: '2'
@@ -481,98 +487,95 @@ ranking_politicas_carreteras:
     5° prioridad: '5'
 rank_1:
   type: mc
-  label: Educación
+  label: (10) Educación
   options:
     Mucho más gasto: '5'
     Más gasto: '4'
     Ni más ni menos de lo que se gasta actualmente: '3'
     Menos gasto: '2'
     Mucho menos gasto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 rank_2:
   type: mc
-  label: Salud
+  label: (11) Salud
   options:
     Mucho más gasto: '5'
     Más gasto: '4'
     Ni más ni menos de lo que se gasta actualmente: '3'
     Menos gasto: '2'
     Mucho menos gasto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 rank_3:
   type: mc
-  label: Pensiones
+  label: (12) Pensiones
   options:
     Mucho más gasto: '5'
     Más gasto: '4'
     Ni más ni menos de lo que se gasta actualmente: '3'
     Menos gasto: '2'
     Mucho menos gasto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 rank_4:
   type: mc
-  label: Salas cuna
+  label: (13) Salas cuna
   options:
     Mucho más gasto: '5'
     Más gasto: '4'
     Ni más ni menos de lo que se gasta actualmente: '3'
     Menos gasto: '2'
     Mucho menos gasto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 rank_5:
   type: mc
-  label: Carreteras
+  label: (14) Carreteras
   options:
     Mucho más gasto: '5'
     Más gasto: '4'
     Ni más ni menos de lo que se gasta actualmente: '3'
     Menos gasto: '2'
     Mucho menos gasto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 pres_1:
   type: mc
-  label: El acceso a la salud es desigual en Chile
+  label: (15) El acceso a la salud es desigual en Chile
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 pres_2:
   type: mc
-  label: El acceso a la educación es desigual en Chile
+  label: (16) El acceso a la educación es desigual en Chile
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 pres_3:
   type: mc
-  label: Las pensiones son desiguales en Chile
+  label: (17) Las pensiones son desiguales en Chile
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 pres_4:
   type: mc
-  label: ¿Usted cree que el acceso a la salud se ha vuelto más desigual entre quienes
-    tienen mayores y menores ingresos?
-  options:
-    Muy de acuerdo: '5'
-    De acuerdo: '4'
-    Ni de acuerdo ni en desacuerdo: '3'
-    En desacuerdo: '2'
-    Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
-pres_5:
-  type: mc
-  label: ¿Usted cree que el acceso a la educación se ha vuelto más desigual entre
+  label: (18) ¿Usted cree que el acceso a la salud se ha vuelto más desigual entre
     quienes tienen mayores y menores ingresos?
   options:
     Muy de acuerdo: '5'
@@ -580,24 +583,38 @@ pres_5:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
-pres_6:
+    No sé: '98'
+    Prefiero no responder: '99'
+pres_5:
   type: mc
-  label: ¿Usted cree que las pensiones se ha vuelto más desigual entre quienes tienen
-    mayores y menores ingresos?
+  label: (19) ¿Usted cree que el acceso a la educación se ha vuelto más desigual entre
+    quienes tienen mayores y menores ingresos?
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
+pres_6:
+  type: mc
+  label: (20) ¿Usted cree que las pensiones se ha vuelto más desigual entre quienes
+    tienen mayores y menores ingresos?
+  options:
+    Muy de acuerdo: '5'
+    De acuerdo: '4'
+    Ni de acuerdo ni en desacuerdo: '3'
+    En desacuerdo: '2'
+    Muy en desacuerdo: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_percepcion_acceso:
   type: unknown
   label: Comentarios (opcional)
 valor_1:
   type: mc
-  label: ¿Estaría bien que los hospitales públicos fueran administrados por privados
+  label: (21) ¿Estaría bien que los hospitales públicos fueran administrados por privados
     si ellos son capaces de ofrecer un mejor servicio?
   options:
     Muy de acuerdo: '5'
@@ -605,10 +622,11 @@ valor_1:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 valor_2:
   type: mc
-  label: ¿Estaría bien que los liceos municipales fueran administrados por privados
+  label: (22) ¿Estaría bien que los liceos municipales fueran administrados por privados
     si ellos son capaces de ofrecer un mejor servicio?
   options:
     Muy de acuerdo: '5'
@@ -616,10 +634,24 @@ valor_2:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 valor_3:
   type: mc
-  label: La calidad del sistema de salud debería ser igual para todos, aunque esto
+  label: (23) La calidad del sistema de salud debería ser igual para todos, aunque
+    esto implique que mi familia no pueda acceder a mejores servicios si pudiera pagar
+    por ellos
+  options:
+    Muy de acuerdo: '5'
+    De acuerdo: '4'
+    Ni de acuerdo ni en desacuerdo: '3'
+    En desacuerdo: '2'
+    Muy en desacuerdo: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
+valor_4:
+  type: mc
+  label: (24) La calidad de la educación debería ser igual para todos, aunque esto
     implique que mi familia no pueda acceder a mejores servicios si pudiera pagar
     por ellos
   options:
@@ -628,21 +660,11 @@ valor_3:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
-valor_4:
-  type: mc
-  label: La calidad de la educación debería ser igual para todos, aunque esto implique
-    que mi familia no pueda acceder a mejores servicios si pudiera pagar por ellos
-  options:
-    Muy de acuerdo: '5'
-    De acuerdo: '4'
-    Ni de acuerdo ni en desacuerdo: '3'
-    En desacuerdo: '2'
-    Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 valor_5:
   type: mc
-  label: Las pensiones deberían ser más igualitarias, aunque yo obtenga una pensión
+  label: (25) Las pensiones deberían ser más igualitarias, aunque yo obtenga una pensión
     más baja a pesar de haber contribuido más al sistema
   options:
     Muy de acuerdo: '5'
@@ -650,13 +672,14 @@ valor_5:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_valor:
   type: unknown
   label: Comentarios (opcional)
 dec_1:
   type: slider
-  label: Imagine que su hijo/a asiste a un colegio privado que tiene una matrícula
+  label: (26) Imagine que su hijo/a asiste a un colegio privado que tiene una matrícula
     de 100 alumnos. ¿Cuántos alumnos cree Ud. que se deberían admitir sin pagar en
     este colegio?
   options:
@@ -673,8 +696,9 @@ dec_1:
     100%: '100'
 dec_2:
   type: slider
-  label: Para que esos alumnos puedan ser admitidos en el colegio, ¿cuánto más estaría
-    dispuesto a pagar de la mensualidad para poder apoyar a estudiantes que no pagan?
+  label: (27) Para que esos alumnos puedan ser admitidos en el colegio, ¿cuánto más
+    estaría dispuesto a pagar de la mensualidad para poder apoyar a estudiantes que
+    no pagan?
   options:
     '0': '0'
     10%: '10'
@@ -689,7 +713,7 @@ dec_2:
     100%: '100'
 dec_3:
   type: slider
-  label: Imagine que usted está en un plan de isapre que está evaluando dar acceso
+  label: (28) Imagine que usted está en un plan de isapre que está evaluando dar acceso
     a un 10% de personas en su mismo plan que no pueden pagarlo. Para ello, usted
     debería pagar un monto adicional a su cotización. En tal situación, ¿cuánto más
     estaría dispuesto a pagar?
@@ -710,7 +734,7 @@ cmt_decomodifica:
   label: Comentarios (opcional)
 lucro_1:
   type: mc
-  label: ¿Qué tan justo le parece que empresas privadas obtengan ganancias monetarias
+  label: (29) ¿Qué tan justo le parece que empresas privadas obtengan ganancias monetarias
     administrando fondos de pensiones?
   options:
     Muy justo: '5'
@@ -718,35 +742,38 @@ lucro_1:
     Ni justo ni injusto: '3'
     Injusto: '2'
     Muy injusto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 lucro_2:
   type: mc
-  label: ¿Qué tan justo le parece que instituciones privadas obtengan ganancias monetarias
-    ofreciendo servicios de educación?
+  label: (30) ¿Qué tan justo le parece que instituciones privadas obtengan ganancias
+    monetarias ofreciendo servicios de educación?
   options:
     Muy justo: '5'
     Justo: '4'
     Ni justo ni injusto: '3'
     Injusto: '2'
     Muy injusto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 lucro_3:
   type: mc
-  label: ¿Qué tan justo le parece que instituciones privadas obtengan ganancias monetarias
-    ofreciendo servicios de salud?
+  label: (31) ¿Qué tan justo le parece que instituciones privadas obtengan ganancias
+    monetarias ofreciendo servicios de salud?
   options:
     Muy justo: '5'
     Justo: '4'
     Ni justo ni injusto: '3'
     Injusto: '2'
     Muy injusto: '1'
-    No sabe/no responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_rol_privados_estado:
   type: unknown
   label: Comentarios (opcional)
 cargo_1:
   type: slider
-  label: Salud
+  label: (32) Salud
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -757,7 +784,7 @@ cargo_1:
     Solo privados: privados
 cargo_2:
   type: slider
-  label: Educación
+  label: (33) Educación
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -768,7 +795,7 @@ cargo_2:
     Solo privados: privados
 cargo_3:
   type: slider
-  label: Pensiones
+  label: (34) Pensiones
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -779,7 +806,7 @@ cargo_3:
     Solo privados: privados
 cargo_4:
   type: slider
-  label: Salas cuna
+  label: (35) Salas cuna
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -790,7 +817,7 @@ cargo_4:
     Solo privados: privados
 cargo_5:
   type: slider
-  label: Carreteras
+  label: (36) Carreteras
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -801,7 +828,7 @@ cargo_5:
     Solo privados: privados
 efic_1:
   type: slider
-  label: Salud
+  label: (37) Salud
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -812,7 +839,7 @@ efic_1:
     Solo privados: privados
 efic_2:
   type: slider
-  label: Educación
+  label: (38) Educación
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -823,7 +850,7 @@ efic_2:
     Solo privados: privados
 efic_3:
   type: slider
-  label: Pensiones
+  label: (39) Pensiones
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -834,7 +861,7 @@ efic_3:
     Solo privados: privados
 efic_4:
   type: slider
-  label: Salas cuna
+  label: (40) Salas cuna
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -845,7 +872,7 @@ efic_4:
     Solo privados: privados
 efic_5:
   type: slider
-  label: Carreteras
+  label: (41) Carreteras
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -856,7 +883,7 @@ efic_5:
     Solo privados: privados
 part_1:
   type: slider
-  label: Salud
+  label: (42) Salud
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -867,7 +894,7 @@ part_1:
     Solo privados: privados
 part_2:
   type: slider
-  label: Educación
+  label: (43) Educación
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -878,7 +905,7 @@ part_2:
     Solo privados: privados
 part_3:
   type: slider
-  label: Pensiones
+  label: (44) Pensiones
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -889,7 +916,7 @@ part_3:
     Solo privados: privados
 part_4:
   type: slider
-  label: Salas cuna
+  label: (45) Salas cuna
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -900,7 +927,7 @@ part_4:
     Solo privados: privados
 part_5:
   type: slider
-  label: Carreteras
+  label: (46) Carreteras
   options:
     Solo el Estado: estado
     ' ': estado_medio
@@ -914,18 +941,19 @@ cmt_participa:
   label: Comentarios (opcional)
 neolib_1:
   type: mc
-  label: El Gobierno debería proporcionar a toda la población servicios básicos como
-    la asistencia sanitaria y la asistencia jurídica de forma gratuita
+  label: (47) El Gobierno debería proporcionar a toda la población servicios básicos
+    como la asistencia sanitaria y la asistencia jurídica de forma gratuita
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 neolib_2:
   type: mc
-  label: Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería
+  label: (48) Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería
     hacerlo
   options:
     Muy de acuerdo: '5'
@@ -933,93 +961,101 @@ neolib_2:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 neolib_3:
   type: mc
-  label: La sociedad debería proporcionar recursos y servicios gratuitos a las personas
-    que no pueden permitírselos
+  label: (49) La sociedad debería proporcionar recursos y servicios gratuitos a las
+    personas que no pueden permitírselos
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 neolib_4:
   type: mc
-  label: Las personas con ingresos más elevados deberían pagar más impuestos que las
-    que tienen ingresos más bajos
+  label: (50) Las personas con ingresos más elevados deberían pagar más impuestos
+    que las que tienen ingresos más bajos
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_neoliberal:
   type: unknown
   label: Comentarios (opcional)
 control_1:
   type: mc
-  label: Las personas que caen en la pobreza por sus propios errores deberían igualmente
-    tener derecho a recibir apoyo del Estado
+  label: (51) Las personas que caen en la pobreza por sus propios errores deberían
+    igualmente tener derecho a recibir apoyo del Estado
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 control_2:
   type: mc
-  label: Quienes son responsables de sus propios problemas igualmente merecen recibir
-    beneficios sociales.
+  label: (52) Quienes son responsables de sus propios problemas igualmente merecen
+    recibir beneficios sociales.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 control_3:
   type: mc
-  label: El Estado debería ayudar a las personas independientemente de si su situación
-    fue causada por decisiones propias o por factores externos.
+  label: (53) El Estado debería ayudar a las personas independientemente de si su
+    situación fue causada por decisiones propias o por factores externos.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 actitud_1:
   type: mc
-  label: Las personas que reciben beneficios del Estado deberían mostrar más gratitud
-    por la ayuda que reciben
+  label: (54) Las personas que reciben beneficios del Estado deberían mostrar más
+    gratitud por la ayuda que reciben
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 actitud_2:
   type: mc
-  label: Está bien que las personas que reciben apoyo del Estado puedan expresar su
-    descontento con las condiciones de los beneficios.
+  label: (55) Está bien que las personas que reciben apoyo del Estado puedan expresar
+    su descontento con las condiciones de los beneficios.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_deserve-1:
   type: unknown
   label: Comentarios (opcional)
 reciproc_1:
   type: mc
-  label: Los beneficios sociales deberían estar reservados para quienes han contribuido
+  label: (56) Los beneficios sociales deberían estar reservados para quienes han contribuido
     previamente al sistema, por ejemplo cotizando o pagando impuestos
   options:
     Muy de acuerdo: '5'
@@ -1027,43 +1063,47 @@ reciproc_1:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 reciproc_2:
   type: mc
-  label: No es justo que personas que nunca han contribuido al sistema reciban los
-    mismos beneficios que quienes sí lo han hecho.
+  label: (57) No es justo que personas que nunca han contribuido al sistema reciban
+    los mismos beneficios que quienes sí lo han hecho.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 reciproc_3:
   type: mc
-  label: Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores
-    beneficios sociales que quienes han contribuido poco o nada
+  label: (58) Quienes han trabajado y aportado al sistema durante más tiempo merecen
+    mejores beneficios sociales que quienes han contribuido poco o nada
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 actitud_4:
   type: mc
-  label: El acceso a los beneficios sociales debería ser el mismo para todos, independientemente
-    de si han cotizado o no en el pasado.
+  label: (59) El acceso a los beneficios sociales debería ser el mismo para todos,
+    independientemente de si han cotizado o no en el pasado.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 id_1:
   type: mc
-  label: Al momento de asignar beneficios sociales, las personas nacidas en Chile
+  label: (60) Al momento de asignar beneficios sociales, las personas nacidas en Chile
     deberían tener prioridad por sobre quienes llegaron de otros países.
   options:
     Muy de acuerdo: '5'
@@ -1071,21 +1111,23 @@ id_1:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 id_2:
   type: mc
-  label: Los migrantes deberían tener acceso a los mismos beneficios sociales que
-    los chilenos.
+  label: (61) Los migrantes deberían tener acceso a los mismos beneficios sociales
+    que los chilenos.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 id_3:
   type: mc
-  label: Solo quienes llevan varios años viviendo en Chile deberían poder acceder
+  label: (62) Solo quienes llevan varios años viviendo en Chile deberían poder acceder
     a los programas de protección social del Estado.
   options:
     Muy de acuerdo: '5'
@@ -1093,24 +1135,26 @@ id_3:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_deserve-2:
   type: unknown
   label: Comentarios (opcional)
 nec_1:
   type: mc
-  label: Los beneficios sociales deberían estar reservados exclusivamente para quienes
-    viven en situación de pobreza real.
+  label: (63) Los beneficios sociales deberían estar reservados exclusivamente para
+    quienes viven en situación de pobreza real.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 nec_2:
   type: mc
-  label: Las personas que tienen suficientes recursos económicos propios no deberían
+  label: (64) Las personas que tienen suficientes recursos económicos propios no deberían
     recibir apoyo del Estado.
   options:
     Muy de acuerdo: '5'
@@ -1118,32 +1162,35 @@ nec_2:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 nec_3:
   type: mc
-  label: Solo quienes se encuentran en situación de extrema necesidad deberían poder
-    acceder a los beneficios sociales.
+  label: (65) Solo quienes se encuentran en situación de extrema necesidad deberían
+    poder acceder a los beneficios sociales.
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 esf_1:
   type: mc
-  label: Las personas que reciben beneficios sociales deberían estar haciendo algo
-    activamente para mejorar su situación, como buscar trabajo o capacitarse
+  label: (66) Las personas que reciben beneficios sociales deberían estar haciendo
+    algo activamente para mejorar su situación, como buscar trabajo o capacitarse
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 esf_2:
   type: mc
-  label: Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir
+  label: (67) Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir
     adelante merecen menos apoyo que quienes sí lo intentan
   options:
     Muy de acuerdo: '5'
@@ -1151,21 +1198,23 @@ esf_2:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 esf_3:
   type: mc
-  label: El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo
-    visible por cambiar su situación
+  label: (68) El Estado debería apoyar a las personas aunque no estén haciendo ningún
+    esfuerzo visible por cambiar su situación
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 esf_4:
   type: mc
-  label: Es razonable que la duración de un beneficio social dependa del esfuerzo
+  label: (69) Es razonable que la duración de un beneficio social dependa del esfuerzo
     que está haciendo la persona para dejar de necesitarlo
   options:
     Muy de acuerdo: '5'
@@ -1173,60 +1222,70 @@ esf_4:
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 esf_5:
   type: mc
-  label: 'No importa si alguien está buscando trabajo o no: si necesita ayuda, el
-    Estado debería dársela igual'
+  label: '(70) No importa si alguien está buscando trabajo o no: si necesita ayuda,
+    el Estado debería dársela igual'
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
     Ni de acuerdo ni en desacuerdo: '3'
     En desacuerdo: '2'
     Muy en desacuerdo: '1'
-    No sabe / No responde: '99'
+    No sé: '98'
+    Prefiero no responder: '99'
 cmt_deserve-3:
   type: unknown
   label: Comentarios (opcional)
 adc_qstn:
   type: mc
-  label: ¿Cuál de las siguientes afirmaciones describe mejor su situación actual,
+  label: (71) ¿Cuál de las siguientes afirmaciones describe mejor su situación actual,
     considerando el total de ingresos que tiene actualmente?
   options:
     Tenemos más que suficiente, podemos ahorrar fácilmente.: '4'
     Tenemos suficiente para vivir sin dificultades.: '3'
     Tenemos justo lo suficiente para vivir.: '2'
     No tenemos suficiente y frecuentemente tenemos dificultades para vivir.: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
 adc_5:
   type: mc
-  label: que sus preocupaciones financieras aumenten en los próximos años.
+  label: (72) que sus preocupaciones financieras aumenten en los próximos años.
   options:
     A menudo: '5'
     Regularmente: '4'
     A veces: '3'
     Raramente: '2'
     Nunca: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
 adc_6:
   type: mc
-  label: Que tendrá dificultades para mantener su posición socioeconómica
+  label: (73) Que tendrá dificultades para mantener su posición socioeconómica
   options:
     A menudo: '5'
     Regularmente: '4'
     A veces: '3'
     Raramente: '2'
     Nunca: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
 adc_7:
   type: mc
-  label: Que sus hijos y las próximas generaciones lo tendrán mucho más difícil
+  label: (74) Que sus hijos y las próximas generaciones lo tendrán mucho más difícil
   options:
     A menudo: '5'
     Regularmente: '4'
     A veces: '3'
     Raramente: '2'
     Nunca: '1'
+    No sé: '98'
+    Prefiero no responder: '99'
 gender:
   type: select
-  label: (2) ¿Cuál es su identidad de género actual?
+  label: ¿Cuál es su identidad de género actual?
   options:
     Hombre: male
     Mujer: female
@@ -1236,7 +1295,7 @@ gender:
     Prefiero no decir: prefer_not_to_say
 income:
   type: select
-  label: (5) ¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos
+  label: ¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos
     y otras deducciones?
   options:
     Menos de $100.000: less_than_100k

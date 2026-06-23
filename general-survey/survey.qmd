@@ -433,7 +433,7 @@ sd_nav(
 
 --- demographics
 
-# Antecedentes
+# Módulo A: Antecedentes
 
 A continuación se presentan una serie de preguntas de caracterización. Recuerde que sus respuestas serán anónimas y confidenciales, y que no hay respuestas correctas o incorrectas. Por favor, responda con sinceridad.
 
@@ -471,7 +471,7 @@ years <- c("Prefiero no decir" = "prefer_not_say", years)
 sd_question(
   type   = 'select',
   id     = 'year_of_birth',
-  label  = "(1) ¿En qué año nació?",
+  label  = "¿En qué año nació?",
   option = years
 )
 
@@ -489,7 +489,7 @@ educations <- c(
 sd_question(
   type   = 'select',
   id     = 'education',
-  label  = "(4) ¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está estudiando, use el grado más alto que haya obtenido.",
+  label  = "¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está estudiando, use el grado más alto que haya obtenido.",
   option = educations
 )
 
@@ -507,35 +507,6 @@ sd_question(
 
 ```{r}
 sd_nav(
-  page_next = "cbc_preambulo",
-  label_next = "Siguiente"
-)
-```
-
---- cbc_preambulo
-
-<center>
-# Tarea de asignación de becas
-</center>
-
-No hay respuestas correctas e incorrectas; sólo queremos saber su opinión.
-
-Imagine que usted forma parte de un comité universitario que debe asignar una beca de apoyo a estudiantes de primer año.
-
-Para esto, se le presentarán pares de estudiantes y usted deberá asignar el monto de la beca que irá destinado a cada estudiante.
-
-Por lo tanto, su tarea consiste en repartir $2.000.000 a partir de distintas características que describen a cada uno de los postulantes. Recuerde que darle más a uno implica darle menos al otro.
-
-
-```{r}
-
-sd_question(
-  type  = "textarea",
-  id    = "cmt_cbc_preambulo",
-  label = "Comentarios (opcional)"
-)
-
-sd_nav(
   page_next = "cbc_practice-page",
   label_next = "Siguiente"
 )
@@ -543,7 +514,7 @@ sd_nav(
 
 --- cbc_practice-page
 
-# Tarea de asignación
+# Módulo B: Tarea de asignación
 
 A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
 
@@ -833,10 +804,32 @@ sd_nav(page_next = "clasicos",
   label_next = "Siguiente")
 ```
 
+```{r}
+# Numeración automática de preguntas: desde "clasicos" hasta el final de
+# "deserve-4". Cada sd_question() recibe un número correlativo antepuesto
+# al label, salvo las cajas de comentario libre (id que empieza con "cmt_").
+# Se restaura sd_question() sin numeración antes de la página "id-final".
+.sd_question_sin_numerar <- sd_question
+.contador_preguntas <- 0
+sd_question <- function(...) {
+  args <- list(...)
+  es_comentario <- grepl("^cmt_", args$id)
+  if (!es_comentario) {
+    .contador_preguntas <<- .contador_preguntas + 1
+    # Se usa "(N)" en vez de "N." porque el label pasa por un parser de
+    # markdown que interpreta "1. texto" como el inicio de una lista
+    # numerada (y la reinicia en 1 en cada pregunta). "(N)" sigue el mismo
+    # formato ya usado en demographics/id-final y no se confunde con markdown.
+    args$label <- paste0("(", .contador_preguntas, ") ", args$label)
+  }
+  do.call(.sd_question_sin_numerar, args)
+}
+```
+
 --- clasicos
 
 <center>
-# Módulo Actitudes hacia la desigualdad
+# Módulo C: Actitudes hacia la desigualdad
 </center>
 
 A continuación se presentan una serie de preguntas acerca de su grado de acuerdo en el acceso a diferentes servicios y recursos de acuerdo con la situación socioeconómica de las personas.
@@ -852,7 +845,8 @@ escala_acuerdo_nsnr <- c(
   'Ni de acuerdo ni en desacuerdo'    = '3',
   'En desacuerdo' = '2',
   'Muy en desacuerdo' = '1',
-  'No sabe / No responde' = '99'
+  'No sé' = '98',
+  'Prefiero no responder' = '99'
 )
 ```
 
@@ -908,7 +902,9 @@ sd_question(
     'Justo' = '4',
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
-    'Muy injusto' = '1'
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'    
   )
 )
 ```
@@ -924,7 +920,8 @@ sd_question(
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
     'Muy injusto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -940,7 +937,8 @@ sd_question(
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
     'Muy injusto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -956,7 +954,8 @@ sd_question(
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
     'Muy injusto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -972,7 +971,8 @@ sd_question(
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
     'Muy injusto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 
@@ -1028,7 +1028,8 @@ sd_question(
     'Ni más ni menos de lo que se gasta actualmente'   = '3',
     'Menos gasto' = '2',
     'Mucho menos gasto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1044,7 +1045,8 @@ sd_question(
     'Ni más ni menos de lo que se gasta actualmente'     = '3',
     'Menos gasto' = '2',
     'Mucho menos gasto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1060,7 +1062,8 @@ sd_question(
     'Ni más ni menos de lo que se gasta actualmente'    = '3',
     'Menos gasto' = '2',
     'Mucho menos gasto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1076,7 +1079,8 @@ sd_question(
     'Ni más ni menos de lo que se gasta actualmente'    = '3',
     'Menos gasto' = '2',
     'Mucho menos gasto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1092,7 +1096,8 @@ sd_question(
     'Ni más ni menos de lo que se gasta actualmente'    = '3',
     'Menos gasto' = '2',
     'Mucho menos gasto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1336,7 +1341,8 @@ sd_question(
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
     'Muy injusto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1352,7 +1358,8 @@ sd_question(
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
     'Muy injusto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1368,7 +1375,8 @@ sd_question(
     'Ni justo ni injusto'    = '3',
     'Injusto' = '2',
     'Muy injusto' = '1',
-    'No sabe/no responde' = '99'
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 
@@ -1615,7 +1623,7 @@ sd_nav(page_next = "deserve-1",
 --- deserve-1
 
 <center>
-# Módulo Merecimiento 
+# Módulo D: Merecimiento 
 </center>
 
 ¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
@@ -1858,10 +1866,12 @@ sd_question(
   id     = 'adc_qstn',
   label  = "¿Cuál de las siguientes afirmaciones describe mejor su situación actual, considerando el total de ingresos que tiene actualmente?",
   option = c(
-    "Tenemos más que suficiente, podemos ahorrar fácilmente." = "4",
-    "Tenemos suficiente para vivir sin dificultades."      = "3",
-    "Tenemos justo lo suficiente para vivir."        = "2",
-    "No tenemos suficiente y frecuentemente tenemos dificultades para vivir."      = "1"
+    'Tenemos más que suficiente, podemos ahorrar fácilmente.' = '4',
+    'Tenemos suficiente para vivir sin dificultades.'      = '3',
+    'Tenemos justo lo suficiente para vivir.'       = '2',
+    'No tenemos suficiente y frecuentemente tenemos dificultades para vivir.'      = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1881,7 +1891,9 @@ sd_question(
     'Regularmente' = '4',
     'A veces' = '3',
     'Raramente' = '2',
-    'Nunca' = '1'
+    'Nunca' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1896,7 +1908,9 @@ sd_question(
     'Regularmente' = '4',
     'A veces' = '3',
     'Raramente' = '2',
-    'Nunca' = '1'
+    'Nunca' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1911,7 +1925,9 @@ sd_question(
     'Regularmente' = '4',
     'A veces' = '3',
     'Raramente' = '2',
-    'Nunca' = '1'
+    'Nunca' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
   )
 )
 ```
@@ -1919,6 +1935,12 @@ sd_question(
 ```{r}
 sd_nav(page_next = "id-final",
   label_next = "Siguiente")
+```
+
+```{r}
+# Fin de la numeración automática de preguntas; se restaura sd_question()
+# original para las preguntas adicionales de esta página.
+sd_question <- .sd_question_sin_numerar
 ```
 
 --- id-final
@@ -1941,7 +1963,7 @@ genders <- c(
 sd_question(
   type   = 'select',
   id     = 'gender',
-  label  = "(2) ¿Cuál es su identidad de género actual?",
+  label  = "¿Cuál es su identidad de género actual?",
   option = genders
 )
 
@@ -1962,7 +1984,7 @@ incomes <- c(
 sd_question(
   type   = 'select',
   id     = 'income',
-  label  = "(5) ¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?",
+  label  = "¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?",
   option = incomes
 )
 
