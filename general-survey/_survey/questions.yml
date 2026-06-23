@@ -25,6 +25,11 @@ year_of_birth:
   label: ¿En qué año nació?
   options:
     Prefiero no decir: prefer_not_say
+    '2008': '2008'
+    '2007': '2007'
+    '2006': '2006'
+    '2005': '2005'
+    '2004': '2004'
     '2003': '2003'
     '2002': '2002'
     '2001': '2001'
@@ -155,6 +160,22 @@ cbc_practice:
 cbc_practice_comment:
   type: unknown
   label: Comentarios
+manip_check:
+  type: mc
+  label: Antes de comenzar, ¿en qué consistirá su tarea en esta sección?
+  options:
+    Repartir un monto de beca entre dos postulantes: reparto
+    Elegir a un único postulante y descartar al otro: eleccion
+    Evaluar la calidad de la universidad de cada postulante: universidad
+attention_check:
+  type: mc
+  label: Esta pregunta es para verificar que está leyendo con atención. Por favor,
+    marque la opción “En desacuerdo”.
+  options:
+    Muy de acuerdo: muy_acuerdo
+    De acuerdo: acuerdo
+    En desacuerdo: desacuerdo
+    Muy en desacuerdo: muy_desacuerdo
 cbc_q1:
   type: slider_numeric
   label: []

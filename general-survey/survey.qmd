@@ -464,7 +464,7 @@ sd_question(
 
 # Construct the list of years
  
-years <- as.character(2003:1920)
+years <- as.character(2008:1920)
 names(years) <- years
 years <- c("Prefiero no decir" = "prefer_not_say", years)
 
@@ -496,10 +496,7 @@ sd_question(
 sd_question(
   type  = "textarea",
   id    = "feedback",
-  label = 
-  "¿Tiene algún otro comentario o sugerencia sobre esta encuesta?
-  
- Su retroalimentación nos ayudará a hacer mejoras en el futuro :)"
+  label = "Comentarios"
 )
 ```
 
@@ -514,25 +511,24 @@ sd_nav(
 
 --- cbc_practice-page
 
-# Módulo B: Tarea de asignación
+# Módulo B: Tarea de asignación de becas
 
-A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
+A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión sobre la asignación de recursos entre ellos.
 
 Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice con la tarea.
 
 **La situación:**
 
-Imagine que Ud. forma parte de un comité universitario encargado de asignar una beca de apoyo a estudiantes de primer año. A lo largo de esta sección Ud. verá varios pares de postulantes distintos. En cada par, ambos postulantes fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar, y la información que verá sobre cada uno fue proporcionada y validada por su colegio de egreso. La beca disponible es de $2.000.000 para el primer año.
+Imagine que Ud. forma parte de un comité universitario encargado de asignar una beca de apoyo a estudiantes de primer año. El monto de la beca disponible es de $2.000.000 y está destinado a cubrir parte del primer año de estudios. A lo largo de esta sección, Ud. evaluará distintos pares de postulantes, quienes fueron aceptados en una misma carrera y universidad, donde deben pagar para estudiar. La información que verá de cada uno fue entregada y validada por su colegio de egreso.
 
 **Su tarea:**
 
-En cada par, Ud. debe repartir la beca asignando un porcentaje a cada postulante. La distribución debe sumar siempre el 100%, lo que significa que darle más a uno implica darle menos a otro. Puede asignar la proporción que estime conveniente, incluido un reparto igualitario.
-
-No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.
+En cada par, Ud. deberá repartir el monto entre los dos postulantes según estime conveniente, teniendo en cuenta las características presentadas en la tabla. Dado que el monto es fijo, otorgar más dinero a un postulante implica otorgar menos al otro. No hay respuestas correctas ni incorrectas; solo nos interesa conocer su opinión.
 
 **¿Cómo hacer la asignación?**
 
-Mueva el control deslizante (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle;"}) bajo la tabla. El monto aparece inicialmente distribuido en partes iguales ($1.000.000 c/u) y cambiará según cómo mueva el control.
+Mueva el control deslizante (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle;"}) debajo de la tabla. El monto aparece inicialmente distribuido en partes iguales ($1.000.000 c/u) y cambiará según cómo mueva el control.
+
 
 ```{r}
 # Make a fixed data frame for the options
@@ -592,6 +588,12 @@ allocation_slider("cbc_practice", nombre1 = practice_names[1], nombre2 = practic
 
 htmltools::HTML("<br>")
 
+
+```
+
+Ahora que ha practicado con una pregunta de ejemplo, vamos a mostrarle 6 pares de postulantes con distintas características, entre quienes deberá distribuir el monto de la beca.
+
+```{r}
 sd_question(
   type  = "textarea",
   id    = "cbc_practice_comment",
@@ -603,21 +605,52 @@ sd_nav(
   label_previous = "Anterior",
   label_next = "Siguiente"
 )
+
 ```
+
 
 --- cbc_intro
 
 # Tarea de asignación de becas
 
-Ahora que ha practicado con una pregunta de ejemplo, vamos a mostrarle 6 pares de postulantes con distintas características, entre quienes deberá distribuir el monto de la beca.
+::: {.question id="manip_check"}
 
 ```{r}
-sd_nav(
-  page_next = "cbc_q1_page",
-  label_previous = "Anterior",
-  label_next = "Siguiente"
+
+sd_question(
+  type = "mc",
+  id = "manip_check",
+  label = "Antes de comenzar, ¿en qué consistirá su tarea en esta sección?",
+  option = c(
+    "Repartir un monto de beca entre dos postulantes" = "reparto",
+    "Elegir a un único postulante y descartar al otro" = "eleccion",
+    "Evaluar la calidad de la universidad de cada postulante" = "universidad"
+  )
+)
+
+
+```
+:::
+
+
+::: {.question id="attention_check"}
+
+```{r}
+sd_question(
+  type = "mc",
+  id = "attention_check",
+  label = "Esta pregunta es para verificar que está leyendo con atención. Por favor, marque la opción \"En desacuerdo\".",
+  option = c(
+    "Muy de acuerdo" = "muy_acuerdo",
+    "De acuerdo" = "acuerdo",
+    "En desacuerdo" = "desacuerdo",
+    "Muy en desacuerdo" = "muy_desacuerdo"
+  )
 )
 ```
+:::
+
+
 
 --- cbc_q1_page
 
