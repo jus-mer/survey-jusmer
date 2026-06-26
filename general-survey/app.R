@@ -161,6 +161,21 @@ ui <- tagList(
       body {
         font-size: 20px;
       }
+      /* surveydown/Bootstrap set these in em/rem relative to the *root*
+         font-size (still 17px), not body, so they drift from the 20px
+         body text above. Pin them to 20px so question text, answer
+         options, free-text inputs and the ranking matrix all match. */
+      .control-label, .radio label, .checkbox label,
+      .form-control,
+      .matrix-question, .matrix-question th {
+        font-size: 20px;
+      }
+      /* kableExtra's conjoint profile table ships its own font-size;
+         override it so it matches the rest of the question text too. */
+      .cell-output-display table.table-condensed td,
+      .cell-output-display table.table-condensed th {
+        font-size: 20px !important;
+      }
       /* Slider track: neutral grey, sin colores que confundan */
       .irs-bar, .irs-bar--single, .irs-bar-edge,
       .irs--shiny .irs-bar, .irs--shiny .irs-bar-edge {

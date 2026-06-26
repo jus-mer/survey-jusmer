@@ -5,6 +5,6 @@ account: jusmer
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 17424047
-bundleId: 12184121
+bundleId: 12184201
 url: https://jusmer.shinyapps.io/my_survey/
 version: 1
