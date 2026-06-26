@@ -20,13 +20,7 @@ survey-settings:
   highlight-unanswered: yes
   highlight-color: orange
   capture-metadata: yes
-  required-questions:
-  - consent_understand
-  - ranking_politicas_educacion
-  - ranking_politicas_salud
-  - ranking_politicas_pensiones
-  - ranking_politicas_cuidado_ninos
-  - ranking_politicas_carreteras
+  required-questions: consent_understand
 
 system-messages:
   cancel: Cancelar

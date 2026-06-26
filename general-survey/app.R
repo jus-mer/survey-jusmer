@@ -156,6 +156,11 @@ ui <- tagList(
       });
     ")),
     tags$style(HTML("
+      /* Flatly theme renders body text at 17px (root font-size); bump it +3px.
+         Headers stay rem-based off the root font-size, so they're unaffected. */
+      body {
+        font-size: 20px;
+      }
       /* Slider track: neutral grey, sin colores que confundan */
       .irs-bar, .irs-bar--single, .irs-bar-edge,
       .irs--shiny .irs-bar, .irs--shiny .irs-bar-edge {
@@ -246,10 +251,22 @@ ui <- tagList(
       /* Estado-vs-privados sliders (cargo_/efic_/part_): show a label only
          at both extremes and the midpoint. The 4 unlabeled stops in
          between (js-grid-text-1/2/4/5) stay fully selectable as
-         intermediate points - they just don't get a tick or label. */
-      .question-container[data-question-id^='cargo_'] .irs-grid-pol,
-      .question-container[data-question-id^='efic_'] .irs-grid-pol,
-      .question-container[data-question-id^='part_'] .irs-grid-pol,
+         intermediate points - they don't get a label, but their tick
+         mark is kept visible as an orientation point for respondents.
+         Sub-ticks (.small) and the tick at the 3 labeled stops are
+         hidden, so only the 4 unlabeled stops show a mark. */
+      .question-container[data-question-id^='cargo_'] .irs-grid-pol.small,
+      .question-container[data-question-id^='efic_'] .irs-grid-pol.small,
+      .question-container[data-question-id^='part_'] .irs-grid-pol.small,
+      .question-container[data-question-id^='cargo_'] .irs-grid-pol:has(+ .js-grid-text-0),
+      .question-container[data-question-id^='cargo_'] .irs-grid-pol:has(+ .js-grid-text-3),
+      .question-container[data-question-id^='cargo_'] .irs-grid-pol:has(+ .js-grid-text-6),
+      .question-container[data-question-id^='efic_'] .irs-grid-pol:has(+ .js-grid-text-0),
+      .question-container[data-question-id^='efic_'] .irs-grid-pol:has(+ .js-grid-text-3),
+      .question-container[data-question-id^='efic_'] .irs-grid-pol:has(+ .js-grid-text-6),
+      .question-container[data-question-id^='part_'] .irs-grid-pol:has(+ .js-grid-text-0),
+      .question-container[data-question-id^='part_'] .irs-grid-pol:has(+ .js-grid-text-3),
+      .question-container[data-question-id^='part_'] .irs-grid-pol:has(+ .js-grid-text-6),
       .question-container[data-question-id^='cargo_'] .js-grid-text-1,
       .question-container[data-question-id^='cargo_'] .js-grid-text-2,
       .question-container[data-question-id^='cargo_'] .js-grid-text-4,
@@ -545,16 +562,36 @@ server <- function(input, output, session) {
   )
 
   # Block advancing past the ranking page until at least 3 of the 5 rows
-  # have a priority assigned.
-  sd_stop_if(
-    (sum(c(
-      !is.null(input$ranking_politicas_educacion),
-      !is.null(input$ranking_politicas_salud),
-      !is.null(input$ranking_politicas_pensiones),
-      !is.null(input$ranking_politicas_cuidado_ninos),
-      !is.null(input$ranking_politicas_carreteras)
-    )) < 3) ~ "Hay preguntas sin responder"
-  )
+  # have a priority assigned. This is done as a JS click intercept (capture
+  # phase, so it runs before Shiny's own next-button handler) instead of
+  # sd_stop_if(): sd_stop_if() marks every input it references as required,
+  # which would force all 5 rows to be answered instead of just 3.
+  runjs("
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('#ranking_next');
+      if (!btn) return;
+      var rows = ['educacion', 'salud', 'pensiones', 'cuidado_ninos', 'carreteras'];
+      var filled = rows.filter(function(r) {
+        return document.querySelector('input[name=\"ranking_politicas_' + r + '\"]:checked') !== null;
+      }).length;
+      if (filled < 3) {
+        e.preventDefault();
+        e.stopPropagation();
+        Shiny.setInputValue('ranking_politicas_block_warning', Math.random(), {priority: 'event'});
+      }
+    }, true);
+  ")
+  observeEvent(input$ranking_politicas_block_warning, {
+    # Same title/text as surveydown's default required-question warning, so
+    # this reads identically to the warning shown for any other unanswered
+    # required question.
+    shinyWidgets::sendSweetAlert(
+      session = session,
+      title   = "Advertencia",
+      text    = "Por favor, responda todas las preguntas obligatorias antes de continuar.",
+      type    = "warning"
+    )
+  }, ignoreInit = TRUE)
 
   # Define any conditional display logic here (show a question if a condition is true)
   sd_show_if()
