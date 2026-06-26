@@ -503,26 +503,36 @@ sd_question(
 
 ```{r}
 sd_nav(
-  page_next = "cbc_practice-page",
+  page_next = "cbc_practice_page",
   label_next = "Siguiente"
 )
 ```
 
---- cbc_practice-page
+--- cbc_practice_page
 
-# Módulo B: Tarea de asignación de becas
+# Tarea de asignación
 
-A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión sobre la asignación de recursos entre ellos.
+A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
 
 Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice con la tarea.
 
-**La situación:**
+::: {.callout-note}
+## La situación:
 
-Imagine que Ud. forma parte de un comité universitario encargado de asignar una beca de apoyo a estudiantes de primer año. El monto de la beca disponible es de $2.000.000 y está destinado a cubrir parte del primer año de estudios. A lo largo de esta sección, Ud. evaluará distintos pares de postulantes, quienes fueron aceptados en una misma carrera y universidad, donde deben pagar para estudiar. La información que verá de cada uno fue entregada y validada por su colegio de egreso.
+- Imagine que Ud. forma parte de un **comité universitario encargado de asignar una beca** de apoyo a estudiantes de primer año. 
+- Los postulantes serán presentados de a pares, con información sobre cada uno proporcionada por el colegio del que egresaron.
+- Ambos postulantes fueron aceptados en la misma carrera y universidad, y en esta carrera los estudiantes deben pagar para estudiar (no hay acceso a gratuidad).
+- La monto disponible es de **$2.000.000** para el primer año.
+:::
 
-**Su tarea:**
+::: {.callout-tip}
+## Su tarea:
 
-En cada par, Ud. deberá repartir el monto entre los dos postulantes según estime conveniente, teniendo en cuenta las características presentadas en la tabla. Dado que el monto es fijo, otorgar más dinero a un postulante implica otorgar menos al otro. No hay respuestas correctas ni incorrectas; solo nos interesa conocer su opinión.
+- En cada par, Ud. debe repartir la beca asignando a cada postulante un porcentaje del monto total de la beca ($ 2.000.000), considerando las características de cada uno que se presentarán en una tabla. 
+- Dado que el monto disponible para distribuir entre cada par es fijo, otorgar más dinero a un postulante implica otorgar menos al otro.  
+
+**No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.**
+:::
 
 **¿Cómo hacer la asignación?**
 

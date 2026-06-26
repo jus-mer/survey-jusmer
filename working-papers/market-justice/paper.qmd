@@ -1,59 +1,90 @@
 ---
-title: "My paper"
-format:
-  html: default
-  hikmah-pdf: 
-    indent: false
+title: "Justicia de mercado: Conceptos, y alternativas de medición"
 author:
-  - name: First author
-    email: firstauthor@email.com
-    orcid: 0000-0003-1265-7854
-    affiliations: 
-        name: Department of X
-        country: Chile
-    attributes:
-      corresponding: true
-  - name: Second author
-    email: secondauthor@email.com
-    orcid: 0000-0002-8108-6154
-    affiliations: 
-        name: Department of X
-        country: Chile
-abstract: |
-  My abstract
-keywords: 
-  - first 
-  - second
-  - third
-  - fourth
-  - fifth
-bibliography: "input/bib/refs.bib"
-csl: "input/bib/apa6.csl"
-link-citations: true
-linestretch: 1.15       
-mainfont: Times New Roman
-fontsize: 12pt          
-geometry: "left=2.54cm,right=2.54cm,top=2.54cm,bottom=2.54cm"
-papersize: letter
-colorlinks: true
-fig-height: 4
-fig-width: 7.5
-header-includes:
-  - \usepackage{threeparttable}
+  - name: Juan Carlos Castillo
+    affiliation: Universidad de Chile
+date: today
+lang: es
+bibliography: "../../input/bib/jusmer.bib"
+csl: "../../input/bib/apa6.csl"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    embed-resources: true
+editor_options:
+  chunk_output_type: console
 ---
 
-{{< include 01-introduction.qmd >}}
+# Introducción
 
-{{< include 02-antecedents.qmd >}}
+El presente documento realiza una revisión del concepto de justicia de mercado, sus antecedentes teóricos y las alternativas de medición que se han propuesto en la literatura. A partir de esto, se proponen alternativas de medición en encuestas para futuras investigaciones empíricas sobre el tema.
 
-{{< include 03-methods.qmd >}}
+La revisión bibliográfica se basa principalmente en tres publicaciones que el equipo de investigación del proyecto JUSMER (y anteriores colaboradores de la línea) han realizado:
 
-{{< include 04-analisis.qmd >}}
+- Castillo, Juan Carlos; Canales-Selles, Rene; Laffert, Andreas & Urzua, Tomas (2026). Justification Trajectories for Pension Inequality in Chile (2016–2023): The Role of Social Class and Beliefs in Meritocracy. Frontiers in Sociology, 11 1771856 https://doi.org/10.3389/fsoc.2026.1771856
 
-{{< include 05-discussion.qmd >}}
+- Castillo, Juan-Carlos; Iturra, Julio & Carrasco, Kevin (2025). Changes in the Justification of Educational Inequalities: The Role of Perceptions of Inequality and Meritocracy During the COVID Pandemic. Social Justice Research, 38(3) 240–263 https://doi.org/10.1007/s11211-025-00458-0
 
-{{< include 06-conclusion.qmd >}}
+- Castillo, Juan Carlos; Laffert, Andreas; Carrasco, Kevin & Iturra-Sanhueza, Julio (2025). Perceptions of Inequality and Meritocracy: Their Interplay in Shaping Preferences for Market Justice in Chile (2016–2023). Frontiers in Sociology, 10 1634219 https://doi.org/10.3389/fsoc.2025.1634219
 
-{{< pagebreak >}}
+- Castillo, Juan Carlos; Salgado, Mauricio; Carrasco, Kevin & Laffert, Andreas (2024). The Socialization of Meritocracy and Market Justice Preferences at School. Societies, 14(11) 214 : Multidisciplinary Digital Publishing Institute https://doi.org/10.3390/soc14110214
 
-{{< include 07-supplementary-material.qmd >}}
+# Antecedentes conceptuales
+
+La noción de justicia de mercado refiere a un principio normativo de asignación de bienes y servicios sociales en el que el criterio central de acceso es la capacidad de pago. En este marco, se considera legítimo que personas y hogares con mayores ingresos accedan a mejores prestaciones en ámbitos como salud, educación y pensiones. A diferencia de criterios distributivos basados en necesidad, igualdad o ciudadanía social, la justicia de mercado naturaliza diferencias de acceso como resultado esperable del funcionamiento económico [@lane_market_1986; @lindh_public_2015; @castillo_perceptions_2025].
+
+En términos teóricos, esta idea se vincula con la distinción entre justicia de mercado y justicia política [@lane_market_1986]. Mientras la primera enfatiza intercambios, precios y responsabilidad individual por los resultados obtenidos, la segunda remite a principios colectivos de protección social y derechos universales. Esta distinción permite comprender por qué, en contextos altamente mercantilizados, la desigualdad puede percibirse como moralmente aceptable: el éxito económico se interpreta como expresión de esfuerzo y mérito, y no como resultado de condiciones estructurales desiguales [@lane_market_1986; @wilson_role_2003].
+
+La literatura reciente también sugiere que la expansión de arreglos institucionales orientados al mercado en los Estados de bienestar no solo modifica el modo de provisión de servicios, sino que además transforma creencias y marcos de legitimidad. Es decir, los diseños institucionales generan efectos de retroalimentación sobre las actitudes ciudadanas: cuando predomina la provisión privada o cuasi-mercados, aumenta la plausibilidad social de que el pago individual sea un criterio justo de asignación [@busemeyer_welfare_2020; @lindh_it_2017; @beland_varieties_2019; @jaime-castillo_public_2013].
+
+Desde esta perspectiva, la justicia de mercado no debe confundirse con meritocracia, aunque ambos conceptos estén fuertemente relacionados. La meritocracia alude al principio según el cual recompensas y posiciones deben distribuirse según esfuerzo y talento. La justicia de mercado, en cambio, se refiere a la legitimidad del acceso diferencial según ingreso o capacidad de compra. En términos analíticos, la percepción de meritocracia puede operar como mecanismo que refuerza preferencias de justicia de mercado, pero no equivale a ellas [@young_rise_1958; @castillo_multidimensional_2023; @castillo_meritocracia_2019].
+
+Un segundo eje clave de la literatura es la socialización de estas preferencias. La evidencia sugiere que familia y escuela cumplen un papel decisivo en la formación de creencias sobre desigualdad y merecimiento. Por una parte, diferencias de estatus socioeconómico se asocian con orientaciones morales divergentes sobre igualdad y responsabilidad individual. Por otra, instituciones escolares con mayor selectividad, mejor rendimiento promedio y culturas más competitivas tienden a reforzar marcos meritocráticos que pueden traducirse en mayor legitimación de desigualdades de acceso [@castillo_socialization_2024; @bourdieu_reproduction_1990].
+
+En el caso chileno y latinoamericano, este debate adquiere especial relevancia por la coexistencia entre altos niveles de desigualdad, limitada movilidad social y fuerte presencia de proveedores privados en servicios sociales. En ese contexto, las preferencias por justicia de mercado expresan una tensión normativa persistente entre lógicas de competencia y lógicas de solidaridad. La revisión de la literatura muestra que este clivaje se observa con claridad en educación y salud, y de forma creciente en pensiones, donde la individualización del riesgo vuelve particularmente visible la dimensión moral de los arreglos distributivos [@torche_intergenerational_2014; @arenas_sistemas_2019; @arrizabalomontoro_debate_2019; @yen_pension_2018].
+
+Finalmente, un desafío conceptual central consiste en evitar que justicia de mercado sea tratada solo como sinónimo de apoyo a privatización. Más bien, conviene entenderla como una orientación normativa específica sobre quién merece qué y por qué, que puede coexistir con apoyos parciales a mecanismos solidarios. Esta delimitación permite avanzar hacia mediciones más precisas, comparables entre dominios de política pública y sensibles a configuraciones institucionales mixtas [@lindh_public_2015; @castillo_perceptions_2025].
+
+
+# Medición y alternativas de operacionalización
+
+La medición de preferencias por justicia de mercado ha sido abordada principalmente a través de encuestas de opinión pública, utilizando ítems que evalúan la legitimidad de criterios de asignación basados en capacidad de pago. En general, esta agenda es aún reducida y se ha centrado en dominios específicos como educación o salud, con menor atención a pensiones u otros servicios sociales. Este foco en educación y salud responde principalmente a la presencia de items específicos en encuestas sociales comparativas, como el International Social Survey Programme (ISSP), que incluye los siguientes ítems:
+
+- "Es justo que las personas con mayores ingresos tengan acceso a mejores servicios de salud"
+- "Es justo que las personas con mayores ingresos tengan acceso a mejores servicios de educación"
+
+Otras encuestas, como ELSOC, han incluido un ítem similar para pensiones: 
+
+- "Es justo que las personas con mayores ingresos tengan acceso a mejores pensiones".
+
+Más allá de estos tres indicadores, según nuestro conocimiento no existen otros ítems específicos que evalúen preferencias por justicia de mercado en otros dominios de política pública, ni tampoco se han desarrollado escalas o índices compuestos que permitan medir esta orientación normativa de forma más integral y comparativa. Al respecto, se podría pensar en incorporar distintas perspectivas de medición, como por ejemplo:
+
+- Reflexividad: pensar en ítems que evalúen la disposición a aceptar desigualdades de acceso a servicios sociales que afecten personalmente, por ejemplo:
+  - es justo que yo tenga acceso a mejor salud/educación/pensiones si puedo pagar por ello
+
+- Proyección
+  - "Está bien que mis hijos tengan acceso a mejores servicios de salud/educación/pensiones que otros niños si es que puedo pagar por ello"
+  - Está bien que mis hijos puedan acceder a la educación privada, a pesar de que esto signifique que niños con menos recursos no puedan acceder a la misma calidad de educación.
+  
+- Ranking/priorización de áreas de política pública: pedir a los encuestados que ordenen distintas áreas de política pública (salud, educación, pensiones, vivienda, etc.) según el grado en que consideran aceptable que el acceso dependa de la capacidad de pago. 
+
+- Percepción de desigualdad: evaluar si la percepción de desigualdad en el acceso a servicios sociales se asocia con preferencias por justicia de mercado, por ejemplo:
+  - "En general, ¿cree que el acceso a servicios de salud/educación/pensiones es muy desigual, algo desigual, algo igual o muy igual?"
+  - "¿Cree que la desigualdad en el acceso a servicios de salud/educación/pensiones es algo buena, algo mala, muy buena o muy mala?"
+  - "¿Cree que la desigualdad en el acceso a servicios de salud/educación/pensiones es algo justa, algo injusta, muy justa o muy injusta?"
+
+- Preguntas inversas (acceso independiente de pago):
+  - la calidad de atención en sal ud/educación/pensiones debería ser igual para todos, aunque esto implique que mi familia no pueda acceder a mejores servicios si pudiera pagar por ellos
+  - la calidad de atención en salud/educación/pensiones debería ser igual para todos, aunque esto implique que mis hijos no puedan acceder a mejores servicios si pudiera pagar por ellos
+
+- Adscriptivismo:
+  - está bien que los hijos de familias con mayores ingresos tengan acceso a mejores servicios de salud/educación/pensiones que los hijos de familias con menores ingresos
+
+- Agente:
+  - está bien que los privados participen en la provisión de servicios de salud/educación/pensiones
+  - los privados son más eficientes que el Estado en la provisión de servicios de salud/educación/pensiones
+
+- Escala Neoliberalismo?

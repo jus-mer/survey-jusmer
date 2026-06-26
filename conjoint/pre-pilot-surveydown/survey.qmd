@@ -441,15 +441,24 @@ A continuación, pasaremos a una sección diferente. Le presentaremos una serie 
 
 Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice con la tarea.
 
-**La situación:**
+::: {.callout-note}
+## La situación:
 
-Imagine que Ud. forma parte de un comité universitario encargado de asignar una beca de apoyo a estudiantes de primer año. A lo largo de esta sección Ud. verá varios pares de postulantes distintos. En cada par, ambos postulantes fueron aceptados en la misma carrera y universidad, donde los estudiantes deben pagar para estudiar, y la información que verá sobre cada uno fue proporcionada y validada por su colegio de egreso. La beca disponible es de $2.000.000 para el primer año.
+- Imagine que Ud. forma parte de un **comité universitario encargado de asignar una beca** de apoyo a estudiantes de primer año. 
+- Los postulantes serán presentados de a pares, con información sobre cada uno proporcionada por el colegio del que egresaron.
+- Ambos postulantes fueron aceptados en la misma carrera y universidad, y en esta carrera los estudiantes deben pagar para estudiar (no hay acceso a gratuidad).
+- La beca disponible es de **$2.000.000** para el primer año.
+:::
 
-**Su tarea:**
+::: {.callout-tip}
+## Su tarea:
 
-En cada par, Ud. debe repartir la beca asignando un porcentaje a cada postulante. La distribución debe sumar siempre el 100%, lo que significa que darle más a uno implica darle menos a otro. Puede asignar la proporción que estime conveniente, incluido un reparto igualitario.
+- En cada par, Ud. debe repartir la beca asignando a cada postulante un porcentaje del monto total de la beca ($ 2.000.000) 
+- La distribución debe sumar siempre el total (100%), lo que significa que darle más a uno implica darle menos a otro. 
+- Puede asignar la proporción que estime conveniente, incluido un reparto igualitario.
 
-No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.
+**No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.**
+:::
 
 **¿Cómo hacer la asignación?**
 

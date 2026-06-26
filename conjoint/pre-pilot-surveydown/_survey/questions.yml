@@ -34,7 +34,7 @@ cbc_practice:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_practice_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q1:
   type: slider_numeric
@@ -63,7 +63,7 @@ cbc_q1:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q1_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q2:
   type: slider_numeric
@@ -92,7 +92,7 @@ cbc_q2:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q2_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q3:
   type: slider_numeric
@@ -121,7 +121,7 @@ cbc_q3:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q3_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q4:
   type: slider_numeric
@@ -150,7 +150,7 @@ cbc_q4:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q4_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q5:
   type: slider_numeric
@@ -179,7 +179,7 @@ cbc_q5:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q5_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q6:
   type: slider_numeric
@@ -208,7 +208,7 @@ cbc_q6:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q6_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 year_of_birth:
   type: select
@@ -339,7 +339,7 @@ income:
     Más de $4.000.000: more_than_4m
     Prefiero no decir: prefer_not_to_say
 feedback:
-  type: unknown
+  type: textarea
   label:
   - ¿Tiene algún otro comentario o sugerencia sobre esta encuesta?
   - Su retroalimentación nos ayudará a hacer mejoras en el futuro :)
