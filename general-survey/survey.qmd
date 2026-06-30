@@ -503,14 +503,14 @@ sd_question(
 
 ```{r}
 sd_nav(
-  page_next = "cbc_practice_page",
+  page_next = "cbc_practice-page",
   label_next = "Siguiente"
 )
 ```
 
---- cbc_practice_page
+--- cbc_practice-page
 
-# Tarea de asignación
+# Módulo B: Tarea de asignación de becas
 
 A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
 

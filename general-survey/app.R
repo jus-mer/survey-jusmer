@@ -176,6 +176,13 @@ ui <- tagList(
       .cell-output-display table.table-condensed th {
         font-size: 20px !important;
       }
+      /* Quarto callouts (e.g. cbc_practice-page) render their body at a
+         smaller, em-based font-size; pin it to match body-font (20px). */
+      .callout-body-container,
+      .callout-body-container p,
+      .callout-body-container li {
+        font-size: 20px !important;
+      }
       /* Slider track: neutral grey, sin colores que confundan */
       .irs-bar, .irs-bar--single, .irs-bar-edge,
       .irs--shiny .irs-bar, .irs--shiny .irs-bar-edge {
