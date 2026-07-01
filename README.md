@@ -9,9 +9,11 @@ survey-jusmer/
 │   README.md
 │   survey-jusmer.Rproj
 │
-├── conjoint/
-│   ├── design/
-│   └── surveydown/
+├── surveys/
+│   ├── conjoint-test/
+│   └── pre-piloto/
+|   └── piloto/
+|   └── ola-1/
 │
 ├── documentation/
 │   ├── 01-antecedents.qmd
@@ -33,15 +35,10 @@ survey-jusmer/
 │   ├── figures/
 │   └── tables/
 │
-├── presentations/
-│
 ├── processing/
 │
-├── questionnaire/
 │
-└── working-papers/
-    ├── deservingness/
-    └── market-justice/
+└
 ```
 
 ### Repository and reproducibility:

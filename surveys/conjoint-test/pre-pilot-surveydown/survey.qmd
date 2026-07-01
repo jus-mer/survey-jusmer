@@ -1,0 +1,857 @@
+---
+theme-settings:
+  theme: default
+  barposition: top
+  footer-left: "Hecho con [surveydown](https://surveydown.org)"
+  footer-right: '[<i class="bi bi-github"></i> Source Code](https://github.com/surveydown-dev/template_conjoint_tables)'
+
+survey-settings:
+  show-previous: true
+  use-cookies: true
+  auto-scroll: false
+  rate-survey: false
+  system-language: es
+  highlight-unanswered: true
+  highlight-color: blue
+  capture-metadata: true
+  all-required: false
+  required:
+    - consent_age
+    - consent_understand
+
+system-messages:
+  previous: Anterior
+  next: Siguiente
+  exit: Finalizar encuesta
+---
+
+```{r}
+Sys.setlocale("LC_ALL", "en_US.UTF-8")
+library(surveydown)
+library(dplyr)
+library(kableExtra)
+library(htmltools)
+library(here)
+source("code/slider_widget.R")
+```
+
+```{=html}
+<style>
+/* Keep allocation text dark and readable even while Shiny updates outputs */
+[id^="container-cbc_"] {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+[id^="container-cbc_"] .form-group,
+[id^="container-cbc_"] .shiny-input-container {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+[id^="container-cbc_"] .form-group {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+[id^="cbc_"] + .irs,
+[id^="cbc_"] + .irs--shiny {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Remove default Bootstrap table bottom gap between conjoint table and slider */
+.cell-output-display table.table.table-condensed {
+  margin-bottom: 0 !important;
+}
+
+/* Match conjoint table option columns to option box colors */
+.cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(2),
+.cell-output-display table.table.table-condensed > thead > tr > th:nth-child(2) {
+  background-color: #f0fff4 !important;
+  box-shadow: inset 0 0 0 9999px #f0fff4 !important;
+  color: #0b3d1a !important;
+}
+
+/* Name row (first tbody row) in option colors */
+.cell-output-display table.table.table-condensed > tbody > tr:first-child > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd):first-child > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even):first-child > td:nth-child(2) {
+  color: #28a745 !important;
+  font-weight: 800 !important;
+}
+
+.cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(3),
+.cell-output-display table.table.table-condensed > thead > tr > th:nth-child(3) {
+  background-color: #d9ecff !important;
+  box-shadow: inset 0 0 0 9999px #d9ecff !important;
+  color: #001f4d !important;
+}
+
+.cell-output-display table.table.table-condensed > tbody > tr:first-child > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd):first-child > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even):first-child > td:nth-child(3) {
+  color: #007bff !important;
+  font-weight: 800 !important;
+}
+
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd) > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even) > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:hover > td:nth-child(2) {
+  background-color: #f0fff4 !important;
+  box-shadow: inset 0 0 0 9999px #f0fff4 !important;
+  color: #0b3d1a !important;
+}
+
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd) > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even) > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:hover > td:nth-child(3) {
+  background-color: #d9ecff !important;
+  box-shadow: inset 0 0 0 9999px #d9ecff !important;
+  color: #001f4d !important;
+}
+
+/* Pull slider cell-output-display up against the table above it */
+.cell > .cell-output-display:has([id^="container-cbc_"]) {
+  margin-top: -40px !important;
+  padding-top: 0 !important;
+}
+
+.cell > .cell-output-display:has(table.table-condensed) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+[id$="_opt1"] {
+  color: #28a745 !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+[id$="_opt2"] {
+  color: #007bff !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+[id$="_name1"] {
+  color: #28a745 !important;
+  font-weight: 800 !important;
+}
+
+[id$="_name2"] {
+  color: #007bff !important;
+  font-weight: 800 !important;
+}
+
+[id$="_opt1_pct"],
+[id$="_opt2_pct"] {
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+[id$="_opt1_pct"] {
+  color: #28a745 !important;
+}
+[id$="_opt2_pct"] {
+  color: #007bff !important;
+}
+
+[id$="_opt1"].recalculating,
+[id$="_opt2"].recalculating,
+[id$="_opt1_pct"].recalculating,
+[id$="_opt2_pct"].recalculating,
+[id$="_opt1"].shiny-bound-output.recalculating,
+[id$="_opt2"].shiny-bound-output.recalculating,
+[id$="_opt1_pct"].shiny-bound-output.recalculating,
+[id$="_opt2_pct"].shiny-bound-output.recalculating,
+[id$="_opt1"] .shiny-bound-output.recalculating,
+[id$="_opt2"] .shiny-bound-output.recalculating,
+[id$="_opt1_pct"] .shiny-bound-output.recalculating,
+[id$="_opt2_pct"] .shiny-bound-output.recalculating,
+[id$="_opt1"] span.recalculating,
+[id$="_opt2"] span.recalculating,
+[id$="_opt1_pct"] span.recalculating,
+[id$="_opt2_pct"] span.recalculating,
+[id$="_opt1"] .recalculating,
+[id$="_opt2"] .recalculating,
+[id$="_opt1_pct"] .recalculating,
+[id$="_opt2_pct"] .recalculating,
+.recalculating [id$="_opt1"],
+.recalculating [id$="_opt2"],
+.recalculating [id$="_opt1_pct"],
+.recalculating [id$="_opt2_pct"],
+[id$="_opt1"] .recalculating,
+[id$="_opt2"] .recalculating,
+[id$="_opt1_pct"] .recalculating,
+[id$="_opt2_pct"] .recalculating {
+  opacity: 1 !important;
+}
+
+/* Some Shiny themes apply fade on container wrappers, not only the output span */
+[id^="container-cbc_"][class*="recalculating"],
+[id^="container-cbc_"] .recalculating,
+[id^="container-cbc_"] .shiny-bound-output.recalculating,
+[id^="container-cbc_"] [id$="_opt1"],
+[id^="container-cbc_"] [id$="_opt2"],
+[id^="container-cbc_"] [id$="_opt1_pct"],
+[id^="container-cbc_"] [id$="_opt2_pct"] {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Last-resort override: do not fade while recalculating anywhere in survey */
+.recalculating {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+[class*="recalculating"] {
+  opacity: 1 !important;
+  filter: none !important;
+}
+</style>
+
+<script>
+function localizeSurveyNavButtons() {
+  document.querySelectorAll('.sd-nav-prev, button, a').forEach(function(el) {
+    if (el.textContent && el.textContent.trim() === 'Previous') {
+      el.textContent = 'Anterior';
+    }
+  });
+
+  document.querySelectorAll('.sd-nav-next, button, a').forEach(function(el) {
+    if (el.textContent && el.textContent.trim() === 'Next') {
+      el.textContent = 'Siguiente';
+    }
+  });
+}
+
+function tightenConjointTableSliderGap() {
+  document.querySelectorAll('div.cell-output-display > table.table.table-condensed').forEach(function(tbl) {
+    var tableOutput = tbl.closest('div.cell-output-display');
+    if (!tableOutput) return;
+
+    var nextOutput = tableOutput.nextElementSibling;
+    if (!nextOutput || !nextOutput.classList.contains('cell-output-display')) return;
+    if (!nextOutput.querySelector('[id^="container-cbc_"]')) return;
+
+    tableOutput.style.marginBottom = '0px';
+    tableOutput.style.paddingBottom = '0px';
+    nextOutput.style.marginTop = '-40px';
+    nextOutput.style.paddingTop = '0px';
+  });
+}
+
+function styleConjointProfiles() {
+  // Find all kable tables in the survey
+  document.querySelectorAll('table.table-striped.table-hover.table-condensed').forEach(function(table) {
+    // Look for "Postulante:" row or "Profile:" row
+    var rows = table.querySelectorAll('tbody tr');
+    rows.forEach(function(row, idx) {
+      var cells = row.querySelectorAll('td');
+      if (cells.length >= 3) {
+        // Check if first cell contains "Postulante:" or "Profile:"
+        var firstCellText = cells[0].textContent.trim();
+        if (firstCellText === 'Postulante:' || firstCellText === 'Profile:') {
+          // Get the names from cells 1 and 2
+          var name1 = cells[1].textContent.trim();
+          var name2 = cells[2].textContent.trim();
+          
+          // Store names in the global object for sliders to access
+          if (!window.cbc_names) window.cbc_names = {};
+          window.cbc_names[table.closest('.cell-output-display')?.nextElementSibling?.querySelector('[id^="cbc_"]')?.id] = [name1, name2];
+          
+          // Style the name cells with bold and color
+          var nameCell = cells[1];
+          nameCell.style.fontWeight = '700';
+          nameCell.style.color = '#28a745';
+          
+          // Check if there's a third cell for the second profile
+          var nameCell2 = cells[2];
+          if (nameCell2) {
+            nameCell2.style.fontWeight = '700';
+            nameCell2.style.color = '#007bff';
+          }
+        }
+      }
+    });
+  });
+}
+
+
+
+function forceAllocationTextOpacity() {
+  document.querySelectorAll('[id$="_opt1"], [id$="_opt2"], [id$="_opt1_pct"], [id$="_opt2_pct"]').forEach(function(el) {
+    if (el.id.endsWith('_opt1') || el.id.endsWith('_opt1_pct')) {
+      el.style.setProperty('color', '#28a745', 'important');
+    }
+    if (el.id.endsWith('_opt2') || el.id.endsWith('_opt2_pct')) {
+      el.style.setProperty('color', '#007bff', 'important');
+    }
+    el.style.setProperty('font-weight', '900', 'important');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+    el.style.setProperty('text-shadow', '0 0 0 transparent', 'important');
+
+    // Remove fade from any recalculating ancestor wrappers
+    var p = el.parentElement;
+    while (p && p !== document.body) {
+      if (p.classList && p.classList.contains('recalculating')) {
+        p.style.setProperty('opacity', '1', 'important');
+        p.style.setProperty('filter', 'none', 'important');
+      }
+      p = p.parentElement;
+    }
+  });
+
+  document.querySelectorAll('[id$="_name1"], [id$="_name2"]').forEach(function(el) {
+    if (el.id.endsWith('_name1')) {
+      el.style.setProperty('color', '#28a745', 'important');
+    }
+    if (el.id.endsWith('_name2')) {
+      el.style.setProperty('color', '#007bff', 'important');
+    }
+    el.style.setProperty('font-weight', '800', 'important');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+  });
+
+  // Color the name row (first tbody row) in each conjoint table
+  document.querySelectorAll('table.table-condensed tbody tr:first-child').forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells[1]) {
+      cells[1].style.setProperty('color', '#28a745', 'important');
+      cells[1].style.setProperty('font-weight', '800', 'important');
+    }
+    if (cells[2]) {
+      cells[2].style.setProperty('color', '#007bff', 'important');
+      cells[2].style.setProperty('font-weight', '800', 'important');
+    }
+  });
+
+  document.querySelectorAll('[id^="container-cbc_"]').forEach(function(el) {
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+  });
+}
+
+function stripRecalculatingClass() {
+  document.querySelectorAll('.recalculating').forEach(function(el) {
+    el.classList.remove('recalculating');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  localizeSurveyNavButtons();
+  tightenConjointTableSliderGap();
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+  styleConjointProfiles();
+  setTimeout(localizeSurveyNavButtons, 100);
+  setTimeout(tightenConjointTableSliderGap, 100);
+  setTimeout(forceAllocationTextOpacity, 100);
+  setTimeout(stripRecalculatingClass, 100);
+  setTimeout(styleConjointProfiles, 100);
+  setTimeout(localizeSurveyNavButtons, 400);
+  setTimeout(tightenConjointTableSliderGap, 400);
+  setTimeout(forceAllocationTextOpacity, 400);
+  setTimeout(stripRecalculatingClass, 400);
+  setTimeout(styleConjointProfiles, 400);
+});
+
+document.addEventListener('click', function() {
+  setTimeout(localizeSurveyNavButtons, 0);
+  setTimeout(tightenConjointTableSliderGap, 0);
+  setTimeout(forceAllocationTextOpacity, 0);
+  setTimeout(stripRecalculatingClass, 0);
+  setTimeout(styleConjointProfiles, 0);
+  setTimeout(localizeSurveyNavButtons, 120);
+  setTimeout(tightenConjointTableSliderGap, 120);
+  setTimeout(forceAllocationTextOpacity, 120);
+  setTimeout(stripRecalculatingClass, 120);
+  setTimeout(styleConjointProfiles, 120);
+});
+
+document.addEventListener('input', function() {
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+});
+
+document.addEventListener('change', function() {
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+});
+
+var navLabelsObserver = new MutationObserver(function() {
+  localizeSurveyNavButtons();
+  tightenConjointTableSliderGap();
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+});
+navLabelsObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+setInterval(function() {
+  stripRecalculatingClass();
+  forceAllocationTextOpacity();
+}, 120);
+</script>
+```
+
+
+
+--- welcome
+
+# Pre-Piloto Encuesta justicia y merecimiento
+
+Muchas gracias por participar en esta encuesta del proyecto FONDECYT "Justicia de Mercado y Merecimiento del Bienestar Social - [JUSMER](https://jusmer.com/)". El objetivo de esta encuesta es entender mejor las opiniones de las personas sobre la justicia y el merecimiento en el contexto de la desigualdad social.
+
+Estamos pre-testeando una sección de la encuesta y nos gustaría mucho que pudiera responderla y nos hiciera comentarios, no debería tomar más de 5 minutos. Sus respuestas serán completamente anónimas y se utilizarán únicamente con fines de investigación.
+
+Las preguntas consisten en una serie de escenarios donde se le pedirá que asigne un recurso limitado entre dos personas con diferentes características.
+
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'consent_understand',
+  label = "Acepto participar en esta encuesta y entiendo que mis respuestas serán anónimas y utilizadas únicamente con fines de investigación.",
+  option = c(
+    'Si' = 'yes',
+    'No'  = 'no'
+  )
+)
+
+sd_nav(
+  page_next = "cbc_practice_page",
+  label_next = "Siguiente"
+)
+```
+
+
+--- cbc_practice_page
+
+# Tarea de asignación
+
+A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
+
+Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice con la tarea.
+
+::: {.callout-note}
+## La situación:
+
+- Imagine que Ud. forma parte de un **comité universitario encargado de asignar una beca** de apoyo a estudiantes de primer año. 
+- Los postulantes serán presentados de a pares, con información sobre cada uno proporcionada por el colegio del que egresaron.
+- Ambos postulantes fueron aceptados en la misma carrera y universidad, y en esta carrera los estudiantes deben pagar para estudiar (no hay acceso a gratuidad).
+- La beca disponible es de **$2.000.000** para el primer año.
+:::
+
+::: {.callout-tip}
+## Su tarea:
+
+- En cada par, Ud. debe repartir la beca asignando a cada postulante un porcentaje del monto total de la beca ($ 2.000.000) 
+- La distribución debe sumar siempre el total (100%), lo que significa que darle más a uno implica darle menos a otro. 
+- Puede asignar la proporción que estime conveniente, incluido un reparto igualitario.
+
+**No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.**
+:::
+
+**¿Cómo hacer la asignación?**
+
+Mueva el control deslizante (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle;"}) bajo la tabla. El monto aparece inicialmente distribuido en partes iguales ($1.000.000 c/u) y cambiará según cómo mueva el control.
+
+```{r}
+# Make a fixed data frame for the options
+
+df <- tibble::tibble(
+  altID       = c(1, 2),
+  need        = c("Dificultad", "Holgura"),
+  identity    = c("Chile", "Chile"),
+  control     = c("Postuló a otras becas pero no obtuvo financiamiento", "No alcanzó a postular a tiempo a otras becas"),
+  effort      = c("Más que sus compañeros", "Igual que sus compañeros"),
+  reciprocity = c("Ha hecho voluntariado", "No ha hecho voluntariado"),
+  attitude    = c("Una ayuda que agradece", "Una ayuda que agradece"),
+)
+
+male_names <- c("Mateo", "Lucas", "Benjamín", "Nicolás", "Daniel", "Santiago", "Tomás", "Joaquín")
+female_names <- c("Sofía", "Valentina", "Isidora", "Martina", "Camila", "Florencia", "Catalina", "Antonia")
+practice_names <- sample(c(sample(male_names, 1), sample(female_names, 1)), 2)
+
+df <- df |>
+  mutate(nombre = practice_names[altID])
+
+alts <- df |>
+  mutate(
+    nombre_formatted = ifelse(
+      altID == 1,
+      sprintf('<span style="color: #28a745; font-weight: 800;">%s</span>', nombre),
+      sprintf('<span style="color: #007bff; font-weight: 800;">%s</span>', nombre)
+    )
+  ) |>
+  # Make nicer attribute labels
+  select(
+    `Postulante:` = nombre_formatted,
+    `Su hogar llega a fin de mes con:` = need,
+    `País de nacimiento:` = identity,
+    `Requiere la beca porque:` = control,
+    `Estudia:` = effort,
+    `Fuera de sus estudios:` = reciprocity,
+    `Ve la beca como:` = attitude
+  )
+
+row.names(alts) <- NULL # Drop row names
+
+kbl(t(alts), escape = FALSE) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+  ) |>
+  column_spec(1, bold = TRUE)
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_practice", nombre1 = practice_names[1], nombre2 = practice_names[2])
+
+htmltools::HTML("<br>")
+
+sd_question(
+  type  = "textarea",
+  id    = "cbc_practice_comment",
+  label = "Comentarios"
+)
+
+sd_nav(
+  page_next = "cbc_intro",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_intro
+
+# Tarea de asignación de becas
+
+Ahora que ha practicado con una pregunta de ejemplo, vamos a mostrarle 6 pares de postulantes con distintas características, entre quienes deberá distribuir el monto de la beca.
+
+```{r}
+sd_nav(
+  page_next = "cbc_q1_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q1_page
+
+<center>
+## Tarea 1
+</center>
+
+```{r}
+sd_output("cbc1_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q1")
+
+htmltools::HTML("<br>")
+
+sd_question(
+  type  = "textarea",
+  id    = "cbc_q1_comment",
+  label = "Comentarios"
+)
+
+sd_nav(
+  page_next = "cbc_q2_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q2_page
+
+<center>
+## Tarea 2
+</center>
+
+```{r}
+sd_output("cbc2_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q2")
+
+htmltools::HTML("<br>")
+
+sd_question(
+  type  = "textarea",
+  id    = "cbc_q2_comment",
+  label = "Comentarios"
+)
+
+sd_nav(
+  page_next = "cbc_q3_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q3_page
+
+<center>
+## Tarea 3
+</center>
+
+```{r}
+sd_output("cbc3_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q3")
+
+htmltools::HTML("<br>")
+
+sd_question(
+  type  = "textarea",
+  id    = "cbc_q3_comment",
+  label = "Comentarios"
+)
+
+sd_nav(
+  page_next = "cbc_q4_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q4_page
+
+<center>
+## Tarea 4
+</center>
+
+```{r}
+sd_output("cbc4_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q4")
+
+htmltools::HTML("<br>")
+
+sd_question(
+  type  = "textarea",
+  id    = "cbc_q4_comment",
+  label = "Comentarios"
+)
+
+sd_nav(
+  page_next = "cbc_q5_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q5_page
+
+<center>
+## Tarea 5
+</center>
+
+```{r}
+sd_output("cbc5_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q5")
+
+htmltools::HTML("<br>")
+
+sd_question(
+  type  = "textarea",
+  id    = "cbc_q5_comment",
+  label = "Comentarios"
+)
+
+sd_nav(
+  page_next = "cbc_q6_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q6_page
+
+<center>
+## Tarea 6
+</center>
+
+```{r}
+sd_output("cbc6_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q6")
+
+htmltools::HTML("<br>")
+
+sd_question(
+  type  = "textarea",
+  id    = "cbc_q6_comment",
+  label = "Comentarios"
+)
+
+sd_nav(
+  page_next = "demographics",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- demographics
+
+# Información Adicional
+
+A continuación se presentan algunas preguntas adicionales, el objetivo es recibir comentarios sobre el estilo de las preguntas, las opciones de respuesta, y cualquier otro aspecto que pueda ser relevante para mejorar la encuesta.  
+
+::: {style="width:500px; margin: 0 auto;"}
+
+```{r}
+# Construct the list of years
+ 
+years <- as.character(2003:1920)
+names(years) <- years
+years <- c("Prefiero no decir" = "prefer_not_say", years)
+
+sd_question(
+  type   = 'select',
+  id     = 'year_of_birth',
+  label  = "(1) ¿En qué año nació?",
+  option = years
+)
+
+genders <- c(
+  "Hombre"                   = "male",
+  "Mujer"                    = "female", 
+  "No binario"               = "non_binary", 
+  "Hombre trans"             = "trans_male",
+  "Mujer trans"              = "trans_female",
+  "Prefiero no decir"        = "prefer_not_to_say"
+)
+
+sd_question(
+  type   = 'select',
+  id     = 'gender',
+  label  = "(2) ¿Cuál es su identidad de género actual?",
+  option = genders
+)
+
+educations <- c(
+  "Menos que primaria"       = "less_than_high_school",
+  "Educación media"          = "high_school",
+  "Algunos estudios superiores" = "some_college",
+  "Técnico o Profesional"    = "associate_degree",
+  "Licenciatura"             = "bachelor_degree",
+  "Magíster"                 = "master_degree",
+  "Doctorado"                = "doctoral_degree",
+  "Prefiero no decir"        = "prefer_not_to_say"
+)
+
+sd_question(
+  type   = 'select',
+  id     = 'education',
+  label  = "(4) ¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está estudiando, use el grado más alto que haya obtenido.",
+  option = educations
+)
+
+incomes <- c(
+  "Menos de $100.000"          = "less_than_100k",
+  "$100.000 a $200.000"        = "100k_to_200k",
+  "$200.001 a $400.000"        = "200001_to_400k",
+  "$400.001 a $700.000"        = "400001_to_700k",
+  "$700.001 a $1.000.000"      = "700001_to_1000k",
+  "$1.000.001 a $1.500.000"    = "1000001_to_1500k",
+  "$1.500.001 a $2.000.000"    = "1500001_to_2000k",
+  "$2.000.001 a $2.800.000"    = "2000001_to_2800k",
+  "$2.800.001 a $4.000.000"    = "2800001_to_4000k",
+  "Más de $4.000.000"          = "more_than_4m",
+  "Prefiero no decir"        = "prefer_not_to_say"
+)
+
+sd_question(
+  type   = 'select',
+  id     = 'income',
+  label  = "(5) ¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?",
+  option = incomes
+)
+
+sd_question(
+  type  = "textarea",
+  id    = "feedback",
+  label = 
+  "¿Tiene algún otro comentario o sugerencia sobre esta encuesta?
+  
+ Su retroalimentación nos ayudará a hacer mejoras en el futuro :)"
+)
+
+sd_nav(
+  page_next = "end_normal",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+:::
+
+--- end_normal
+
+# Fin de la Encuesta
+
+¡La encuesta ha finalizado! ¡Gracias por su participación!
+
+Tu código de finalización es: **`r sd_output('completion_code', type = 'value')`**
+
+Puede cerrar la ventana ahora.
+
+```{r}
+sd_close()
+```
+
+--- end_consent
+
+# Fin de la Encuesta
+
+La encuesta ha finalizado. Puedes cerrar la ventana.
+
+```{r}
+sd_close()
+```
+
+
