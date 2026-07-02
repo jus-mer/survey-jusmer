@@ -17,6 +17,7 @@ survey-settings:
   all-required: false
   required:
     - consent_understand
+  set-mode: database
 
 
 system-messages:

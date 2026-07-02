@@ -1,5 +1,12 @@
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
+library(surveydown)
+
+# Connects to database
+db <- sd_db_connect()
+
+
+
 # Package setup ---------------------------------------------------------------
 
 # Install required packages:
@@ -27,7 +34,15 @@ library(tidyr)
 # Read in the full survey design file
 design <- read_csv("data/choice_questions.csv")
 
-db <- sd_db_connect(ignore = TRUE)
+# Database setup --------------------------------------------------------------
+#
+# Configure credentials once with:
+# surveydown::sd_db_config()
+#
+# In production (default), responses are written to the configured database.
+# For local UI tests without writes, set SD_IGNORE_DB=true.
+ignore_db <- tolower(Sys.getenv("SD_IGNORE_DB", "false")) %in% c("1", "true", "yes")
+db <- sd_db_connect(ignore = ignore_db)
 
 # UI setup --------------------------------------------------------------------
 

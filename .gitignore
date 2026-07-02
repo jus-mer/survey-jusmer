@@ -11,3 +11,9 @@
 
 # macOS
 .DS_Store
+
+# Local secrets (database credentials)
+.env
+.Renviron
+**/.env
+**/.Renviron

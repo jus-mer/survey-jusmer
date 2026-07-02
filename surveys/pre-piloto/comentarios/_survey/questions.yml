@@ -131,7 +131,7 @@ education:
     Doctorado: '8'
     Prefiero no decir: prefer_not_to_say
 feedback:
-  type: unknown
+  type: textarea
   label: ¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar
     cualquier observación de forma, contenido o diseño en el cuadro a continuación.
 cbc_practice:
@@ -161,7 +161,7 @@ cbc_practice:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_practice_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 manip_check:
   type: mc
@@ -197,7 +197,7 @@ cbc_q1:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q1_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q2:
   type: slider_numeric
@@ -226,7 +226,7 @@ cbc_q2:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q2_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q3:
   type: slider_numeric
@@ -255,7 +255,7 @@ cbc_q3:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q3_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q4:
   type: slider_numeric
@@ -284,7 +284,7 @@ cbc_q4:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q4_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q5:
   type: slider_numeric
@@ -313,7 +313,7 @@ cbc_q5:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q5_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 cbc_q6:
   type: slider_numeric
@@ -342,7 +342,7 @@ cbc_q6:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q6_comment:
-  type: unknown
+  type: textarea
   label: Comentarios
 mj_1:
   type: mc
@@ -381,7 +381,7 @@ mj_3:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_clasicos:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 ref_1:
   type: mc
@@ -451,7 +451,7 @@ attention_check:
     En desacuerdo: desacuerdo
     Muy en desacuerdo: muy_desacuerdo
 cmt_reflex:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 ranking_politicas:
   type: matrix
@@ -569,7 +569,7 @@ rank_5:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_ranking:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 pres_1:
   type: mc
@@ -638,7 +638,7 @@ pres_6:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_percepcion_acceso:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 valor_1:
   type: mc
@@ -701,7 +701,7 @@ valor_5:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_valor:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 dec_3:
   type: slider
@@ -756,7 +756,7 @@ dec_2:
     90%: '90'
     100%: '100'
 cmt_decomodifica:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 lucro_1:
   type: mc
@@ -792,7 +792,7 @@ lucro_3:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_rol_privados_estado:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 cargo_1:
   type: slider
@@ -960,7 +960,7 @@ part_5:
     '    ': '6'
     Privados: '7'
 cmt_participa:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 neolib_1:
   type: mc
@@ -1011,7 +1011,7 @@ neolib_4:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_neoliberal:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 control_1:
   type: mc
@@ -1074,7 +1074,7 @@ actitud_2:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_deserve-1:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 reciproc_1:
   type: mc
@@ -1161,7 +1161,7 @@ id_3:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_deserve-2:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 nec_1:
   type: mc
@@ -1260,7 +1260,7 @@ esf_5:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_deserve-3:
-  type: unknown
+  type: textarea
   label: Comentarios (opcional)
 adc_qstn:
   type: mc
