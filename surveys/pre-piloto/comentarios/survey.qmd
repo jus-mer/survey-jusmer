@@ -878,7 +878,7 @@ escala_acuerdo_nsnr <- c(
 sd_question(
   type  = 'mc',
   id    = 'mj_1',
-  label = "Es justo que las personas de altos ingresos puedan acceder a una mejor atención de salud que las personas con ingresos más bajos",
+  label = "Es justo que en Chile las personas de altos ingresos puedan acceder a una mejor atención de salud que las personas con ingresos más bajos",
   option = escala_acuerdo_nsnr
 )
 ```
@@ -887,7 +887,7 @@ sd_question(
 sd_question(
   type  = 'mc',
   id    = 'mj_2',
-  label = "Es justo que las personas de altos ingresos tengan una mejor educación para sus hijos que las personas con ingresos más bajos",
+  label = "Es justo que en Chile las personas de altos ingresos tengan una mejor educación para sus hijos que las personas con ingresos más bajos",
   option = escala_acuerdo_nsnr
 )
 ```
@@ -896,7 +896,7 @@ sd_question(
 sd_question(
   type  = 'mc',
   id    = 'mj_3',
-  label = "Es justo que las personas de altos ingresos tengan mejores pensiones que las personas con ingresos más bajos",
+  label = "Es justo que en Chile las personas de altos ingresos tengan mejores pensiones que las personas con ingresos más bajos",
   option = escala_acuerdo_nsnr
 )
 

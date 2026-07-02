@@ -346,8 +346,8 @@ cbc_q6_comment:
   label: Comentarios
 mj_1:
   type: mc
-  label: (1) Es justo que las personas de altos ingresos puedan acceder a una mejor
-    atención de salud que las personas con ingresos más bajos
+  label: (1) Es justo que en Chile las personas de altos ingresos puedan acceder a
+    una mejor atención de salud que las personas con ingresos más bajos
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
@@ -358,8 +358,8 @@ mj_1:
     Prefiero no responder: '99'
 mj_2:
   type: mc
-  label: (2) Es justo que las personas de altos ingresos tengan una mejor educación
-    para sus hijos que las personas con ingresos más bajos
+  label: (2) Es justo que en Chile las personas de altos ingresos tengan una mejor
+    educación para sus hijos que las personas con ingresos más bajos
   options:
     Muy de acuerdo: '5'
     De acuerdo: '4'
@@ -370,7 +370,7 @@ mj_2:
     Prefiero no responder: '99'
 mj_3:
   type: mc
-  label: (3) Es justo que las personas de altos ingresos tengan mejores pensiones
+  label: (3) Es justo que en Chile las personas de altos ingresos tengan mejores pensiones
     que las personas con ingresos más bajos
   options:
     Muy de acuerdo: '5'
