@@ -105,7 +105,7 @@ Con `hf` ya autenticado (paso 1), desde la raíz del repo:
 
 ```bash
 ~/.claude/skills/surveydown-skill/deploy-hugging-face/deploy.sh \
-  --space tomasurzuam/jusmer-pre-piloto-comentarios \
+  --space jus-mer/pre-piloto-v1 \
   --dir surveys/pre-piloto/comentarios \
   --title "Pre-Piloto Encuesta Justicia y Merecimiento — Comentarios" \
   --wait
@@ -130,7 +130,7 @@ Qué hace, en orden:
    un `HTTP 200` sobre la URL final.
 
 URL resultante: `https://<owner>-<space-name>.hf.space`
-(en este caso: <https://tomasurzuam-jusmer-pre-piloto-comentarios.hf.space>)
+(en este caso: <https://jus-mer-pre-piloto-v1.hf.space>)
 
 Un primer build tarda unos **2-5 minutos**. Si falla, revisar los logs en
 `https://huggingface.co/spaces/<owner>/<space-name>?logs=build`.
@@ -161,8 +161,12 @@ queda "quota-paused" y no se despierta solo. Revisar cupo disponible antes de cr
 otro Space:
 
 ```bash
-~/.claude/skills/surveydown-skill/deploy-hugging-face/check-quota.sh tomasurzuam
+~/.claude/skills/surveydown-skill/deploy-hugging-face/check-quota.sh jus-mer
 ```
+
+(La cuota se cuenta por la cuenta **dueña** del Space. Como este survey ahora vive en
+la organización `jus-mer`, hay que consultar la cuota de `jus-mer`, no la de la
+cuenta personal.)
 
 ## 7. Spaces y URLs en Hugging Face
 
@@ -183,6 +187,75 @@ La opción 2) es la más recomendable ya que se puede realizar de forma gratuita
 - Apretar el botón "I understand, move this space"
 
 Una vez hecho esto, el proyecto se traspasa y empienza a generarse el nuevo deploy, ahora alojado dentro de la organización (esto puede demorar un par de minutos).
+
+**Este survey ya pasó por este traspaso**: originalmente estaba en
+`tomasurzuam/jusmer-pre-piloto-comentarios` (cuenta personal) y ahora vive en
+`jus-mer/pre-piloto-v1`, con URL `https://jus-mer-pre-piloto-v1.hf.space`.
+
+## 9. Re-desplegar tras traspasar el Space a una organización
+
+Cuando un Space ya existente se traspasa a una organización (sección 8), el owner
+del slug cambia — hay que actualizar el deploy para apuntar al Space nuevo, y
+verificar que el token de `hf` tenga permiso de escritura ahí. Pasos, en orden:
+
+### 9.1 Confirmar el nuevo slug del Space
+
+Después del traspaso, la URL del Space cambia de `<cuenta-personal>/<nombre>` a
+`<organización>/<nombre-nuevo>` (el nombre también se puede haber renombrado durante
+el traspaso). Confirmar el slug exacto entrando al Space en huggingface.co — no
+asumir que el `<nombre>` se mantuvo igual.
+
+### 9.2 Confirmar que el token activo tiene permiso de escritura sobre la organización
+
+`hf auth whoami` mostrando `orgs=jus-mer` solo confirma que la **cuenta** es
+miembro de la organización — no que el **token activo** tenga permiso de escritura
+ahí. Si el upload falla con `403 Forbidden` / "upload failed. Check you're logged
+in... with a Write token for '<org>'", el token no alcanza. Un token **classic**
+con rol `write` cubre automáticamente los repos de las organizaciones donde tu rol
+es write/admin (según la documentación oficial de HF); un token **fine-grained**
+necesita estar explícitamente scopeado al repo/Space de la organización.
+
+Para generar uno nuevo:
+
+1. <https://huggingface.co/settings/tokens> → **New token** → rol **`write`**
+   (classic, no fine-grained).
+2. Copiar el valor **inmediatamente** desde el diálogo de creación (con el ícono de
+   copiar) — es la única vez que se muestra completo; si se cierra el diálogo sin
+   copiarlo, hay que generar otro (Refresh o borrar y crear de nuevo).
+3. `hf auth login --force` en una terminal propia y pegar el token en el prompt
+   oculto ("Enter your token (input will not be visible)"). Nunca pegarlo en el
+   chat, un dotfile, ni un archivo versionado.
+4. Confirmar con `hf auth whoami` (debe seguir mostrando `orgs=<org>`) y, si hace
+   falta, `hf repos list --type space --namespace <org>` para verificar acceso real
+   (no solo membresía).
+
+**Si el prompt oculto no captura el pegado** (síntomas: `Error: Invalid user
+token.` con un token recién copiado, o un traceback de `httpx`/`httpcore` con
+`Illegal header value b'Bearer '` — esto último significa que llegó una cadena
+vacía, no que el token sea inválido) — es un problema del terminal, no del token.
+Alternativa que evita el prompt de `huggingface_hub`:
+
+```bash
+read -rs HF_TOKEN   # pegar el token y Enter (bash maneja el pegado, no Python)
+export HF_TOKEN
+hf auth whoami       # hf/huggingface_hub leen HF_TOKEN del entorno automáticamente
+```
+
+Esto solo dura la sesión de terminal actual (no se guarda en ningún archivo).
+
+### 9.3 Actualizar y correr el deploy
+
+Editar el `--space` del comando en la sección 3 para que apunte al slug nuevo
+(`<organización>/<nombre>`) y correrlo con `--wait`. Si el survey está en modo
+database, el mismo comando vuelve a sincronizar los Secrets `SD_*` en el Space
+nuevo (el Space recién traspasado no hereda los Secrets del Space de origen).
+
+### 9.4 Verificar
+
+Seguir la sección 4 (completar una respuesta de prueba, confirmar la fila en
+Supabase) y, si vas a seguir monitoreando cuota de hardware, usar el namespace de
+la organización en `check-quota.sh` (sección 6) — la cuota se cuenta por la cuenta
+**dueña** del Space, que ahora es la organización, no la cuenta personal.
 
 ## Nota: mismo survey también en shinyapps.io
 

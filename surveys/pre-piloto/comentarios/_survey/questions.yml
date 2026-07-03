@@ -7,6 +7,11 @@ consent_understand:
   options:
     Sí: 'yes'
     'No': 'no'
+id-correo:
+  type: unknown
+  label: Agradeceríamos que nos dejara su nombre y correo electrónico en caso de que
+    queramos contactarlo para hacerle preguntas respecto a sus comentarios y recomendaciones
+    sobre la encuesta. Sus respuestas seguirán siendo anónimas y confidenciales
 respondent:
   type: mc
   label: ¿Desde qué dispositivo responde esta encuesta?
@@ -120,15 +125,16 @@ education:
   label: ¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está
     estudiando, use el grado más alto que haya obtenido.
   options:
-    Menos que primaria: '0'
-    Educación primaria: '1'
-    Educación secundaria incompleta: '2'
-    Educación secundaria completa: '3'
-    Educación técnico/profesional: '4'
-    Bachillerato: '5'
-    Licenciatura o título universitario: '6'
-    Magíster: '7'
-    Doctorado: '8'
+    Sin estudios: '0'
+    Educación básica incompleta: '1'
+    Educación básica completa: '2'
+    Educación media incompleta: '3'
+    Educación media completa: '4'
+    Técnica superior incompleta (instituto o CFT): '5'
+    Técnica superior completa (instituto o CFT): '6'
+    Universitaria incompleta: '7'
+    Universitaria completa: '8'
+    Estudios de posgrado (magíster o doctorado): '9'
     Prefiero no decir: prefer_not_to_say
 feedback:
   type: unknown
