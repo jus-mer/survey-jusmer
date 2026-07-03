@@ -131,9 +131,8 @@ education:
     Doctorado: '8'
     Prefiero no decir: prefer_not_to_say
 feedback:
-  type: textarea
-  label: ¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar
-    cualquier observación de forma, contenido o diseño en el cuadro a continuación.
+  type: unknown
+  label: Comentarios (opcional)
 cbc_practice:
   type: slider_numeric
   label: []
@@ -161,7 +160,7 @@ cbc_practice:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_practice_comment:
-  type: textarea
+  type: unknown
   label: Comentarios
 manip_check:
   type: mc
@@ -197,7 +196,7 @@ cbc_q1:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q1_comment:
-  type: textarea
+  type: unknown
   label: Comentarios
 cbc_q2:
   type: slider_numeric
@@ -226,7 +225,7 @@ cbc_q2:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q2_comment:
-  type: textarea
+  type: unknown
   label: Comentarios
 cbc_q3:
   type: slider_numeric
@@ -255,7 +254,7 @@ cbc_q3:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q3_comment:
-  type: textarea
+  type: unknown
   label: Comentarios
 cbc_q4:
   type: slider_numeric
@@ -284,7 +283,7 @@ cbc_q4:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q4_comment:
-  type: textarea
+  type: unknown
   label: Comentarios
 cbc_q5:
   type: slider_numeric
@@ -313,7 +312,7 @@ cbc_q5:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q5_comment:
-  type: textarea
+  type: unknown
   label: Comentarios
 cbc_q6:
   type: slider_numeric
@@ -342,7 +341,7 @@ cbc_q6:
     '1900000': 1900000.0
     2e+06: 2000000.0
 cbc_q6_comment:
-  type: textarea
+  type: unknown
   label: Comentarios
 mj_1:
   type: mc
@@ -381,7 +380,7 @@ mj_3:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_clasicos:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 ref_1:
   type: mc
@@ -451,7 +450,7 @@ attention_check:
     En desacuerdo: desacuerdo
     Muy en desacuerdo: muy_desacuerdo
 cmt_reflex:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 ranking_politicas:
   type: matrix
@@ -569,7 +568,7 @@ rank_5:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_ranking:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 pres_1:
   type: mc
@@ -638,7 +637,7 @@ pres_6:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_percepcion_acceso:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 valor_1:
   type: mc
@@ -701,7 +700,7 @@ valor_5:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_valor:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 dec_3:
   type: slider
@@ -756,7 +755,7 @@ dec_2:
     90%: '90'
     100%: '100'
 cmt_decomodifica:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 lucro_1:
   type: mc
@@ -792,7 +791,7 @@ lucro_3:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_rol_privados_estado:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 cargo_1:
   type: slider
@@ -960,7 +959,7 @@ part_5:
     '    ': '6'
     Privados: '7'
 cmt_participa:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 neolib_1:
   type: mc
@@ -1011,7 +1010,7 @@ neolib_4:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_neoliberal:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 control_1:
   type: mc
@@ -1074,7 +1073,7 @@ actitud_2:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_deserve-1:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 reciproc_1:
   type: mc
@@ -1161,7 +1160,7 @@ id_3:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_deserve-2:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 nec_1:
   type: mc
@@ -1260,7 +1259,7 @@ esf_5:
     No sé: '98'
     Prefiero no responder: '99'
 cmt_deserve-3:
-  type: textarea
+  type: unknown
   label: Comentarios (opcional)
 adc_qstn:
   type: mc
@@ -1346,4 +1345,8 @@ educ_prov:
     Particular privado: privado
     Particular subvencionado: subvencionado
     Municipal: municipal
+feedback-2:
+  type: unknown
+  label: ¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar
+    cualquier observación de forma, contenido o diseño en el cuadro a continuación.
 

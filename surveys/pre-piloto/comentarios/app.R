@@ -1,9 +1,5 @@
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
-
 library(surveydown)
-
-# Connects to database
-db <- sd_db_connect()
 
 
 
@@ -23,7 +19,6 @@ db <- sd_db_connect()
 
 # Load packages
 library(shiny)
-library(surveydown)
 library(shinyjs)
 library(dplyr)
 library(readr)
@@ -432,9 +427,26 @@ make_cbc_table <- function(df, attr_order = NULL) {
 
   has_custom_cols <- all(c("need", "identity", "control", "effort", "reciprocity", "attitude") %in% names(df))
 
+  attrs_by_alt <- NULL
+
   if (has_custom_cols) {
     slider_id <- paste0("cbc_q", unique(df$qID)[1])
     names_vec <- unname(name_map[as.character(alt_ids)])
+
+    # Snapshot of what's actually shown to the respondent for this task
+    # (attributes + assigned name per alternative), keyed by altID. Needed to
+    # store the presented profiles alongside the slider answer, since the
+    # design is randomized per-session and can't be reconstructed afterwards.
+    attr_cols <- c("need", "identity", "control", "effort", "reciprocity", "attitude")
+    df_by_alt <- df[match(alt_ids, df$altID), ]
+    attrs_by_alt <- stats::setNames(
+      lapply(seq_along(alt_ids), function(i) {
+        vals <- as.list(df_by_alt[i, attr_cols])
+        vals$nombre <- unname(name_map[as.character(alt_ids[i])])
+        vals
+      }),
+      as.character(alt_ids)
+    )
 
     attr_labels <- c(
       need        = "Su hogar llega a fin de mes con:",
@@ -490,7 +502,8 @@ make_cbc_table <- function(df, attr_order = NULL) {
   list(
     render = function() { shiny::HTML(as.character(table)) },
     slider_id = if (has_custom_cols) slider_id else NULL,
-    names = if (has_custom_cols) names_vec else NULL
+    names = if (has_custom_cols) names_vec else NULL,
+    attrs = attrs_by_alt
   )
 }
 
@@ -595,6 +608,33 @@ server <- function(input, output, session) {
       tbl <- tables[[q]]
       output[[paste0("cbc", q, "_table")]] <- tbl$render
     })
+  }
+
+  # Persist the attributes and name shown for each alternative in every cbc
+  # task, so the slider allocation can later be analyzed against what was
+  # actually presented. The design is randomized per-session (see
+  # build_default_conjoint_design() above), so without this the profiles
+  # behind each answer are lost once the session ends.
+  #
+  # A single sd_store_value() call for all 6 tasks: every call does at least
+  # one DB/CSV lookup internally (to support cookie-resume), so calling it
+  # once per attribute (84 calls) added ~3s per session locally and, against
+  # a real remote DB, was slow enough to make the app appear to hang. One
+  # per task (6 calls) was still measurably slower than before this feature
+  # existed, so all 6 tasks are bundled into one JSON value instead.
+  all_profiles <- stats::setNames(
+    lapply(1:6, function(q) {
+      tbl_attrs <- tables[[q]]$attrs
+      if (is.null(tbl_attrs)) return(NULL)
+      stats::setNames(tbl_attrs, paste0("a", names(tbl_attrs)))
+    }),
+    paste0("q", 1:6)
+  )
+  all_profiles <- Filter(Negate(is.null), all_profiles)
+  if (length(all_profiles) > 0) {
+    profiles_json <- jsonlite::toJSON(all_profiles, auto_unbox = TRUE)
+    profiles_str <- as.character(profiles_json)
+    sd_store_value(profiles_str, "cbc_profiles", auto_assign = FALSE)
   }
 
   # Send candidate names to JS via custom message after Shiny connects

@@ -1,0 +1,10 @@
+name: comentarios
+title:
+username: jusmer
+account: jusmer
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17576773
+bundleId: 12217044
+url: https://jusmer.shinyapps.io/comentarios/
+version: 1

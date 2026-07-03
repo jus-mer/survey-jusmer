@@ -1,0 +1,10 @@
+name: survey-jusmer
+title:
+username: jusmer
+account: jusmer
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17579174
+bundleId: 12217004
+url: https://jusmer.shinyapps.io/survey-jusmer/
+version: 1

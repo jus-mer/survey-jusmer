@@ -1,0 +1,6 @@
+.env
+.git/
+.gitignore
+.vscode/
+preview_data.csv
+README.md

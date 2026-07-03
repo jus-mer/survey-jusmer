@@ -2099,7 +2099,7 @@ sd_question(
 
 sd_question(
   type  = "textarea",
-  id    = "feedback",
+  id    = "feedback-2",
   label =
   "¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar cualquier observación de forma, contenido o diseño en el cuadro a continuación."
 )
