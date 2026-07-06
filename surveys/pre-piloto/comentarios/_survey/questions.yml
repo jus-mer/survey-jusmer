@@ -7,7 +7,7 @@ consent_understand:
   options:
     Sí: 'yes'
     'No': 'no'
-id-correo:
+id_correo:
   type: unknown
   label: Agradeceríamos que nos dejara su nombre y correo electrónico en caso de que
     queramos contactarlo para hacerle preguntas respecto a sus comentarios y recomendaciones
@@ -1351,7 +1351,7 @@ educ_prov:
     Particular privado: privado
     Particular subvencionado: subvencionado
     Municipal: municipal
-feedback-2:
+feedback_2:
   type: unknown
   label: ¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar
     cualquier observación de forma, contenido o diseño en el cuadro a continuación.
