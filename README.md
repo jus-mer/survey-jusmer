@@ -47,4 +47,4 @@ The repository follows the logic of the [IPO protocol](https://github.com/juanca
 
 ### Files:
 
-- [Surveydown pre-pilot](https://jusmer.shinyapps.io/my_survey/)
+- [Pre-pilot survey](https://jus-mer-pre-piloto-v1.hf.space/)
