@@ -48,3 +48,4 @@ The repository follows the logic of the [IPO protocol](https://github.com/juanca
 ### Files:
 
 - [Surveydown pre-pilot](https://jusmer.shinyapps.io/my_survey/)
+- [Statistical Design Conjoint](https://jus-mer.github.io/survey-jusmer/surveys/conjoint-test/design/conjoint-preplan.html)
