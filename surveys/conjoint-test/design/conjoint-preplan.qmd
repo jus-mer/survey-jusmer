@@ -8,6 +8,7 @@ format:
     html-math-method: katex
     number-sections: true
     title-block-banner: true
+    embed-resources: true
     theme:
       - cosmo
     include-in-header:
