@@ -38,7 +38,7 @@ design <- read_csv("data/choice_questions.csv")
 # In production (default), responses are written to the configured database.
 # For local UI tests without writes, set SD_IGNORE_DB=true.
 ignore_db <- tolower(Sys.getenv("SD_IGNORE_DB", "false")) %in% c("1", "true", "yes")
-db <- sd_db_connect(ignore = ignore_db)
+db <- sd_db_connect(ignore = ignore_db, gssencmode = "disable")
 
 # UI setup --------------------------------------------------------------------
 
