@@ -1,0 +1,72 @@
+---
+title: Comentarios pre-piloto
+author: Equipo JUSMER
+date: today
+format:
+  html:
+    toc: true
+    df-print: kable
+    theme: cosmo
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(dplyr)
+library(DT)
+
+resumen <- read.csv(
+  here::here("output/comentarios-prepiloto-resumen.csv"),
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+```
+
+## Resumen por pregunta
+
+Tabla con, para cada variable de la base `comentarios-prepiloto.csv`: el label de
+la pregunta, el N de respuestas válidas, el N de códigos de no-respuesta
+(98 / 99 / "No sé" / "Prefiero no responder") y el promedio para las variables
+numéricas.
+
+```{r}
+#| label: tbl-resumen
+#| echo: false
+
+resumen |>
+  select(variable, label, n_valido, n_no_sabe_no_responde, promedio) |>
+  datatable(
+    filter = "top",
+    rownames = FALSE,
+    options = list(pageLength = 15, scrollX = TRUE),
+    colnames = c(
+      "Variable", "Label", "N válidas", "N NS/NR", "Promedio"
+    )
+  )
+```
+
+## Comentarios abiertos
+
+Detalle de las variables de comentario libre (`cmt_*` o `*_comment`), con el N
+de comentarios recibidos y el texto de cada uno.
+
+```{r}
+#| label: tbl-comentarios
+#| echo: false
+
+comentario_cols <- grep("^comentario_", names(resumen), value = TRUE)
+
+resumen |>
+  filter(!is.na(n_comentarios), n_comentarios > 0) |>
+  select(variable, label, n_comentarios, all_of(comentario_cols)) |>
+  datatable(
+    rownames = FALSE,
+    options = list(pageLength = 10, scrollX = TRUE),
+    colnames = c(
+      "Variable", "Label", "N comentarios",
+      gsub("comentario_", "Comentario ", comentario_cols)
+    )
+  )
+```
+

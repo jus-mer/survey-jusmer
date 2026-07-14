@@ -1,0 +1,1904 @@
+---
+theme-settings:
+  theme: flatly
+  barcolor: "#841414"
+  barposition: top
+
+
+survey-settings:
+  show-previous: true
+  use-cookies: true
+  auto-scroll: true
+  rate-survey: false
+  system-language: es
+  highlight-unanswered: true
+  highlight-color: orange
+  capture-metadata: true
+  all-required: false
+  required:
+    - consent_understand
+  set-mode: database
+
+
+system-messages:
+  warning: "Advertencia"
+  next: "Página siguiente"
+  exit: "Finalizar encuesta"
+---
+
+
+```{r}
+Sys.setlocale("LC_ALL", "en_US.UTF-8")
+library(surveydown)
+library(dplyr)
+library(kableExtra)
+library(htmltools)
+library(here)
+source("code/slider_widget.R")
+```
+
+```{=html}
+<style>
+/* Keep allocation text dark and readable even while Shiny updates outputs */
+[id^="container-cbc_"] {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+[id^="container-cbc_"] .form-group,
+[id^="container-cbc_"] .shiny-input-container {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+[id^="container-cbc_"] .form-group {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+[id^="cbc_"] + .irs,
+[id^="cbc_"] + .irs--shiny {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Remove default Bootstrap table bottom gap between conjoint table and slider */
+.cell-output-display table.table.table-condensed {
+  margin-bottom: 0 !important;
+}
+
+/* Match conjoint table option columns to option box colors */
+.cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(2),
+.cell-output-display table.table.table-condensed > thead > tr > th:nth-child(2) {
+  background-color: #f0fff4 !important;
+  box-shadow: inset 0 0 0 9999px #f0fff4 !important;
+  color: #0b3d1a !important;
+}
+
+/* Name row (first tbody row) in option colors */
+.cell-output-display table.table.table-condensed > tbody > tr:first-child > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd):first-child > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even):first-child > td:nth-child(2) {
+  color: #28a745 !important;
+  font-weight: 800 !important;
+}
+
+.cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(3),
+.cell-output-display table.table.table-condensed > thead > tr > th:nth-child(3) {
+  background-color: #d9ecff !important;
+  box-shadow: inset 0 0 0 9999px #d9ecff !important;
+  color: #001f4d !important;
+}
+
+.cell-output-display table.table.table-condensed > tbody > tr:first-child > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd):first-child > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even):first-child > td:nth-child(3) {
+  color: #007bff !important;
+  font-weight: 800 !important;
+}
+
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd) > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even) > td:nth-child(2),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:hover > td:nth-child(2) {
+  background-color: #f0fff4 !important;
+  box-shadow: inset 0 0 0 9999px #f0fff4 !important;
+  color: #0b3d1a !important;
+}
+
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd) > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even) > td:nth-child(3),
+.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:hover > td:nth-child(3) {
+  background-color: #d9ecff !important;
+  box-shadow: inset 0 0 0 9999px #d9ecff !important;
+  color: #001f4d !important;
+}
+
+/* Pull slider cell-output-display up against the table above it */
+.cell > .cell-output-display:has([id^="container-cbc_"]) {
+  margin-top: -40px !important;
+  padding-top: 0 !important;
+}
+
+.cell > .cell-output-display:has(table.table-condensed) {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+[id$="_opt1"] {
+  color: #28a745 !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+[id$="_opt2"] {
+  color: #007bff !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+[id$="_name1"] {
+  color: #28a745 !important;
+  font-weight: 800 !important;
+}
+
+[id$="_name2"] {
+  color: #007bff !important;
+  font-weight: 800 !important;
+}
+
+[id$="_opt1_pct"],
+[id$="_opt2_pct"] {
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+[id$="_opt1_pct"] {
+  color: #28a745 !important;
+}
+[id$="_opt2_pct"] {
+  color: #007bff !important;
+}
+
+[id$="_opt1"].recalculating,
+[id$="_opt2"].recalculating,
+[id$="_opt1_pct"].recalculating,
+[id$="_opt2_pct"].recalculating,
+[id$="_opt1"].shiny-bound-output.recalculating,
+[id$="_opt2"].shiny-bound-output.recalculating,
+[id$="_opt1_pct"].shiny-bound-output.recalculating,
+[id$="_opt2_pct"].shiny-bound-output.recalculating,
+[id$="_opt1"] .shiny-bound-output.recalculating,
+[id$="_opt2"] .shiny-bound-output.recalculating,
+[id$="_opt1_pct"] .shiny-bound-output.recalculating,
+[id$="_opt2_pct"] .shiny-bound-output.recalculating,
+[id$="_opt1"] span.recalculating,
+[id$="_opt2"] span.recalculating,
+[id$="_opt1_pct"] span.recalculating,
+[id$="_opt2_pct"] span.recalculating,
+[id$="_opt1"] .recalculating,
+[id$="_opt2"] .recalculating,
+[id$="_opt1_pct"] .recalculating,
+[id$="_opt2_pct"] .recalculating,
+.recalculating [id$="_opt1"],
+.recalculating [id$="_opt2"],
+.recalculating [id$="_opt1_pct"],
+.recalculating [id$="_opt2_pct"],
+[id$="_opt1"] .recalculating,
+[id$="_opt2"] .recalculating,
+[id$="_opt1_pct"] .recalculating,
+[id$="_opt2_pct"] .recalculating {
+  opacity: 1 !important;
+}
+
+/* Some Shiny themes apply fade on container wrappers, not only the output span */
+[id^="container-cbc_"][class*="recalculating"],
+[id^="container-cbc_"] .recalculating,
+[id^="container-cbc_"] .shiny-bound-output.recalculating,
+[id^="container-cbc_"] [id$="_opt1"],
+[id^="container-cbc_"] [id$="_opt2"],
+[id^="container-cbc_"] [id$="_opt1_pct"],
+[id^="container-cbc_"] [id$="_opt2_pct"] {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Last-resort override: do not fade while recalculating anywhere in survey */
+.recalculating {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+[class*="recalculating"] {
+  opacity: 1 !important;
+  filter: none !important;
+}
+</style>
+
+<script>
+function localizeSurveyNavButtons() {
+  document.querySelectorAll('.sd-nav-prev, button, a').forEach(function(el) {
+    if (el.textContent && el.textContent.trim() === 'Previous') {
+      el.textContent = 'Anterior';
+    }
+  });
+
+  document.querySelectorAll('.sd-nav-next, button, a').forEach(function(el) {
+    if (el.textContent && el.textContent.trim() === 'Next') {
+      el.textContent = 'Siguiente';
+    }
+  });
+}
+
+function tightenConjointTableSliderGap() {
+  document.querySelectorAll('div.cell-output-display > table.table.table-condensed').forEach(function(tbl) {
+    var tableOutput = tbl.closest('div.cell-output-display');
+    if (!tableOutput) return;
+
+    var nextOutput = tableOutput.nextElementSibling;
+    if (!nextOutput || !nextOutput.classList.contains('cell-output-display')) return;
+    if (!nextOutput.querySelector('[id^="container-cbc_"]')) return;
+
+    tableOutput.style.marginBottom = '0px';
+    tableOutput.style.paddingBottom = '0px';
+    nextOutput.style.marginTop = '-40px';
+    nextOutput.style.paddingTop = '0px';
+  });
+}
+
+function styleConjointProfiles() {
+  // Find all kable tables in the survey
+  document.querySelectorAll('table.table-striped.table-hover.table-condensed').forEach(function(table) {
+    // Look for "Postulante:" row or "Profile:" row
+    var rows = table.querySelectorAll('tbody tr');
+    rows.forEach(function(row, idx) {
+      var cells = row.querySelectorAll('td');
+      if (cells.length >= 3) {
+        // Check if first cell contains "Postulante:" or "Profile:"
+        var firstCellText = cells[0].textContent.trim();
+        if (firstCellText === 'Postulante:' || firstCellText === 'Profile:') {
+          // Get the names from cells 1 and 2
+          var name1 = cells[1].textContent.trim();
+          var name2 = cells[2].textContent.trim();
+          
+          // Store names in the global object for sliders to access
+          if (!window.cbc_names) window.cbc_names = {};
+          window.cbc_names[table.closest('.cell-output-display')?.nextElementSibling?.querySelector('[id^="cbc_"]')?.id] = [name1, name2];
+          
+          // Style the name cells with bold and color
+          var nameCell = cells[1];
+          nameCell.style.fontWeight = '700';
+          nameCell.style.color = '#28a745';
+          
+          // Check if there's a third cell for the second profile
+          var nameCell2 = cells[2];
+          if (nameCell2) {
+            nameCell2.style.fontWeight = '700';
+            nameCell2.style.color = '#007bff';
+          }
+        }
+      }
+    });
+  });
+}
+
+
+
+function forceAllocationTextOpacity() {
+  document.querySelectorAll('[id$="_opt1"], [id$="_opt2"], [id$="_opt1_pct"], [id$="_opt2_pct"]').forEach(function(el) {
+    if (el.id.endsWith('_opt1') || el.id.endsWith('_opt1_pct')) {
+      el.style.setProperty('color', '#28a745', 'important');
+    }
+    if (el.id.endsWith('_opt2') || el.id.endsWith('_opt2_pct')) {
+      el.style.setProperty('color', '#007bff', 'important');
+    }
+    el.style.setProperty('font-weight', '900', 'important');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+    el.style.setProperty('text-shadow', '0 0 0 transparent', 'important');
+
+    // Remove fade from any recalculating ancestor wrappers
+    var p = el.parentElement;
+    while (p && p !== document.body) {
+      if (p.classList && p.classList.contains('recalculating')) {
+        p.style.setProperty('opacity', '1', 'important');
+        p.style.setProperty('filter', 'none', 'important');
+      }
+      p = p.parentElement;
+    }
+  });
+
+  document.querySelectorAll('[id$="_name1"], [id$="_name2"]').forEach(function(el) {
+    if (el.id.endsWith('_name1')) {
+      el.style.setProperty('color', '#28a745', 'important');
+    }
+    if (el.id.endsWith('_name2')) {
+      el.style.setProperty('color', '#007bff', 'important');
+    }
+    el.style.setProperty('font-weight', '800', 'important');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+  });
+
+  // Color the name row (first tbody row) in each conjoint table
+  document.querySelectorAll('table.table-condensed tbody tr:first-child').forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    if (cells[1]) {
+      cells[1].style.setProperty('color', '#28a745', 'important');
+      cells[1].style.setProperty('font-weight', '800', 'important');
+    }
+    if (cells[2]) {
+      cells[2].style.setProperty('color', '#007bff', 'important');
+      cells[2].style.setProperty('font-weight', '800', 'important');
+    }
+  });
+
+  document.querySelectorAll('[id^="container-cbc_"]').forEach(function(el) {
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+  });
+}
+
+function stripRecalculatingClass() {
+  document.querySelectorAll('.recalculating').forEach(function(el) {
+    el.classList.remove('recalculating');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  localizeSurveyNavButtons();
+  tightenConjointTableSliderGap();
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+  styleConjointProfiles();
+  setTimeout(localizeSurveyNavButtons, 100);
+  setTimeout(tightenConjointTableSliderGap, 100);
+  setTimeout(forceAllocationTextOpacity, 100);
+  setTimeout(stripRecalculatingClass, 100);
+  setTimeout(styleConjointProfiles, 100);
+  setTimeout(localizeSurveyNavButtons, 400);
+  setTimeout(tightenConjointTableSliderGap, 400);
+  setTimeout(forceAllocationTextOpacity, 400);
+  setTimeout(stripRecalculatingClass, 400);
+  setTimeout(styleConjointProfiles, 400);
+});
+
+document.addEventListener('click', function() {
+  setTimeout(localizeSurveyNavButtons, 0);
+  setTimeout(tightenConjointTableSliderGap, 0);
+  setTimeout(forceAllocationTextOpacity, 0);
+  setTimeout(stripRecalculatingClass, 0);
+  setTimeout(styleConjointProfiles, 0);
+  setTimeout(localizeSurveyNavButtons, 120);
+  setTimeout(tightenConjointTableSliderGap, 120);
+  setTimeout(forceAllocationTextOpacity, 120);
+  setTimeout(stripRecalculatingClass, 120);
+  setTimeout(styleConjointProfiles, 120);
+});
+
+document.addEventListener('input', function() {
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+});
+
+document.addEventListener('change', function() {
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+});
+
+var navLabelsObserver = new MutationObserver(function() {
+  localizeSurveyNavButtons();
+  tightenConjointTableSliderGap();
+  forceAllocationTextOpacity();
+  stripRecalculatingClass();
+});
+navLabelsObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+setInterval(function() {
+  stripRecalculatingClass();
+  forceAllocationTextOpacity();
+}, 120);
+</script>
+```
+
+--- welcome
+
+<center>
+# Pre-Piloto Encuesta justicia y merecimiento
+</center>
+
+Esta es la encuesta del proyecto FONDECYT "Justicia de Mercado y Merecimiento del Bienestar Social - [JUSMER](https://jusmer.com/)". Su objetivo es entender mejor las opiniones de las personas sobre la justicia y el merecimiento en el contexto de la desigualdad social.
+
+Estamos pre-testeando una sección de la encuesta y nos gustaría mucho que pudiera responderla y nos hiciera comentarios, no debería tomar más de 10 minutos. Sus respuestas serán completamente anónimas y se utilizarán únicamente con fines de investigación.
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'consent_understand',
+  label = "Acepto participar en esta encuesta y entiendo que mis respuestas serán anónimas y utilizadas únicamente con fines de investigación.",
+  option = c(
+    '**Sí**' = 'yes',
+    '**No**'  = 'no'
+  )
+)
+
+sd_nav(
+  page_next = "demographics",
+  label_next = "Siguiente"
+)
+```
+
+
+--- demographics
+
+# Módulo Información general
+
+A continuación se presentan una serie de preguntas para conocer información sobre usted. Recuerde que sus respuestas serán anónimas y confidenciales, y que no hay respuestas correctas o incorrectas.
+
+```{r}
+
+sd_question(
+  type   = 'mc',
+  id     = 'respondent',
+  label  = "¿Desde qué dispositivo responde esta encuesta?",
+  option = c(
+    "Celular" = "celular",
+    "Computador" = "pc",
+    "Tablet" = "tablet"
+  )
+)
+
+sd_question(
+  type   = 'mc',
+  id     = 'sexo',
+  label  = "¿Cuál es su sexo?",
+  option = c(
+    "Masculino" = "0",
+    "Femenino" = "1",
+    "Otro" = "99"
+  )
+)
+
+# Construct the list of years
+ 
+years <- as.character(2008:1920)
+names(years) <- years
+years <- c("Prefiero no decir" = "prefer_not_say", years)
+
+sd_question(
+  type   = 'select',
+  id     = 'year_of_birth',
+  label  = "¿En qué año nació?",
+  option = years
+)
+
+educations <- c(
+  "Sin estudios"       = "0",
+  "Educación básica incompleta"          = "1",
+  "Educación básica completa" = "2",
+  "Educación media incompleta" = "3",
+  "Educación media completa" = "4",
+  "Técnica superior incompleta (instituto o CFT)"    = "5",
+  "Técnica superior completa (instituto o CFT)"    = "6",
+  "Universitaria incompleta" = "7",
+  "Universitaria completa"             = "8",
+  "Estudios de posgrado (magíster o doctorado)"                 = "9",
+  "Prefiero no decir"        = "prefer_not_to_say"
+)
+
+sd_question(
+  type   = 'select',
+  id     = 'education',
+  label  = "¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está estudiando, use el grado más alto que haya obtenido.",
+  option = educations
+)
+```
+
+```{r}
+sd_nav(
+  page_next = "cbc_practice-page",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_practice-page
+
+# Módulo Tarea de asignación de becas
+
+A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
+
+Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice con la tarea.
+
+::: {.callout-note}
+## La situación:
+
+- Imagine que Ud. forma parte de un **comité universitario encargado de asignar una beca** de apoyo a estudiantes de primer año. 
+- Los postulantes serán presentados de a pares, con información sobre cada uno proporcionada por el colegio del que egresaron.
+- Ambos postulantes fueron aceptados en la misma carrera y universidad, y en esta carrera los estudiantes deben pagar para estudiar (no hay acceso a gratuidad).
+- El monto disponible es de **$2.000.000** para el primer año.
+:::
+
+::: {.callout-tip}
+## Su tarea:
+
+- En cada par, Ud. debe repartir la beca asignando a cada postulante un porcentaje del monto total de la beca ($ 2.000.000), considerando las características de cada uno que se presentarán en una tabla. 
+- Dado que el monto disponible para distribuir entre cada par es fijo, otorgar más dinero a un postulante implica otorgar menos al otro.  
+
+**No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.**
+:::
+
+**¿Cómo hacer la asignación?**
+
+Mueva el control deslizante (círculo amarillo ![](images/circulo_amarillo.svg){width="24" style="vertical-align: middle;"}) debajo de la tabla. El monto aparece inicialmente distribuido en partes iguales ($1.000.000 c/u) y cambiará según cómo mueva el control.
+
+
+```{r}
+# Make a fixed data frame for the options
+
+df <- tibble::tibble(
+  altID       = c(1, 2),
+  need        = c("Dificultad", "Holgura"),
+  identity    = c("Chile", "Chile"),
+  control     = c("Postuló a otras becas pero no obtuvo financiamiento", "No alcanzó a postular a tiempo a otras becas"),
+  effort      = c("Más que sus compañeros", "Igual que sus compañeros"),
+  reciprocity = c("Ha hecho voluntariado", "No ha hecho voluntariado"),
+  attitude    = c("Una ayuda que agradece", "Una ayuda que agradece"),
+)
+
+male_names <- c("Mateo", "Lucas", "Benjamín", "Nicolás", "Daniel", "Santiago", "Tomás", "Joaquín")
+female_names <- c("Sofía", "Valentina", "Isidora", "Martina", "Camila", "Florencia", "Catalina", "Antonia")
+practice_names <- sample(c(sample(male_names, 1), sample(female_names, 1)), 2)
+
+df <- df |>
+  mutate(nombre = practice_names[altID])
+
+alts <- df |>
+  mutate(
+    nombre_formatted = ifelse(
+      altID == 1,
+      sprintf('<span style="color: #28a745; font-weight: 800;">%s</span>', nombre),
+      sprintf('<span style="color: #007bff; font-weight: 800;">%s</span>', nombre)
+    )
+  ) |>
+  # Make nicer attribute labels
+  select(
+    `Postulante:` = nombre_formatted,
+    `Su hogar llega a fin de mes con:` = need,
+    `País de nacimiento:` = identity,
+    `Requiere la beca porque:` = control,
+    `Estudia:` = effort,
+    `Fuera de sus estudios:` = reciprocity,
+    `Ve la beca como:` = attitude
+  )
+
+row.names(alts) <- NULL # Drop row names
+
+kbl(t(alts), escape = FALSE) |>
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+  ) |>
+  column_spec(1, bold = TRUE)
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_practice", nombre1 = practice_names[1], nombre2 = practice_names[2])
+
+htmltools::HTML("<br>")
+
+
+```
+
+Ahora que ha practicado con una pregunta de ejemplo, vamos a mostrarle 6 pares de postulantes con distintas características, entre quienes deberá distribuir el monto de la beca.
+
+```{r}
+
+sd_nav(
+  page_next = "cbc_intro",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+
+```
+
+
+--- cbc_intro
+
+# Tarea de asignación de becas
+
+```{r}
+
+sd_question(
+  type = "mc",
+  id = "manip_check",
+  label = "Antes de comenzar, ¿en qué consistirá su tarea en esta sección?",
+  option = c(
+    "Repartir un monto de beca entre dos postulantes" = "reparto",
+    "Elegir a un único postulante y descartar al otro" = "eleccion",
+    "Evaluar la calidad de la universidad de cada postulante" = "universidad"
+  )
+)
+
+sd_nav(
+  page_next = "cbc_q1_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+
+--- cbc_q1_page
+
+<center>
+## Tarea 1
+</center>
+
+```{r}
+sd_output("cbc1_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q1")
+
+htmltools::HTML("<br>")
+
+sd_nav(
+  page_next = "cbc_q2_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q2_page
+
+<center>
+## Tarea 2
+</center>
+
+```{r}
+sd_output("cbc2_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q2")
+
+htmltools::HTML("<br>")
+
+sd_nav(
+  page_next = "cbc_q3_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q3_page
+
+<center>
+## Tarea 3
+</center>
+
+```{r}
+sd_output("cbc3_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q3")
+
+htmltools::HTML("<br>")
+
+sd_nav(
+  page_next = "cbc_q4_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q4_page
+
+<center>
+## Tarea 4
+</center>
+
+```{r}
+sd_output("cbc4_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q4")
+
+htmltools::HTML("<br>")
+
+sd_nav(
+  page_next = "cbc_q5_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q5_page
+
+<center>
+## Tarea 5
+</center>
+
+```{r}
+sd_output("cbc5_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q5")
+
+htmltools::HTML("<br>")
+
+sd_nav(
+  page_next = "cbc_q6_page",
+  label_previous = "Anterior",
+  label_next = "Siguiente"
+)
+```
+
+--- cbc_q6_page
+
+<center>
+## Tarea 6
+</center>
+
+```{r}
+sd_output("cbc6_table")
+
+shiny::p(
+  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
+  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
+)
+
+allocation_slider("cbc_q6")
+
+htmltools::HTML("<br>")
+
+sd_nav(page_next = "clasicos",
+  label_next = "Siguiente")
+```
+
+```{r}
+# Numeración automática de preguntas: desde "clasicos" hasta el final de
+# "deserve-4". Cada sd_question() recibe un número correlativo antepuesto
+# al label, salvo las cajas de comentario libre (id que empieza con "cmt_").
+# Se restaura sd_question() sin numeración antes de la página "id-final".
+.sd_question_sin_numerar <- sd_question
+.contador_preguntas <- 0
+sd_question <- function(...) {
+  args <- list(...)
+  es_comentario <- grepl("^cmt_", args$id)
+  if (!es_comentario) {
+    .contador_preguntas <<- .contador_preguntas + 1
+    # Se usa "(N)" en vez de "N." porque el label pasa por un parser de
+    # markdown que interpreta "1. texto" como el inicio de una lista
+    # numerada (y la reinicia en 1 en cada pregunta). "(N)" sigue el mismo
+    # formato ya usado en demographics/id-final y no se confunde con markdown.
+    args$label <- paste0("(", .contador_preguntas, ") ", args$label)
+  }
+  do.call(.sd_question_sin_numerar, args)
+}
+```
+
+--- clasicos
+
+<center>
+# Módulo Actitudes hacia la desigualdad
+</center>
+
+A continuación se presentan una serie de preguntas acerca de su grado de acuerdo en el acceso a diferentes servicios y recursos de acuerdo con la situación socioeconómica de las personas.
+
+<br>
+
+¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
+```{r}
+escala_acuerdo_nsnr <- c(
+  'Muy de acuerdo'    = '5',
+  'De acuerdo' = '4',
+  'Ni de acuerdo ni en desacuerdo'    = '3',
+  'En desacuerdo' = '2',
+  'Muy en desacuerdo' = '1',
+  'No sé' = '98',
+  'Prefiero no responder' = '99'
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'mj_1',
+  label = "Es justo que en Chile las personas de altos ingresos puedan acceder a una mejor atención de salud que las personas con ingresos más bajos",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'mj_2',
+  label = "Es justo que en Chile las personas de altos ingresos tengan una mejor educación para sus hijos que las personas con ingresos más bajos",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'mj_3',
+  label = "Es justo que en Chile las personas de altos ingresos tengan mejores pensiones que las personas con ingresos más bajos",
+  option = escala_acuerdo_nsnr
+)
+
+sd_nav(page_next = "reflex",
+  label_next = "Siguiente")
+```
+
+--- reflex
+
+¿En qué medida considera justo o injusto las siguientes afirmaciones?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'ref_1',
+  label = "Es justo que **yo** tenga acceso a una mejor salud si puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'    
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'ref_2',
+  label = "Es justo que **yo** tenga acceso a una mejor educación si puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'ref_3',
+  label = "Es justo que **yo** tenga acceso a mejor pensión si puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'proy_1',
+  label = "Está bien que **mis hijos/as** tengan acceso a una mejor salud que otros niños si es que puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'proy_2',
+  label = "Está bien que **mis hijos/as** tengan acceso a una mejor educación que otros niños si es que puedo pagar por ello",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type = "mc",
+  id = "attention_check",
+  label = "Esta pregunta es para verificar que está leyendo con atención. Por favor, deje esta pregunta en blanco",
+  option = c(
+    "Muy de acuerdo" = "muy_acuerdo",
+    "De acuerdo" = "acuerdo",
+    "En desacuerdo" = "desacuerdo",
+    "Muy en desacuerdo" = "muy_desacuerdo"
+  )
+)
+
+sd_nav(page_next = "ranking",
+  label_next = "Siguiente")
+```
+
+--- ranking
+
+Los recursos del Estado son limitados y deben distribuirse entre distintas áreas de inversión pública. Pensando en cómo usted asignaría esos recursos, le pedimos ordene según prioridad las siguientes áreas de inversión de fondos públicos (seleccione al menos 3):
+
+```{r}
+sd_question(
+  type   = "matrix",
+  id     = "ranking_politicas",
+  label  = "Asigne una **prioridad** a cada área de inversión de fondos públicos:",
+  row    = c(
+    "Educación"        = "educacion",
+    "Salud"            = "salud",
+    "Pensiones"        = "pensiones",
+    "Salas cunas" = "cuidado_ninos",
+    "Carreteras" = "carreteras"
+  ),
+  option = c(
+    "1°" = "1",
+    "2°" = "2",
+    "3°" = "3",
+    "4°" = "4",
+    "5°" = "5"
+  )
+)
+```
+
+A continuación, se mencionan algunos ámbitos de la actividad gubernamental. Por favor, señale si le gustaría que se aumentara o se redujera el gasto público en cada uno de ellos. Tenga en cuenta que «más» o «mucho más» podría implicar un alza de impuestos.
+
+En qué medida le gustaría que hubiera más o menos gasto público en…
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'rank_1',
+  label = "Educación",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'Ni más ni menos de lo que se gasta actualmente'   = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'rank_2',
+  label = "Salud",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'Ni más ni menos de lo que se gasta actualmente'     = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'rank_3',
+  label = "Pensiones",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'Ni más ni menos de lo que se gasta actualmente'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'rank_4',
+  label = "Salas cuna",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'Ni más ni menos de lo que se gasta actualmente'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'rank_5',
+  label = "Carreteras",
+  option = c(
+    'Mucho más gasto'    = '5',
+    'Más gasto' = '4',
+    'Ni más ni menos de lo que se gasta actualmente'    = '3',
+    'Menos gasto' = '2',
+    'Mucho menos gasto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_nav(page_next = "marketizacion",
+  label_next = "Siguiente")
+```
+
+--- marketizacion
+
+En Chile, el acceso a servicios como la salud, la educación y las pensiones puede variar según la situación económica de las personas. A continuación, queremos saber su percepción sobre la situación en el país.
+
+<br>
+
+¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
+```{r}
+escala_justo <- c(
+  'Muy desigual' = '5',
+  'Desigual' = '4',
+  'Ni igual ni desigual' = '3',
+  'Poco desigual' = '2',
+  'Nada desigual' = '1',
+  'No sé' = '98',
+  'Prefiero no responder' = '99'
+)
+
+escala_justo_injusto <- c(
+  'Mucho más desigual' = '5',
+  'Más desigual' = '4',
+  'Ni igual ni desigual' = '3',
+  'Menos desigual' = '2',
+  'Mucho menos desigual' = '1',
+  'No sé' = '98',
+  'Prefiero no responder' = '99'
+)
+```
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_1',
+  label = "El acceso a la salud es desigual en Chile",
+  option = escala_justo
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'pres_2',
+  label = "El acceso a la educación es desigual en Chile",
+  option = escala_justo
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'pres_3',
+  label = "Las pensiones son desiguales en Chile",
+  option = escala_justo
+)
+```
+
+<br>
+
+Y pensando hace 10 años atrás, ¿usted cree que el acceso a los siguientes servicios entre quienes tienes más y menores ingresos se ha vuelto…?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'pres_4',
+  label = "Salud",
+  option = escala_justo_injusto
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'pres_5',
+  label = "Educación",
+  option = escala_justo_injusto
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'pres_6',
+  label = "Pensiones",
+  option = escala_justo_injusto
+)
+
+sd_nav(page_next = "valor",
+  label_next = "Siguiente")
+```
+
+--- valor
+
+¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'valor_1',
+  label = "Está bien que los hospitales públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'valor_2',
+  label = "Está bien que los liceos públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'valor_3',
+  label = "La calidad del sistema de salud debería ser igual para todos aunque esto signifique que mi familila no pueda pagar por mejores servicios ",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'valor_4',
+  label = "La educación debería ser de igual calidad para todos aunque eso me impida pagar por una mejor para mi familia",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'valor_5',
+  label = "Las pensiones deberían ser más igualitarias, aunque eso signifique que yo reciba una pensión similar a quienes aportaron menos que yo ",
+  option = escala_acuerdo_nsnr
+)
+
+sd_nav(page_next = "decomodifica",
+  label_next = "Siguiente")
+```
+
+--- decomodifica
+
+```{r}
+# Cada módulo de respuesta se numera desde (1), ya que un respondiente solo
+# ve uno de los tres módulos (ver assigned_module en app.R).
+.contador_preguntas <- 0
+```
+
+<center>
+# Módulo Percepción de servicios públicos y privados
+</center>
+
+
+Las siguientes preguntas presentan situaciones hipotéticas sobre el acceso a servicios de educación y salud. En cada caso, le pedimos que imagine que usted está en la situación descrita e indique qué haría. No hay respuestas correctas ni incorrectas; solo queremos conocer su opinión.
+
+<br>
+
+### Salud
+
+```{r}
+sd_question(
+  type  = 'slider',
+  id    = 'dec_3',
+  label = "Imagine que usted está en un plan de Isapre que está evaluando dar acceso a un 10% de personas en su mismo plan que no pueden pagarlo. Para ello, usted debería pagar un monto adicional a su cotización. En tal situación, ¿cuánto más estaría dispuesto a pagar?",
+  option = c(
+    "0" = "0",
+    "10%"      = "10",
+    "20%"   = "20",
+    "30%"      = "30",
+    "40%" = "40",
+    "50%" = "50",
+    "60%" = "60",
+    "70%" = "70",
+    "80%" = "80",
+    "90%" = "90",
+    "100%" = "100"
+  ),
+  selected = '0'
+)
+```
+
+### Educación
+
+En Chile se está aplicando una política en que los colegios privados deben aceptar a un porcentaje de estudiantes que no pueden pagar. Al respecto:
+
+```{r}
+sd_question(
+  type = "slider",
+  id = "dec_1",
+  label = "Imagine que su hijo/a asiste a un colegio privado que tiene una matrícula de 100 alumnos. ¿Cuántos alumnos cree Ud. que se deberían admitir sin pagar en este colegio? ",
+  option = c(
+    "0" = "0",
+    "10" = "10",
+    "20" = "20",
+    "30" = "30",
+    "40" = "40",
+    "50" = "50",
+    "60" = "60",
+    "70" = "70",
+    "80" = "80",
+    "90" = "90",
+    "100" = "100"
+  ),
+  selected = '0'
+)
+```
+
+```{r}
+shiny::actionButton("confirm_dec1", "Confirmar respuesta", class = "btn btn-primary mt-2 mb-3")
+```
+
+```{r}
+sd_question(
+  type  = 'slider',
+  id    = 'dec_2',
+  label = "Para que esos alumnos puedan ser admitidos en el colegio, ¿cuánto más estaría dispuesto a pagar de la mensualidad para poder apoyar a estudiantes que no pagan?",
+  option = c(
+    "0" = "0",
+    "10%"      = "10",
+    "20%"   = "20",
+    "30%"      = "30",
+    "40%" = "40",
+    "50%" = "50",
+    "60%" = "60",
+    "70%" = "70",
+    "80%" = "80",
+    "90%" = "90",
+    "100%" = "100"
+  ),
+  selected = '0'
+)
+
+sd_nav(page_next = "lucro",
+  label_next = "Siguiente")
+```
+
+--- lucro 
+
+En Chile, existen empresas e instituciones privadas que participan en la administración de servicios como la salud, la educación y las pensiones. A continuación le preguntamos cuán justo le parece que estas entidades obtengan ganancias económicas por su gestión.
+
+<br>
+
+Qué tan justo o injusto le parece que empresas privadas obtengan ganancias monetarias administrando…
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'lucro_1',
+  label = "Salud",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'lucro_2',
+  label = "Educación",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'lucro_3',
+  label = "Pensiones",
+  option = c(
+    'Muy justo'    = '5',
+    'Justo' = '4',
+    'Ni justo ni injusto'    = '3',
+    'Injusto' = '2',
+    'Muy injusto' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_nav(page_next = "participa",
+  label_next = "Siguiente")
+```
+
+--- participa
+
+En Chile, algunos ámbitos de prestaciones y beneficios sociales están más a cargo del estado, mientras que otros más a cargo de los privados.
+
+<br>
+
+```{r}
+# NOTA: se cambia el rótulo de los extremos del slider de "Estado"/"Privados"
+# a "Solo el Estado"/"Solo privados" en las tres baterías, según documento de
+# contenido (nota de diseño: equiparar el fraseo de forma simétrica). Se
+# elimina la batería de "responsabilidad" (resp_1 a resp_5) y se reordenan
+# las baterías: cargo, eficiencia, participación deseada.
+
+escala_estado_privados <- c(
+  "Estado" = "1",
+  " "        = "2",
+  "  "       = "3", # espacio único
+  "Ambos por igual"  = "4",
+  "   "      = "5",
+  "    "     = "6",  # doble espacio único
+  "Privados" = "7"
+)
+```
+
+**En Chile, ¿quién participa más en la provisión de los siguientes servicios?**
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_1',
+  label  = "Salud",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_2',
+  label  = "Educación",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_3',
+  label  = "Pensiones",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_4',
+  label  = "Salas cuna",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'cargo_5',
+  label  = "Carreteras",
+  option = escala_estado_privados,
+  selected = '4'
+)
+```
+
+<br>
+
+**¿Quién es más eficiente en la provisión de los siguientes servicios?**
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'efic_1',
+  label  = "Salud",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'efic_2',
+  label  = "Educación",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'efic_3',
+  label  = "Pensiones",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'efic_4',
+  label  = "Salas cuna",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'efic_5',
+  label  = "Carreteras",
+  option = escala_estado_privados,
+  selected = '4'
+)
+```
+
+<br>
+
+**Considerando la realidad chilena, ¿quién debería participar más en la provisión de los siguientes servicios?**
+
+```{r}
+sd_question(
+  type   = 'slider',
+  id     = 'part_1',
+  label  = "Salud",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'part_2',
+  label  = "Educación",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'part_3',
+  label  = "Pensiones",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'part_4',
+  label  = "Salas cuna",
+  option = escala_estado_privados,
+  selected = '4'
+)
+
+sd_question(
+  type   = 'slider',
+  id     = 'part_5',
+  label  = "Carreteras",
+  option = escala_estado_privados,
+  selected = '4'
+)
+```
+
+<br>
+
+```{r}
+sd_nav(page_next = "neoliberal",
+  label_next = "Siguiente")
+```
+
+--- neoliberal
+
+¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_1',
+  label = "El Gobierno debería proporcionar a toda la población servicios básicos como la asistencia sanitaria y la asistencia jurídica de forma gratuita",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_2',
+  label = "Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería hacerlo",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_3',
+  label = "La sociedad debería proporcionar recursos y servicios gratuitos a las personas que no pueden permitírselos",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'neolib_4',
+  label = "Las personas con ingresos más elevados deberían pagar más impuestos que las que tienen ingresos más bajos",
+  option = escala_acuerdo_nsnr
+)
+
+sd_nav(page_next = "deserve-1",
+  label_next = "Siguiente")
+```
+
+--- deserve-1
+
+```{r}
+# Cada módulo de respuesta se numera desde (1), ya que un respondiente solo
+# ve uno de los tres módulos (ver assigned_module en app.R).
+.contador_preguntas <- 0
+```
+
+<center>
+# Módulo Merecimiento
+</center>
+
+¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'control_1',
+  label = "Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'control_2',
+  label = "Quienes son responsables de sus propios problemas igualmente merecen recibir beneficios sociales.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'control_3',
+  label = "El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'actitud_1',
+  label = "Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'actitud_2',
+  label = "Está bien que las personas que reciben apoyo del Estado puedan expresar su descontento con las condiciones de los beneficios.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_nav(page_next = "deserve-2",
+  label_next = "Siguiente")
+```
+
+--- deserve-2
+
+¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'reciproc_1',
+  label = "Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'reciproc_2',
+  label = "No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'reciproc_3',
+  label = "Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'actitud_4',
+  label = "El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'id_1',
+  label = "Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'id_2',
+  label = "Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'id_3',
+  label = "Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_nav(page_next = "deserve-3",
+  label_next = "Siguiente")
+```
+
+
+--- deserve-3
+
+¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'nec_1',
+  label = "Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'nec_2',
+  label = "Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'nec_3',
+  label = "Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales.",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'esf_1',
+  label = "Las personas que reciben beneficios sociales deberían estar haciendo algo activamente para mejorar su situación, como buscar trabajo o capacitarse",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'esf_2',
+  label = "Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'esf_3',
+  label = "El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'esf_4',
+  label = "Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo",
+  option = escala_acuerdo_nsnr
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'esf_5',
+  label = "No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual",
+  option = escala_acuerdo_nsnr
+)
+
+sd_nav(page_next = "deserve-4",
+  label_next = "Siguiente")
+```
+
+--- deserve-4
+
+Responda las siguientes preguntas a partir de su situación socioeconómica actual.
+
+```{r}
+sd_question(
+  type   = 'mc',
+  id     = 'adc_qstn',
+  label  = "¿Cuál de las siguientes afirmaciones describe mejor su situación actual, considerando el total de ingresos que tiene actualmente?",
+  option = c(
+    'Nos alcanza bien, hasta podemos ahorrar' = '4',
+    'Nos alcanza justo y podemos darnos algunos gustos sin mayores problemas'      = '3',
+    'Nos alcanza con dificultad, ajustando gastos '       = '2',
+    'No nos alcanza, tenemos grandes problemas'      = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+```
+
+
+<br>
+
+¿Con qué frecuencia se siente preocupado por las siguientes situaciones?
+
+```{r}
+sd_question(
+  type  = 'mc',
+  id    = 'adc_5',
+  label = "Que mi situación financiera empeore los próximos años.",
+  option = c(
+    'A menudo' = '5',
+    'Regularmente' = '4',
+    'A veces' = '3',
+    'Raramente' = '2',
+    'Nunca' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'adc_6',
+  label = "Quedar desempleado",
+  option = c(
+    'A menudo' = '5',
+    'Regularmente' = '4',
+    'A veces' = '3',
+    'Raramente' = '2',
+    'Nunca' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_question(
+  type  = 'mc',
+  id    = 'adc_7',
+  label = "Que mis hijos/as y las próximas generaciones lo tendrán mucho más difícil",
+  option = c(
+    'A menudo' = '5',
+    'Regularmente' = '4',
+    'A veces' = '3',
+    'Raramente' = '2',
+    'Nunca' = '1',
+    'No sé' = '98',
+    'Prefiero no responder' = '99'
+  )
+)
+
+sd_nav(page_next = "id-final",
+  label_next = "Siguiente")
+```
+
+```{r}
+# Fin de la numeración automática de preguntas; se restaura sd_question()
+# original para las preguntas adicionales de esta página.
+sd_question <- .sd_question_sin_numerar
+```
+
+--- id-final
+
+A continuación se presentan algunas preguntas adicionales, el objetivo es recibir comentarios sobre el estilo de las preguntas, las opciones de respuesta, y cualquier otro aspecto que pueda ser relevante para mejorar la encuesta.
+
+::: {style="width:500px; margin: 0 auto;"}
+
+```{r}
+
+genders <- c(
+  "Hombre"                   = "male",
+  "Mujer"                    = "female", 
+  "No binario"               = "non_binary", 
+  "Hombre trans"             = "trans_male",
+  "Mujer trans"              = "trans_female",
+  "Prefiero no responder"        = "99"
+)
+
+sd_question(
+  type   = 'select',
+  id     = 'gender',
+  label  = "¿Cuál es su identidad de género?",
+  option = genders
+)
+
+incomes <- c(
+  "$3.100.000 o más mensuales"          = "10",
+  "De $2.100.000 a $3.099.999 mensuales" = "9",
+  "De $1.600.000 a $2.099.999 mensuales"        = "8",
+  "De $1.300.000 a $1.599.999 mensuales"        = "7",
+  "De $1.050.000 a $1.299.999 mensuales"      = "6",
+  "De $850.000 a $1.049.999 mensuales"    = "5",
+  "De $680.000 a $849.999 mensuales"    = "4",
+  "De $520.000 a $679.999 mensuales"    = "3",
+  "De $345.000 a $519.999 mensuales"    = "2",
+  "Hasta $344.999 mensuales"          = "1",
+  "No sé" = '98',
+  "Prefiero no responder"        = "99"
+)
+
+sd_question(
+  type   = 'select',
+  id     = 'income',
+  label  = "¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?",
+  option = incomes
+)
+
+sd_question(
+  type   = 'mc',
+  id     = 'salud_prov',
+  label  = "¿Qué plan de salud tiene?",
+  option = c(
+    "FONASA" = "fonasa",
+    "ISAPRE" = "isapre"
+  )
+)
+
+sd_question(
+  type   = 'mc',
+  id     = 'educ_prov',
+  label  = "¿En qué tipo de colegio estudió?",
+  option = c(
+    "Particular privado" = "privado",
+    "Particular subvencionado" = "subvencionado",
+    "Municipal" = "municipal"
+  )
+)
+
+```
+
+:::
+
+```{r}
+sd_nav(page_next = "end_normal",
+  label_next = "Siguiente")
+```
+
+--- end_normal
+
+# Fin de la Encuesta
+
+¡La encuesta ha finalizado! ¡Gracias por su participación!
+
+Tu código de finalización es: **`r sd_output('completion_code', type = 'value')`**
+
+Puede cerrar la ventana ahora.
+
+```{r}
+sd_close()
+```
+
+--- end_consent
+
+# Fin de la Encuesta
+
+La encuesta ha finalizado. Puedes cerrar la ventana.
+
+```{r}
+sd_close()
+```

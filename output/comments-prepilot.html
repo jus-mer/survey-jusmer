@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Equipo JUSMER">
+<meta name="dcterms.date" content="2026-07-14">
+
+<title>Comentarios pre-piloto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="comments-prepilot_files/libs/clipboard/clipboard.min.js"></script>
+<script src="comments-prepilot_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="comments-prepilot_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="comments-prepilot_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="comments-prepilot_files/libs/quarto-html/popper.min.js"></script>
+<script src="comments-prepilot_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="comments-prepilot_files/libs/quarto-html/anchor.min.js"></script>
+<link href="comments-prepilot_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="comments-prepilot_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="comments-prepilot_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="comments-prepilot_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="comments-prepilot_files/libs/bootstrap/bootstrap-167f2573dfa0e1af6223d5b36672558a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="comments-prepilot_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="comments-prepilot_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="comments-prepilot_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="comments-prepilot_files/libs/datatables-binding-0.34.0/datatables.js"></script>
+<script src="comments-prepilot_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="comments-prepilot_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="comments-prepilot_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="comments-prepilot_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="comments-prepilot_files/libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="comments-prepilot_files/libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="comments-prepilot_files/libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="comments-prepilot_files/libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="comments-prepilot_files/libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="comments-prepilot_files/libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#resumen-por-pregunta" id="toc-resumen-por-pregunta" class="nav-link active" data-scroll-target="#resumen-por-pregunta">Resumen por pregunta</a></li>
+  <li><a href="#comentarios-abiertos" id="toc-comentarios-abiertos" class="nav-link" data-scroll-target="#comentarios-abiertos">Comentarios abiertos</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Comentarios pre-piloto</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Equipo JUSMER </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 14, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="resumen-por-pregunta" class="level2">
+<h2 class="anchored" data-anchor-id="resumen-por-pregunta">Resumen por pregunta</h2>
+<p>Tabla con, para cada variable de la base <code>comentarios-prepiloto.csv</code>: el label de la pregunta, el N de respuestas válidas, el N de códigos de no-respuesta (98 / 99 / “No sé” / “Prefiero no responder”) y el promedio para las variables numéricas.</p>
+<div class="cell">
+<div id="tbl-resumen" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-resumen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1
+</figcaption>
+<div aria-describedby="tbl-resumen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-0b13f789940b57e011d1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0b13f789940b57e011d1">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"33\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.167\" data-max=\"1093750\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["consent_understand","respondent","sexo","year_of_birth","education","feedback","cbc_practice","cbc_practice_comment","manip_check","cbc_q1","cbc_q1_comment","cbc_q2","cbc_q2_comment","cbc_q3","cbc_q3_comment","cbc_q4","cbc_q4_comment","cbc_q5","cbc_q5_comment","cbc_q6","cbc_q6_comment","mj_1","mj_2","mj_3","cmt_clasicos","ref_1","ref_2","ref_3","proy_1","proy_2","attention_check","cmt_reflex","ranking_politicas","ranking_politicas_educacion","ranking_politicas_salud","ranking_politicas_pensiones","ranking_politicas_cuidado_ninos","ranking_politicas_carreteras","rank_1","rank_2","rank_3","rank_4","rank_5","cmt_ranking","pres_1","pres_2","pres_3","pres_4","pres_5","pres_6","cmt_percepcion_acceso","valor_1","valor_2","valor_3","valor_4","valor_5","cmt_valor","dec_3","dec_1","dec_2","cmt_decomodifica","lucro_1","lucro_2","lucro_3","cmt_rol_privados_estado","cargo_1","cargo_2","cargo_3","cargo_4","cargo_5","efic_1","efic_2","efic_3","efic_4","efic_5","part_1","part_2","part_3","part_4","part_5","cmt_participa","neolib_1","neolib_2","neolib_3","neolib_4","cmt_neoliberal","control_1","control_2","control_3","actitud_1","actitud_2","cmt_deserve-1","reciproc_1","reciproc_2","reciproc_3","actitud_4","id_1","id_2","id_3","cmt_deserve-2","nec_1","nec_2","nec_3","esf_1","esf_2","esf_3","esf_4","esf_5","cmt_deserve-3","adc_qstn","adc_5","adc_6","adc_7","gender","income","salud_prov","educ_prov","id_correo","feedback_2","id-correo","feedback-2"],["Acepto participar en esta encuesta y entiendo que mis respuestas serán anónimas y utilizadas únicamente con fines de investigación.","¿Desde qué dispositivo responde esta encuesta?","¿Cuál es su sexo?","¿En qué año nació?","¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está estudiando, use el grado más alto que haya obtenido.","Comentarios (opcional)","Considerando las caracteristicas anteriores, cuanto dinero (beca) le daria a cada postulante? (ejemplo de practica)","Comentarios","Antes de comenzar, ¿en qué consistirá su tarea en esta sección?","(Tarea 1) Considerando las caracteristicas anteriores, cuanto dinero (beca) le daria a cada postulante?","Comentarios","(Tarea 2) Considerando las caracteristicas anteriores, cuanto dinero (beca) le daria a cada postulante?","Comentarios","(Tarea 3) Considerando las caracteristicas anteriores, cuanto dinero (beca) le daria a cada postulante?","Comentarios","(Tarea 4) Considerando las caracteristicas anteriores, cuanto dinero (beca) le daria a cada postulante?","Comentarios","(Tarea 5) Considerando las caracteristicas anteriores, cuanto dinero (beca) le daria a cada postulante?","Comentarios","(Tarea 6) Considerando las caracteristicas anteriores, cuanto dinero (beca) le daria a cada postulante?","Comentarios","(1) Es justo que en Chile las personas de altos ingresos puedan acceder a una mejor atención de salud que las personas con ingresos más bajos","(2) Es justo que en Chile las personas de altos ingresos tengan una mejor educación para sus hijos que las personas con ingresos más bajos","(3) Es justo que en Chile las personas de altos ingresos tengan mejores pensiones que las personas con ingresos más bajos","Comentarios (opcional)","(4) Es justo que **yo** tenga acceso a una mejor salud si puedo pagar por ello","(5) Es justo que **yo** tenga acceso a una mejor educación si puedo pagar por ello","(6) Es justo que **yo** tenga acceso a mejor pensión si puedo pagar por ello","(7) Está bien que **mis hijos/as** tengan acceso a una mejor salud que otros niños si es que puedo pagar por ello","(8) Está bien que **mis hijos/as** tengan acceso a una mejor educación que otros niños si es que puedo pagar por ello","(9) Esta pregunta es para verificar que está leyendo con atención. Por favor, deje esta pregunta en blanco","Comentarios (opcional)","(10) Asigne una **prioridad** a cada área de inversión de fondos públicos:","(10) Asigne una **prioridad** a cada área de inversión de fondos públicos: - Educación","(10) Asigne una **prioridad** a cada área de inversión de fondos públicos: - Salud","(10) Asigne una **prioridad** a cada área de inversión de fondos públicos: - Pensiones","(10) Asigne una **prioridad** a cada área de inversión de fondos públicos: - Salas cunas","(10) Asigne una **prioridad** a cada área de inversión de fondos públicos: - Carreteras","(11) Educación","(12) Salud","(13) Pensiones","(14) Salas cuna","(15) Carreteras","Comentarios (opcional)","(16) El acceso a la salud es desigual en Chile","(17) El acceso a la educación es desigual en Chile","(18) Las pensiones son desiguales en Chile","(19) Salud","(20) Educación","(21) Pensiones","Comentarios (opcional)","(22) Está bien que los hospitales públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio","(23) Está bien que los liceos públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio","(24) La calidad del sistema de salud debería ser igual para todos aunque esto signifique que mi familila no pueda pagar por mejores servicios ","(25) La educación debería ser de igual calidad para todos aunque eso me impida pagar por una mejor para mi familia","(26) Las pensiones deberían ser más igualitarias, aunque eso signifique que yo reciba una pensión similar a quienes aportaron menos que yo ","Comentarios (opcional)","(27) Imagine que usted está en un plan de Isapre que está evaluando dar acceso a un 10% de personas en su mismo plan que no pueden pagarlo. Para ello, usted debería pagar un monto adicional a su cotización. En tal situación, ¿cuánto más estaría dispuesto a pagar?","(28) Imagine que su hijo/a asiste a un colegio privado que tiene una matrícula de 100 alumnos. ¿Cuántos alumnos cree Ud. que se deberían admitir sin pagar en este colegio? ","(29) Para que esos alumnos puedan ser admitidos en el colegio, ¿cuánto más estaría dispuesto a pagar de la mensualidad para poder apoyar a estudiantes que no pagan?","Comentarios (opcional)","(30) Salud","(31) Educación","(32) Pensiones","Comentarios (opcional)","(33) Salud","(34) Educación","(35) Pensiones","(36) Salas cuna","(37) Carreteras","(38) Salud","(39) Educación","(40) Pensiones","(41) Salas cuna","(42) Carreteras","(43) Salud","(44) Educación","(45) Pensiones","(46) Salas cuna","(47) Carreteras","Comentarios (opcional)","(48) El Gobierno debería proporcionar a toda la población servicios básicos como la asistencia sanitaria y la asistencia jurídica de forma gratuita","(49) Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería hacerlo","(50) La sociedad debería proporcionar recursos y servicios gratuitos a las personas que no pueden permitírselos","(51) Las personas con ingresos más elevados deberían pagar más impuestos que las que tienen ingresos más bajos","Comentarios (opcional)","(52) Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado","(53) Quienes son responsables de sus propios problemas igualmente merecen recibir beneficios sociales.","(54) El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos.","(55) Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben","(56) Está bien que las personas que reciben apoyo del Estado puedan expresar su descontento con las condiciones de los beneficios.","Comentarios (opcional)","(57) Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos","(58) No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho.","(59) Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada","(60) El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado.","(61) Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países.","(62) Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos.","(63) Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado.","Comentarios (opcional)","(64) Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real.","(65) Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado.","(66) Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales.","(67) Las personas que reciben beneficios sociales deberían estar haciendo algo activamente para mejorar su situación, como buscar trabajo o capacitarse","(68) Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan","(69) El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación","(70) Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo","(71) No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual","Comentarios (opcional)","(72) ¿Cuál de las siguientes afirmaciones describe mejor su situación actual, considerando el total de ingresos que tiene actualmente?","(73) Que mi situación financiera empeore los próximos años.","(74) Quedar desempleado","(75) Que mis hijos/as y las próximas generaciones lo tendrán mucho más difícil","¿Cuál es su identidad de género?","¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?","¿Qué plan de salud tiene?","¿En qué tipo de colegio estudió?","Agradeceríamos que nos dejara su nombre y correo electrónico en caso de que queramos contactarlo para hacerle preguntas respecto a sus comentarios y recomendaciones sobre la encuesta. Sus respuestas seguirán siendo anónimas y confidenciales","¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar cualquier observación de forma, contenido o diseño en el cuadro a continuación.","Agradeceríamos que nos dejara su nombre y correo electrónico en caso de que queramos contactarlo para hacerle preguntas respecto a sus comentarios y recomendaciones sobre la encuesta. Sus respuestas seguirán siendo anónimas y confidenciales [variable legada, renombrada a id_correo]","¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar cualquier observación de forma, contenido o diseño en el cuadro a continuación. [variable legada, renombrada a feedback_2]"],[33,20,18,18,17,13,30,3,20,21,5,20,1,17,1,16,1,16,0,16,1,6,6,6,0,6,6,6,6,5,2,0,0,4,4,4,3,3,4,4,4,3,3,1,4,4,4,4,3,4,0,4,4,4,4,4,0,4,4,4,0,3,3,3,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,0,3,3,3,3,0,3,3,3,3,3,0,2,2,2,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,6,7,7,7,7,3,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0],[null,null,0.167,1995.944,7.647,null,843333.333,null,null,919047.6189999999,null,955000,null,1076470.588,null,1093750,null,912500,null,937500,null,2.167,2.5,2.667,null,3.167,3.167,3.167,3.5,3.6,null,null,null,2.25,2.25,2.25,3,5,2.75,2.75,3,3.333,2.667,null,3,3,3.25,2.75,2.333,2.25,null,2.75,3,2.25,2.5,2.25,null,17.5,32.5,15,null,1,1.333,1,null,4.75,4.75,4.75,4.75,5.5,3.25,3.25,3.25,3.25,3.25,3.25,4,4,4,4,null,3.333,3.333,3.333,3.667,null,4.667,5,5,2.333,3.333,null,2.5,2.5,2.5,null,null,5,1,null,null,null,null,null,null,null,null,null,null,2,4,3,3,null,6.667,null,null,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Variable<\/th>\n      <th>Label<\/th>\n      <th>N válidas<\/th>\n      <th>N NS/NR<\/th>\n      <th>Promedio<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":15,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"name":"variable","targets":0},{"name":"label","targets":1},{"name":"n_valido","targets":2},{"name":"n_no_sabe_no_responde","targets":3},{"name":"promedio","targets":4}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[10,15,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="comentarios-abiertos" class="level2">
+<h2 class="anchored" data-anchor-id="comentarios-abiertos">Comentarios abiertos</h2>
+<p>Detalle de las variables de comentario libre (<code>cmt_*</code> o <code>*_comment</code>), con el N de comentarios recibidos y el texto de cada uno.</p>
+<div class="cell">
+<div id="tbl-comentarios" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-comentarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2
+</figcaption>
+<div aria-describedby="tbl-comentarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-032a44fd0ec475511f37" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-032a44fd0ec475511f37">{"x":{"filter":"none","vertical":false,"data":[["feedback","cbc_practice_comment","cbc_q1_comment","cbc_q2_comment","cbc_q3_comment","cbc_q4_comment","cbc_q6_comment","cmt_ranking","feedback_2"],["Comentarios (opcional)","Comentarios","Comentarios","Comentarios","Comentarios","Comentarios","Comentarios","Comentarios (opcional)","¿Tiene algún comentario u observación sobre esta encuesta? Puede ingresar cualquier observación de forma, contenido o diseño en el cuadro a continuación."],[13,3,5,1,1,1,1,1,3],["probando desde hugging face","El atributo su hogar llega a fin de mes con podría ser dicho de un modo más específico, en el sentido de que se refiere al dinero. \n\nEl ver género como primer atributo determinó completamente mi opción. ","jc desde shiniapps.io\n","le di todo a valentina","tarea 3","otra tarea","Tengo la impresión que el tema de necesidad económica va a determinar la decisión. Estoy tomando la decisión en base a cómo llega a fin de mes, y luego veo el resto de atributos. ","Sugiero no preguntar los items del 11 al 15: la gran mayoría a a decir más o mucho más gasto. ","Me parece que para identidad de género las categorías de respuesta deberían ser \"Femenino, Masculino, Transfemenino, Transmasculino, No binario...\".\nLa barra de avance daba saltos y a veces no avanzaba nada, por lo que no era posible estar seguro de cuánto faltaba para terminar.\n\nTodo el resto me parece bien :)"],["segunda pag fix comentarios id","sigo probando","tomas desde hugging face - post deploy hf y shiny\n","","","","","","No me queda del todo claro si pregunta por el ingreso total del hogar mio especificamente, o de todas las personas."],["e","martina-tomás","probando tarea 1","","","","","","Considero que la palabra \"holgura\" al caracterizar como cierto caso llega a fin de mes, no cualquier persona lo podría llegar a entender. Podría ser cómoda o sin preocupaciones."],["Andreas","","benjamín isidora","","","","","",""],["probando desde local (linux)","","tomas-joaquin","","","","","",""],["probando local","","","","","","","",""],["Andreas otra vez","","","","","","","",""],["La pregunta de ingreso es mejor si incluye impuestos. ","","","","","","","",""],["probando desde  https://jusmer.shinyapps.io/comentarios/\n\ny comentarios al final ...","","","","","","","",""],["jc desde hugging face prueba 1","","","","","","","",""],["id-correo test desde segunda pag","","","","","","","",""],["Se me hizo algo confusa la pregunta sobre nivel educativo. Estoy estudiando en universidad y no tenia certeza si pone educación media completa o universitaria incompleta","","","","","","","",""],["probando el nuevo guardado de atributos del conjoint","","","","","","","",""]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Variable<\/th>\n      <th>Label<\/th>\n      <th>N comentarios<\/th>\n      <th>Comentario 1<\/th>\n      <th>Comentario 2<\/th>\n      <th>Comentario 3<\/th>\n      <th>Comentario 4<\/th>\n      <th>Comentario 5<\/th>\n      <th>Comentario 6<\/th>\n      <th>Comentario 7<\/th>\n      <th>Comentario 8<\/th>\n      <th>Comentario 9<\/th>\n      <th>Comentario 10<\/th>\n      <th>Comentario 11<\/th>\n      <th>Comentario 12<\/th>\n      <th>Comentario 13<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2},{"name":"variable","targets":0},{"name":"label","targets":1},{"name":"n_comentarios","targets":2},{"name":"comentario_1","targets":3},{"name":"comentario_2","targets":4},{"name":"comentario_3","targets":5},{"name":"comentario_4","targets":6},{"name":"comentario_5","targets":7},{"name":"comentario_6","targets":8},{"name":"comentario_7","targets":9},{"name":"comentario_8","targets":10},{"name":"comentario_9","targets":11},{"name":"comentario_10","targets":12},{"name":"comentario_11","targets":13},{"name":"comentario_12","targets":14},{"name":"comentario_13","targets":15}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
