@@ -1,0 +1,11 @@
+name: pre-piloto-v2
+title: Pre-piloto Encuesta JUSMER (tiempo)
+username: jus-mer
+account: jus-mer
+server: connect.posit.cloud
+envVars: SD_HOST, SD_PORT, SD_DBNAME, SD_USER, SD_TABLE, SD_PASSWORD
+hostUrl: https://api.connect.posit.cloud/v1
+appId: 019f6772-6c05-4512-b3df-ee334461ecf1
+bundleId:
+url: https://connect.posit.cloud/jus-mer/content/019f6772-6c05-4512-b3df-ee334461ecf1
+version: 1

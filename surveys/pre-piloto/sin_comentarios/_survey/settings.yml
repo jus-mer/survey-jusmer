@@ -15,14 +15,102 @@ survey-settings:
   auto-scroll: yes
   rate-survey: no
   all-questions-required: no
-  start-page: welcome
+  start-page: ~
   system-language: es
   highlight-unanswered: yes
   highlight-color: orange
   capture-metadata: yes
   required-questions:
   - consent_understand
+  - respondent
+  - sexo
+  - year_of_birth
+  - education
+  - manip_check
+  - cbc_practice
+  - cbc_q1
+  - cbc_q2
+  - cbc_q3
+  - cbc_q4
+  - cbc_q5
   - cbc_q6
+  - mj_1
+  - mj_2
+  - mj_3
+  - ref_1
+  - ref_2
+  - ref_3
+  - proy_1
+  - proy_2
+  - rank_1
+  - rank_2
+  - rank_3
+  - rank_4
+  - rank_5
+  - pres_1
+  - pres_2
+  - pres_3
+  - pres_4
+  - pres_5
+  - pres_6
+  - valor_1
+  - valor_2
+  - valor_3
+  - valor_4
+  - valor_5
+  - dec_3
+  - dec_1
+  - dec_2
+  - lucro_1
+  - lucro_2
+  - lucro_3
+  - cargo_1
+  - cargo_2
+  - cargo_3
+  - cargo_4
+  - cargo_5
+  - efic_1
+  - efic_2
+  - efic_3
+  - efic_4
+  - efic_5
+  - part_1
+  - part_2
+  - part_3
+  - part_4
+  - part_5
+  - neolib_1
+  - neolib_2
+  - neolib_3
+  - neolib_4
+  - control_1
+  - control_2
+  - control_3
+  - actitud_1
+  - actitud_2
+  - reciproc_1
+  - reciproc_2
+  - reciproc_3
+  - actitud_4
+  - id_1
+  - id_2
+  - id_3
+  - nec_1
+  - nec_2
+  - nec_3
+  - esf_1
+  - esf_2
+  - esf_3
+  - esf_4
+  - esf_5
+  - adc_qstn
+  - adc_5
+  - adc_6
+  - adc_7
+  - gender
+  - income
+  - salud_prov
+  - educ_prov
 
 system-messages:
   cancel: Cancelar

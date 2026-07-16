@@ -13,7 +13,8 @@ library(surveydown)
 #   'readr',
 #   'dplyr',
 #   'kableExtra',
-#   'tidyr'
+#   'tidyr',
+#   'waiter'
 # ))
 
 # Load packages
@@ -24,6 +25,7 @@ library(readr)
 library(here)
 library(kableExtra)
 library(tidyr)
+library(waiter)
 
 # Read in the full survey design file
 design <- read_csv("data/choice_questions.csv")
@@ -42,6 +44,14 @@ db <- sd_db_connect(ignore = ignore_db, gssencmode = "disable")
 
 ui <- tagList(
   useShinyjs(),
+  use_waiter(),
+  waiter_show_on_load(
+    html = tagList(
+      spin_fading_circles(),
+      tags$p("Cargando la encuesta", style = "color: #ffffff; margin-top: 20px;")
+    ),
+    color = "#333e48"
+  ),
   sd_ui(),
   tags$head(
     tags$script(HTML("
@@ -795,6 +805,15 @@ server <- function(input, output, session) {
       if (show_dec2) "block" else "none"
     ))
   }, ignoreNULL = TRUE)
+
+  # Hide the load-time spinner once the first render flush completes, i.e.
+  # once the survey page is actually visible/interactive, not just once the
+  # server code above has finished executing. Registered before sd_server()
+  # only because sd_server() must be the last call in this function - the
+  # callback itself still fires after render, same as before.
+  session$onFlushed(function() {
+    waiter_hide()
+  }, once = TRUE)
 
   # Run surveydown server and define database
   sd_server(db = db)
