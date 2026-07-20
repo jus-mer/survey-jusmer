@@ -4,4 +4,24 @@ format: html
 toc: false
 ---
 
-# Presentación {.unnumbered}
+# Presentation {.unnumbered}
+
+This manual documents the survey conducted within the framework of the project *Market Justice and Deservingness of Social Welfare* (JUSMER), FONDECYT Regular N° 1250518, directed by Prof. Juan Carlos Castillo at the Department of Sociology, Universidad de Chile, and funded by ANID (2025–2028). The survey examines the extent to which the Chilean adult population endorses the application of market criteria to the distribution of social services (such as health care, education, and pensions) and how those preferences relate to criteria of welfare deservingness, merit, and redistribution.
+
+The study was fielded as a [two/three]-wave online panel survey (CAWI) with a national scope,
+based on a non-probability quota design. The questionnaire was programmed by the research team in
+`surveydown` and self-hosted, while sample provision and fieldwork operations were contracted to an
+external panel provider.
+
+The manual serves two purposes. First, it provides a public and verifiable record of the design,
+fieldwork, and processing decisions behind the data, so that users can assess their scope and
+limitations. Second, it works as a reference for anyone using the datasets: what each file
+contains, how each variable was constructed, and under what conditions it should be interpreted.
+Chapters follow the lifecycle of the survey, from statistical design to the released datasets.
+
+Use of these data is subject to citation of the project. See @sec-bases for the recommended
+citation, licensing terms, and conditions of use.
+
+::: {.callout-warning appearance="simple"}
+Work in progress. Sections marked with brackets `[ ]` require confirmation before release.
+:::

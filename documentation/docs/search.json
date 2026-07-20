@@ -1,0 +1,392 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "JUSMER Survey Methodological Manual",
+    "section": "",
+    "text": "Presentation\nThis manual documents the survey conducted within the framework of the project Market Justice and Deservingness of Social Welfare (JUSMER), FONDECYT Regular N° 1250518, directed by Prof. Juan Carlos Castillo at the Department of Sociology, Universidad de Chile, and funded by ANID (2025–2028). The survey examines the extent to which the Chilean adult population endorses the application of market criteria to the distribution of social services (such as health care, education, and pensions) and how those preferences relate to criteria of welfare deservingness, merit, and redistribution.\nThe study was fielded as a [two/three]-wave online panel survey (CAWI) with a national scope, based on a non-probability quota design. The questionnaire was programmed by the research team in surveydown and self-hosted, while sample provision and fieldwork operations were contracted to an external panel provider.\nThe manual serves two purposes. First, it provides a public and verifiable record of the design, fieldwork, and processing decisions behind the data, so that users can assess their scope and limitations. Second, it works as a reference for anyone using the datasets: what each file contains, how each variable was constructed, and under what conditions it should be interpreted. Chapters follow the lifecycle of the survey, from statistical design to the released datasets.\nUse of these data is subject to citation of the project. See Section 8.2 for the recommended citation, licensing terms, and conditions of use.\n\n\n\n\n\n\nWork in progress. Sections marked with brackets [ ] require confirmation before release.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Presentación</span>"
+    ]
+  },
+  {
+    "objectID": "01-antecedents.html",
+    "href": "01-antecedents.html",
+    "title": "2  Background",
+    "section": "",
+    "text": "The provision of welfare and the collective management of social risk are defining functions of modern states, yet the arrangements through which societies discharge them vary widely, from tax-financed universal provision to systems where access is mediated by ability to pay (Esping-Andersen, 1990; Mau, 2015). Chile is an emblematic case of the latter. Its pension system is privately administered, 84% of higher education is privately managed, and social expenditure reaches 14.5% of GDP, placing the country 30th among 34 OECD members. This configuration has become a persistent source of contention — the 2019 social uprising, the constitutional processes, the crisis of private health insurers, the pension fund withdrawals, the debate over student debt forgiveness. Despite an extensive literature on the consequences of privatisation in Chile, no study has systematically examined how the population evaluates the application of market criteria to social policy, what shapes those evaluations, and how they have changed.\nWithin the framework of the JUSMER project, we address this gap through the concept of market justice: the endorsement of the principle that individual or family ability to pay should grant greater and better access to social provisions such as health care, pensions, and education (Lane, 1986; Lindh, 2015). Our central argument is that such preferences are anchored in deservingness criteria, that is, in beliefs about which individual characteristics justify obtaining a given good or service (Knotz et al., 2022; Oorschot, 2000). Within the CARIN framework (Meuleman et al., 2020), we expect the control criterion — in its meritocratic variant, where need is read as the outcome of individual effort and responsibility — to take precedence over attitude, reciprocity, identity, and need. The project advances three contributions: conceptual, by approaching welfare attitudes through market justice rather than redistribution alone; methodological, by examining it from public opinion data across two decades and in cross-national comparison; and theoretical, by treating privatisation as a normative and institutional project whose cultural imprint can be traced through policy-feedback effects (Fourcade & Healy, 2007).\nThe general research objective is to analyse preferences for market justice in Chile in international comparison, their change over the past two decades, and their association with criteria of welfare deservingness. Our principal hypothesis is that the institutional design of extensive commodification in Chile has produced strong adherence to meritocratic deservingness criteria, which in turn translates into higher support for market justice than in less commodified contexts. This objective is broken down as follows:\n\nSO1 (Deservingness). Analyse the association between deservingness criteria and preferences for market justice.\nSO2 (Socioeconomic status). Establish the extent to which socioeconomic status is linked to preferences for market justice.\nSO3 (Socio-structural position). Examine the link between socio-structural variables, such as age and gender, and preferences for market justice.\nSO4 (Perceptions and beliefs). Investigate the association between perceptions and beliefs about inequality and preferences for market justice.\nSO5 (Individual-level moderation). Analyse the moderating role of status, subjective, and socio-structural variables in the deservingness–market justice association.\nSO6 (Country-level factors). Examine the association between contextual inequality variables and preferences for market justice.\nSO7 (Country-level moderation). Explore the moderating role of country-level variables in the deservingness–market justice association.\n\nThe project pursues these objectives across five studies, moving from secondary to primary data. Study 1 examines market justice in international comparison using the ISSP inequality module, and Study 2 traces its change in Chile between 1999 and 2019. Study 3 addresses deservingness criteria through the survey documented in this manual, which extends the measurement of market justice to pensions, childcare, and distinct educational levels, and operationalises deservingness through the CARIN deservingness principles scale (Meuleman et al., 2020), a measurement proposal derived from the NICER framework (Knotz et al., 2022), the neoliberalism scale (Grzanka et al., 2020), and the meritocratic preferences scale (Castillo et al., 2023). Study 4 analyses a distributional survey experiment embedded in the same instrument (Auspurg & Hinz, 2016; Gilgen, 2022), and Study 5 applies computational text analysis to the parliamentary debate on the additional 6% pension contribution. All hypotheses are preregistered in the Open Science Framework.\n\n\n\n\nAuspurg, K., & Hinz, T. (2016). Factorial survey experiments. Los Angeles: SAGE.\n\n\nCastillo, J. C., Iturra, J., Maldonado, L., Atria, J., & Meneses, F. (2023). A Multidimensional Approach for Measuring Meritocratic Beliefs: Advantages, Limitations and Alternatives to the ISSP Social Inequality Survey. International Journal of Sociology, 53(6), 448–472. https://doi.org/10.1080/00207659.2023.2274712\n\n\nEsping-Andersen, G. (1990). The Three Worlds of Welfare Capitalism. Cambridge: Polity Press.\n\n\nFourcade, M., & Healy, K. (2007). Moral Views of Market Society. Annual Review of Sociology, 33(Volume 33, 2007), 285–311. https://doi.org/10.1146/annurev.soc.33.040406.131642\n\n\nGilgen, S. (2022). Disentangling Justice: Needs, Equality or Merit? On the Situation-Dependency of Distributive Justice (1. Auflage). Baden-Baden: Nomos Verlagsgesellschaft mbH & Co. KG. https://doi.org/10.5771/9783748926955\n\n\nGrzanka, P. R., Miles, J. R., Spengler, E. S., Arnett, J. E., & Pruett, J. (2020). Measuring Neoliberalism: Development and Initial Validation of a Scale of Anti-Neoliberal Attitudes. Social Justice Research, 33(1), 44–80. https://doi.org/10.1007/s11211-019-00339-3\n\n\nKnotz, C. M., Gandenberger, M. K., Fossati, F., & Bonoli, G. (2022). A Recast Framework for Welfare Deservingness Perceptions. Social Indicators Research, 159(3), 927–943. https://doi.org/10.1007/s11205-021-02774-9\n\n\nLane, R. E. (1986). Market Justice, Political Justice. American Political Science Review, 80(2), 383–402. https://doi.org/10.2307/1958264\n\n\nLindh, A. (2015). Public Opinion against Markets? Attitudes towards Market Distribution of Social Services – A Comparison of 17 Countries. Social Policy & Administration, 49(7), 887–910. https://doi.org/10.1111/spol.12105\n\n\nMau, S. (2015). Inequality, Marketization and the Majority Class: Why Did the European Middle Classes Accept Neo-Liberalism? London: Palgrave Macmillan UK.\n\n\nMeuleman, B., Roosma, F., & Abts, K. (2020). Welfare deservingness opinions from heuristic to measurable concept: The CARIN deservingness principles scale. Social Science Research, 85, 102352. https://doi.org/10.1016/j.ssresearch.2019.102352\n\n\nOorschot, W. V. (2000). Who should get what, and why? On deservingness criteria and the conditionality of solidarity among the public. Policy & Politics, 28(1), 33–48. https://doi.org/10.1332/0305573002500811",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Background</span>"
+    ]
+  },
+  {
+    "objectID": "02-sample-desing.html",
+    "href": "02-sample-desing.html",
+    "title": "3  Statistical design",
+    "section": "",
+    "text": "3.1 Target Population and Survey Population\n## Sampling Frame ## Units of Analysis and Domains ## Sampling Strategy and Sample Selection ## Quotas and Sample Size ## Longitudinal Design ## Weighting and Calibration ## Precision, Uncertainty, and Non-sampling Errors",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Statistical design</span>"
+    ]
+  },
+  {
+    "objectID": "03-instrument-desing.html",
+    "href": "03-instrument-desing.html",
+    "title": "4  Diseño del instrumento",
+    "section": "",
+    "text": "5 Instrument design",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Diseño del instrumento</span>"
+    ]
+  },
+  {
+    "objectID": "03-instrument-desing.html#questionnaire-structure-and-content",
+    "href": "03-instrument-desing.html#questionnaire-structure-and-content",
+    "title": "4  Diseño del instrumento",
+    "section": "5.1 Questionnaire Structure and Content",
+    "text": "5.1 Questionnaire Structure and Content",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Diseño del instrumento</span>"
+    ]
+  },
+  {
+    "objectID": "03-instrument-desing.html#measurement-scales-and-sources-of-survey-items",
+    "href": "03-instrument-desing.html#measurement-scales-and-sources-of-survey-items",
+    "title": "4  Diseño del instrumento",
+    "section": "5.2 Measurement Scales and Sources of Survey Items",
+    "text": "5.2 Measurement Scales and Sources of Survey Items",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Diseño del instrumento</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#research-question",
+    "href": "04-conjoint-desing.html#research-question",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n7.1 Research question",
+    "text": "7.1 Research question\nTo what extent do deservingness criteria—need, control, effort, reciprocity, attitude, and identity—shape how citizens allocate scarce higher education scholarships between competing applicants in Chile?",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#hypotheses",
+    "href": "04-conjoint-desing.html#hypotheses",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n7.2 Hypotheses",
+    "text": "7.2 Hypotheses\n\n7.2.1 Main effects\nH_1 (Need): Applicants from households that struggle to make ends meet (Dificultad) will receive a larger share than applicants from financially comfortable households (Holgura).\nH_2 (Effort): Applicants who study more than their peers will receive a larger share than those who study the same as or less than their peers.\nH_3 (Control): Applicants whose need for the scholarship is outside their control (having applied to other scholarships without securing funding) will receive a larger share than applicants whose need reflects a controllable failure (not having applied on time).\nH_4 (Reciprocity): Applicants who have contributed to their community through volunteering will receive a larger share than those who have not.\nH_5 (Attitude): Applicants who frame the scholarship as help they are grateful for will receive a larger share than those who frame it as something they deserve.\nH_6 (Identity): Country of birth will affect allocation. Relative to Chilean-born applicants, foreign-born applicants (Venezuela, Perú) may receive a smaller share. The direction is pre-registered as theoretically open.\nH_7 (Sex): Female applicants, signaled through gendered names, will receive a larger share of the scholarship than male applicants.\n\n7.2.2 Conditional effects (moderation)\nWe expect merit and disadvantage-related attributes to be moderated by respondents’ meritocratic orientation, measured following Castillo et al. (2023). For the pre-registered confirmatory tests we use the two normative components of that framework—meritocratic preference (the endorsement that effort and talent should be rewarded) and acceptance of privilege (the endorsement of advantage derived from non-meritocratic factors)—because they yield clearer directional predictions than the descriptive-perception components.\nH_8 (Effort × meritocratic preference): The positive effect of effort (H_2) will be stronger among respondents with higher meritocratic preference.\nH_9 (Control × meritocratic preference): The positive effect of uncontrollable need (H_3) will be stronger among respondents with higher meritocratic preference, who condition support on the applicant’s lack of responsibility for their situation.\nH_{10} (Need × acceptance of privilege): The positive effect of economic need (H_1) will be weaker among respondents with higher acceptance of privilege.\n\n7.2.3 Exploratory moderation\nThe two descriptive-perception components of Castillo et al. (2023), meritocratic perception (the belief that effort and talent are in fact rewarded) and perception of privilege (the recognition that non-meritocratic factors shape outcomes), are descriptive rather than normative beliefs, so their moderating direction is not theoretically determined. We therefore formalize the following as exploratory hypotheses, tested but not used for confirmatory inference.\nH_{11} (Effort × meritocratic perception, exploratory): The positive effect of effort (H_2) may be stronger among respondents with higher meritocratic perception.\nH_{12} (Need × perception of privilege, exploratory): The positive effect of need (H_1) may be stronger among respondents with higher perception of privilege.\n[POR DEFINIR]",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#design-type",
+    "href": "04-conjoint-desing.html#design-type",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n8.1 Design type",
+    "text": "8.1 Design type\nThe study uses a paired-profile distributive conjoint, a design that fuses the randomization logic of conjoint survey experiments with the allocative logic of distributive justice experiments. As in a standard conjoint, each task presents two profiles whose attributes are independently randomized, and the analysis recovers the effect of each attribute and level on the outcome. What departs from the standard conjoint is the response: rather than choosing one profile over the other, the respondent distributes a fixed resource between them, allocating a percentage of the total to each. The design therefore functions as an allocator—it asks how a scarce good should be divided between two independent claimants—and reveals the weight respondents place on each attribute through the share they are willing to grant.\nFormally, each task displays two applicants with randomized profiles, and the respondent divides a fixed scholarship fund between them, so that the share allocated to one and the share allocated to the other sum to 100% by construction. The outcome is the percentage assigned to each profile. This fixed-sum response is what makes the design distributive rather than evaluative: because the resource is scarce and interdependent, any share granted to one applicant is necessarily withheld from the other, forcing respondents to reveal how they prioritize competing criteria when the trade-off is concrete.\nThis distributive logic follows the Distributional Survey Experiment of Gilgen (2022), but the present design differs from hers in two consequential respects. First, it retains the full randomization of a conjoint rather than constructing a D-efficient design: attribute levels are drawn independently and uniformly at the profile level, which simplifies both implementation and the identification of AMCEs (see Causal identification). Second, it presents two profiles per task rather than three. Using two profiles reduces the cognitive load of a task that is already more demanding than a binary choice, and it keeps both the interface and the statistical model simple, since the interdependence of the outcome becomes trivial: the second applicant’s share is the complement of the first (B = 100 − A). The result is a design that borrows the causal-inferential machinery of the conjoint tradition (Hainmueller et al., 2014) and the distributive, scarcity-based task of Gilgen’s framework, without inheriting the design-efficiency complications of the latter.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#scenario",
+    "href": "04-conjoint-desing.html#scenario",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n8.2 Scenario",
+    "text": "8.2 Scenario\nRespondents are asked to place themselves in the role of a member of a university committee responsible for allocating a first-year higher education scholarship. They are told that the two applicants shown in each task were admitted to the same program at the same institution, where students must pay to study, that the information about each applicant was provided and verified by their secondary school, and that the scholarship fund available to distribute is CLP 2,000,000 for the first year. This framing establishes a context of genuine scarcity—the fund cannot fully cover both applicants—and holds the admission bar and institution constant across applicants, so that the allocation decision turns on the experimentally manipulated attributes rather than on differences in eligibility or institutional prestige.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#task-structure",
+    "href": "04-conjoint-desing.html#task-structure",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n8.3 Task structure",
+    "text": "8.3 Task structure\nEach respondent (i) completes six allocation tasks (t). In every task, two applicant profiles (each labeled by a first name and displayed side by side in a table) are presented together with the fixed scholarship fund, and the respondent distributes the fund between them according to what they consider fair, with no correct or incorrect answer. Presenting six tasks per respondent rather than a single one increases within-respondent statistical efficiency by yielding multiple allocation decisions per person. This gain comes at the cost of non-independence among the tasks and profiles evaluated by the same respondent, which the analysis addresses explicitly (see Analysis Plan).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#profiles-and-attributes",
+    "href": "04-conjoint-desing.html#profiles-and-attributes",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n8.4 Profiles and attributes",
+    "text": "8.4 Profiles and attributes\nEach applicant profile (j) is defined by seven experimentally manipulated dimensions. Six correspond to deservingness criteria from the NICER and CARIN frameworks (Knotz et al., 2022; Meuleman et al., 2020) and are displayed as explicit rows of the profile table: need, control, effort, reciprocity, attitude, and identity. The seventh, applicant sex, is signaled implicitly through a gendered first name rather than as an explicit row, so that the profile reads as a natural description of a person rather than a mechanical list of traits; names are drawn from pools matched on familiarity and perceived social class to isolate the sex signal from other connotations. The order in which the six explicit attributes appear is randomized once per respondent and held constant across their six tasks, so that any effect of attribute position is balanced across the sample while within-respondent presentation remains stable. The full set of levels and reference categories is specified in the Variables section.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#causal-identification-and-assumptions",
+    "href": "04-conjoint-desing.html#causal-identification-and-assumptions",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n8.5 Causal identification and assumptions",
+    "text": "8.5 Causal identification and assumptions\nThe distributive conjoint identifies the average marginal component effect (AMCE) of each attribute on the allocated share under the design-based assumptions formalized by Hainmueller et al. (2014). Because attribute levels are assigned by the researcher rather than observed, identification rests on the randomization itself rather than on selection-on-observables, provided four conditions hold. We adopt their notation: let i index respondents, t \\in \\{1,\\dots,6\\} tasks, and j \\in \\{1,2\\} the profile position within a task. Let T_{ijt} denote the vector of randomized attributes of profile j, with l-th component T_{ijt}^{(l)} taking values in the level set \\mathcal{T}_l, and let Y_{ijt}(t) be the potential share the respondent would allocate to that profile if its attribute vector were fixed at t.\nStability and no carryover effects. The potential outcome of a profile depends only on that profile’s own attributes, not on the profiles seen in the same or previous tasks. Formally, for any two tasks t and t' and profiles j, j',\nY_{ijt}(t) = Y_{ij't'}(t) \\quad \\text{whenever the profile's attribute vector is the same,}\nso that a profile with attribute vector t yields the same potential allocation regardless of when or against which competitor it appears. This licenses pooling the six tasks per respondent into a single estimand rather than treating each as a separate experiment.\nNo profile-order effects. The potential outcome does not depend on the position (left or right, here altID 1 or 2) that the profile occupies. For any two positions j and j',\nY_{ijt}(t) = Y_{ij't}(t),\nwhich we enforce by randomizing which profile occupies each position, making position orthogonal to attribute content.\nRandomization (completely independent). The assigned attribute vector is statistically independent of the potential outcomes and of the competing profile’s attributes. Writing the full profile of both alternatives in a task as T_{it},\nY_{ijt}(t) \\perp\\!\\!\\!\\perp T_{it} \\quad \\text{for all } t,\nand the components are assigned independently of one another with fixed marginal probabilities,\nP\\!\\left(T_{ijt}^{(l)} = t_l\\right) = p_l(t_l), \\qquad \\sum_{t_l \\in \\mathcal{T}_l} p_l(t_l) = 1,\nwith each attribute drawn uniformly, p_l(t_l) = 1/|\\mathcal{T}_l|, independently across the L attributes. This holds by construction, since levels are drawn independently and uniformly at the profile level.\nPositivity (common support). Every attribute level, and every profile-level combination that the design admits, has strictly positive probability of assignment:\nP\\!\\left(T_{ijt} = t\\right) &gt; 0 \\quad \\text{for all admissible } t \\in \\mathcal{T}_1 \\times \\cdots \\times \\mathcal{T}_L.\nThe only combinations excluded by the design are pairs of profiles within a task that are identical or that differ on a single attribute (see Randomization). Because this restriction operates on the joint distribution of the two profiles in a task and never removes any individual level from any attribute’s support, positivity at the attribute level is preserved.\nUnder these four conditions the AMCE of moving attribute l from a reference level t_l^{0} to an alternative level t_l^{1} is nonparametrically identified as\n\\text{AMCE}_l = \\mathbb{E}\\!\\left[\\,Y_{ijt}\\!\\left(t_l^{1}, T_{ijt}^{(-l)}\\right) - Y_{ijt}\\!\\left(t_l^{0}, T_{ijt}^{(-l)}\\right)\\right],\nwhere T_{ijt}^{(-l)} denotes the remaining attributes and the expectation is taken over their design distribution. The estimand is thus the average change in allocated share associated with the level contrast, averaging over all other attributes as randomized.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#attributes-and-levels",
+    "href": "04-conjoint-desing.html#attributes-and-levels",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n9.1 Attributes and levels",
+    "text": "9.1 Attributes and levels\nThe table below lists each attribute, the label shown to respondents, its levels, and the reference category used in estimation. Reference categories are set to the theoretically less deserving or baseline level of each attribute, so that estimated AMCEs read as the change in allocated share associated with moving toward the more deserving level. These reference categories are fixed in advance and applied identically in the analysis code.\n\n\n\nAttribute\n\n\nCriterion\n\n\nProfile label\n\n\nLevels\n\n\nReference category\n\n\n\n\n\nNeed\n\n\nNeed (CARIN/NICER)\n\n\nMakes ends meet with (Su hogar llega a fin de mes con:)\n\n\nHardship (Dificultad)Comfort (Holgura)\n\n\nComfort (Holgura)\n\n\n\n\nEffort\n\n\nEffort (NICER)\n\n\nStudies (Estudia:)\n\n\nMore than their peers (Más que sus compañeros)The same as their peers (Igual que sus compañeros)Less than their peers (Menos que sus compañeros)\n\n\nLess than their peers (Menos que sus compañeros)\n\n\n\n\nControl\n\n\nControl (CARIN/NICER)\n\n\nNeeds the scholarship because (Requiere la beca porque:)\n\n\nApplied to other scholarships but received no funding (Postuló a otras becas pero no obtuvo financiamiento)Did not apply to other scholarships in time (No alcanzó a postular a tiempo a otras becas)\n\n\nDid not apply in time (No alcanzó a postular a tiempo)\n\n\n\n\nReciprocity\n\n\nReciprocity (CARIN/NICER)\n\n\nOutside their studies (Fuera de sus estudios:)\n\n\nHas done volunteer work (Ha hecho voluntariado)Has not done volunteer work (No ha hecho voluntariado)\n\n\nHas not done volunteer work (No ha hecho voluntariado)\n\n\n\n\nAttitude\n\n\nAttitude (CARIN)\n\n\nSees the scholarship as (Ve la beca como:)\n\n\nHelp they are grateful for (Una ayuda que agradece)Something they deserve (Algo que se merece)\n\n\nSomething they deserve (Algo que se merece)\n\n\n\n\nIdentity\n\n\nIdentity (CARIN/NICER)\n\n\nCountry of birth (País de nacimiento:)\n\n\nChileVenezuelaPeru (Perú)\n\n\nChile\n\n\n\n\nSex\n\n\nAscriptive (signaled by name)\n\n\nFirst name (no explicit row)\n\n\nFemale nameMale name\n\n\nMale\n\n\n\n\n\nNote: Levels are given in English, with the original Spanish wording shown to respondents in parentheses. The factorial space comprises 2 (Need) × 3 (Effort) × 2 (Control) × 2 (Reciprocity) × 2 (Attitude) × 3 (Identity) × 2 (Sex) = 288 unique profiles. Attributes are assigned independently and uniformly at the profile level. Sex is signaled through gendered first names drawn from matched pools rather than as an explicit table row.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#outcome",
+    "href": "04-conjoint-desing.html#outcome",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n9.2 Outcome",
+    "text": "9.2 Outcome\nThe outcome is the share of the scholarship fund allocated to each applicant. Respondents register their decision using a single continuous slider displayed beneath the profile table, initialized at an even split. The slider spans the full fund in Chilean pesos (CLP 0 to CLP 2,000,000), and as it moves, the percentage and peso amount for each applicant update in real time. The recorded value is the amount allocated to the right-hand applicant; the left-hand applicant’s amount is its complement, so the two always sum to the fixed total. For analysis this amount is converted to a share of the fund, bounded between 0 and 100, with the two shares within a task summing to 100 by construction. This fixed-sum structure is the defining feature of the distributive design: it makes the allocation genuinely zero-sum, so that any share granted to one applicant is withheld from the other. Modeling the outcome as a share rather than a raw amount respects this structure and follows the strategy recommended by Gilgen (2022) for distributional survey experiments.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#controls-and-moderators",
+    "href": "04-conjoint-desing.html#controls-and-moderators",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n9.3 Controls and moderators",
+    "text": "9.3 Controls and moderators\nBecause attributes are randomized at the profile level, no covariates are required to identify the AMCEs: respondent-level characteristics are not confounders and enter only to estimate heterogeneity in the effects, never as adjustments to the main estimand (Hainmueller et al., 2014). The confirmatory moderation hypotheses (H8–H10) rest on two sets of respondent-level measures. The first is meritocratic orientation, measured following Castillo et al. (2023), which distinguishes four components: meritocratic perception (the belief that effort and talent are in fact rewarded), meritocratic preference (the normative endorsement that they should be rewarded), perception of privilege (the recognition that non-meritocratic factors shape outcomes), and acceptance of privilege (the normative endorsement of privilege-based advantage). The two normative components serve as the confirmatory moderators, since they yield directional predictions; the two descriptive-perception components are reserved for the exploratory hypotheses (H11–H12). Following Leeper et al. (2020), subgroup and moderation analyses rely on marginal means rather than differences in conditional AMCEs, which depend on the reference category and can mislead when compared across subgroups; the formal treatment is given in the Analysis Plan.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#strategy",
+    "href": "04-conjoint-desing.html#strategy",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n10.1 Strategy",
+    "text": "10.1 Strategy\nThe experiment uses complete and independent randomization of attribute levels, the reference case in Hainmueller et al. (2014) and the default for most applied conjoint designs (Bansak et al., 2021). For each profile (j), every attribute is drawn independently of the others and of the competing profile, with uniform probability within its attribute (1/2 for the four two-level attributes, 1/3 for Effort and Identity). No attribute is conditioned on another and no level is reweighted, so the joint distribution of profiles is the product of the attribute marginals (Hainmueller et al., 2014). Randomization occurs at the profile level and is performed anew for each respondent and task, rather than as a fixed block assigned in advance.\nUnder this scheme the assignment of each attribute is by construction independent of the potential outcomes, which is the condition that identifies the AMCE (see Causal identification), and no attribute can confound another. Crucially, identification does not require that every possible profile, or every possible pair, appear in the data: the AMCE is a marginal quantity, defined as the average effect of moving one attribute from its reference level to another while averaging over the distribution of the rest (Hainmueller et al., 2014). It is therefore identified from the marginal variation in each attribute, not from joint coverage of the factorial space. With 288 possible profiles and thousands of profile evaluations, each level is observed many times across varying combinations of the others, which is all a marginal effect requires.\nThis is why a D-efficient design is not needed here. Such designs optimize the attribute covariance structure to minimize coefficient variance, and are valuable mainly when the factorial space is large relative to the sample, when specific interactions are the target, or when a forced-choice model is fit on few tasks—none of which binds in this design (Auspurg & Hinz, 2016; Gilgen, 2022). The space is small (288 profiles), the estimands are marginal main effects, and complete randomization already guarantees in expectation the orthogonality a D-efficient design engineers, delivering unbiased AMCEs with near-optimal efficiency for main effects at this size (Bansak et al., 2021), without the added complexity.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#restrictions",
+    "href": "04-conjoint-desing.html#restrictions",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n10.2 Restrictions",
+    "text": "10.2 Restrictions\nThe design imposes a single restriction, applied to the pair of profiles (j) within a task (t) rather than to individual attributes: the two profiles must differ on at least two attributes. When a pair is generated, the two profiles are drawn independently and retained only if they differ on two or more of the seven attributes, otherwise redrawn. This excludes identical pairs and pairs differing on exactly one attribute.\nThe purpose is cognitive, not statistical. A pair that is identical or nearly so presents two indistinguishable applicants, yielding a task that carries little information about trade-offs and that may read as degenerate. With seven attributes, the probability that an unconstrained draw produces such a near-identical pair is non-negligible across a respondent’s six tasks, so the restriction improves the informativeness and face validity of the tasks.\nThe restriction operates only on the joint distribution of the two profiles and leaves each attribute’s marginal distribution unchanged: every level still appears with its original uniform probability and remains independent of the other attributes within a profile. Because AMCE identification depends on marginal randomization and not on the joint distribution of pairs, the restriction leaves identification and interpretation intact; it removes no level from any attribute’s support and induces no within-profile correlation, ruling out only the least informative comparisons. Empirical attribute balance is verified as part of the quality checks (see Quality control).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#estimands",
+    "href": "04-conjoint-desing.html#estimands",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n11.1 Estimands",
+    "text": "11.1 Estimands\nThe primary estimand is the average marginal component effect (AMCE) of each attribute on the share of the fund allocated to a profile, in percentage points. For attribute l, moving from reference level t_l^0 to level t_l^1,\n\\text{AMCE}_l = \\mathbb{E}\\!\\left[Y_{ijt}\\!\\left(t_l^1, T_{ijt}^{(-l)}\\right) - Y_{ijt}\\!\\left(t_l^0, T_{ijt}^{(-l)}\\right)\\right],\nthe average change in allocated share associated with the level contrast, averaging over the design distribution of the remaining attributes (Hainmueller et al., 2014). Since the outcome is a share of a fixed fund rather than a choice probability, the AMCE reads directly as the percentage points of the scholarship a level shifts toward or away from a profile. Alongside AMCEs we report marginal means—the average share at each attribute level—which describe absolute support without a baseline category and are the basis for all subgroup comparisons (Leeper et al., 2020).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#models",
+    "href": "04-conjoint-desing.html#models",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n11.2 Models",
+    "text": "11.2 Models\nThe confirmatory estimator for the main effects (H1–H7) is a linear model of the allocated share on the seven attributes, with respondent fixed effects and standard errors clustered by respondent:\n\\text{share}_{ijt} = \\alpha_i + \\sum_{l=1}^{7} \\beta_l\\, T^{(l)}_{ijt} + \\varepsilon_{ijt},\nwhere \\alpha_i absorbs time-invariant respondent heterogeneity and clustering handles the non-independence of profiles evaluated by the same respondent (Gilgen, 2022; Hainmueller et al., 2014). Each attribute enters as dummies against its pre-registered reference category, so each \\beta_l is the corresponding AMCE. Modeling the share rather than the raw peso amount respects the fixed-sum structure of the allocation (Gilgen, 2022).\nThe confirmatory moderation hypotheses (H8–H10) target the conditional AMCE (Hainmueller et al., 2014), whose identification rests, as for the main effects, solely on attribute randomization within any respondent subgroup. Continuous moderators (meritocratic preference, acceptance of privilege) are standardized, so the interaction coefficient reads as the change in an attribute’s AMCE per one-standard-deviation increase in the moderator. Because moderators are constant within respondent and would be absorbed by respondent fixed effects, these models use a random intercept to admit the level-2 term:\n\\text{share}_{ijt} = \\gamma_{00} + \\sum_l \\beta_l\\, T^{(l)}_{ijt} + \\delta\\,(T^{(l)}_{ijt} \\times M_i) + \\theta\\, M_i + u_i + \\varepsilon_{ijt},\nwhere M_i is the standardized moderator and \\delta the coefficient of interest. The multilevel specification is a device for estimating a level-2 interaction, not a change of estimand: the target remains the conditional AMCE, identified by attribute randomization. Following Leeper et al. (2020), differences across subgroups are summarized with marginal means, never by comparing conditional AMCEs, which depend on the reference category. The exploratory hypotheses (H11–H12) use the same standardized specification with the two perception components.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#inference-criteria",
+    "href": "04-conjoint-desing.html#inference-criteria",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n11.3 Inference criteria",
+    "text": "11.3 Inference criteria\nHypotheses are evaluated two-sided at \\alpha = 0.05, with 95% confidence intervals for all AMCEs and marginal means. Across the confirmatory family (H1–H10) we control the family-wise error rate with the Holm–Bonferroni procedure, reporting both unadjusted and adjusted p-values. Directional hypotheses (H1–H5, H7) are assessed against their pre-registered sign; identity (H6) is non-directional. Subgroup and moderation results are reported as differences in marginal means rather than conditional AMCEs (Leeper et al., 2020). Exploratory analyses (H11–H12 and any socio-demographic contrasts) carry no confirmatory weight and are labeled as such.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#missing-data",
+    "href": "04-conjoint-desing.html#missing-data",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n11.4 Missing data",
+    "text": "11.4 Missing data\nThe slider carries a default even-split value and each task must be completed to advance, so item non-response on the outcome is not expected. Respondents failing the pre-registered quality checks (see Quality control) are excluded from the confirmatory analysis, with all results reported both including and excluding flagged respondents. Partial responses from respondents who abandon before completing all six tasks are retained for completed tasks, since the profile-level estimator does not require balanced task counts. No imputation is performed on the outcome.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#strategy-1",
+    "href": "04-conjoint-desing.html#strategy-1",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n12.1 Strategy",
+    "text": "12.1 Strategy\nPower is computed analytically with the closed-form expressions of Schuessler & Freitag (2020), implemented in the cjpowR package, which relate the minimum detectable AMCE to the number of profile evaluations without additional parametric assumptions. The central expression is\nN \\approx \\frac{K}{2} \\cdot \\frac{(z_{1-\\alpha/2} + z_{\\kappa})^2}{\\delta_1^2},\nwhere N is the total number of profile evaluations (N_{\\text{respondents}} \\times \\text{tasks} \\times 2), K the number of levels of the attribute of interest, and \\delta_1 the expected AMCE on the 0–1 scale; under the conservative assumption \\delta_0 = 0.5 the variance term reduces to (z_{1-\\alpha/2}+z_\\kappa)^2 = 7.84 at \\alpha = 0.05 and power 0.80. Two features of the design matter for interpreting these calculations. First, the dimensioning attributes are the three-level ones—Effort and Identity—since their effective sample size is 2/3 of the total profiles, requiring a larger N than the two-level attributes (Need, Control, Reciprocity, Attitude, Sex) for the same power. Second, the outcome is a continuous share (0–100), not the binary outcome the formula assumes; because the variance of a share concentrated roughly between 20 and 80 pp is well below the \\text{Bernoulli}(0.5) variance, the figures reported here are conservative and overstate the required N. The minimum effect of interest is set at 3 pp, the lower range of identity-type effects in the CARIN/NICER literature (Knotz et al., 2022).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#parameters",
+    "href": "04-conjoint-desing.html#parameters",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n12.2 Parameters",
+    "text": "12.2 Parameters\nFor the pilot, the minimum detectable effect at 80% power is \\delta_1 = \\sqrt{(K/2)\\,(7.84/N_{\\text{profiles}})}. The largest attribute effects are detectable with high confidence under any pilot scenario, while effects near 3 pp sit at the boundary of detectability. This is acceptable because the pilot’s purpose is to validate the instrument, calibrate the true variance of the slider outcome, and estimate the intra-respondent correlation across tasks to fine-tune the main-study N, rather than to test the confirmatory hypotheses.\n\n\n\nTable 12.1: Minimum detectable effect by pilot size (power = 0.80, α = 0.05)\n\n\n\n\nN respondents\nN profiles\nMDE, K=2 attribute\nMDE, K=3 attribute\n\n\n\n500\n6,000\n3.6 pp\n4.4 pp\n\n\n600\n7,200\n3.3 pp\n4 pp\n\n\n700\n8,400\n3.1 pp\n3.7 pp\n\n\n\n\n\n\n\n\nFor the main study, the minimum N is set by the most demanding attribute. For a three-level attribute (Effort, Identity) and a 3 pp AMCE, N_{\\text{profiles}} = (3/2)(7.84/0.03^2) \\approx 13{,}067, i.e. N \\approx 1{,}089 respondents at six tasks and two profiles per task. For a heterogeneity analysis with a binary moderator, the required N roughly doubles, giving N \\approx 2{,}200.\n\n\n\nTable 12.2: Minimum N for the main study (power = 0.80, α = 0.05, 6 tasks)\n\n\n\n\nTarget\nMinimum AMCE\nMost demanding attribute\nMinimum N\n\n\n\nMain effects, K=2\n3 pp\nBinary\n727\n\n\nMain effects, K=3\n3 pp\nEffort / Identity\n1,091\n\n\nHeterogeneity (binary moderator)\n3 pp\nK=3 + subgroup\n2,182\n\n\nMain effects, K=3, power = 0.90\n3 pp\nEffort / Identity\n1,460",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#reported-indicators",
+    "href": "04-conjoint-desing.html#reported-indicators",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n12.3 Reported indicators",
+    "text": "12.3 Reported indicators\nThe power curves below report, for each attribute type, the statistical power achieved across candidate sample sizes and effect sizes, with the pilot and main-study targets marked. Because the analytic formula assumes a binary outcome and independent tasks, we complement it with a design-based simulation (DeclareDesign) that reproduces the realized design—continuous share outcome, six tasks per respondent, the pair restriction of at least two differing attributes, and respondent-level clustering—and reports bias, RMSE, power, and confidence-interval coverage across N = 500; 750; 1{,}000; 1{,}500; 2{,}000. The simulation provides a more realistic assessment than the closed-form approximation under the actual outcome distribution.\n\n\n\n\nFigure 12.1: Statistical power curves by number of respondents\n\n\n\n\n\n\n\nRecommendation. N = 1{,}200 suffices for main effects with power \\geq 0.80 on all attributes; N = 1{,}500 adds margin and supports descriptive subgroup analysis; N = 2{,}000 is targeted when heterogeneity analyses are treated as confirmatory estimands. Given the conservative binary-outcome assumption, N = 1{,}500 is likely sufficient for the most relevant heterogeneity analyses of the design.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#attention-and-comprehension-checks",
+    "href": "04-conjoint-desing.html#attention-and-comprehension-checks",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n13.1 Attention and comprehension checks",
+    "text": "13.1 Attention and comprehension checks\nTwo screening items are included. A comprehension check, placed after the practice task and before the six allocation tasks, asks respondents what their task will consist of, with the correct option (“distributing a scholarship amount between two applicants”) shown alongside distractors describing plausible misreadings, most importantly choosing a single applicant, which corresponds to the forced-choice format the design does not use. An attention check of the standard instructional-manipulation type, embedded among the post-task attitudinal items, instructs respondents to select a specific option (“disagree”) regardless of content. Respondents failing either are flagged.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#time-filters",
+    "href": "04-conjoint-desing.html#time-filters",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n13.2 Time filters",
+    "text": "13.2 Time filters\nTotal completion time and time on the conjoint module are recorded. Respondents whose completion time falls implausibly below the median are flagged as likely satisficing. Because the plausible lower bound depends on the observed distribution, the exact threshold is fixed after the pilot rather than imposed in advance, and pre-registered before the main study.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "04-conjoint-desing.html#response-patterns",
+    "href": "04-conjoint-desing.html#response-patterns",
+    "title": "\n5  Statistical Design: Distributive Conjoint Pre-Plan\n",
+    "section": "\n13.3 Response patterns",
+    "text": "13.3 Response patterns\nTwo non-substantive patterns are monitored: invariant responding across the six tasks—most saliently leaving every slider at the default even split—and straight-lining across the attitudinal batteries used to construct the moderators. Because a fixed even split is also a substantively meaningful choice, these patterns are flagged for sensitivity analysis rather than used as automatic exclusions.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Statistical Design: Distributive Conjoint Pre-Plan</span>"
+    ]
+  },
+  {
+    "objectID": "05-survey-implementation.html",
+    "href": "05-survey-implementation.html",
+    "title": "6  Implementación del Instrumento",
+    "section": "",
+    "text": "7 Survey implementation\n## Survey Programming and Technical Integration ## Fieldwork ## Quality Control ## Fieldwork Performance Indicators",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Implementación del Instrumento</span>"
+    ]
+  },
+  {
+    "objectID": "06-database.html",
+    "href": "06-database.html",
+    "title": "7  Bases de Datos",
+    "section": "",
+    "text": "8 Data base",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Bases de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "06-database.html#data-files-and-file-structure",
+    "href": "06-database.html#data-files-and-file-structure",
+    "title": "7  Bases de Datos",
+    "section": "8.1 Data Files and File Structure",
+    "text": "8.1 Data Files and File Structure",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Bases de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "06-database.html#sec-bases",
+    "href": "06-database.html#sec-bases",
+    "title": "7  Bases de Datos",
+    "section": "8.2 Data Access and Terms of Use",
+    "text": "8.2 Data Access and Terms of Use",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Bases de Datos</span>"
+    ]
+  },
+  {
+    "objectID": "07-etichs.html",
+    "href": "07-etichs.html",
+    "title": "8  Ética",
+    "section": "",
+    "text": "9 Ethics",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ética</span>"
+    ]
+  },
+  {
+    "objectID": "07-etichs.html#ethics-committee-approval",
+    "href": "07-etichs.html#ethics-committee-approval",
+    "title": "8  Ética",
+    "section": "9.1 Ethics Committee Approval",
+    "text": "9.1 Ethics Committee Approval",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ética</span>"
+    ]
+  },
+  {
+    "objectID": "07-etichs.html#informed-consent-and-re-consent",
+    "href": "07-etichs.html#informed-consent-and-re-consent",
+    "title": "8  Ética",
+    "section": "9.2 Informed Consent and Re-consent",
+    "text": "9.2 Informed Consent and Re-consent\n## Data Protection and Retention",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Ética</span>"
+    ]
+  },
+  {
+    "objectID": "08-codebook.html",
+    "href": "08-codebook.html",
+    "title": "9  Libro de Códigos",
+    "section": "",
+    "text": "10 Codebook",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Libro de Códigos</span>"
+    ]
+  },
+  {
+    "objectID": "08-codebook.html#instructions",
+    "href": "08-codebook.html#instructions",
+    "title": "9  Libro de Códigos",
+    "section": "10.1 Instructions",
+    "text": "10.1 Instructions",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Libro de Códigos</span>"
+    ]
+  },
+  {
+    "objectID": "09-appendix.html",
+    "href": "09-appendix.html",
+    "title": "10  Cuestionarios",
+    "section": "",
+    "text": "11 Appendix",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Cuestionarios</span>"
+    ]
+  },
+  {
+    "objectID": "09-appendix.html#questionnaries",
+    "href": "09-appendix.html#questionnaries",
+    "title": "10  Cuestionarios",
+    "section": "11.1 Questionnaries",
+    "text": "11.1 Questionnaries",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Cuestionarios</span>"
+    ]
+  }
+]

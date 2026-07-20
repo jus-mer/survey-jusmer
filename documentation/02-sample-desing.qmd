@@ -1,12 +1,14 @@
 ---
-title: "Diseño estadístico"
 format: html
 ---
 
-# Diseño estadístico {#dis-muest}
+# Statistical design {#dis-estadis}
 
-## Diseño muestral
-
-## Diseño y estimación ponderadores
-
-## Medidas de precisión
+## Target Population and Survey Population
+## Sampling Frame
+## Units of Analysis and Domains
+## Sampling Strategy and Sample Selection
+## Quotas and Sample Size
+## Longitudinal Design
+## Weighting and Calibration
+## Precision, Uncertainty, and Non-sampling Errors

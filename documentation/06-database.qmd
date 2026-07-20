@@ -1,0 +1,10 @@
+---
+title: "Bases de Datos"
+format: html
+---
+
+# Data base {#databases}
+
+## Data Files and File Structure
+
+## Data Access and Terms of Use {#sec-bases}

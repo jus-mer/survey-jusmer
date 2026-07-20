@@ -49,3 +49,5 @@ The repository follows the logic of the [IPO protocol](https://github.com/juanca
 
 - [Pre-pilot survey](https://jus-mer-pre-piloto-v1.hf.space/)
 - [Statistical Design Conjoint](https://jus-mer.github.io/survey-jusmer/surveys/conjoint-test/design/conjoint-preplan.html)
+- [Methodological Manual](https://jus-mer.github.io/survey-jusmer/documentation/docs/index.html)
+

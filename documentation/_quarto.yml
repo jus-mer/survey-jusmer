@@ -1,0 +1,51 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "JUSMER Survey Methodological Manual"
+  reader-mode: true
+  page-footer:
+    left: |
+      Project "Market Justice and the Deservingness of Social Welfare"
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+  page-navigation: true
+  #cover-image: images/logo-sogedi.png
+  #favicon: images/logo-sogedi.png
+  repo-url: https://jus-mer.com/
+  repo-branch: main
+  chapters:
+    - index.qmd
+    - 01-antecedents.qmd
+    - 02-sample-desing.qmd
+    - 03-instrument-desing.qmd
+    - 04-conjoint-desing.qmd
+    - 05-survey-implementation.qmd
+    - 06-database.qmd
+    - 07-etichs.qmd
+    - 08-codebook.qmd
+    - 09-appendix.qmd
+    
+  search:
+    location: sidebar
+    type: textbox
+  sidebar:
+    search: true
+    style: docked
+    pinned: false
+
+
+format:
+  html:
+    theme:
+      - cosmo
+      - sogedi.scss
+    code-link: true
+
+editor: visual
+lang: en
+
+bibliography: "../input/bib/jusmer.bib"
+csl: "../input/bib/apa6.csl"
+

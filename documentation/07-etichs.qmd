@@ -1,0 +1,12 @@
+---
+title: "Ética"
+format: html
+---
+
+# Ethics {#etica}
+
+## Ethics Committee Approval
+
+## Informed Consent and Re-consent
+
+## Data Protection and Retention

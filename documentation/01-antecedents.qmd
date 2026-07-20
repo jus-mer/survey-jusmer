@@ -1,13 +1,62 @@
----
-title: "Antecedentes"
-format: html
-toc: false
----
+# Background {#sec-background}
 
-# Antecedentes 
+The provision of welfare and the collective management of social risk are defining functions of
+modern states, yet the arrangements through which societies discharge them vary widely, from
+tax-financed universal provision to systems where access is mediated by ability to pay
+[@esping-andersen_three_1990; @mau_inequality_2015]. Chile is an emblematic case of the latter. Its pension system is
+privately administered, 84% of higher education is privately managed, and social expenditure
+reaches 14.5% of GDP, placing the country 30th among 34 OECD members. This configuration has
+become a persistent source of contention — the 2019 social uprising, the constitutional
+processes, the crisis of private health insurers, the pension fund withdrawals, the debate over
+student debt forgiveness. Despite an extensive literature on the consequences of privatisation in
+Chile, no study has systematically examined how the population evaluates the application of
+market criteria to social policy, what shapes those evaluations, and how they have changed.
 
+Within the framework of the JUSMER project, we address this gap through the concept of **market
+justice**: the endorsement of the principle that individual or family ability to pay should grant
+greater and better access to social provisions such as health care, pensions, and education
+[@lane_market_1986; @lindh_public_2015]. Our central argument is that such preferences are anchored in
+**deservingness** criteria, that is, in beliefs about which individual characteristics justify
+obtaining a given good or service [@oorschot_who_2000; @knotz_recast_2022]. Within the CARIN framework
+[@meuleman_welfare_2020], we expect the control criterion — in its meritocratic variant, where need is
+read as the outcome of individual effort and responsibility — to take precedence over attitude,
+reciprocity, identity, and need. The project advances three contributions: conceptual, by
+approaching welfare attitudes through market justice rather than redistribution alone;
+methodological, by examining it from public opinion data across two decades and in cross-national
+comparison; and theoretical, by treating privatisation as a normative and institutional project
+whose cultural imprint can be traced through policy-feedback effects [@fourcade_moral_2007].
 
-## Referencias {.unnumbered}
+The general research objective is to analyse preferences for market justice in Chile in
+international comparison, their change over the past two decades, and their association with
+criteria of welfare deservingness. Our principal hypothesis is that the institutional design of
+extensive commodification in Chile has produced strong adherence to meritocratic deservingness
+criteria, which in turn translates into higher support for market justice than in less
+commodified contexts. This objective is broken down as follows:
 
-::: {#refs}
-:::
+- **SO1 (Deservingness).** Analyse the association between deservingness criteria and preferences
+  for market justice.
+- **SO2 (Socioeconomic status).** Establish the extent to which socioeconomic status is linked to
+  preferences for market justice.
+- **SO3 (Socio-structural position).** Examine the link between socio-structural variables, such
+  as age and gender, and preferences for market justice.
+- **SO4 (Perceptions and beliefs).** Investigate the association between perceptions and beliefs
+  about inequality and preferences for market justice.
+- **SO5 (Individual-level moderation).** Analyse the moderating role of status, subjective, and
+  socio-structural variables in the deservingness–market justice association.
+- **SO6 (Country-level factors).** Examine the association between contextual inequality
+  variables and preferences for market justice.
+- **SO7 (Country-level moderation).** Explore the moderating role of country-level variables in
+  the deservingness–market justice association.
+
+The project pursues these objectives across five studies, moving from secondary to primary data.
+Study 1 examines market justice in international comparison using the ISSP inequality module, and
+Study 2 traces its change in Chile between 1999 and 2019. Study 3 addresses deservingness criteria
+through the survey documented in this manual, which extends the measurement of market justice to
+pensions, childcare, and distinct educational levels, and operationalises deservingness through
+the CARIN deservingness principles scale [@meuleman_welfare_2020], a measurement proposal derived from the
+NICER framework [@knotz_recast_2022], the neoliberalism scale [@grzanka_measuring_2020], and the meritocratic
+preferences scale [@castillo_multidimensional_2023]. Study 4 analyses a distributional survey experiment embedded in
+the same instrument [@gilgen_disentangling_2022; @auspurg_factorial_2016], and Study 5 applies computational text analysis
+to the parliamentary debate on the additional 6% pension contribution. All hypotheses are
+preregistered in the Open Science Framework.
+

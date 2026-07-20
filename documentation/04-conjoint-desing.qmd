@@ -1,8 +1,38 @@
 ---
-title: “Experimental Design for a Conjoint Allocator Survey”
-format: html
+title: "Statistical Design: Distributive Conjoint Pre-Plan"
+date: today
+date-format: "DD MMMM, YYYY"
+format:
+  html:
+    code-fold: true
+    html-math-method: katex
+    number-sections: true
+    title-block-banner: true
+    include-in-header:
+      text: |
+        <style>
+        .justify { text-align: justify; }
+        </style>
+editor: source
+author:
+  - name: Andreas Laffert
+    corresponding: true
+    orcid: 0000-0002-9008-2454
+    email: alaffertt@estudiante.uc.cl 
+    affiliations:
+      - ref: 1
+affiliations: 
+  - id: 1
+    name: Department of Sociology, University of Chile
+citeproc: true
+link-citations: true
+linestretch: 1.5       
+mainfont: Times New Roman
+fontsize: 13pt          
+colorlinks: true
+fig-height: 4
+fig-width: 7.5
 ---
-
 
 
 ```{r setup, include=FALSE, message=FALSE}
@@ -28,10 +58,9 @@ table_format = if (knitr::is_html_output()) {
 
 ```{r}
 #| echo: false
-#| cache.extra: tools::md5sum(here::here("processing/cjpow.R"))
-library(here)
+#| cache.extra: tools::md5sum("../processing/cjpow.R")
 
-source(file = here("processing/cjpow.R"))
+source(file = "../processing/cjpow.R")
 
 ```
 
@@ -77,15 +106,16 @@ $H_9$ (Control × meritocratic preference): The positive effect of uncontrollabl
 
 $H_{10}$ (Need × acceptance of privilege): The positive effect of economic need ($H_1$) will be weaker among respondents with higher acceptance of privilege.
 
-$H_{11}$ (Ideology): Ideological self-placement will moderate the weight assigned to competing criteria. Right-leaning respondents will assign greater relative weight to effort and control and less to need, whereas left-leaning respondents will assign greater relative weight to need and to compensatory identity criteria and less to effort and control.
-
 ### Exploratory moderation
 
 The two descriptive-perception components of @castillo_multidimensional_2023, meritocratic perception (the belief that effort and talent *are* in fact rewarded) and perception of privilege (the recognition that non-meritocratic factors shape outcomes), are descriptive rather than normative beliefs, so their moderating direction is not theoretically determined. We therefore formalize the following as exploratory hypotheses, tested but not used for confirmatory inference.
 
-$H_{12}$ (Effort × meritocratic perception, exploratory): The positive effect of effort ($H_2$) may be stronger among respondents with higher meritocratic perception.
+$H_{11}$ (Effort × meritocratic perception, exploratory): The positive effect of effort ($H_2$) may be stronger among respondents with higher meritocratic perception.
 
-$H_{13}$ (Need × perception of privilege, exploratory): The positive effect of need ($H_1$) may be stronger among respondents with higher perception of privilege.
+$H_{12}$ (Need × perception of privilege, exploratory): The positive effect of need ($H_1$) may be stronger among respondents with higher perception of privilege.
+
+
+[POR DEFINIR]
 
 # Experimental design
 
@@ -224,7 +254,7 @@ The outcome is the share of the scholarship fund allocated to each applicant. Re
 
 ## Controls and moderators
 
-Because attributes are randomized at the profile level, no covariates are required to identify the AMCEs: respondent-level characteristics are not confounders and enter only to estimate heterogeneity in the effects, never as adjustments to the main estimand [@hainmueller_causal_2014]. The confirmatory moderation hypotheses (H8–H11) rest on two sets of respondent-level measures. The first is meritocratic orientation, measured following @castillo_multidimensional_2023, which distinguishes four components: meritocratic perception (the belief that effort and talent are in fact rewarded), meritocratic preference (the normative endorsement that they should be rewarded), perception of privilege (the recognition that non-meritocratic factors shape outcomes), and acceptance of privilege (the normative endorsement of privilege-based advantage). The two normative components serve as the confirmatory moderators, since they yield directional predictions; the two descriptive-perception components are reserved for the exploratory hypotheses (H12–H13). The second measure is ideological self-placement on a standard left–right scale (H11). Following @leeper_measuring_2020, subgroup and moderation analyses rely on marginal means rather than differences in conditional AMCEs, which depend on the reference category and can mislead when compared across subgroups; the formal treatment is given in the Analysis Plan.
+Because attributes are randomized at the profile level, no covariates are required to identify the AMCEs: respondent-level characteristics are not confounders and enter only to estimate heterogeneity in the effects, never as adjustments to the main estimand [@hainmueller_causal_2014]. The confirmatory moderation hypotheses (H8–H10) rest on two sets of respondent-level measures. The first is meritocratic orientation, measured following @castillo_multidimensional_2023, which distinguishes four components: meritocratic perception (the belief that effort and talent are in fact rewarded), meritocratic preference (the normative endorsement that they should be rewarded), perception of privilege (the recognition that non-meritocratic factors shape outcomes), and acceptance of privilege (the normative endorsement of privilege-based advantage). The two normative components serve as the confirmatory moderators, since they yield directional predictions; the two descriptive-perception components are reserved for the exploratory hypotheses (H11–H12). Following @leeper_measuring_2020, subgroup and moderation analyses rely on marginal means rather than differences in conditional AMCEs, which depend on the reference category and can mislead when compared across subgroups; the formal treatment is given in the Analysis Plan.
 
 # Randomization
 
@@ -262,15 +292,15 @@ $$\text{share}_{ijt} = \alpha_i + \sum_{l=1}^{7} \beta_l\, T^{(l)}_{ijt} + \vare
 
 where $\alpha_i$ absorbs time-invariant respondent heterogeneity and clustering handles the non-independence of profiles evaluated by the same respondent [@hainmueller_causal_2014; @gilgen_disentangling_2022]. Each attribute enters as dummies against its pre-registered reference category, so each $\beta_l$ is the corresponding AMCE. Modeling the share rather than the raw peso amount respects the fixed-sum structure of the allocation [@gilgen_disentangling_2022].
 
-The confirmatory moderation hypotheses (H8–H11) target the conditional AMCE [@hainmueller_causal_2014], whose identification rests, as for the main effects, solely on attribute randomization within any respondent subgroup. Continuous moderators (meritocratic preference, acceptance of privilege) are standardized, so the interaction coefficient reads as the change in an attribute's AMCE per one-standard-deviation increase in the moderator. Because moderators are constant within respondent and would be absorbed by respondent fixed effects, these models use a random intercept to admit the level-2 term:
+The confirmatory moderation hypotheses (H8–H10) target the conditional AMCE [@hainmueller_causal_2014], whose identification rests, as for the main effects, solely on attribute randomization within any respondent subgroup. Continuous moderators (meritocratic preference, acceptance of privilege) are standardized, so the interaction coefficient reads as the change in an attribute's AMCE per one-standard-deviation increase in the moderator. Because moderators are constant within respondent and would be absorbed by respondent fixed effects, these models use a random intercept to admit the level-2 term:
 
 $$\text{share}_{ijt} = \gamma_{00} + \sum_l \beta_l\, T^{(l)}_{ijt} + \delta\,(T^{(l)}_{ijt} \times M_i) + \theta\, M_i + u_i + \varepsilon_{ijt},$$
 
-where $M_i$ is the standardized moderator and $\delta$ the coefficient of interest. The multilevel specification is a device for estimating a level-2 interaction, not a change of estimand: the target remains the conditional AMCE, identified by attribute randomization. Ideology (H11) is estimated equivalently by subgroup. Following @leeper_measuring_2020, differences across subgroups are summarized with marginal means, never by comparing conditional AMCEs, which depend on the reference category. The exploratory hypotheses (H12–H13) use the same standardized specification with the two perception components.
+where $M_i$ is the standardized moderator and $\delta$ the coefficient of interest. The multilevel specification is a device for estimating a level-2 interaction, not a change of estimand: the target remains the conditional AMCE, identified by attribute randomization. Following @leeper_measuring_2020, differences across subgroups are summarized with marginal means, never by comparing conditional AMCEs, which depend on the reference category. The exploratory hypotheses (H11–H12) use the same standardized specification with the two perception components.
 
 ## Inference criteria
 
-Hypotheses are evaluated two-sided at $\alpha = 0.05$, with 95% confidence intervals for all AMCEs and marginal means. Across the confirmatory family (H1–H11) we control the false discovery rate with the Benjamini–Hochberg procedure, reporting both unadjusted and adjusted $p$-values. Directional hypotheses (H1–H5, H7) are assessed against their pre-registered sign; identity (H6) is non-directional. Subgroup and moderation results are reported as differences in marginal means rather than conditional AMCEs [@leeper_measuring_2020]. Exploratory analyses (H12–H13 and any socio-demographic contrasts) carry no confirmatory weight and are labeled as such.
+Hypotheses are evaluated two-sided at $\alpha = 0.05$, with 95% confidence intervals for all AMCEs and marginal means. Across the confirmatory family (H1–H10) we control the family-wise error rate with the Holm–Bonferroni procedure, reporting both unadjusted and adjusted $p$-values. Directional hypotheses (H1–H5, H7) are assessed against their pre-registered sign; identity (H6) is non-directional. Subgroup and moderation results are reported as differences in marginal means rather than conditional AMCEs [@leeper_measuring_2020]. Exploratory analyses (H11–H12 and any socio-demographic contrasts) carry no confirmatory weight and are labeled as such.
 
 ## Missing data
 
