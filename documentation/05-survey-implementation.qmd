@@ -1,5 +1,4 @@
 ---
-title: "Implementación del Instrumento"
 format: html
 ---
 
@@ -7,6 +6,9 @@ format: html
 
 
 ## Survey Programming and Technical Integration
+
 ## Fieldwork
+
 ## Quality Control
+
 ## Fieldwork Performance Indicators

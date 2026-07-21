@@ -4,8 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.27">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="Andreas Laffert">
-<title>5&nbsp; Statistical Design: Distributive Conjoint Pre-Plan – JUSMER Survey Methodological Manual</title>
+<title>4&nbsp; Statistical Design: Distributive Conjoint Pre-Plan – JUSMER Survey Methodological Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,7 +58,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4d63357cbdec99cfac3c7f9e0dabf497.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-03e2b95e75bd56a803f8525e7dcc3928.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -85,24 +84,7 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<style>
-.justify { text-align: justify; }
-</style>
-<script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-<script type="text/javascript">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -127,59 +109,23 @@ const typesetMath = (el) => {
 window.Quarto = {
   typesetMath
 };
-</script>
+</script><link rel="stylesheet" href="justify.css">
 </head>
 <body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-conjoint-desing.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Design: Distributive Conjoint Pre-Plan</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-conjoint-desing.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistical Design: Distributive Conjoint Pre-Plan</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Design: Distributive Conjoint Pre-Plan</span>
-</h1>
-                      </div>
-  </div>
-    
-  <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
-    
-      <div class="quarto-title-meta-contents">
-      <p class="author">Andreas Laffert <a href="mailto:alaffertt@estudiante.uc.cl" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-9008-2454" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-    </div>
-    <div class="quarto-title-meta-contents">
-          <p class="affiliation">
-              Department of Sociology, University of Chile
-            </p>
-        </div>
-    </div>
-
-  <div class="quarto-title-meta">
-
-        
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">20 July, 2026</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
@@ -204,144 +150,232 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Presentación</span></span></a>
+ <span class="menu-text">Presentation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-antecedents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-sample-desing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical design</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical design</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-instrument-desing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diseño del instrumento</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instrument design</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-conjoint-desing.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical Design: Distributive Conjoint Pre-Plan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistical Design: Distributive Conjoint Pre-Plan</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-survey-implementation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Implementación del Instrumento</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survey implementation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-database.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Bases de Datos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data base</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-etichs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Ética</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Ethics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-codebook.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Libro de Códigos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Codebook</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Cuestionarios</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
   </div>
 </li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
+  <li>
+<a href="#study-information" id="toc-study-information" class="nav-link" data-scroll-target="#study-information"><span class="header-section-number">4.2</span> Study Information</a>
+  <ul class="collapse">
+<li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question"><span class="header-section-number">4.2.1</span> Research question</a></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">4.2.2</span> Hypotheses</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#experimental-design" id="toc-experimental-design" class="nav-link" data-scroll-target="#experimental-design"><span class="header-section-number">4.3</span> Experimental design</a>
+  <ul class="collapse">
+<li><a href="#design-type" id="toc-design-type" class="nav-link" data-scroll-target="#design-type"><span class="header-section-number">4.3.1</span> Design type</a></li>
+  <li><a href="#scenario" id="toc-scenario" class="nav-link" data-scroll-target="#scenario"><span class="header-section-number">4.3.2</span> Scenario</a></li>
+  <li><a href="#task-structure" id="toc-task-structure" class="nav-link" data-scroll-target="#task-structure"><span class="header-section-number">4.3.3</span> Task structure</a></li>
+  <li><a href="#profiles-and-attributes" id="toc-profiles-and-attributes" class="nav-link" data-scroll-target="#profiles-and-attributes"><span class="header-section-number">4.3.4</span> Profiles and attributes</a></li>
+  <li><a href="#causal-identification-and-assumptions" id="toc-causal-identification-and-assumptions" class="nav-link" data-scroll-target="#causal-identification-and-assumptions"><span class="header-section-number">4.3.5</span> Causal identification and assumptions</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">4.4</span> Variables</a>
+  <ul class="collapse">
+<li><a href="#attributes-and-levels" id="toc-attributes-and-levels" class="nav-link" data-scroll-target="#attributes-and-levels"><span class="header-section-number">4.4.1</span> Attributes and levels</a></li>
+  <li><a href="#outcome" id="toc-outcome" class="nav-link" data-scroll-target="#outcome"><span class="header-section-number">4.4.2</span> Outcome</a></li>
+  <li><a href="#controls-and-moderators" id="toc-controls-and-moderators" class="nav-link" data-scroll-target="#controls-and-moderators"><span class="header-section-number">4.4.3</span> Controls and moderators</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#randomization" id="toc-randomization" class="nav-link" data-scroll-target="#randomization"><span class="header-section-number">4.5</span> Randomization</a>
+  <ul class="collapse">
+<li><a href="#strategy" id="toc-strategy" class="nav-link" data-scroll-target="#strategy"><span class="header-section-number">4.5.1</span> Strategy</a></li>
+  <li><a href="#restrictions" id="toc-restrictions" class="nav-link" data-scroll-target="#restrictions"><span class="header-section-number">4.5.2</span> Restrictions</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#analysis-plan" id="toc-analysis-plan" class="nav-link" data-scroll-target="#analysis-plan"><span class="header-section-number">4.6</span> Analysis Plan</a>
+  <ul class="collapse">
+<li><a href="#estimands" id="toc-estimands" class="nav-link" data-scroll-target="#estimands"><span class="header-section-number">4.6.1</span> Estimands</a></li>
+  <li><a href="#models" id="toc-models" class="nav-link" data-scroll-target="#models"><span class="header-section-number">4.6.2</span> Models</a></li>
+  <li><a href="#inference-criteria" id="toc-inference-criteria" class="nav-link" data-scroll-target="#inference-criteria"><span class="header-section-number">4.6.3</span> Inference criteria</a></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">4.6.4</span> Missing data</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis"><span class="header-section-number">4.7</span> Power analysis</a>
+  <ul class="collapse">
+<li><a href="#strategy-1" id="toc-strategy-1" class="nav-link" data-scroll-target="#strategy-1"><span class="header-section-number">4.7.1</span> Strategy</a></li>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="header-section-number">4.7.2</span> Parameters</a></li>
+  <li><a href="#reported-indicators" id="toc-reported-indicators" class="nav-link" data-scroll-target="#reported-indicators"><span class="header-section-number">4.7.3</span> Reported indicators</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#quality-control" id="toc-quality-control" class="nav-link" data-scroll-target="#quality-control"><span class="header-section-number">4.8</span> Quality control</a>
+  <ul class="collapse">
+<li><a href="#attention-and-comprehension-checks" id="toc-attention-and-comprehension-checks" class="nav-link" data-scroll-target="#attention-and-comprehension-checks"><span class="header-section-number">4.8.1</span> Attention and comprehension checks</a></li>
+  <li><a href="#time-filters" id="toc-time-filters" class="nav-link" data-scroll-target="#time-filters"><span class="header-section-number">4.8.2</span> Time filters</a></li>
+  <li><a href="#response-patterns" id="toc-response-patterns" class="nav-link" data-scroll-target="#response-patterns"><span class="header-section-number">4.8.3</span> Response patterns</a></li>
+  </ul>
+</li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.9</span> References</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><div class="justify">
-<section id="introduction" class="level1" data-number="6"><h1 data-number="6">
-<span class="header-section-number">6</span> Introduction</h1>
-<p>Entitlement to welfare provision is rarely unconditional. Even in solidaristic systems, access to social goods rests on normative judgments about who deserves collective support and on what grounds, what the literature terms conditional solidarity and, at the individual level, deservingness <span class="citation" data-cites="oorschot_who_2000 meuleman_welfare_2020">(<a href="04-conjoint-desing.html#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>; <a href="04-conjoint-desing.html#ref-oorschot_who_2000" role="doc-biblioref">Oorschot, 2000</a>)</span>. A growing experimental literature has mapped how citizens weigh deservingness criteria such as need, control, reciprocity, attitude, and identity <span class="citation" data-cites="knotz_recast_2022 dietrich_prioritizing_2026 gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-dietrich_prioritizing_2026" role="doc-biblioref">Dietrich et al., 2026</a>; <a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>; <a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>. Yet most of this work asks respondents to evaluate claimants in isolation or to choose between them in binary forced-choice tasks, without confronting the distributive trade-offs that scarce resources impose. When allocating more to one claimant necessarily means allocating less to another, the relative weight citizens place on competing criteria may diverge sharply from what attitudinal or forced-choice measures capture. This study addresses that gap by embedding the deservingness framework in a distributive allocation task under genuine scarcity.</p>
-<p>We administer a pre-registered paired-profile distributive conjoint experiment to a Chilean sample, adapting Gilgen’s <span class="citation" data-cites="gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span> Distributional Survey Experiment. Respondents act as members of a university committee dividing a fixed first-year scholarship fund between two applicants via a continuous slider, so that giving more to one means giving less to the other. Applicant profiles are built on the recast NICER scheme <span class="citation" data-cites="knotz_recast_2022">(<a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>, which integrates and refines van Oorschot’s CARIN criteria, and vary need, control, effort, reciprocity, attitude, identity, and sex. Chile offers a demanding test case: its higher education system combines some of the highest private expenditure shares in the OECD with acute stratification by origin, and its population holds unusually strong meritocratic beliefs relative to its level of inequality <span class="citation" data-cites="castillo_multidimensional_2023">(<a href="04-conjoint-desing.html#ref-castillo_multidimensional_2023" role="doc-biblioref">Castillo et al., 2023</a>)</span>. If need dominates allocations even here, its primacy as a distributive principle appears robust; if effort and control prevail, this reveals how commodification and meritocratic ideology jointly reshape distributive judgments.</p>
-</section><section id="study-information" class="level1" data-number="7"><h1 data-number="7">
-<span class="header-section-number">7</span> Study Information</h1>
-<section id="research-question" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="research-question">
-<span class="header-section-number">7.1</span> Research question</h2>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistical Design: Distributive Conjoint Pre-Plan</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="introduction" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">4.1</span> Introduction</h2>
+<p>Entitlement to welfare provision is rarely unconditional. Even in solidaristic systems, access to social goods rests on normative judgments about who deserves collective support and on what grounds, what welfare state research terms conditional solidarity and, at the individual level, deservingness <span class="citation" data-cites="oorschot_who_2000 meuleman_welfare_2020">(<a href="04-conjoint-desing.html#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>; <a href="04-conjoint-desing.html#ref-oorschot_who_2000" role="doc-biblioref">Oorschot, 2000</a>)</span>. A growing experimental literature has established how citizens weigh criteria such as need, control, reciprocity, effort, attitude and identity, overwhelmingly in the domain of unemployment benefits and social assistance: respondents rate how deserving a fictional claimant is, or state what share of a benefit that claimant should receive, one claimant at a time <span class="citation" data-cites="knotz_recast_2022 meuleman_welfare_2020">(<a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>; <a href="04-conjoint-desing.html#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span>, or decide which of two claimants to prioritize for a service <span class="citation" data-cites="dietrich_prioritizing_2026">(<a href="04-conjoint-desing.html#ref-dietrich_prioritizing_2026" role="doc-biblioref">Dietrich et al., 2026</a>)</span>. Both formats evaluate claimants against a standard rather than against each other, which allows respondents to endorse each criterion independently without ever resolving the conflicts between them. Yet justice principles routinely point in opposite directions—a claimant may be needy but exert little effort, another may have contributed much but need little—so that honoring need and merit at once is a dilemma rather than a sum <span class="citation" data-cites="gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>)</span>. Only when a finite resource must be divided is a respondent forced to adopt a weighting among the competing principles, and it is that weighting, rather than the separate endorsement of each criterion, that constitutes a distributive preference. A division task also makes observable a principle the standard formats cannot register at all: equality, since an equal split is expressible only where respondents control how much each claimant receives.</p>
+<p>We therefore administer a pre-registered paired-profile distributive conjoint experiment to a Chilean sample, adapting Gilgen’s <span class="citation" data-cites="gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span> Distributional Survey Experiment to the tabular profile presentation and the complete, independent randomization of a conjoint design. Respondents act as members of a university committee dividing a fixed first-year scholarship fund between two applicants via a continuous slider, so that giving more to one means giving less to the other. Applicant profiles are built on the recast NICER scheme <span class="citation" data-cites="knotz_recast_2022">(<a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>, which integrates and refines van Oorschot’s CARIN criteria, and vary need, control, effort, reciprocity, attitude, identity, and sex. The setting further moves deservingness research into a domain where it has rarely been tested experimentally: access to higher education rather than unemployment or social assistance. Chile is a demanding case. Its higher education system combines some of the highest shares of private household expenditure in the OECD with acute stratification by socioeconomic origin <span class="citation" data-cites="valenzuela_socioeconomic_2013">(<a href="04-conjoint-desing.html#ref-valenzuela_socioeconomic_2013" role="doc-biblioref">Valenzuela et al., 2013</a>)</span>, and its population holds unusually strong meritocratic beliefs relative to its level of inequality <span class="citation" data-cites="castillo_meritocracia_2019">(<a href="04-conjoint-desing.html#ref-castillo_meritocracia_2019" role="doc-biblioref">Castillo et al., 2019</a>)</span>. If need dominates allocations even here, its primacy as a distributive principle appears robust; if effort and control prevail, this reveals how commodification and meritocratic ideology jointly reshape distributive judgments.</p>
+</section><section id="study-information" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="study-information">
+<span class="header-section-number">4.2</span> Study Information</h2>
+<section id="research-question" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="research-question">
+<span class="header-section-number">4.2.1</span> Research question</h3>
 <p><strong>To what extent do deservingness criteria—need, control, effort, reciprocity, attitude, and identity—shape how citizens allocate scarce higher education scholarships between competing applicants in Chile?</strong></p>
-</section><section id="hypotheses" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="hypotheses">
-<span class="header-section-number">7.2</span> Hypotheses</h2>
-<section id="main-effects" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="main-effects">
-<span class="header-section-number">7.2.1</span> Main effects</h3>
-<p><span class="math inline">H_1</span> (Need): Applicants from households that struggle to make ends meet (<em>Dificultad</em>) will receive a larger share than applicants from financially comfortable households (<em>Holgura</em>).</p>
-<p><span class="math inline">H_2</span> (Effort): Applicants who study more than their peers will receive a larger share than those who study the same as or less than their peers.</p>
-<p><span class="math inline">H_3</span> (Control): Applicants whose need for the scholarship is outside their control (having applied to other scholarships without securing funding) will receive a larger share than applicants whose need reflects a controllable failure (not having applied on time).</p>
-<p><span class="math inline">H_4</span> (Reciprocity): Applicants who have contributed to their community through volunteering will receive a larger share than those who have not.</p>
-<p><span class="math inline">H_5</span> (Attitude): Applicants who frame the scholarship as help they are grateful for will receive a larger share than those who frame it as something they deserve.</p>
-<p><span class="math inline">H_6</span> (Identity): Country of birth will affect allocation. Relative to Chilean-born applicants, foreign-born applicants (Venezuela, Perú) may receive a smaller share. The direction is pre-registered as theoretically open.</p>
-<p><span class="math inline">H_7</span> (Sex): Female applicants, signaled through gendered names, will receive a larger share of the scholarship than male applicants.</p>
-</section><section id="conditional-effects-moderation" class="level3" data-number="7.2.2"><h3 data-number="7.2.2" class="anchored" data-anchor-id="conditional-effects-moderation">
-<span class="header-section-number">7.2.2</span> Conditional effects (moderation)</h3>
+</section><section id="hypotheses" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="hypotheses">
+<span class="header-section-number">4.2.2</span> Hypotheses</h3>
+<section id="main-effects" class="level4" data-number="4.2.2.1"><h4 data-number="4.2.2.1" class="anchored" data-anchor-id="main-effects">
+<span class="header-section-number">4.2.2.1</span> Main effects</h4>
+<p><span class="math inline">\(H_1\)</span> (Need): Applicants from households that struggle to make ends meet (<em>Dificultad</em>) will receive a larger share than applicants from financially comfortable households (<em>Holgura</em>).</p>
+<p><span class="math inline">\(H_2\)</span> (Effort): Applicants who study more than their peers will receive a larger share than those who study the same as or less than their peers.</p>
+<p><span class="math inline">\(H_3\)</span> (Control): Applicants whose need for the scholarship is outside their control (having applied to other scholarships without securing funding) will receive a larger share than applicants whose need reflects a controllable failure (not having applied on time).</p>
+<p><span class="math inline">\(H_4\)</span> (Reciprocity): Applicants who have contributed to their community through volunteering will receive a larger share than those who have not.</p>
+<p><span class="math inline">\(H_5\)</span> (Attitude): Applicants who frame the scholarship as help they are grateful for will receive a larger share than those who frame it as something they deserve.</p>
+<p><span class="math inline">\(H_6\)</span> (Identity): Country of birth will affect allocation. Relative to Chilean-born applicants, foreign-born applicants (Venezuela, Perú) may receive a smaller share. The direction is pre-registered as theoretically open.</p>
+<p><span class="math inline">\(H_7\)</span> (Sex): Female applicants, signaled through gendered names, will receive a larger share of the scholarship than male applicants.</p>
+</section><section id="conditional-effects-moderation" class="level4" data-number="4.2.2.2"><h4 data-number="4.2.2.2" class="anchored" data-anchor-id="conditional-effects-moderation">
+<span class="header-section-number">4.2.2.2</span> Conditional effects (moderation)</h4>
 <p>We expect merit and disadvantage-related attributes to be moderated by respondents’ meritocratic orientation, measured following Castillo et al.&nbsp;(2023). For the pre-registered confirmatory tests we use the two <em>normative</em> components of that framework—meritocratic preference (the endorsement that effort and talent <em>should</em> be rewarded) and acceptance of privilege (the endorsement of advantage derived from non-meritocratic factors)—because they yield clearer directional predictions than the descriptive-perception components.</p>
-<p><span class="math inline">H_8</span> (Effort × meritocratic preference): The positive effect of effort (<span class="math inline">H_2</span>) will be stronger among respondents with higher meritocratic preference.</p>
-<p><span class="math inline">H_9</span> (Control × meritocratic preference): The positive effect of uncontrollable need (<span class="math inline">H_3</span>) will be stronger among respondents with higher meritocratic preference, who condition support on the applicant’s lack of responsibility for their situation.</p>
-<p><span class="math inline">H_{10}</span> (Need × acceptance of privilege): The positive effect of economic need (<span class="math inline">H_1</span>) will be weaker among respondents with higher acceptance of privilege.</p>
-</section><section id="exploratory-moderation" class="level3" data-number="7.2.3"><h3 data-number="7.2.3" class="anchored" data-anchor-id="exploratory-moderation">
-<span class="header-section-number">7.2.3</span> Exploratory moderation</h3>
+<p><span class="math inline">\(H_8\)</span> (Effort × meritocratic preference): The positive effect of effort (<span class="math inline">\(H_2\)</span>) will be stronger among respondents with higher meritocratic preference.</p>
+<p><span class="math inline">\(H_9\)</span> (Control × meritocratic preference): The positive effect of uncontrollable need (<span class="math inline">\(H_3\)</span>) will be stronger among respondents with higher meritocratic preference, who condition support on the applicant’s lack of responsibility for their situation.</p>
+<p><span class="math inline">\(H_{10}\)</span> (Need × acceptance of privilege): The positive effect of economic need (<span class="math inline">\(H_1\)</span>) will be weaker among respondents with higher acceptance of privilege.</p>
+</section><section id="exploratory-moderation" class="level4" data-number="4.2.2.3"><h4 data-number="4.2.2.3" class="anchored" data-anchor-id="exploratory-moderation">
+<span class="header-section-number">4.2.2.3</span> Exploratory moderation</h4>
 <p>The two descriptive-perception components of <span class="citation" data-cites="castillo_multidimensional_2023">Castillo et al. (<a href="04-conjoint-desing.html#ref-castillo_multidimensional_2023" role="doc-biblioref">2023</a>)</span>, meritocratic perception (the belief that effort and talent <em>are</em> in fact rewarded) and perception of privilege (the recognition that non-meritocratic factors shape outcomes), are descriptive rather than normative beliefs, so their moderating direction is not theoretically determined. We therefore formalize the following as exploratory hypotheses, tested but not used for confirmatory inference.</p>
-<p><span class="math inline">H_{11}</span> (Effort × meritocratic perception, exploratory): The positive effect of effort (<span class="math inline">H_2</span>) may be stronger among respondents with higher meritocratic perception.</p>
-<p><span class="math inline">H_{12}</span> (Need × perception of privilege, exploratory): The positive effect of need (<span class="math inline">H_1</span>) may be stronger among respondents with higher perception of privilege.</p>
+<p><span class="math inline">\(H_{11}\)</span> (Effort × meritocratic perception, exploratory): The positive effect of effort (<span class="math inline">\(H_2\)</span>) may be stronger among respondents with higher meritocratic perception.</p>
+<p><span class="math inline">\(H_{12}\)</span> (Need × perception of privilege, exploratory): The positive effect of need (<span class="math inline">\(H_1\)</span>) may be stronger among respondents with higher perception of privilege.</p>
 <p>[POR DEFINIR]</p>
-</section></section></section><section id="experimental-design" class="level1" data-number="8"><h1 data-number="8">
-<span class="header-section-number">8</span> Experimental design</h1>
-<section id="design-type" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="design-type">
-<span class="header-section-number">8.1</span> Design type</h2>
+</section></section></section><section id="experimental-design" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="experimental-design">
+<span class="header-section-number">4.3</span> Experimental design</h2>
+<section id="design-type" class="level3" data-number="4.3.1"><h3 data-number="4.3.1" class="anchored" data-anchor-id="design-type">
+<span class="header-section-number">4.3.1</span> Design type</h3>
 <p>The study uses a <strong>paired-profile distributive conjoint</strong>, a design that fuses the randomization logic of conjoint survey experiments with the allocative logic of distributive justice experiments. As in a standard conjoint, each task presents two profiles whose attributes are independently randomized, and the analysis recovers the effect of each attribute and level on the outcome. What departs from the standard conjoint is the response: rather than choosing one profile over the other, the respondent distributes a fixed resource between them, allocating a percentage of the total to each. The design therefore functions as an <em>allocator</em>—it asks how a scarce good should be divided between two independent claimants—and reveals the weight respondents place on each attribute through the share they are willing to grant.</p>
 <p>Formally, each task displays two applicants with randomized profiles, and the respondent divides a fixed scholarship fund between them, so that the share allocated to one and the share allocated to the other sum to 100% by construction. The outcome is the percentage assigned to each profile. This fixed-sum response is what makes the design distributive rather than evaluative: because the resource is scarce and interdependent, any share granted to one applicant is necessarily withheld from the other, forcing respondents to reveal how they prioritize competing criteria when the trade-off is concrete.</p>
 <p>This distributive logic follows the Distributional Survey Experiment of <span class="citation" data-cites="gilgen_disentangling_2022">Gilgen (<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span>, but the present design differs from hers in two consequential respects. First, it retains the full randomization of a conjoint rather than constructing a D-efficient design: attribute levels are drawn independently and uniformly at the profile level, which simplifies both implementation and the identification of AMCEs (see Causal identification). Second, it presents two profiles per task rather than three. Using two profiles reduces the cognitive load of a task that is already more demanding than a binary choice, and it keeps both the interface and the statistical model simple, since the interdependence of the outcome becomes trivial: the second applicant’s share is the complement of the first (B = 100 − A). The result is a design that borrows the causal-inferential machinery of the conjoint tradition <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span> and the distributive, scarcity-based task of Gilgen’s framework, without inheriting the design-efficiency complications of the latter.</p>
-</section><section id="scenario" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="scenario">
-<span class="header-section-number">8.2</span> Scenario</h2>
+</section><section id="scenario" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="scenario">
+<span class="header-section-number">4.3.2</span> Scenario</h3>
 <p>Respondents are asked to place themselves in the role of a member of a university committee responsible for allocating a first-year higher education scholarship. They are told that the two applicants shown in each task were admitted to the same program at the same institution, where students must pay to study, that the information about each applicant was provided and verified by their secondary school, and that the scholarship fund available to distribute is CLP 2,000,000 for the first year. This framing establishes a context of genuine scarcity—the fund cannot fully cover both applicants—and holds the admission bar and institution constant across applicants, so that the allocation decision turns on the experimentally manipulated attributes rather than on differences in eligibility or institutional prestige.</p>
-</section><section id="task-structure" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="task-structure">
-<span class="header-section-number">8.3</span> Task structure</h2>
-<p>Each respondent <span class="math inline">(i)</span> completes six allocation tasks <span class="math inline">(t)</span>. In every task, two applicant profiles (each labeled by a first name and displayed side by side in a table) are presented together with the fixed scholarship fund, and the respondent distributes the fund between them according to what they consider fair, with no correct or incorrect answer. Presenting six tasks per respondent rather than a single one increases within-respondent statistical efficiency by yielding multiple allocation decisions per person. This gain comes at the cost of non-independence among the tasks and profiles evaluated by the same respondent, which the analysis addresses explicitly (see Analysis Plan).</p>
-</section><section id="profiles-and-attributes" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="profiles-and-attributes">
-<span class="header-section-number">8.4</span> Profiles and attributes</h2>
-<p>Each applicant profile <span class="math inline">(j)</span> is defined by seven experimentally manipulated dimensions. Six correspond to deservingness criteria from the NICER and CARIN frameworks <span class="citation" data-cites="knotz_recast_2022 meuleman_welfare_2020">(<a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>; <a href="04-conjoint-desing.html#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span> and are displayed as explicit rows of the profile table: need, control, effort, reciprocity, attitude, and identity. The seventh, applicant sex, is signaled implicitly through a gendered first name rather than as an explicit row, so that the profile reads as a natural description of a person rather than a mechanical list of traits; names are drawn from pools matched on familiarity and perceived social class to isolate the sex signal from other connotations. The order in which the six explicit attributes appear is randomized once per respondent and held constant across their six tasks, so that any effect of attribute position is balanced across the sample while within-respondent presentation remains stable. The full set of levels and reference categories is specified in the Variables section.</p>
-</section><section id="causal-identification-and-assumptions" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="causal-identification-and-assumptions">
-<span class="header-section-number">8.5</span> Causal identification and assumptions</h2>
-<p>The distributive conjoint identifies the average marginal component effect (AMCE) of each attribute on the allocated share under the design-based assumptions formalized by <span class="citation" data-cites="hainmueller_causal_2014">Hainmueller et al. (<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">2014</a>)</span>. Because attribute levels are assigned by the researcher rather than observed, identification rests on the randomization itself rather than on selection-on-observables, provided four conditions hold. We adopt their notation: let <span class="math inline">i</span> index respondents, <span class="math inline">t \in \{1,\dots,6\}</span> tasks, and <span class="math inline">j \in \{1,2\}</span> the profile position within a task. Let <span class="math inline">T_{ijt}</span> denote the vector of randomized attributes of profile <span class="math inline">j</span>, with <span class="math inline">l</span>-th component <span class="math inline">T_{ijt}^{(l)}</span> taking values in the level set <span class="math inline">\mathcal{T}_l</span>, and let <span class="math inline">Y_{ijt}(t)</span> be the potential share the respondent would allocate to that profile if its attribute vector were fixed at <span class="math inline">t</span>.</p>
-<p><strong>Stability and no carryover effects.</strong> The potential outcome of a profile depends only on that profile’s own attributes, not on the profiles seen in the same or previous tasks. Formally, for any two tasks <span class="math inline">t</span> and <span class="math inline">t'</span> and profiles <span class="math inline">j</span>, <span class="math inline">j'</span>,</p>
-<p><span class="math display">Y_{ijt}(t) = Y_{ij't'}(t) \quad \text{whenever the profile's attribute vector is the same,}</span></p>
-<p>so that a profile with attribute vector <span class="math inline">t</span> yields the same potential allocation regardless of when or against which competitor it appears. This licenses pooling the six tasks per respondent into a single estimand rather than treating each as a separate experiment.</p>
-<p><strong>No profile-order effects.</strong> The potential outcome does not depend on the position (left or right, here altID 1 or 2) that the profile occupies. For any two positions <span class="math inline">j</span> and <span class="math inline">j'</span>,</p>
-<p><span class="math display">Y_{ijt}(t) = Y_{ij't}(t),</span></p>
+</section><section id="task-structure" class="level3" data-number="4.3.3"><h3 data-number="4.3.3" class="anchored" data-anchor-id="task-structure">
+<span class="header-section-number">4.3.3</span> Task structure</h3>
+<p>Each respondent <span class="math inline">\((i)\)</span> completes six allocation tasks <span class="math inline">\((t)\)</span>. In every task, two applicant profiles (each labeled by a first name and displayed side by side in a table) are presented together with the fixed scholarship fund, and the respondent distributes the fund between them according to what they consider fair, with no correct or incorrect answer. Presenting six tasks per respondent rather than a single one increases within-respondent statistical efficiency by yielding multiple allocation decisions per person. This gain comes at the cost of non-independence among the tasks and profiles evaluated by the same respondent, which the analysis addresses explicitly (see Analysis Plan).</p>
+<p>Six tasks sits well within the range the evidence supports: <span class="citation" data-cites="bansak_breaking_2021">Bansak et al. (<a href="04-conjoint-desing.html#ref-bansak_breaking_2021" role="doc-biblioref">2021a</a>)</span> find no detectable degradation in response quality up to thirty tasks in online panels. It also matches practice in distributive designs, since <span class="citation" data-cites="gilgen_disentangling_2022">Gilgen (<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span> administers four allocation tasks with three profiles each—twelve profile-level observations per respondent, the same number generated here. Because the distributive task is more demanding than a binary choice, we treat thirty as an upper bound rather than a target.</p>
+</section><section id="profiles-and-attributes" class="level3" data-number="4.3.4"><h3 data-number="4.3.4" class="anchored" data-anchor-id="profiles-and-attributes">
+<span class="header-section-number">4.3.4</span> Profiles and attributes</h3>
+<p>Each applicant profile <span class="math inline">\((j)\)</span> is defined by seven experimentally manipulated dimensions. Six correspond to deservingness criteria from the NICER and CARIN frameworks <span class="citation" data-cites="knotz_recast_2022 meuleman_welfare_2020">(<a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>; <a href="04-conjoint-desing.html#ref-meuleman_welfare_2020" role="doc-biblioref">Meuleman et al., 2020</a>)</span> and are displayed as explicit rows of the profile table: need, control, effort, reciprocity, attitude, and identity. The seventh, applicant sex, is signaled implicitly through a gendered first name rather than as an explicit row, so that the profile reads as a natural description of a person rather than a mechanical list of traits; names are drawn from pools matched on familiarity and perceived social class to isolate the sex signal from other connotations. The order in which the six explicit attributes appear is randomized once per respondent and held constant across their six tasks, so that any effect of attribute position is balanced across the sample while within-respondent presentation remains stable. The full set of levels and reference categories is specified in the Variables section.</p>
+<p><a href="#fig-cbc-module" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> shows the module as presented to respondents.</p>
+<div id="fig-cbc-module" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-cbc-module-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/conjoint_screen.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cbc-module-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: The scholarship allocation module as presented to respondents.
+</figcaption></figure>
+</div>
+</section><section id="causal-identification-and-assumptions" class="level3" data-number="4.3.5"><h3 data-number="4.3.5" class="anchored" data-anchor-id="causal-identification-and-assumptions">
+<span class="header-section-number">4.3.5</span> Causal identification and assumptions</h3>
+<p>The distributive conjoint identifies the average marginal component effect (AMCE) of each attribute on the allocated share under the design-based assumptions formalized by <span class="citation" data-cites="hainmueller_causal_2014">Hainmueller et al. (<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">2014</a>)</span>. Because attribute levels are assigned by the researcher rather than observed, identification rests on the randomization itself rather than on selection-on-observables, provided four conditions hold. We adopt their notation: let <span class="math inline">\(i\)</span> index respondents, <span class="math inline">\(t \in \{1,\dots,6\}\)</span> tasks, and <span class="math inline">\(j \in \{1,2\}\)</span> the profile position within a task. Let <span class="math inline">\(T_{ijt}\)</span> denote the vector of randomized attributes of profile <span class="math inline">\(j\)</span>, with <span class="math inline">\(l\)</span>-th component <span class="math inline">\(T_{ijt}^{(l)}\)</span> taking values in the level set <span class="math inline">\(\mathcal{T}_l\)</span>, and let <span class="math inline">\(Y_{ijt}(t)\)</span> be the potential share the respondent would allocate to that profile if its attribute vector were fixed at <span class="math inline">\(t\)</span>.</p>
+<p><strong>Stability and no carryover effects.</strong> The potential outcome of a profile depends only on that profile’s own attributes, not on the profiles seen in the same or previous tasks. Formally, for any two tasks <span class="math inline">\(t\)</span> and <span class="math inline">\(t'\)</span> and profiles <span class="math inline">\(j\)</span>, <span class="math inline">\(j'\)</span>,</p>
+<p><span class="math display">\[Y_{ijt}(t) = Y_{ij't'}(t) \quad \text{whenever the profile's attribute vector is the same,}\]</span></p>
+<p>so that a profile with attribute vector <span class="math inline">\(t\)</span> yields the same potential allocation regardless of when or against which competitor it appears. This licenses pooling the six tasks per respondent into a single estimand rather than treating each as a separate experiment.</p>
+<p><strong>No profile-order effects.</strong> The potential outcome does not depend on the position (left or right, here altID 1 or 2) that the profile occupies. For any two positions <span class="math inline">\(j\)</span> and <span class="math inline">\(j'\)</span>,</p>
+<p><span class="math display">\[Y_{ijt}(t) = Y_{ij't}(t),\]</span></p>
 <p>which we enforce by randomizing which profile occupies each position, making position orthogonal to attribute content.</p>
-<p><strong>Randomization (completely independent).</strong> The assigned attribute vector is statistically independent of the potential outcomes and of the competing profile’s attributes. Writing the full profile of both alternatives in a task as <span class="math inline">T_{it}</span>,</p>
-<p><span class="math display">Y_{ijt}(t) \perp\!\!\!\perp T_{it} \quad \text{for all } t,</span></p>
+<p><strong>Randomization (completely independent).</strong> The assigned attribute vector is statistically independent of the potential outcomes and of the competing profile’s attributes. Writing the full profile of both alternatives in a task as <span class="math inline">\(T_{it}\)</span>,</p>
+<p><span class="math display">\[Y_{ijt}(t) \perp\!\!\!\perp T_{it} \quad \text{for all } t,\]</span></p>
 <p>and the components are assigned independently of one another with fixed marginal probabilities,</p>
-<p><span class="math display">P\!\left(T_{ijt}^{(l)} = t_l\right) = p_l(t_l), \qquad \sum_{t_l \in \mathcal{T}_l} p_l(t_l) = 1,</span></p>
-<p>with each attribute drawn uniformly, <span class="math inline">p_l(t_l) = 1/|\mathcal{T}_l|</span>, independently across the <span class="math inline">L</span> attributes. This holds by construction, since levels are drawn independently and uniformly at the profile level.</p>
+<p><span class="math display">\[P\!\left(T_{ijt}^{(l)} = t_l\right) = p_l(t_l), \qquad \sum_{t_l \in \mathcal{T}_l} p_l(t_l) = 1,\]</span></p>
+<p>with each attribute drawn uniformly, <span class="math inline">\(p_l(t_l) = 1/|\mathcal{T}_l|\)</span>, independently across the <span class="math inline">\(L\)</span> attributes. This holds by construction, since levels are drawn independently and uniformly at the profile level.</p>
 <p><strong>Positivity (common support).</strong> Every attribute level, and every profile-level combination that the design admits, has strictly positive probability of assignment:</p>
-<p><span class="math display">P\!\left(T_{ijt} = t\right) &gt; 0 \quad \text{for all admissible } t \in \mathcal{T}_1 \times \cdots \times \mathcal{T}_L.</span></p>
+<p><span class="math display">\[P\!\left(T_{ijt} = t\right) &gt; 0 \quad \text{for all admissible } t \in \mathcal{T}_1 \times \cdots \times \mathcal{T}_L.\]</span></p>
 <p>The only combinations excluded by the design are pairs of profiles within a task that are identical or that differ on a single attribute (see Randomization). Because this restriction operates on the joint distribution of the two profiles in a task and never removes any individual level from any attribute’s support, positivity at the attribute level is preserved.</p>
-<p>Under these four conditions the AMCE of moving attribute <span class="math inline">l</span> from a reference level <span class="math inline">t_l^{0}</span> to an alternative level <span class="math inline">t_l^{1}</span> is nonparametrically identified as</p>
-<p><span class="math display">\text{AMCE}_l = \mathbb{E}\!\left[\,Y_{ijt}\!\left(t_l^{1}, T_{ijt}^{(-l)}\right) - Y_{ijt}\!\left(t_l^{0}, T_{ijt}^{(-l)}\right)\right],</span></p>
-<p>where <span class="math inline">T_{ijt}^{(-l)}</span> denotes the remaining attributes and the expectation is taken over their design distribution. The estimand is thus the average change in allocated share associated with the level contrast, averaging over all other attributes as randomized.</p>
-</section></section><section id="variables" class="level1" data-number="9"><h1 data-number="9">
-<span class="header-section-number">9</span> Variables</h1>
-<section id="attributes-and-levels" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="attributes-and-levels">
-<span class="header-section-number">9.1</span> Attributes and levels</h2>
+<p>Under these four conditions the AMCE of moving attribute <span class="math inline">\(l\)</span> from a reference level <span class="math inline">\(t_l^{0}\)</span> to an alternative level <span class="math inline">\(t_l^{1}\)</span> is nonparametrically identified as</p>
+<p><span class="math display">\[\text{AMCE}_l = \mathbb{E}\!\left[\,Y_{ijt}\!\left(t_l^{1}, T_{ijt}^{(-l)}\right) - Y_{ijt}\!\left(t_l^{0}, T_{ijt}^{(-l)}\right)\right],\]</span></p>
+<p>where <span class="math inline">\(T_{ijt}^{(-l)}\)</span> denotes the remaining attributes and the expectation is taken over their design distribution. The estimand is thus the average change in allocated share associated with the level contrast, averaging over all other attributes as randomized.</p>
+</section></section><section id="variables" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="variables">
+<span class="header-section-number">4.4</span> Variables</h2>
+<section id="attributes-and-levels" class="level3" data-number="4.4.1"><h3 data-number="4.4.1" class="anchored" data-anchor-id="attributes-and-levels">
+<span class="header-section-number">4.4.1</span> Attributes and levels</h3>
 <p>The table below lists each attribute, the label shown to respondents, its levels, and the reference category used in estimation. Reference categories are set to the theoretically less deserving or baseline level of each attribute, so that estimated AMCEs read as the change in allocated share associated with moving toward the more deserving level. These reference categories are fixed in advance and applied identically in the analysis code.</p>
 <table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
 <thead><tr style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
@@ -486,59 +520,77 @@ Male
 <p style="font-size:0.8rem; color:#555; margin-top:0.8rem;">
 <em>Note: Levels are given in English, with the original Spanish wording shown to respondents in parentheses. The factorial space comprises 2 (Need) × 3 (Effort) × 2 (Control) × 2 (Reciprocity) × 2 (Attitude) × 3 (Identity) × 2 (Sex) = 288 unique profiles. Attributes are assigned independently and uniformly at the profile level. Sex is signaled through gendered first names drawn from matched pools rather than as an explicit table row.</em>
 </p>
-</section><section id="outcome" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="outcome">
-<span class="header-section-number">9.2</span> Outcome</h2>
+</section><section id="outcome" class="level3" data-number="4.4.2"><h3 data-number="4.4.2" class="anchored" data-anchor-id="outcome">
+<span class="header-section-number">4.4.2</span> Outcome</h3>
 <p>The outcome is the share of the scholarship fund allocated to each applicant. Respondents register their decision using a single continuous slider displayed beneath the profile table, initialized at an even split. The slider spans the full fund in Chilean pesos (CLP 0 to CLP 2,000,000), and as it moves, the percentage and peso amount for each applicant update in real time. The recorded value is the amount allocated to the right-hand applicant; the left-hand applicant’s amount is its complement, so the two always sum to the fixed total. For analysis this amount is converted to a share of the fund, bounded between 0 and 100, with the two shares within a task summing to 100 by construction. This fixed-sum structure is the defining feature of the distributive design: it makes the allocation genuinely zero-sum, so that any share granted to one applicant is withheld from the other. Modeling the outcome as a share rather than a raw amount respects this structure and follows the strategy recommended by <span class="citation" data-cites="gilgen_disentangling_2022">Gilgen (<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span> for distributional survey experiments.</p>
-</section><section id="controls-and-moderators" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="controls-and-moderators">
-<span class="header-section-number">9.3</span> Controls and moderators</h2>
+</section><section id="controls-and-moderators" class="level3" data-number="4.4.3"><h3 data-number="4.4.3" class="anchored" data-anchor-id="controls-and-moderators">
+<span class="header-section-number">4.4.3</span> Controls and moderators</h3>
 <p>Because attributes are randomized at the profile level, no covariates are required to identify the AMCEs: respondent-level characteristics are not confounders and enter only to estimate heterogeneity in the effects, never as adjustments to the main estimand <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. The confirmatory moderation hypotheses (H8–H10) rest on two sets of respondent-level measures. The first is meritocratic orientation, measured following <span class="citation" data-cites="castillo_multidimensional_2023">Castillo et al. (<a href="04-conjoint-desing.html#ref-castillo_multidimensional_2023" role="doc-biblioref">2023</a>)</span>, which distinguishes four components: meritocratic perception (the belief that effort and talent are in fact rewarded), meritocratic preference (the normative endorsement that they should be rewarded), perception of privilege (the recognition that non-meritocratic factors shape outcomes), and acceptance of privilege (the normative endorsement of privilege-based advantage). The two normative components serve as the confirmatory moderators, since they yield directional predictions; the two descriptive-perception components are reserved for the exploratory hypotheses (H11–H12). Following <span class="citation" data-cites="leeper_measuring_2020">Leeper et al. (<a href="04-conjoint-desing.html#ref-leeper_measuring_2020" role="doc-biblioref">2020</a>)</span>, subgroup and moderation analyses rely on marginal means rather than differences in conditional AMCEs, which depend on the reference category and can mislead when compared across subgroups; the formal treatment is given in the Analysis Plan.</p>
-</section></section><section id="randomization" class="level1" data-number="10"><h1 data-number="10">
-<span class="header-section-number">10</span> Randomization</h1>
-<section id="strategy" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="strategy">
-<span class="header-section-number">10.1</span> Strategy</h2>
-<p>The experiment uses complete and independent randomization of attribute levels, the reference case in Hainmueller et al. <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">2014</a>)</span> and the default for most applied conjoint designs <span class="citation" data-cites="bansak_conjoint_2021">(<a href="04-conjoint-desing.html#ref-bansak_conjoint_2021" role="doc-biblioref">Bansak et al., 2021</a>)</span>. For each profile <span class="math inline">(j)</span>, every attribute is drawn independently of the others and of the competing profile, with uniform probability within its attribute (<span class="math inline">1/2</span> for the four two-level attributes, <span class="math inline">1/3</span> for Effort and Identity). No attribute is conditioned on another and no level is reweighted, so the joint distribution of profiles is the product of the attribute marginals <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. Randomization occurs at the profile level and is performed anew for each respondent and task, rather than as a fixed block assigned in advance.</p>
+</section></section><section id="randomization" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="randomization">
+<span class="header-section-number">4.5</span> Randomization</h2>
+<section id="strategy" class="level3" data-number="4.5.1"><h3 data-number="4.5.1" class="anchored" data-anchor-id="strategy">
+<span class="header-section-number">4.5.1</span> Strategy</h3>
+<p>The experiment uses complete and independent randomization of attribute levels, the reference case in Hainmueller et al. <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">2014</a>)</span> and the default for most applied conjoint designs <span class="citation" data-cites="bansak_conjoint_2021">(<a href="04-conjoint-desing.html#ref-bansak_conjoint_2021" role="doc-biblioref">Bansak et al., 2021b</a>)</span>. For each profile <span class="math inline">\((j)\)</span>, every attribute is drawn independently of the others and of the competing profile, with uniform probability within its attribute (<span class="math inline">\(1/2\)</span> for the four two-level attributes, <span class="math inline">\(1/3\)</span> for Effort and Identity). No attribute is conditioned on another and no level is reweighted, so the joint distribution of profiles is the product of the attribute marginals <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. Randomization occurs at the profile level and is performed anew for each respondent and task, rather than as a fixed block assigned in advance.</p>
 <p>Under this scheme the assignment of each attribute is by construction independent of the potential outcomes, which is the condition that identifies the AMCE (see Causal identification), and no attribute can confound another. Crucially, identification does not require that every possible profile, or every possible pair, appear in the data: the AMCE is a marginal quantity, defined as the average effect of moving one attribute from its reference level to another while averaging over the distribution of the rest <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. It is therefore identified from the marginal variation in each attribute, not from joint coverage of the factorial space. With 288 possible profiles and thousands of profile evaluations, each level is observed many times across varying combinations of the others, which is all a marginal effect requires.</p>
-<p>This is why a D-efficient design is not needed here. Such designs optimize the attribute covariance structure to minimize coefficient variance, and are valuable mainly when the factorial space is large relative to the sample, when specific interactions are the target, or when a forced-choice model is fit on few tasks—none of which binds in this design <span class="citation" data-cites="auspurg_factorial_2016 gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-auspurg_factorial_2016" role="doc-biblioref">Auspurg &amp; Hinz, 2016</a>; <a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>)</span>. The space is small (288 profiles), the estimands are marginal main effects, and complete randomization already guarantees in expectation the orthogonality a D-efficient design engineers, delivering unbiased AMCEs with near-optimal efficiency for main effects at this size <span class="citation" data-cites="bansak_conjoint_2021">(<a href="04-conjoint-desing.html#ref-bansak_conjoint_2021" role="doc-biblioref">Bansak et al., 2021</a>)</span>, without the added complexity.</p>
-</section><section id="restrictions" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="restrictions">
-<span class="header-section-number">10.2</span> Restrictions</h2>
-<p>The design imposes a single restriction, applied to the pair of profiles <span class="math inline">(j)</span> within a task <span class="math inline">(t)</span> rather than to individual attributes: the two profiles must differ on at least two attributes. When a pair is generated, the two profiles are drawn independently and retained only if they differ on two or more of the seven attributes, otherwise redrawn. This excludes identical pairs and pairs differing on exactly one attribute.</p>
+<p>This is why a D-efficient design is not needed here. Such designs optimize the attribute covariance structure to minimize coefficient variance, and are valuable mainly when the factorial space is large relative to the sample, when specific interactions are the target, or when a forced-choice model is fit on few tasks—none of which binds in this design <span class="citation" data-cites="auspurg_factorial_2016 gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-auspurg_factorial_2016" role="doc-biblioref">Auspurg &amp; Hinz, 2016</a>; <a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>)</span>. The space is small (288 profiles), the estimands are marginal main effects, and complete randomization already guarantees in expectation the orthogonality a D-efficient design engineers, delivering unbiased AMCEs with near-optimal efficiency for main effects at this size <span class="citation" data-cites="bansak_conjoint_2021">(<a href="04-conjoint-desing.html#ref-bansak_conjoint_2021" role="doc-biblioref">Bansak et al., 2021b</a>)</span>, without the added complexity.</p>
+</section><section id="restrictions" class="level3" data-number="4.5.2"><h3 data-number="4.5.2" class="anchored" data-anchor-id="restrictions">
+<span class="header-section-number">4.5.2</span> Restrictions</h3>
+<p>The design imposes a single restriction, applied to the pair of profiles <span class="math inline">\((j)\)</span> within a task <span class="math inline">\((t)\)</span> rather than to individual attributes: the two profiles must differ on at least two attributes. When a pair is generated, the two profiles are drawn independently and retained only if they differ on two or more of the seven attributes, otherwise redrawn. This excludes identical pairs and pairs differing on exactly one attribute.</p>
 <p>The purpose is cognitive, not statistical. A pair that is identical or nearly so presents two indistinguishable applicants, yielding a task that carries little information about trade-offs and that may read as degenerate. With seven attributes, the probability that an unconstrained draw produces such a near-identical pair is non-negligible across a respondent’s six tasks, so the restriction improves the informativeness and face validity of the tasks.</p>
 <p>The restriction operates only on the joint distribution of the two profiles and leaves each attribute’s marginal distribution unchanged: every level still appears with its original uniform probability and remains independent of the other attributes within a profile. Because AMCE identification depends on marginal randomization and not on the joint distribution of pairs, the restriction leaves identification and interpretation intact; it removes no level from any attribute’s support and induces no within-profile correlation, ruling out only the least informative comparisons. Empirical attribute balance is verified as part of the quality checks (see Quality control).</p>
-</section></section><section id="analysis-plan" class="level1" data-number="11"><h1 data-number="11">
-<span class="header-section-number">11</span> Analysis Plan</h1>
-<section id="estimands" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="estimands">
-<span class="header-section-number">11.1</span> Estimands</h2>
-<p>The primary estimand is the average marginal component effect (AMCE) of each attribute on the share of the fund allocated to a profile, in percentage points. For attribute <span class="math inline">l</span>, moving from reference level <span class="math inline">t_l^0</span> to level <span class="math inline">t_l^1</span>,</p>
-<p><span class="math display">\text{AMCE}_l = \mathbb{E}\!\left[Y_{ijt}\!\left(t_l^1, T_{ijt}^{(-l)}\right) - Y_{ijt}\!\left(t_l^0, T_{ijt}^{(-l)}\right)\right],</span></p>
+</section></section><section id="analysis-plan" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="analysis-plan">
+<span class="header-section-number">4.6</span> Analysis Plan</h2>
+<section id="estimands" class="level3" data-number="4.6.1"><h3 data-number="4.6.1" class="anchored" data-anchor-id="estimands">
+<span class="header-section-number">4.6.1</span> Estimands</h3>
+<p>The primary estimand is the average marginal component effect (AMCE) of each attribute on the share of the fund allocated to a profile, in percentage points. For attribute <span class="math inline">\(l\)</span>, moving from reference level <span class="math inline">\(t_l^0\)</span> to level <span class="math inline">\(t_l^1\)</span>,</p>
+<p><span class="math display">\[\text{AMCE}_l = \mathbb{E}\!\left[Y_{ijt}\!\left(t_l^1, T_{ijt}^{(-l)}\right) - Y_{ijt}\!\left(t_l^0, T_{ijt}^{(-l)}\right)\right],\]</span></p>
 <p>the average change in allocated share associated with the level contrast, averaging over the design distribution of the remaining attributes <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. Since the outcome is a share of a fixed fund rather than a choice probability, the AMCE reads directly as the percentage points of the scholarship a level shifts toward or away from a profile. Alongside AMCEs we report marginal means—the average share at each attribute level—which describe absolute support without a baseline category and are the basis for all subgroup comparisons <span class="citation" data-cites="leeper_measuring_2020">(<a href="04-conjoint-desing.html#ref-leeper_measuring_2020" role="doc-biblioref">Leeper et al., 2020</a>)</span>.</p>
-</section><section id="models" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="models">
-<span class="header-section-number">11.2</span> Models</h2>
+</section><section id="models" class="level3" data-number="4.6.2"><h3 data-number="4.6.2" class="anchored" data-anchor-id="models">
+<span class="header-section-number">4.6.2</span> Models</h3>
+<section id="main-effects-1" class="level4" data-number="4.6.2.1"><h4 data-number="4.6.2.1" class="anchored" data-anchor-id="main-effects-1">
+<span class="header-section-number">4.6.2.1</span> Main effects</h4>
 <p>The confirmatory estimator for the main effects (H1–H7) is a linear model of the allocated share on the seven attributes, with respondent fixed effects and standard errors clustered by respondent:</p>
-<p><span class="math display">\text{share}_{ijt} = \alpha_i + \sum_{l=1}^{7} \beta_l\, T^{(l)}_{ijt} + \varepsilon_{ijt},</span></p>
-<p>where <span class="math inline">\alpha_i</span> absorbs time-invariant respondent heterogeneity and clustering handles the non-independence of profiles evaluated by the same respondent <span class="citation" data-cites="hainmueller_causal_2014 gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>; <a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. Each attribute enters as dummies against its pre-registered reference category, so each <span class="math inline">\beta_l</span> is the corresponding AMCE. Modeling the share rather than the raw peso amount respects the fixed-sum structure of the allocation <span class="citation" data-cites="gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>)</span>.</p>
-<p>The confirmatory moderation hypotheses (H8–H10) target the conditional AMCE <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>, whose identification rests, as for the main effects, solely on attribute randomization within any respondent subgroup. Continuous moderators (meritocratic preference, acceptance of privilege) are standardized, so the interaction coefficient reads as the change in an attribute’s AMCE per one-standard-deviation increase in the moderator. Because moderators are constant within respondent and would be absorbed by respondent fixed effects, these models use a random intercept to admit the level-2 term:</p>
-<p><span class="math display">\text{share}_{ijt} = \gamma_{00} + \sum_l \beta_l\, T^{(l)}_{ijt} + \delta\,(T^{(l)}_{ijt} \times M_i) + \theta\, M_i + u_i + \varepsilon_{ijt},</span></p>
-<p>where <span class="math inline">M_i</span> is the standardized moderator and <span class="math inline">\delta</span> the coefficient of interest. The multilevel specification is a device for estimating a level-2 interaction, not a change of estimand: the target remains the conditional AMCE, identified by attribute randomization. Following <span class="citation" data-cites="leeper_measuring_2020">Leeper et al. (<a href="04-conjoint-desing.html#ref-leeper_measuring_2020" role="doc-biblioref">2020</a>)</span>, differences across subgroups are summarized with marginal means, never by comparing conditional AMCEs, which depend on the reference category. The exploratory hypotheses (H11–H12) use the same standardized specification with the two perception components.</p>
-</section><section id="inference-criteria" class="level2" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="inference-criteria">
-<span class="header-section-number">11.3</span> Inference criteria</h2>
-<p>Hypotheses are evaluated two-sided at <span class="math inline">\alpha = 0.05</span>, with 95% confidence intervals for all AMCEs and marginal means. Across the confirmatory family (H1–H10) we control the family-wise error rate with the Holm–Bonferroni procedure, reporting both unadjusted and adjusted <span class="math inline">p</span>-values. Directional hypotheses (H1–H5, H7) are assessed against their pre-registered sign; identity (H6) is non-directional. Subgroup and moderation results are reported as differences in marginal means rather than conditional AMCEs <span class="citation" data-cites="leeper_measuring_2020">(<a href="04-conjoint-desing.html#ref-leeper_measuring_2020" role="doc-biblioref">Leeper et al., 2020</a>)</span>. Exploratory analyses (H11–H12 and any socio-demographic contrasts) carry no confirmatory weight and are labeled as such.</p>
-</section><section id="missing-data" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="missing-data">
-<span class="header-section-number">11.4</span> Missing data</h2>
+<p><span class="math display">\[\text{share}_{ijt} = \alpha_i + \sum_{l=1}^{7} \beta_l\, T^{(l)}_{ijt} + \varepsilon_{ijt},\]</span></p>
+<p>where each attribute enters as a set of dummies against its pre-registered reference category, so that each <span class="math inline">\(\beta_l\)</span> is the corresponding AMCE. The fixed-sum structure implies that every respondent’s mean allocated share is exactly 50 by construction, so <span class="math inline">\(\alpha_i\)</span> does not absorb between-respondent differences in baseline generosity—there are none to absorb. Its role is to remove the purely chance variation in the attribute composition each respondent happened to face, while the substantive work of accounting for non-independence is done by clustering, which is robust to the arbitrary within-respondent covariance the fixed-sum constraint induces, including the exact negative correlation between the two shares within a task. Modeling the share rather than the raw peso amount respects that structure and follows the strategy adopted by Gilgen <span class="citation" data-cites="gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span> for distributional survey experiments <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>.</p>
+</section><section id="conditional-effects" class="level4" data-number="4.6.2.2"><h4 data-number="4.6.2.2" class="anchored" data-anchor-id="conditional-effects">
+<span class="header-section-number">4.6.2.2</span> Conditional effects</h4>
+<p>The confirmatory moderation hypotheses (H8–H10) target the conditional AMCE <span class="citation" data-cites="hainmueller_causal_2014">(<a href="04-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>: the same attribute contrast evaluated within the subpopulation defined by a respondent-level moderator <span class="math inline">\(M_i\)</span>. Formally, for attribute <span class="math inline">\(l\)</span> moving from reference level <span class="math inline">\(t_l^{0}\)</span> to level <span class="math inline">\(t_l^{1}\)</span>,</p>
+<p><span class="math display">\[\text{AMCE}_l(m) = \mathbb{E}\!\left[Y_{ijt}\!\left(t_l^{1}, T_{ijt}^{(-l)}\right) - Y_{ijt}\!\left(t_l^{0}, T_{ijt}^{(-l)}\right) \,\Big|\, M_i = m\right].\]</span></p>
+<p>Identification requires only that <span class="math inline">\(M_i\)</span> be a pre-treatment respondent characteristic, which holds by design. Because randomization is performed independently of respondent identity, the design distribution of the remaining attributes <span class="math inline">\(T_{ijt}^{(-l)}\)</span> is identical for every value of <span class="math inline">\(M_i\)</span>: unlike observational subgroup analysis, the distribution over which the effect is averaged does not differ across groups. What differs is the effective information available per conditional effect, which is the basis of the sample-size requirement for heterogeneity (see Power analysis).</p>
+<p>Each moderation hypothesis is estimated with the same respondent fixed-effects specification used for the main effects, adding the interaction between the moderated attribute <span class="math inline">\(l^{*}\)</span> and the standardized moderator:</p>
+<p><span class="math display">\[\text{share}_{ijt} = \alpha_i + \sum_{l=1}^{7} \beta_l\, T^{(l)}_{ijt} + \delta\left(T^{(l^{*})}_{ijt} \times M_i\right) + \varepsilon_{ijt},\]</span></p>
+<p>with standard errors clustered by respondent. The conditional AMCE of attribute <span class="math inline">\(l^{*}\)</span> at moderator value <span class="math inline">\(m\)</span> is then <span class="math inline">\(\text{AMCE}_{l^{*}}(m) = \beta_{l^{*}} + \delta m\)</span>, so that <span class="math inline">\(\delta = \partial\,\text{AMCE}_{l^{*}} / \partial M\)</span> is the parameter of interest: because <span class="math inline">\(M_i\)</span> is standardized to mean zero and unit variance, <span class="math inline">\(\beta_{l^{*}}\)</span> is the AMCE at the sample mean of the moderator and <span class="math inline">\(\delta\)</span> is the change in that AMCE per one-standard-deviation increase.</p>
+<p>Although <span class="math inline">\(M_i\)</span> is constant within respondent and its main effect is absorbed by <span class="math inline">\(\alpha_i\)</span>, the interaction remains identified. Writing <span class="math inline">\(\bar{w}_i\)</span> for the respondent-specific mean of any variable <span class="math inline">\(w\)</span>, the within transformation applied by the fixed-effects estimator gives <span class="math inline">\(M_i - \bar{M}_i = 0\)</span> for the moderator alone, but</p>
+<p><span class="math display">\[T^{(l^{*})}_{ijt} M_i - \overline{T^{(l^{*})}_i M_i} = M_i\left(T^{(l^{*})}_{ijt} - \bar{T}^{(l^{*})}_i\right),\]</span></p>
+<p>which is non-degenerate whenever the attribute varies within respondent—as it does by construction, since each respondent evaluates twelve independently randomized profiles. Estimating cross-level interactions within a fixed-effects specification is the strategy Gilgen <span class="citation" data-cites="gilgen_disentangling_2022">(<a href="04-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span> adopts for heterogeneity in distributional survey experiments, interacting vignette-level attributes with respondent-level characteristics while retaining respondent fixed effects.</p>
+<p>The absorbed main effect of the moderator is of no substantive interest here. Because the two shares within a task sum to the fixed total, every respondent’s mean allocated share is exactly 50, that is <span class="math inline">\((2T)^{-1}\sum_{t}\sum_{j}\text{share}_{ijt} = 50\)</span> for all <span class="math inline">\(i\)</span>, so no respondent characteristic can predict it and level-2 main effects are mechanically null. For the same reason, a random-intercept specification would model the one quantity that carries no between-respondent variation and is therefore not used: respondent heterogeneity in this design resides in how strongly individuals weight each attribute, not in a baseline level of generosity.</p>
+<p>One model is fitted per moderation hypothesis, with a single interaction term, so that each <span class="math inline">\(\delta\)</span> is interpretable and the moderators do not compete for the same variance. The exploratory hypotheses (H11–H12) use the identical specification with the two descriptive-perception components as moderators. Following <span class="citation" data-cites="leeper_measuring_2020">Leeper et al. (<a href="04-conjoint-desing.html#ref-leeper_measuring_2020" role="doc-biblioref">2020</a>)</span>, any description of differences across subgroups is reported as differences in marginal means computed directly from the data, never by comparing conditional AMCEs across groups, since the latter depend on the choice of reference category.</p>
+</section><section id="robustness" class="level4" data-number="4.6.2.3"><h4 data-number="4.6.2.3" class="anchored" data-anchor-id="robustness">
+<span class="header-section-number">4.6.2.3</span> Robustness</h4>
+<p>As a robustness check for the fixed-sum structure, we estimate a within-task difference model, regressing the difference in shares between the two profiles in a task on the differences in their attributes:</p>
+<p><span class="math display">\[\text{share}_{it}^{A} - \text{share}_{it}^{B} = \sum_l \beta_l\left(T^{(l),A}_{it} - T^{(l),B}_{it}\right) + \varepsilon_{it},\]</span></p>
+<p>with standard errors clustered by respondent. This collapses each task to a single observation, resolving by construction the exact dependence between the two shares. Because a one-level change raises one applicant’s share and lowers the other’s, coefficients in this specification are approximately twice those of the profile-level model; the two are equivalent up to that scaling. The same specification, with the attribute differences interacted with the standardized moderator, serves as the robustness check for the conditional effects.</p>
+</section></section><section id="inference-criteria" class="level3" data-number="4.6.3"><h3 data-number="4.6.3" class="anchored" data-anchor-id="inference-criteria">
+<span class="header-section-number">4.6.3</span> Inference criteria</h3>
+<p>Hypotheses are evaluated two-sided at <span class="math inline">\(\alpha = 0.05\)</span>, with 95% confidence intervals reported for all AMCEs and marginal means. For the two three-level attributes, Effort and Identity, the corresponding hypotheses (H2 and H6 for main effects, H8 for moderation) are assessed with a joint Wald test of the two non-reference coefficients rather than coefficient by coefficient. The joint test is invariant to the choice of reference category, whereas the individual coefficients—and, in the moderation case, the individual interaction terms—are not <span class="citation" data-cites="leeper_measuring_2020">(<a href="04-conjoint-desing.html#ref-leeper_measuring_2020" role="doc-biblioref">Leeper et al., 2020</a>)</span>. Level-specific AMCEs are still reported for interpretation, with the reference category stated explicitly.</p>
+<p>Each hypothesis therefore contributes exactly one <span class="math inline">\(p\)</span>-value, and across the confirmatory family (H1–H10) we control the family-wise error rate with the Holm–Bonferroni procedure over those ten tests, reporting both unadjusted and adjusted <span class="math inline">\(p\)</span>-values. Directional hypotheses (H1–H5, H7) are assessed against their pre-registered sign; identity (H6) is non-directional. Descriptions of differences across subgroups are reported as differences in marginal means rather than as comparisons of conditional AMCEs <span class="citation" data-cites="leeper_measuring_2020">(<a href="04-conjoint-desing.html#ref-leeper_measuring_2020" role="doc-biblioref">Leeper et al., 2020</a>)</span>. Exploratory analyses (H11–H12, the latter applying the same joint-test rule to Effort, and any socio-demographic contrasts) carry no confirmatory weight and are labeled as such.</p>
+</section><section id="missing-data" class="level3" data-number="4.6.4"><h3 data-number="4.6.4" class="anchored" data-anchor-id="missing-data">
+<span class="header-section-number">4.6.4</span> Missing data</h3>
 <p>The slider carries a default even-split value and each task must be completed to advance, so item non-response on the outcome is not expected. Respondents failing the pre-registered quality checks (see Quality control) are excluded from the confirmatory analysis, with all results reported both including and excluding flagged respondents. Partial responses from respondents who abandon before completing all six tasks are retained for completed tasks, since the profile-level estimator does not require balanced task counts. No imputation is performed on the outcome.</p>
-</section></section><section id="power-analysis" class="level1" data-number="12"><h1 data-number="12">
-<span class="header-section-number">12</span> Power analysis</h1>
-<section id="strategy-1" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="strategy-1">
-<span class="header-section-number">12.1</span> Strategy</h2>
+</section></section><section id="power-analysis" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="power-analysis">
+<span class="header-section-number">4.7</span> Power analysis</h2>
+<section id="strategy-1" class="level3" data-number="4.7.1"><h3 data-number="4.7.1" class="anchored" data-anchor-id="strategy-1">
+<span class="header-section-number">4.7.1</span> Strategy</h3>
 <p>Power is computed analytically with the closed-form expressions of <span class="citation" data-cites="schuessler_power_2020">Schuessler &amp; Freitag (<a href="04-conjoint-desing.html#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>, implemented in the <code>cjpowR</code> package, which relate the minimum detectable AMCE to the number of profile evaluations without additional parametric assumptions. The central expression is</p>
-<p><span class="math display">N \approx \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2},</span></p>
-<p>where <span class="math inline">N</span> is the total number of profile evaluations (<span class="math inline">N_{\text{respondents}} \times \text{tasks} \times 2</span>), <span class="math inline">K</span> the number of levels of the attribute of interest, and <span class="math inline">\delta_1</span> the expected AMCE on the 0–1 scale; under the conservative assumption <span class="math inline">\delta_0 = 0.5</span> the variance term reduces to <span class="math inline">(z_{1-\alpha/2}+z_\kappa)^2 = 7.84</span> at <span class="math inline">\alpha = 0.05</span> and power <span class="math inline">0.80</span>. Two features of the design matter for interpreting these calculations. First, the dimensioning attributes are the three-level ones—Effort and Identity—since their effective sample size is <span class="math inline">2/3</span> of the total profiles, requiring a larger <span class="math inline">N</span> than the two-level attributes (Need, Control, Reciprocity, Attitude, Sex) for the same power. Second, the outcome is a continuous share (0–100), not the binary outcome the formula assumes; because the variance of a share concentrated roughly between 20 and 80 pp is well below the <span class="math inline">\text{Bernoulli}(0.5)</span> variance, the figures reported here are conservative and overstate the required <span class="math inline">N</span>. The minimum effect of interest is set at 3 pp, the lower range of identity-type effects in the CARIN/NICER literature <span class="citation" data-cites="knotz_recast_2022">(<a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>.</p>
-</section><section id="parameters" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="parameters">
-<span class="header-section-number">12.2</span> Parameters</h2>
-<p>For the pilot, the minimum detectable effect at 80% power is <span class="math inline">\delta_1 = \sqrt{(K/2)\,(7.84/N_{\text{profiles}})}</span>. The largest attribute effects are detectable with high confidence under any pilot scenario, while effects near 3 pp sit at the boundary of detectability. This is acceptable because the pilot’s purpose is to validate the instrument, calibrate the true variance of the slider outcome, and estimate the intra-respondent correlation across tasks to fine-tune the main-study <span class="math inline">N</span>, rather than to test the confirmatory hypotheses.</p>
+<p><span class="math display">\[N \approx \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2},\]</span></p>
+<p>where <span class="math inline">\(N\)</span> is the total number of profile evaluations (<span class="math inline">\(N_{\text{respondents}} \times \text{tasks} \times 2\)</span>), <span class="math inline">\(K\)</span> the number of levels of the attribute of interest, and <span class="math inline">\(\delta_1\)</span> the expected AMCE on the 0–1 scale; under the conservative assumption <span class="math inline">\(\delta_0 = 0.5\)</span> the variance term reduces to <span class="math inline">\((z_{1-\alpha/2}+z_\kappa)^2 = 7.84\)</span> at <span class="math inline">\(\alpha = 0.05\)</span> and power <span class="math inline">\(0.80\)</span>. Two features of the design matter for interpreting these calculations. First, the dimensioning attributes are the three-level ones—Effort and Identity—since their effective sample size is <span class="math inline">\(2/3\)</span> of the total profiles, requiring a larger <span class="math inline">\(N\)</span> than the two-level attributes (Need, Control, Reciprocity, Attitude, Sex) for the same power. Second, the outcome is a continuous share (0–100), not the binary outcome the formula assumes; because the variance of a share concentrated roughly between 20 and 80 pp is well below the <span class="math inline">\(\text{Bernoulli}(0.5)\)</span> variance, the figures reported here are conservative and overstate the required <span class="math inline">\(N\)</span>. The minimum effect of interest is set at 3 pp, the lower range of identity-type effects in the CARIN/NICER literature <span class="citation" data-cites="knotz_recast_2022">(<a href="04-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>.</p>
+</section><section id="parameters" class="level3" data-number="4.7.2"><h3 data-number="4.7.2" class="anchored" data-anchor-id="parameters">
+<span class="header-section-number">4.7.2</span> Parameters</h3>
+<p>For the pilot, the minimum detectable effect at 80% power is <span class="math inline">\(\delta_1 = \sqrt{(K/2)\,(7.84/N_{\text{profiles}})}\)</span>. The largest attribute effects are detectable with high confidence under any pilot scenario, while effects near 3 pp sit at the boundary of detectability. This is acceptable because the pilot’s purpose is to validate the instrument, calibrate the true variance of the slider outcome, and estimate the intra-respondent correlation across tasks to fine-tune the main-study <span class="math inline">\(N\)</span>, rather than to test the confirmatory hypotheses.</p>
 <div class="cell">
 <div id="tbl-power-pilot" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-power-pilot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;12.1: Minimum detectable effect by pilot size (power = 0.80, α = 0.05)
+Table&nbsp;4.1: Minimum detectable effect by pilot size (power = 0.80, α = 0.05)
 </figcaption><div aria-describedby="tbl-power-pilot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
@@ -574,11 +626,11 @@ Table&nbsp;12.1: Minimum detectable effect by pilot size (power = 0.80, α = 0.0
 </figure>
 </div>
 </div>
-<p>For the main study, the minimum <span class="math inline">N</span> is set by the most demanding attribute. For a three-level attribute (Effort, Identity) and a 3 pp AMCE, <span class="math inline">N_{\text{profiles}} = (3/2)(7.84/0.03^2) \approx 13{,}067</span>, i.e.&nbsp;<span class="math inline">N \approx 1{,}089</span> respondents at six tasks and two profiles per task. For a heterogeneity analysis with a binary moderator, the required <span class="math inline">N</span> roughly doubles, giving <span class="math inline">N \approx 2{,}200</span>.</p>
+<p>For the main study, the minimum <span class="math inline">\(N\)</span> is set by the most demanding attribute. For a three-level attribute (Effort, Identity) and a 3 pp AMCE, <span class="math inline">\(N_{\text{profiles}} = (3/2)(7.84/0.03^2) \approx 13{,}067\)</span>, i.e.&nbsp;<span class="math inline">\(N \approx 1{,}089\)</span> respondents at six tasks and two profiles per task. For a heterogeneity analysis with a binary moderator, the required <span class="math inline">\(N\)</span> roughly doubles, giving <span class="math inline">\(N \approx 2{,}200\)</span>.</p>
 <div class="cell">
 <div id="tbl-power-main" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-power-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;12.2: Minimum N for the main study (power = 0.80, α = 0.05, 6 tasks)
+Table&nbsp;4.2: Minimum N for the main study (power = 0.80, α = 0.05, 6 tasks)
 </figcaption><div aria-describedby="tbl-power-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
@@ -620,14 +672,14 @@ Table&nbsp;12.2: Minimum N for the main study (power = 0.80, α = 0.05, 6 tasks)
 </figure>
 </div>
 </div>
-</section><section id="reported-indicators" class="level2" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="reported-indicators">
-<span class="header-section-number">12.3</span> Reported indicators</h2>
-<p>The power curves below report, for each attribute type, the statistical power achieved across candidate sample sizes and effect sizes, with the pilot and main-study targets marked. Because the analytic formula assumes a binary outcome and independent tasks, we complement it with a design-based simulation (DeclareDesign) that reproduces the realized design—continuous share outcome, six tasks per respondent, the pair restriction of at least two differing attributes, and respondent-level clustering—and reports bias, RMSE, power, and confidence-interval coverage across <span class="math inline">N = 500; 750; 1{,}000; 1{,}500; 2{,}000</span>. The simulation provides a more realistic assessment than the closed-form approximation under the actual outcome distribution.</p>
+</section><section id="reported-indicators" class="level3" data-number="4.7.3"><h3 data-number="4.7.3" class="anchored" data-anchor-id="reported-indicators">
+<span class="header-section-number">4.7.3</span> Reported indicators</h3>
+<p>The power curves below report, for each attribute type, the statistical power achieved across candidate sample sizes and effect sizes, with the pilot and main-study targets marked. Because the analytic formula assumes a binary outcome and independent tasks, we complement it with a design-based simulation (DeclareDesign) that reproduces the realized design—continuous share outcome, six tasks per respondent, the pair restriction of at least two differing attributes, and respondent-level clustering—and reports bias, RMSE, power, and confidence-interval coverage across <span class="math inline">\(N = 500; 750; 1{,}000; 1{,}500; 2{,}000\)</span>. The simulation provides a more realistic assessment than the closed-form approximation under the actual outcome distribution.</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
-<div id="fig-power" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="top" data-fig-pos="H">
+<div id="fig-power" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-cap-location="top">
 <figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.1: Statistical power curves by number of respondents
+Figure&nbsp;4.2: Statistical power curves by number of respondents
 </figcaption><div aria-describedby="fig-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="04-conjoint-desing_files/figure-html/fig-power-1.png" class="img-fluid figure-img" style="width:85.0%" data-fig-pos="H">
 </div>
@@ -635,29 +687,34 @@ Figure&nbsp;12.1: Statistical power curves by number of respondents
 </div>
 </div>
 </div>
-<p><strong>Recommendation.</strong> <span class="math inline">N = 1{,}200</span> suffices for main effects with power <span class="math inline">\geq 0.80</span> on all attributes; <span class="math inline">N = 1{,}500</span> adds margin and supports descriptive subgroup analysis; <span class="math inline">N = 2{,}000</span> is targeted when heterogeneity analyses are treated as confirmatory estimands. Given the conservative binary-outcome assumption, <span class="math inline">N = 1{,}500</span> is likely sufficient for the most relevant heterogeneity analyses of the design.</p>
-</section></section><section id="quality-control" class="level1" data-number="13"><h1 data-number="13">
-<span class="header-section-number">13</span> Quality control</h1>
+<p><strong>Recommendation.</strong> <span class="math inline">\(N = 1{,}200\)</span> suffices for main effects with power <span class="math inline">\(\geq 0.80\)</span> on all attributes; <span class="math inline">\(N = 1{,}500\)</span> adds margin and supports descriptive subgroup analysis; <span class="math inline">\(N = 2{,}000\)</span> is targeted when heterogeneity analyses are treated as confirmatory estimands. Given the conservative binary-outcome assumption, <span class="math inline">\(N = 1{,}500\)</span> is likely sufficient for the most relevant heterogeneity analyses of the design.</p>
+</section></section><section id="quality-control" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="quality-control">
+<span class="header-section-number">4.8</span> Quality control</h2>
 <p>All checks below are pre-registered and used to flag rather than automatically exclude respondents: the confirmatory analysis is reported both with and without flagged cases (see Missing data).</p>
-<section id="attention-and-comprehension-checks" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="attention-and-comprehension-checks">
-<span class="header-section-number">13.1</span> Attention and comprehension checks</h2>
+<section id="attention-and-comprehension-checks" class="level3" data-number="4.8.1"><h3 data-number="4.8.1" class="anchored" data-anchor-id="attention-and-comprehension-checks">
+<span class="header-section-number">4.8.1</span> Attention and comprehension checks</h3>
 <p>Two screening items are included. A comprehension check, placed after the practice task and before the six allocation tasks, asks respondents what their task will consist of, with the correct option (“distributing a scholarship amount between two applicants”) shown alongside distractors describing plausible misreadings, most importantly choosing a single applicant, which corresponds to the forced-choice format the design does not use. An attention check of the standard instructional-manipulation type, embedded among the post-task attitudinal items, instructs respondents to select a specific option (“disagree”) regardless of content. Respondents failing either are flagged.</p>
-</section><section id="time-filters" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="time-filters">
-<span class="header-section-number">13.2</span> Time filters</h2>
+</section><section id="time-filters" class="level3" data-number="4.8.2"><h3 data-number="4.8.2" class="anchored" data-anchor-id="time-filters">
+<span class="header-section-number">4.8.2</span> Time filters</h3>
 <p>Total completion time and time on the conjoint module are recorded. Respondents whose completion time falls implausibly below the median are flagged as likely satisficing. Because the plausible lower bound depends on the observed distribution, the exact threshold is fixed after the pilot rather than imposed in advance, and pre-registered before the main study.</p>
-</section><section id="response-patterns" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="response-patterns">
-<span class="header-section-number">13.3</span> Response patterns</h2>
+</section><section id="response-patterns" class="level3" data-number="4.8.3"><h3 data-number="4.8.3" class="anchored" data-anchor-id="response-patterns">
+<span class="header-section-number">4.8.3</span> Response patterns</h3>
 <p>Two non-substantive patterns are monitored: invariant responding across the six tasks—most saliently leaving every slider at the default even split—and straight-lining across the attitudinal batteries used to construct the moderators. Because a fixed even split is also a substantively meaningful choice, these patterns are flagged for sensitivity analysis rather than used as automatic exclusions.</p>
-<div style="page-break-after: always;"></div>
-</section></section><section id="references" class="level1" data-number="14"><h1 data-number="14">
-<span class="header-section-number">14</span> References</h1>
+</section></section><section id="references" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="references">
+<span class="header-section-number">4.9</span> References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-auspurg_factorial_2016" class="csl-entry" role="listitem">
 Auspurg, K., &amp; Hinz, T. (2016). <em>Factorial survey
 experiments</em>. Los Angeles: SAGE.
 </div>
+<div id="ref-bansak_breaking_2021" class="csl-entry" role="listitem">
+Bansak, K., Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2021a).
+Beyond the breaking point? <span>Survey</span> satisficing in conjoint
+experiments. <em>Political Science Research and Methods</em>,
+<em>9</em>(1), 53–71. <a href="https://doi.org/10.1017/psrm.2019.13">https://doi.org/10.1017/psrm.2019.13</a>
+</div>
 <div id="ref-bansak_conjoint_2021" class="csl-entry" role="listitem">
-Bansak, K., Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2021).
+Bansak, K., Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2021b).
 Conjoint <span>Survey Experiments</span>. In J. Druckman &amp; D. P.
 Green (Eds.), <em>Advances in <span>Experimental Political
 Science</span></em> (1st ed., pp. 19–41). Cambridge University Press. <a href="https://doi.org/10.1017/9781108777919.004">https://doi.org/10.1017/9781108777919.004</a>
@@ -669,6 +726,12 @@ Meritocratic Beliefs</span>: <span>Advantages</span>,
 <span>Limitations</span> and <span>Alternatives</span> to the <span>ISSP
 Social Inequality Survey</span>. <em>International Journal of
 Sociology</em>, <em>53</em>(6), 448–472. <a href="https://doi.org/10.1080/00207659.2023.2274712">https://doi.org/10.1080/00207659.2023.2274712</a>
+</div>
+<div id="ref-castillo_meritocracia_2019" class="csl-entry" role="listitem">
+Castillo, J. C., Torres, A., Atria, J., &amp; Maldonado, L. (2019).
+Meritocracia y desigualdad económica: <span>Percepciones</span>,
+preferencias e implicancias. <em>Revista Internacional de
+Sociología</em>, <em>77</em>(1), 117. <a href="https://doi.org/10.3989/ris.2019.77.1.17.114">https://doi.org/10.3989/ris.2019.77.1.17.114</a>
 </div>
 <div id="ref-dietrich_prioritizing_2026" class="csl-entry" role="listitem">
 Dietrich, B., Jankowski, M., Schnapp, K.-U., &amp; Tepe, M. (2026).
@@ -751,13 +814,16 @@ public. <em>Policy &amp; Politics</em>, <em>28</em>(1), 33–48. <a href="https:
 Schuessler, J., &amp; Freitag, M. (2020). Power <span>Analysis</span>
 for <span>Conjoint Experiments</span>. SocArXiv. <a href="https://doi.org/10.31235/osf.io/9yuhp">https://doi.org/10.31235/osf.io/9yuhp</a>
 </div>
+<div id="ref-valenzuela_socioeconomic_2013" class="csl-entry" role="listitem">
+Valenzuela, J. P., Bellei, C., &amp; Ríos, D. D. L. (2013).
+Socioeconomic school segregation in a market-oriented educational
+system. <span>The</span> case of <span>Chile</span>. <em>Journal of
+Education Policy</em>, <em>29</em>(2), 217–241. <a href="https://doi.org/10.1080/02680939.2013.806995">https://doi.org/10.1080/02680939.2013.806995</a>
 </div>
-</section>
 </div>
 
 
-
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1157,13 +1223,13 @@ for <span>Conjoint Experiments</span>. SocArXiv. <a href="https://doi.org/10.312
     }
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./03-instrument-desing.html" class="pagination-link" aria-label="Diseño del instrumento">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diseño del instrumento</span></span>
+      <a href="./03-instrument-desing.html" class="pagination-link" aria-label="Instrument design">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instrument design</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-survey-implementation.html" class="pagination-link" aria-label="Implementación del Instrumento">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Implementación del Instrumento</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05-survey-implementation.html" class="pagination-link" aria-label="Survey implementation">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survey implementation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

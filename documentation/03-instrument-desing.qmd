@@ -1,9 +1,9 @@
 ---
-title: "Diseño del instrumento"
 format: html
 ---
 
 # Instrument design {#dis-instrument}
 
 ## Questionnaire Structure and Content
+
 ## Measurement Scales and Sources of Survey Items

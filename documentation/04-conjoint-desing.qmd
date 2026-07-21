@@ -1,37 +1,9 @@
 ---
-title: "Statistical Design: Distributive Conjoint Pre-Plan"
-date: today
-date-format: "DD MMMM, YYYY"
 format:
   html:
-    code-fold: true
-    html-math-method: katex
-    number-sections: true
-    title-block-banner: true
-    include-in-header:
-      text: |
-        <style>
-        .justify { text-align: justify; }
-        </style>
-editor: source
-author:
-  - name: Andreas Laffert
-    corresponding: true
-    orcid: 0000-0002-9008-2454
-    email: alaffertt@estudiante.uc.cl 
-    affiliations:
-      - ref: 1
-affiliations: 
-  - id: 1
-    name: Department of Sociology, University of Chile
-citeproc: true
-link-citations: true
-linestretch: 1.5       
-mainfont: Times New Roman
-fontsize: 13pt          
-colorlinks: true
-fig-height: 4
-fig-width: 7.5
+    toc: true
+    toc-expand: true
+    css: justify.css
 ---
 
 
@@ -60,27 +32,32 @@ table_format = if (knitr::is_html_output()) {
 #| echo: false
 #| cache.extra: tools::md5sum("../processing/cjpow.R")
 
-source(file = "../processing/cjpow.R")
+library(here)
+here::i_am("documentation/04-conjoint-desing.qmd")
+
+source(file = here("processing/cjpow.R"))
 
 ```
 
-:::: {.justify}
 
-# Introduction
+# Statistical Design: Distributive Conjoint Pre-Plan
 
-Entitlement to welfare provision is rarely unconditional. Even in solidaristic systems, access to social goods rests on normative judgments about who deserves collective support and on what grounds, what the literature terms conditional solidarity and, at the individual level, deservingness [@oorschot_who_2000; @meuleman_welfare_2020]. A growing experimental literature has mapped how citizens weigh deservingness criteria such as need, control, reciprocity, attitude, and identity [@knotz_recast_2022; @dietrich_prioritizing_2026; @gilgen_disentangling_2022]. Yet most of this work asks respondents to evaluate claimants in isolation or to choose between them in binary forced-choice tasks, without confronting the distributive trade-offs that scarce resources impose. When allocating more to one claimant necessarily means allocating less to another, the relative weight citizens place on competing criteria may diverge sharply from what attitudinal or forced-choice measures capture. This study addresses that gap by embedding the deservingness framework in a distributive allocation task under genuine scarcity.
+## Introduction
 
-We administer a pre-registered paired-profile distributive conjoint experiment to a Chilean sample, adapting Gilgen's [-@gilgen_disentangling_2022] Distributional Survey Experiment. Respondents act as members of a university committee dividing a fixed first-year scholarship fund between two applicants via a continuous slider, so that giving more to one means giving less to the other. Applicant profiles are built on the recast NICER scheme [@knotz_recast_2022], which integrates and refines van Oorschot's CARIN criteria, and vary need, control, effort, reciprocity, attitude, identity, and sex. Chile offers a demanding test case: its higher education system combines some of the highest private expenditure shares in the OECD with acute stratification by origin, and its population holds unusually strong meritocratic beliefs relative to its level of inequality [@castillo_multidimensional_2023]. If need dominates allocations even here, its primacy as a distributive principle appears robust; if effort and control prevail, this reveals how commodification and meritocratic ideology jointly reshape distributive judgments.
+Entitlement to welfare provision is rarely unconditional. Even in solidaristic systems, access to social goods rests on normative judgments about who deserves collective support and on what grounds, what welfare state research terms conditional solidarity and, at the individual level, deservingness [@oorschot_who_2000; @meuleman_welfare_2020]. A growing experimental literature has established how citizens weigh criteria such as need, control, reciprocity, effort, attitude and identity, overwhelmingly in the domain of unemployment benefits and social assistance: respondents rate how deserving a fictional claimant is, or state what share of a benefit that claimant should receive, one claimant at a time [@knotz_recast_2022; @meuleman_welfare_2020], or decide which of two claimants to prioritize for a service [@dietrich_prioritizing_2026]. Both formats evaluate claimants against a standard rather than against each other, which allows respondents to endorse each criterion independently without ever resolving the conflicts between them. Yet justice principles routinely point in opposite directions—a claimant may be needy but exert little effort, another may have contributed much but need little—so that honoring need and merit at once is a dilemma rather than a sum [@gilgen_disentangling_2022]. Only when a finite resource must be divided is a respondent forced to adopt a weighting among the competing principles, and it is that weighting, rather than the separate endorsement of each criterion, that constitutes a distributive preference. A division task also makes observable a principle the standard formats cannot register at all: equality, since an equal split is expressible only where respondents control how much each claimant receives.
 
-# Study Information
+We therefore administer a pre-registered paired-profile distributive conjoint experiment to a Chilean sample, adapting Gilgen's [-@gilgen_disentangling_2022] Distributional Survey Experiment to the tabular profile presentation and the complete, independent randomization of a conjoint design. Respondents act as members of a university committee dividing a fixed first-year scholarship fund between two applicants via a continuous slider, so that giving more to one means giving less to the other. Applicant profiles are built on the recast NICER scheme [@knotz_recast_2022], which integrates and refines van Oorschot's CARIN criteria, and vary need, control, effort, reciprocity, attitude, identity, and sex. The setting further moves deservingness research into a domain where it has rarely been tested experimentally: access to higher education rather than unemployment or social assistance. Chile is a demanding case. Its higher education system combines some of the highest shares of private household expenditure in the OECD with acute stratification by socioeconomic origin [@valenzuela_socioeconomic_2013], and its population holds unusually strong meritocratic beliefs relative to its level of inequality [@castillo_meritocracia_2019]. If need dominates allocations even here, its primacy as a distributive principle appears robust; if effort and control prevail, this reveals how commodification and meritocratic ideology jointly reshape distributive judgments.
 
-## Research question
+
+## Study Information
+
+### Research question
 
 **To what extent do deservingness criteria—need, control, effort, reciprocity, attitude, and identity—shape how citizens allocate scarce higher education scholarships between competing applicants in Chile?**
 
-## Hypotheses
+### Hypotheses
 
-### Main effects
+#### Main effects
 
 $H_1$ (Need): Applicants from households that struggle to make ends meet (*Dificultad*) will receive a larger share than applicants from financially comfortable households (*Holgura*). 
 
@@ -96,7 +73,7 @@ $H_6$ (Identity): Country of birth will affect allocation. Relative to Chilean-b
 
 $H_7$ (Sex): Female applicants, signaled through gendered names, will receive a larger share of the scholarship than male applicants.
 
-### Conditional effects (moderation)
+#### Conditional effects (moderation)
 
 We expect merit and disadvantage-related attributes to be moderated by respondents' meritocratic orientation, measured following Castillo et al. (2023). For the pre-registered confirmatory tests we use the two *normative* components of that framework—meritocratic preference (the endorsement that effort and talent *should* be rewarded) and acceptance of privilege (the endorsement of advantage derived from non-meritocratic factors)—because they yield clearer directional predictions than the descriptive-perception components.
 
@@ -106,7 +83,7 @@ $H_9$ (Control × meritocratic preference): The positive effect of uncontrollabl
 
 $H_{10}$ (Need × acceptance of privilege): The positive effect of economic need ($H_1$) will be weaker among respondents with higher acceptance of privilege.
 
-### Exploratory moderation
+#### Exploratory moderation
 
 The two descriptive-perception components of @castillo_multidimensional_2023, meritocratic perception (the belief that effort and talent *are* in fact rewarded) and perception of privilege (the recognition that non-meritocratic factors shape outcomes), are descriptive rather than normative beliefs, so their moderating direction is not theoretically determined. We therefore formalize the following as exploratory hypotheses, tested but not used for confirmatory inference.
 
@@ -117,9 +94,9 @@ $H_{12}$ (Need × perception of privilege, exploratory): The positive effect of 
 
 [POR DEFINIR]
 
-# Experimental design
+## Experimental design
 
-## Design type
+### Design type
 
 The study uses a **paired-profile distributive conjoint**, a design that fuses the randomization logic of conjoint survey experiments with the allocative logic of distributive justice experiments. As in a standard conjoint, each task presents two profiles whose attributes are independently randomized, and the analysis recovers the effect of each attribute and level on the outcome. What departs from the standard conjoint is the response: rather than choosing one profile over the other, the respondent distributes a fixed resource between them, allocating a percentage of the total to each. The design therefore functions as an *allocator*—it asks how a scarce good should be divided between two independent claimants—and reveals the weight respondents place on each attribute through the share they are willing to grant.
 
@@ -127,19 +104,25 @@ Formally, each task displays two applicants with randomized profiles, and the re
 
 This distributive logic follows the Distributional Survey Experiment of @gilgen_disentangling_2022, but the present design differs from hers in two consequential respects. First, it retains the full randomization of a conjoint rather than constructing a D-efficient design: attribute levels are drawn independently and uniformly at the profile level, which simplifies both implementation and the identification of AMCEs (see Causal identification). Second, it presents two profiles per task rather than three. Using two profiles reduces the cognitive load of a task that is already more demanding than a binary choice, and it keeps both the interface and the statistical model simple, since the interdependence of the outcome becomes trivial: the second applicant's share is the complement of the first (B = 100 − A). The result is a design that borrows the causal-inferential machinery of the conjoint tradition [@hainmueller_causal_2014] and the distributive, scarcity-based task of Gilgen's framework, without inheriting the design-efficiency complications of the latter.
 
-## Scenario
+### Scenario
 
 Respondents are asked to place themselves in the role of a member of a university committee responsible for allocating a first-year higher education scholarship. They are told that the two applicants shown in each task were admitted to the same program at the same institution, where students must pay to study, that the information about each applicant was provided and verified by their secondary school, and that the scholarship fund available to distribute is CLP 2,000,000 for the first year. This framing establishes a context of genuine scarcity—the fund cannot fully cover both applicants—and holds the admission bar and institution constant across applicants, so that the allocation decision turns on the experimentally manipulated attributes rather than on differences in eligibility or institutional prestige.
 
-## Task structure
+### Task structure
 
 Each respondent $(i)$ completes six allocation tasks $(t)$. In every task, two applicant profiles (each labeled by a first name and displayed side by side in a table) are presented together with the fixed scholarship fund, and the respondent distributes the fund between them according to what they consider fair, with no correct or incorrect answer. Presenting six tasks per respondent rather than a single one increases within-respondent statistical efficiency by yielding multiple allocation decisions per person. This gain comes at the cost of non-independence among the tasks and profiles evaluated by the same respondent, which the analysis addresses explicitly (see Analysis Plan).
 
-## Profiles and attributes
+Six tasks sits well within the range the evidence supports: @bansak_breaking_2021 find no detectable degradation in response quality up to thirty tasks in online panels. It also matches practice in distributive designs, since @gilgen_disentangling_2022 administers four allocation tasks with three profiles each—twelve profile-level observations per respondent, the same number generated here. Because the distributive task is more demanding than a binary choice, we treat thirty as an upper bound rather than a target.
+
+### Profiles and attributes
 
 Each applicant profile $(j)$ is defined by seven experimentally manipulated dimensions. Six correspond to deservingness criteria from the NICER and CARIN frameworks [@knotz_recast_2022; @meuleman_welfare_2020] and are displayed as explicit rows of the profile table: need, control, effort, reciprocity, attitude, and identity. The seventh, applicant sex, is signaled implicitly through a gendered first name rather than as an explicit row, so that the profile reads as a natural description of a person rather than a mechanical list of traits; names are drawn from pools matched on familiarity and perceived social class to isolate the sex signal from other connotations. The order in which the six explicit attributes appear is randomized once per respondent and held constant across their six tasks, so that any effect of attribute position is balanced across the sample while within-respondent presentation remains stable. The full set of levels and reference categories is specified in the Variables section.
 
-## Causal identification and assumptions
+@fig-cbc-module shows the module as presented to respondents.
+
+![The scholarship allocation module as presented to respondents.](images/conjoint_screen.png){#fig-cbc-module width=90%}
+
+### Causal identification and assumptions
 
 The distributive conjoint identifies the average marginal component effect (AMCE) of each attribute on the allocated share under the design-based assumptions formalized by @hainmueller_causal_2014. Because attribute levels are assigned by the researcher rather than observed, identification rests on the randomization itself rather than on selection-on-observables, provided four conditions hold. We adopt their notation: let $i$ index respondents, $t \in \{1,\dots,6\}$ tasks, and $j \in \{1,2\}$ the profile position within a task. Let $T_{ijt}$ denote the vector of randomized attributes of profile $j$, with $l$-th component $T_{ijt}^{(l)}$ taking values in the level set $\mathcal{T}_l$, and let $Y_{ijt}(t)$ be the potential share the respondent would allocate to that profile if its attribute vector were fixed at $t$.
 
@@ -177,9 +160,9 @@ $$\text{AMCE}_l = \mathbb{E}\!\left[\,Y_{ijt}\!\left(t_l^{1}, T_{ijt}^{(-l)}\rig
 
 where $T_{ijt}^{(-l)}$ denotes the remaining attributes and the expectation is taken over their design distribution. The estimand is thus the average change in allocated share associated with the level contrast, averaging over all other attributes as randomized.
 
-# Variables
+## Variables
 
-## Attributes and levels
+### Attributes and levels
 
 The table below lists each attribute, the label shown to respondents, its levels, and the reference category used in estimation. Reference categories are set to the theoretically less deserving or baseline level of each attribute, so that estimated AMCEs read as the change in allocated share associated with moving toward the more deserving level. These reference categories are fixed in advance and applied identically in the analysis code.
 
@@ -247,18 +230,18 @@ The table below lists each attribute, the label shown to respondents, its levels
 </table>
 <p style="font-size:0.8rem; color:#555; margin-top:0.8rem;"><em>Note: Levels are given in English, with the original Spanish wording shown to respondents in parentheses. The factorial space comprises 2 (Need) × 3 (Effort) × 2 (Control) × 2 (Reciprocity) × 2 (Attitude) × 3 (Identity) × 2 (Sex) = 288 unique profiles. Attributes are assigned independently and uniformly at the profile level. Sex is signaled through gendered first names drawn from matched pools rather than as an explicit table row.</em></p>
 
-## Outcome
+### Outcome
 
 The outcome is the share of the scholarship fund allocated to each applicant. Respondents register their decision using a single continuous slider displayed beneath the profile table, initialized at an even split. The slider spans the full fund in Chilean pesos (CLP 0 to CLP 2,000,000), and as it moves, the percentage and peso amount for each applicant update in real time. The recorded value is the amount allocated to the right-hand applicant; the left-hand applicant's amount is its complement, so the two always sum to the fixed total. For analysis this amount is converted to a share of the fund, bounded between 0 and 100, with the two shares within a task summing to 100 by construction. This fixed-sum structure is the defining feature of the distributive design: it makes the allocation genuinely zero-sum, so that any share granted to one applicant is withheld from the other. Modeling the outcome as a share rather than a raw amount respects this structure and follows the strategy recommended by @gilgen_disentangling_2022 for distributional survey experiments. 
 
 
-## Controls and moderators
+### Controls and moderators
 
 Because attributes are randomized at the profile level, no covariates are required to identify the AMCEs: respondent-level characteristics are not confounders and enter only to estimate heterogeneity in the effects, never as adjustments to the main estimand [@hainmueller_causal_2014]. The confirmatory moderation hypotheses (H8–H10) rest on two sets of respondent-level measures. The first is meritocratic orientation, measured following @castillo_multidimensional_2023, which distinguishes four components: meritocratic perception (the belief that effort and talent are in fact rewarded), meritocratic preference (the normative endorsement that they should be rewarded), perception of privilege (the recognition that non-meritocratic factors shape outcomes), and acceptance of privilege (the normative endorsement of privilege-based advantage). The two normative components serve as the confirmatory moderators, since they yield directional predictions; the two descriptive-perception components are reserved for the exploratory hypotheses (H11–H12). Following @leeper_measuring_2020, subgroup and moderation analyses rely on marginal means rather than differences in conditional AMCEs, which depend on the reference category and can mislead when compared across subgroups; the formal treatment is given in the Analysis Plan.
 
-# Randomization
+## Randomization
 
-## Strategy
+### Strategy
 
 The experiment uses complete and independent randomization of attribute levels, the reference case in Hainmueller et al. [-@hainmueller_causal_2014] and the default for most applied conjoint designs [@bansak_conjoint_2021]. For each profile $(j)$, every attribute is drawn independently of the others and of the competing profile, with uniform probability within its attribute ($1/2$ for the four two-level attributes, $1/3$ for Effort and Identity). No attribute is conditioned on another and no level is reweighted, so the joint distribution of profiles is the product of the attribute marginals [@hainmueller_causal_2014]. Randomization occurs at the profile level and is performed anew for each respondent and task, rather than as a fixed block assigned in advance.
 
@@ -266,7 +249,7 @@ Under this scheme the assignment of each attribute is by construction independen
 
 This is why a D-efficient design is not needed here. Such designs optimize the attribute covariance structure to minimize coefficient variance, and are valuable mainly when the factorial space is large relative to the sample, when specific interactions are the target, or when a forced-choice model is fit on few tasks—none of which binds in this design [@auspurg_factorial_2016; @gilgen_disentangling_2022]. The space is small (288 profiles), the estimands are marginal main effects, and complete randomization already guarantees in expectation the orthogonality a D-efficient design engineers, delivering unbiased AMCEs with near-optimal efficiency for main effects at this size [@bansak_conjoint_2021], without the added complexity.
 
-## Restrictions
+### Restrictions
 
 The design imposes a single restriction, applied to the pair of profiles $(j)$ within a task $(t)$ rather than to individual attributes: the two profiles must differ on at least two attributes. When a pair is generated, the two profiles are drawn independently and retained only if they differ on two or more of the seven attributes, otherwise redrawn. This excludes identical pairs and pairs differing on exactly one attribute.
 
@@ -274,9 +257,9 @@ The purpose is cognitive, not statistical. A pair that is identical or nearly so
 
 The restriction operates only on the joint distribution of the two profiles and leaves each attribute's marginal distribution unchanged: every level still appears with its original uniform probability and remains independent of the other attributes within a profile. Because AMCE identification depends on marginal randomization and not on the joint distribution of pairs, the restriction leaves identification and interpretation intact; it removes no level from any attribute's support and induces no within-profile correlation, ruling out only the least informative comparisons. Empirical attribute balance is verified as part of the quality checks (see Quality control).
 
-# Analysis Plan
+## Analysis Plan
 
-## Estimands
+### Estimands
 
 The primary estimand is the average marginal component effect (AMCE) of each attribute on the share of the fund allocated to a profile, in percentage points. For attribute $l$, moving from reference level $t_l^0$ to level $t_l^1$,
 
@@ -284,31 +267,61 @@ $$\text{AMCE}_l = \mathbb{E}\!\left[Y_{ijt}\!\left(t_l^1, T_{ijt}^{(-l)}\right) 
 
 the average change in allocated share associated with the level contrast, averaging over the design distribution of the remaining attributes [@hainmueller_causal_2014]. Since the outcome is a share of a fixed fund rather than a choice probability, the AMCE reads directly as the percentage points of the scholarship a level shifts toward or away from a profile. Alongside AMCEs we report marginal means—the average share at each attribute level—which describe absolute support without a baseline category and are the basis for all subgroup comparisons [@leeper_measuring_2020].
 
-## Models
+### Models
+
+#### Main effects
 
 The confirmatory estimator for the main effects (H1–H7) is a linear model of the allocated share on the seven attributes, with respondent fixed effects and standard errors clustered by respondent:
 
 $$\text{share}_{ijt} = \alpha_i + \sum_{l=1}^{7} \beta_l\, T^{(l)}_{ijt} + \varepsilon_{ijt},$$
 
-where $\alpha_i$ absorbs time-invariant respondent heterogeneity and clustering handles the non-independence of profiles evaluated by the same respondent [@hainmueller_causal_2014; @gilgen_disentangling_2022]. Each attribute enters as dummies against its pre-registered reference category, so each $\beta_l$ is the corresponding AMCE. Modeling the share rather than the raw peso amount respects the fixed-sum structure of the allocation [@gilgen_disentangling_2022].
+where each attribute enters as a set of dummies against its pre-registered reference category, so that each $\beta_l$ is the corresponding AMCE. The fixed-sum structure implies that every respondent's mean allocated share is exactly 50 by construction, so $\alpha_i$ does not absorb between-respondent differences in baseline generosity—there are none to absorb. Its role is to remove the purely chance variation in the attribute composition each respondent happened to face, while the substantive work of accounting for non-independence is done by clustering, which is robust to the arbitrary within-respondent covariance the fixed-sum constraint induces, including the exact negative correlation between the two shares within a task. Modeling the share rather than the raw peso amount respects that structure and follows the strategy adopted by Gilgen [-@gilgen_disentangling_2022] for distributional survey experiments [@hainmueller_causal_2014].
 
-The confirmatory moderation hypotheses (H8–H10) target the conditional AMCE [@hainmueller_causal_2014], whose identification rests, as for the main effects, solely on attribute randomization within any respondent subgroup. Continuous moderators (meritocratic preference, acceptance of privilege) are standardized, so the interaction coefficient reads as the change in an attribute's AMCE per one-standard-deviation increase in the moderator. Because moderators are constant within respondent and would be absorbed by respondent fixed effects, these models use a random intercept to admit the level-2 term:
+#### Conditional effects
 
-$$\text{share}_{ijt} = \gamma_{00} + \sum_l \beta_l\, T^{(l)}_{ijt} + \delta\,(T^{(l)}_{ijt} \times M_i) + \theta\, M_i + u_i + \varepsilon_{ijt},$$
+The confirmatory moderation hypotheses (H8–H10) target the conditional AMCE [@hainmueller_causal_2014]: the same attribute contrast evaluated within the subpopulation defined by a respondent-level moderator $M_i$. Formally, for attribute $l$ moving from reference level $t_l^{0}$ to level $t_l^{1}$,
 
-where $M_i$ is the standardized moderator and $\delta$ the coefficient of interest. The multilevel specification is a device for estimating a level-2 interaction, not a change of estimand: the target remains the conditional AMCE, identified by attribute randomization. Following @leeper_measuring_2020, differences across subgroups are summarized with marginal means, never by comparing conditional AMCEs, which depend on the reference category. The exploratory hypotheses (H11–H12) use the same standardized specification with the two perception components.
+$$\text{AMCE}_l(m) = \mathbb{E}\!\left[Y_{ijt}\!\left(t_l^{1}, T_{ijt}^{(-l)}\right) - Y_{ijt}\!\left(t_l^{0}, T_{ijt}^{(-l)}\right) \,\Big|\, M_i = m\right].$$
 
-## Inference criteria
+Identification requires only that $M_i$ be a pre-treatment respondent characteristic, which holds by design. Because randomization is performed independently of respondent identity, the design distribution of the remaining attributes $T_{ijt}^{(-l)}$ is identical for every value of $M_i$: unlike observational subgroup analysis, the distribution over which the effect is averaged does not differ across groups. What differs is the effective information available per conditional effect, which is the basis of the sample-size requirement for heterogeneity (see Power analysis).
 
-Hypotheses are evaluated two-sided at $\alpha = 0.05$, with 95% confidence intervals for all AMCEs and marginal means. Across the confirmatory family (H1–H10) we control the family-wise error rate with the Holm–Bonferroni procedure, reporting both unadjusted and adjusted $p$-values. Directional hypotheses (H1–H5, H7) are assessed against their pre-registered sign; identity (H6) is non-directional. Subgroup and moderation results are reported as differences in marginal means rather than conditional AMCEs [@leeper_measuring_2020]. Exploratory analyses (H11–H12 and any socio-demographic contrasts) carry no confirmatory weight and are labeled as such.
+Each moderation hypothesis is estimated with the same respondent fixed-effects specification used for the main effects, adding the interaction between the moderated attribute $l^{*}$ and the standardized moderator:
 
-## Missing data
+$$\text{share}_{ijt} = \alpha_i + \sum_{l=1}^{7} \beta_l\, T^{(l)}_{ijt} + \delta\left(T^{(l^{*})}_{ijt} \times M_i\right) + \varepsilon_{ijt},$$
+
+with standard errors clustered by respondent. The conditional AMCE of attribute $l^{*}$ at moderator value $m$ is then $\text{AMCE}_{l^{*}}(m) = \beta_{l^{*}} + \delta m$, so that $\delta = \partial\,\text{AMCE}_{l^{*}} / \partial M$ is the parameter of interest: because $M_i$ is standardized to mean zero and unit variance, $\beta_{l^{*}}$ is the AMCE at the sample mean of the moderator and $\delta$ is the change in that AMCE per one-standard-deviation increase.
+
+Although $M_i$ is constant within respondent and its main effect is absorbed by $\alpha_i$, the interaction remains identified. Writing $\bar{w}_i$ for the respondent-specific mean of any variable $w$, the within transformation applied by the fixed-effects estimator gives $M_i - \bar{M}_i = 0$ for the moderator alone, but
+
+$$T^{(l^{*})}_{ijt} M_i - \overline{T^{(l^{*})}_i M_i} = M_i\left(T^{(l^{*})}_{ijt} - \bar{T}^{(l^{*})}_i\right),$$
+
+which is non-degenerate whenever the attribute varies within respondent—as it does by construction, since each respondent evaluates twelve independently randomized profiles. Estimating cross-level interactions within a fixed-effects specification is the strategy Gilgen [-@gilgen_disentangling_2022] adopts for heterogeneity in distributional survey experiments, interacting vignette-level attributes with respondent-level characteristics while retaining respondent fixed effects.
+
+The absorbed main effect of the moderator is of no substantive interest here. Because the two shares within a task sum to the fixed total, every respondent's mean allocated share is exactly 50, that is $(2T)^{-1}\sum_{t}\sum_{j}\text{share}_{ijt} = 50$ for all $i$, so no respondent characteristic can predict it and level-2 main effects are mechanically null. For the same reason, a random-intercept specification would model the one quantity that carries no between-respondent variation and is therefore not used: respondent heterogeneity in this design resides in how strongly individuals weight each attribute, not in a baseline level of generosity.
+
+One model is fitted per moderation hypothesis, with a single interaction term, so that each $\delta$ is interpretable and the moderators do not compete for the same variance. The exploratory hypotheses (H11–H12) use the identical specification with the two descriptive-perception components as moderators. Following @leeper_measuring_2020, any description of differences across subgroups is reported as differences in marginal means computed directly from the data, never by comparing conditional AMCEs across groups, since the latter depend on the choice of reference category.
+
+#### Robustness
+
+As a robustness check for the fixed-sum structure, we estimate a within-task difference model, regressing the difference in shares between the two profiles in a task on the differences in their attributes:
+
+$$\text{share}_{it}^{A} - \text{share}_{it}^{B} = \sum_l \beta_l\left(T^{(l),A}_{it} - T^{(l),B}_{it}\right) + \varepsilon_{it},$$
+
+with standard errors clustered by respondent. This collapses each task to a single observation, resolving by construction the exact dependence between the two shares. Because a one-level change raises one applicant's share and lowers the other's, coefficients in this specification are approximately twice those of the profile-level model; the two are equivalent up to that scaling. The same specification, with the attribute differences interacted with the standardized moderator, serves as the robustness check for the conditional effects.
+
+### Inference criteria
+
+Hypotheses are evaluated two-sided at $\alpha = 0.05$, with 95% confidence intervals reported for all AMCEs and marginal means. For the two three-level attributes, Effort and Identity, the corresponding hypotheses (H2 and H6 for main effects, H8 for moderation) are assessed with a joint Wald test of the two non-reference coefficients rather than coefficient by coefficient. The joint test is invariant to the choice of reference category, whereas the individual coefficients—and, in the moderation case, the individual interaction terms—are not [@leeper_measuring_2020]. Level-specific AMCEs are still reported for interpretation, with the reference category stated explicitly.
+
+Each hypothesis therefore contributes exactly one $p$-value, and across the confirmatory family (H1–H10) we control the family-wise error rate with the Holm–Bonferroni procedure over those ten tests, reporting both unadjusted and adjusted $p$-values. Directional hypotheses (H1–H5, H7) are assessed against their pre-registered sign; identity (H6) is non-directional. Descriptions of differences across subgroups are reported as differences in marginal means rather than as comparisons of conditional AMCEs [@leeper_measuring_2020]. Exploratory analyses (H11–H12, the latter applying the same joint-test rule to Effort, and any socio-demographic contrasts) carry no confirmatory weight and are labeled as such.
+
+### Missing data
 
 The slider carries a default even-split value and each task must be completed to advance, so item non-response on the outcome is not expected. Respondents failing the pre-registered quality checks (see Quality control) are excluded from the confirmatory analysis, with all results reported both including and excluding flagged respondents. Partial responses from respondents who abandon before completing all six tasks are retained for completed tasks, since the profile-level estimator does not require balanced task counts. No imputation is performed on the outcome.
 
-# Power analysis
+## Power analysis
 
-## Strategy
+### Strategy
 
 Power is computed analytically with the closed-form expressions of @schuessler_power_2020, implemented in the `cjpowR` package, which relate the minimum detectable AMCE to the number of profile evaluations without additional parametric assumptions. The central expression is
 
@@ -316,7 +329,7 @@ $$N \approx \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2}
 
 where $N$ is the total number of profile evaluations ($N_{\text{respondents}} \times \text{tasks} \times 2$), $K$ the number of levels of the attribute of interest, and $\delta_1$ the expected AMCE on the 0–1 scale; under the conservative assumption $\delta_0 = 0.5$ the variance term reduces to $(z_{1-\alpha/2}+z_\kappa)^2 = 7.84$ at $\alpha = 0.05$ and power $0.80$. Two features of the design matter for interpreting these calculations. First, the dimensioning attributes are the three-level ones—Effort and Identity—since their effective sample size is $2/3$ of the total profiles, requiring a larger $N$ than the two-level attributes (Need, Control, Reciprocity, Attitude, Sex) for the same power. Second, the outcome is a continuous share (0–100), not the binary outcome the formula assumes; because the variance of a share concentrated roughly between 20 and 80 pp is well below the $\text{Bernoulli}(0.5)$ variance, the figures reported here are conservative and overstate the required $N$. The minimum effect of interest is set at 3 pp, the lower range of identity-type effects in the CARIN/NICER literature [@knotz_recast_2022].
 
-## Parameters
+### Parameters
 
 For the pilot, the minimum detectable effect at 80% power is $\delta_1 = \sqrt{(K/2)\,(7.84/N_{\text{profiles}})}$. The largest attribute effects are detectable with high confidence under any pilot scenario, while effects near 3 pp sit at the boundary of detectability. This is acceptable because the pilot's purpose is to validate the instrument, calibrate the true variance of the slider outcome, and estimate the intra-respondent correlation across tasks to fine-tune the main-study $N$, rather than to test the confirmatory hypotheses.
 
@@ -334,7 +347,7 @@ For the main study, the minimum $N$ is set by the most demanding attribute. For 
 tbl_power_main
 ```
 
-## Reported indicators
+### Reported indicators
 
 The power curves below report, for each attribute type, the statistical power achieved across candidate sample sizes and effect sizes, with the pilot and main-study targets marked. Because the analytic formula assumes a binary outcome and independent tasks, we complement it with a design-based simulation (DeclareDesign) that reproduces the realized design—continuous share outcome, six tasks per respondent, the pair restriction of at least two differing attributes, and respondent-level clustering—and reports bias, RMSE, power, and confidence-interval coverage across $N = 500; 750; 1{,}000; 1{,}500; 2{,}000$. The simulation provides a more realistic assessment than the closed-form approximation under the actual outcome distribution.
 
@@ -348,30 +361,25 @@ g1
 
 **Recommendation.** $N = 1{,}200$ suffices for main effects with power $\geq 0.80$ on all attributes; $N = 1{,}500$ adds margin and supports descriptive subgroup analysis; $N = 2{,}000$ is targeted when heterogeneity analyses are treated as confirmatory estimands. Given the conservative binary-outcome assumption, $N = 1{,}500$ is likely sufficient for the most relevant heterogeneity analyses of the design.
 
-# Quality control
+## Quality control
 
 All checks below are pre-registered and used to flag rather than automatically exclude respondents: the confirmatory analysis is reported both with and without flagged cases (see Missing data).
 
-## Attention and comprehension checks
+### Attention and comprehension checks
 
 Two screening items are included. A comprehension check, placed after the practice task and before the six allocation tasks, asks respondents what their task will consist of, with the correct option ("distributing a scholarship amount between two applicants") shown alongside distractors describing plausible misreadings, most importantly choosing a single applicant, which corresponds to the forced-choice format the design does not use. An attention check of the standard instructional-manipulation type, embedded among the post-task attitudinal items, instructs respondents to select a specific option ("disagree") regardless of content. Respondents failing either are flagged.
 
-## Time filters
+### Time filters
 
 Total completion time and time on the conjoint module are recorded. Respondents whose completion time falls implausibly below the median are flagged as likely satisficing. Because the plausible lower bound depends on the observed distribution, the exact threshold is fixed after the pilot rather than imposed in advance, and pre-registered before the main study.
 
-## Response patterns
+### Response patterns
 
 Two non-substantive patterns are monitored: invariant responding across the six tasks—most saliently leaving every slider at the default even split—and straight-lining across the attitudinal batteries used to construct the moderators. Because a fixed even split is also a substantively meaningful choice, these patterns are flagged for sensitivity analysis rather than used as automatic exclusions.
 
-
-
-{{< pagebreak >}}
-
-# References
+## References
 
 ::: {#refs}
 :::
 
 
-::::

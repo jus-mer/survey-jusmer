@@ -5,10 +5,17 @@ format: html
 # Statistical design {#dis-estadis}
 
 ## Target Population and Survey Population
+
 ## Sampling Frame
+
 ## Units of Analysis and Domains
+
 ## Sampling Strategy and Sample Selection
+
 ## Quotas and Sample Size
+
 ## Longitudinal Design
+
 ## Weighting and Calibration
+
 ## Precision, Uncertainty, and Non-sampling Errors

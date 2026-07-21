@@ -1,5 +1,4 @@
 ---
-title: "Libro de Códigos"
 format: html
 ---
 
