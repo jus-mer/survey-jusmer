@@ -301,13 +301,6 @@ The absorbed main effect of the moderator is of no substantive interest here. Be
 
 One model is fitted per moderation hypothesis, with a single interaction term, so that each $\delta$ is interpretable and the moderators do not compete for the same variance. The exploratory hypotheses (H11–H12) use the identical specification with the two descriptive-perception components as moderators. Following @leeper_measuring_2020, any description of differences across subgroups is reported as differences in marginal means computed directly from the data, never by comparing conditional AMCEs across groups, since the latter depend on the choice of reference category.
 
-#### Robustness
-
-As a robustness check for the fixed-sum structure, we estimate a within-task difference model, regressing the difference in shares between the two profiles in a task on the differences in their attributes:
-
-$$\text{share}_{it}^{A} - \text{share}_{it}^{B} = \sum_l \beta_l\left(T^{(l),A}_{it} - T^{(l),B}_{it}\right) + \varepsilon_{it},$$
-
-with standard errors clustered by respondent. This collapses each task to a single observation, resolving by construction the exact dependence between the two shares. Because a one-level change raises one applicant's share and lowers the other's, coefficients in this specification are approximately twice those of the profile-level model; the two are equivalent up to that scaling. The same specification, with the attribute differences interacted with the standardized moderator, serves as the robustness check for the conditional effects.
 
 ### Inference criteria
 
