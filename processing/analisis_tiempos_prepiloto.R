@@ -84,6 +84,18 @@ detalle_list <- lapply(qcols, function(col) {
 tiempo_pregunta_detalle <- do.call(rbind, detalle_list)
 tiempo_pregunta_detalle <- tiempo_pregunta_detalle[!is.na(tiempo_pregunta_detalle$tiempo_seg), ]
 
+# Desviacion estandar, por caso, de la duracion (duracion_seg) entre todas
+# las preguntas que respondio: mide que tan variable fue su ritmo de
+# respuesta pregunta a pregunta.
+sd_duracion_caso <- stats::aggregate(
+  duracion_seg ~ session_id,
+  data = tiempo_pregunta_detalle,
+  FUN = function(x) sd(x, na.rm = TRUE)
+)
+names(sd_duracion_caso)[2] <- "sd_duracion_pregunta_seg"
+tiempo_caso <- merge(tiempo_caso, sd_duracion_caso, by = "session_id", all.x = TRUE)
+tiempo_caso$sd_duracion_pregunta_seg <- round(tiempo_caso$sd_duracion_pregunta_seg, 2)
+
 # -----------------------------------------------------------------------------
 # 4. Resumen agregado por pregunta (n, media, mediana, sd, min, max) + modulo(s)
 #    en que se presenta esa pregunta (inferido a partir de los datos: en que

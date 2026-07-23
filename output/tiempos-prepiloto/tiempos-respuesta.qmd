@@ -33,8 +33,8 @@ tiempo_estimado_total <- read.csv(
 
 ## Metodología
 
-Base: `input/tbl/tiempos-prepiloto.csv`, restringida a los `r nrow(tiempo_caso)`
-casos con `consent_understand == "yes"`. La encuesta tiene un tramo común y
+Base: `input/tbl/tiempos-prepiloto.csv`, restringida a los 12
+casos válidos. La encuesta tiene un tramo común y
 luego se ramifica en tres módulos aleatorizados (`assigned_module` A/B/C), de
 modo que cada respondente sólo contesta uno de los tres.
 
@@ -55,19 +55,32 @@ modo que cada respondente sólo contesta uno de los tres.
 
 ## Tiempo total por caso
 
+`DE duración por pregunta (s)` es la desviación estándar, para cada
+respondente, de la duración (delta respecto al checkpoint anterior) de cada
+una de las preguntas que respondió: mide qué tan parejo o disparejo fue su
+ritmo de respuesta a lo largo de la encuesta. El caso respID 749 se excluye
+de esta tabla porque solo dejó timestamp en una pregunta (`consent_understand`),
+por lo que la desviación estándar no está definida (requiere al menos 2
+valores).
+
 ```{r}
 #| label: tbl-tiempo-caso
 #| echo: false
 
 tiempo_caso |>
-  select(respID, assigned_module, time_start, time_end, tiempo_total_min) |>
+  filter(respID != "749") |>
+  select(
+    respID, assigned_module, time_start, time_end, tiempo_total_min,
+    sd_duracion_pregunta_seg
+  ) |>
   arrange(desc(tiempo_total_min)) |>
   datatable(
     filter = "top",
     rownames = FALSE,
     options = list(pageLength = 15, scrollX = TRUE),
     colnames = c(
-      "respID", "Módulo", "Inicio", "Fin", "Tiempo total (min)"
+      "respID", "Módulo", "Inicio", "Fin", "Tiempo total (min)",
+      "DE duración por pregunta (s)"
     )
   )
 ```
@@ -78,24 +91,23 @@ corrido). Sin embargo, sus respuestas se mantienen en los tiempos normales, comp
 
 ## Tiempo de respuesta por pregunta
 
-Resumen por pregunta (`time_q_*`): columnas `Media (s)`/`Mediana (s)`/`DE (s)`/
-`Mín (s)`/`Máx (s)` describen el tiempo acumulado desde `time_start`; columnas
-`Duración media (s)`/`Duración mediana (s)` describen la duración específica
-de esa pregunta (delta respecto al checkpoint anterior). `n` corresponde al
-número de casos que alcanzaron esa pregunta (varía según el módulo asignado).
+Resumen por pregunta (`time_q_*`): columnas `Duración media (s)`/
+`Duración mediana (s)` describen la duración específica de esa pregunta
+(delta respecto al checkpoint anterior). `n` corresponde al número de casos
+que alcanzaron esa pregunta (varía según el módulo asignado).
 
 ```{r}
 #| label: tbl-tiempo-pregunta
 #| echo: false
 
 tiempo_pregunta_resumen |>
+  select(pregunta, modulo, n, duracion_media_seg, duracion_mediana_seg) |>
   datatable(
     filter = "top",
     rownames = FALSE,
     options = list(pageLength = 20, scrollX = TRUE),
     colnames = c(
-      "Pregunta", "Módulo", "N", "Media (s)", "Mediana (s)",
-      "DE (s)", "Mín (s)", "Máx (s)",
+      "Pregunta", "Módulo", "N",
       "Duración media (s)", "Duración mediana (s)"
     )
   )
