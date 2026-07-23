@@ -1,0 +1,144 @@
+---
+title: Tiempos de respuesta pre-piloto
+author: Tomás Urzúa - Asistente de investigación
+date: today
+format:
+  html:
+    toc: true
+    df-print: kable
+    theme: cosmo
+    embed-resources: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(dplyr)
+library(DT)
+
+tiempo_caso <- read.csv(
+  here::here("output/tiempos-prepiloto/tiempos-caso.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE
+)
+tiempo_pregunta_resumen <- read.csv(
+  here::here("output/tiempos-prepiloto/tiempos-pregunta-resumen.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE
+)
+tiempo_estimado_total <- read.csv(
+  here::here("output/tiempos-prepiloto/tiempos-estimado-total.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE
+)
+```
+
+## Metodología
+
+Base: `input/tbl/tiempos-prepiloto.csv`, restringida a los 12
+casos válidos. La encuesta tiene un tramo común y
+luego se ramifica en tres módulos aleatorizados (`assigned_module` A/B/C), de
+modo que cada respondente sólo contesta uno de los tres.
+
+- **Tiempo total de la encuesta**: `time_end - time_start` para cada caso.
+- **Tiempo por pregunta (acumulado)**: para cada columna `time_q_*`
+  (timestamp al responder esa pregunta), se calcula `time_q_* - time_start`.
+  Es decir, es el tiempo transcurrido **desde el inicio de la encuesta hasta
+  esa pregunta**, no la duración exclusiva dedicada a esa pregunta puntual.
+- **Duración por pregunta**: `time_q_*` menos el checkpoint anterior de ese
+  mismo caso (el `time_start` para la primera pregunta con valor, o el
+  `time_q_*` previo con valor, saltando las preguntas del módulo no
+  asignado). Aproxima el tiempo dedicado específicamente a esa pregunta.
+  Las columnas `time_p_*` (a nivel de página, que pueden agrupar varias
+  preguntas) no se incluyen en ninguno de los dos cálculos.
+- El "módulo" de cada pregunta en la tabla de resumen se infiere directamente
+  de los datos: en qué `assigned_module` existe al menos un valor no vacío
+  para esa pregunta. "Todos" indica preguntas del tramo común.
+
+## Tiempo total por caso
+
+`DE duración por pregunta (s)` es la desviación estándar, para cada
+respondente, de la duración (delta respecto al checkpoint anterior) de cada
+una de las preguntas que respondió: mide qué tan parejo o disparejo fue su
+ritmo de respuesta a lo largo de la encuesta. El caso respID 749 se excluye
+de esta tabla porque solo dejó timestamp en una pregunta (`consent_understand`),
+por lo que la desviación estándar no está definida (requiere al menos 2
+valores).
+
+```{r}
+#| label: tbl-tiempo-caso
+#| echo: false
+
+tiempo_caso |>
+  filter(respID != "749") |>
+  select(
+    respID, assigned_module, time_start, time_end, tiempo_total_min,
+    sd_duracion_pregunta_seg
+  ) |>
+  arrange(desc(tiempo_total_min)) |>
+  datatable(
+    filter = "top",
+    rownames = FALSE,
+    options = list(pageLength = 15, scrollX = TRUE),
+    colnames = c(
+      "respID", "Módulo", "Inicio", "Fin", "Tiempo total (min)",
+      "DE duración por pregunta (s)"
+    )
+  )
+```
+
+`r resp_max <- tiempo_caso$respID[which.max(tiempo_caso$tiempo_total_min)]; max_min <- round(max(tiempo_caso$tiempo_total_min), 1)` El caso respID `r resp_max` tiene un tiempo total de `r max_min` minutos, muy por
+sobre el resto (probablemente dejó la encuesta abierta sin completarla de
+corrido). Sin embargo, sus respuestas se mantienen en los tiempos normales, comprobando el tiempo en el que respondió la última pregunta (se demoró aprox 13 minutos).
+
+## Tiempo de respuesta por pregunta
+
+Resumen por pregunta (`time_q_*`): columnas `Duración media (s)`/
+`Duración mediana (s)` describen la duración específica de esa pregunta
+(delta respecto al checkpoint anterior). `n` corresponde al número de casos
+que alcanzaron esa pregunta (varía según el módulo asignado).
+
+```{r}
+#| label: tbl-tiempo-pregunta
+#| echo: false
+
+tiempo_pregunta_resumen |>
+  select(pregunta, modulo, n, duracion_media_seg, duracion_mediana_seg) |>
+  datatable(
+    filter = "top",
+    rownames = FALSE,
+    options = list(pageLength = 20, scrollX = TRUE),
+    colnames = c(
+      "Pregunta", "Módulo", "N",
+      "Duración media (s)", "Duración mediana (s)"
+    )
+  )
+```
+
+## Estimado de tiempo total con los tres módulos
+
+La encuesta real solo muestra un módulo por respondente. Para estimar cuánto
+se demoraría alguien en responder la encuesta completa si los tres módulos
+estuvieran disponibles (en vez de uno solo asignado al azar), se suma:
+
+- el promedio, por caso, del tiempo dedicado a la sección común (tramo
+  compartido antes y después de los módulos), y
+- el promedio, por caso, del tiempo dedicado a cada módulo (A, B y C) —
+  calculado solo con los casos que efectivamente respondieron ese módulo.
+
+Cada promedio se calcula sumando, para cada caso, las duraciones
+(`duracion_seg`, delta respecto al checkpoint anterior) de las preguntas de
+esa sección, y luego promediando esas sumas entre los casos correspondientes.
+
+```{r}
+#| label: tbl-tiempo-estimado
+#| echo: false
+
+tiempo_estimado_total |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = 5),
+    colnames = c("Sección", "N casos", "Promedio (s)", "Promedio (min)")
+  )
+```
+
+`r min_total <- tiempo_estimado_total$promedio_min[tiempo_estimado_total$seccion == "Total estimado (comun + A + B + C)"]` Con esto, se estima que responder la sección común más los tres módulos
+completos tomaría en promedio **`r min_total` minutos**.

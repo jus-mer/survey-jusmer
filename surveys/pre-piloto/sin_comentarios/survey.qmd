@@ -123,14 +123,17 @@ system-messages:
   exit: "Finalizar encuesta"
 ---
 
-
 ```{r}
-Sys.setlocale("LC_ALL", "en_US.UTF-8")
 library(surveydown)
 library(dplyr)
 library(kableExtra)
 library(htmltools)
 library(here)
+```
+
+
+```{r}
+Sys.setlocale("LC_ALL", "en_US.UTF-8")
 source("code/slider_widget.R")
 ```
 
@@ -381,7 +384,6 @@ function styleConjointProfiles() {
 }
 
 
-
 function forceAllocationTextOpacity() {
   document.querySelectorAll('[id$="_opt1"], [id$="_opt2"], [id$="_opt1_pct"], [id$="_opt2_pct"]').forEach(function(el) {
     if (el.id.endsWith('_opt1') || el.id.endsWith('_opt1_pct')) {
@@ -521,7 +523,9 @@ sd_question(
     '**No**'  = 'no'
   )
 )
+```
 
+```{r}
 sd_nav(
   page_next = "demographics",
   label_next = "Siguiente"
@@ -536,7 +540,6 @@ sd_nav(
 A continuación se presentan una serie de preguntas para conocer información sobre usted. Recuerde que sus respuestas serán anónimas y confidenciales, y que no hay respuestas correctas o incorrectas.
 
 ```{r}
-
 sd_question(
   type   = 'mc',
   id     = 'respondent',
@@ -547,7 +550,9 @@ sd_question(
     "Tablet" = "tablet"
   )
 )
+```
 
+```{r}
 sd_question(
   type   = 'mc',
   id     = 'sexo',
@@ -558,34 +563,18 @@ sd_question(
     "Otro" = "99"
   )
 )
+```
 
-# Construct the list of years
- 
-years <- as.character(2008:1920)
-names(years) <- years
-years <- c("Prefiero no decir" = "prefer_not_say", years)
-
+```{r}
 sd_question(
   type   = 'select',
   id     = 'year_of_birth',
   label  = "¿En qué año nació?",
   option = years
 )
+```
 
-educations <- c(
-  "Sin estudios"       = "0",
-  "Educación básica incompleta"          = "1",
-  "Educación básica completa" = "2",
-  "Educación media incompleta" = "3",
-  "Educación media completa" = "4",
-  "Técnica superior incompleta (instituto o CFT)"    = "5",
-  "Técnica superior completa (instituto o CFT)"    = "6",
-  "Universitaria incompleta" = "7",
-  "Universitaria completa"             = "8",
-  "Estudios de posgrado (magíster o doctorado)"                 = "9",
-  "Prefiero no decir"        = "prefer_not_to_say"
-)
-
+```{r}
 sd_question(
   type   = 'select',
   id     = 'education',
@@ -593,6 +582,7 @@ sd_question(
   option = educations
 )
 ```
+
 
 ```{r}
 sd_nav(
@@ -711,7 +701,6 @@ sd_nav(
 # Tarea de asignación de becas
 
 ```{r}
-
 sd_question(
   type = "mc",
   id = "manip_check",
@@ -722,7 +711,9 @@ sd_question(
     "Evaluar la calidad de la universidad de cada postulante" = "universidad"
   )
 )
+```
 
+```{r}
 sd_nav(
   page_next = "cbc_q1_page",
   label_previous = "Anterior",
@@ -739,22 +730,16 @@ sd_nav(
 
 ```{r}
 sd_output("cbc1_table")
+```
 
-shiny::p(
-  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
-  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
-)
-
-allocation_slider("cbc_q1")
-
-htmltools::HTML("<br>")
-
+```{r}
 sd_nav(
   page_next = "cbc_q2_page",
   label_previous = "Anterior",
   label_next = "Siguiente"
 )
 ```
+
 
 --- cbc_q2_page
 
@@ -764,22 +749,16 @@ sd_nav(
 
 ```{r}
 sd_output("cbc2_table")
+```
 
-shiny::p(
-  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
-  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
-)
-
-allocation_slider("cbc_q2")
-
-htmltools::HTML("<br>")
-
+```{r}
 sd_nav(
   page_next = "cbc_q3_page",
   label_previous = "Anterior",
   label_next = "Siguiente"
 )
 ```
+
 
 --- cbc_q3_page
 
@@ -789,22 +768,16 @@ sd_nav(
 
 ```{r}
 sd_output("cbc3_table")
+```
 
-shiny::p(
-  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
-  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
-)
-
-allocation_slider("cbc_q3")
-
-htmltools::HTML("<br>")
-
+```{r}
 sd_nav(
   page_next = "cbc_q4_page",
   label_previous = "Anterior",
   label_next = "Siguiente"
 )
 ```
+
 
 --- cbc_q4_page
 
@@ -814,22 +787,16 @@ sd_nav(
 
 ```{r}
 sd_output("cbc4_table")
+```
 
-shiny::p(
-  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
-  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
-)
-
-allocation_slider("cbc_q4")
-
-htmltools::HTML("<br>")
-
+```{r}
 sd_nav(
   page_next = "cbc_q5_page",
   label_previous = "Anterior",
   label_next = "Siguiente"
 )
 ```
+
 
 --- cbc_q5_page
 
@@ -839,22 +806,16 @@ sd_nav(
 
 ```{r}
 sd_output("cbc5_table")
+```
 
-shiny::p(
-  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
-  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
-)
-
-allocation_slider("cbc_q5")
-
-htmltools::HTML("<br>")
-
+```{r}
 sd_nav(
   page_next = "cbc_q6_page",
   label_previous = "Anterior",
   label_next = "Siguiente"
 )
 ```
+
 
 --- cbc_q6_page
 
@@ -864,41 +825,22 @@ sd_nav(
 
 ```{r}
 sd_output("cbc6_table")
+```
 
-shiny::p(
-  "Considerando las características anteriores, ¿cuánto dinero (beca) le daría a cada postulante?",
-  style = "text-align: center; font-weight: 600; margin: 10px 0 8px 0;"
-)
-
-allocation_slider("cbc_q6")
-
-htmltools::HTML("<br>")
-
+```{r}
 sd_nav(page_next = "clasicos",
   label_next = "Siguiente")
 ```
 
+
 ```{r}
-# Numeración automática de preguntas: desde "clasicos" hasta el final de
 # "deserve-4". Cada sd_question() recibe un número correlativo antepuesto
-# al label, salvo las cajas de comentario libre (id que empieza con "cmt_").
-# Se restaura sd_question() sin numeración antes de la página "id-final".
-.sd_question_sin_numerar <- sd_question
-.contador_preguntas <- 0
-sd_question <- function(...) {
-  args <- list(...)
-  es_comentario <- grepl("^cmt_", args$id)
-  if (!es_comentario) {
-    .contador_preguntas <<- .contador_preguntas + 1
-    # Se usa "(N)" en vez de "N." porque el label pasa por un parser de
-    # markdown que interpreta "1. texto" como el inicio de una lista
-    # numerada (y la reinicia en 1 en cada pregunta). "(N)" sigue el mismo
-    # formato ya usado en demographics/id-final y no se confunde con markdown.
-    args$label <- paste0("(", .contador_preguntas, ") ", args$label)
-  }
-  do.call(.sd_question_sin_numerar, args)
-}
 ```
+
+```{r}
+# Se restaura sd_question() sin numeración antes de la página "id-final".
+```
+
 
 --- clasicos
 
@@ -931,24 +873,31 @@ sd_question(
   label = "Es justo que en Chile las personas de altos ingresos puedan acceder a una mejor atención de salud que las personas con ingresos más bajos",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'mj_2',
   label = "Es justo que en Chile las personas de altos ingresos tengan una mejor educación para sus hijos que las personas con ingresos más bajos",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'mj_3',
   label = "Es justo que en Chile las personas de altos ingresos tengan mejores pensiones que las personas con ingresos más bajos",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_nav(page_next = "reflex",
   label_next = "Siguiente")
 ```
+
 
 --- reflex
 
@@ -969,7 +918,9 @@ sd_question(
     'Prefiero no responder' = '99'    
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'ref_2',
@@ -984,7 +935,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'ref_3',
@@ -999,7 +952,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'proy_1',
@@ -1014,7 +969,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'proy_2',
@@ -1029,7 +986,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type = "mc",
   id = "attention_check",
@@ -1041,10 +1000,13 @@ sd_question(
     "Muy en desacuerdo" = "muy_desacuerdo"
   )
 )
+```
 
+```{r}
 sd_nav(page_next = "ranking",
   label_next = "Siguiente")
 ```
+
 
 --- ranking
 
@@ -1091,7 +1053,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'rank_2',
@@ -1106,7 +1070,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'rank_3',
@@ -1121,7 +1087,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'rank_4',
@@ -1136,7 +1104,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'rank_5',
@@ -1151,10 +1121,13 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_nav(page_next = "marketizacion",
   label_next = "Siguiente")
 ```
+
 
 --- marketizacion
 
@@ -1193,14 +1166,18 @@ sd_question(
   label = "El acceso a la salud es desigual en Chile",
   option = escala_justo
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'pres_2',
   label = "El acceso a la educación es desigual en Chile",
   option = escala_justo
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'pres_3',
@@ -1208,6 +1185,7 @@ sd_question(
   option = escala_justo
 )
 ```
+
 
 <br>
 
@@ -1220,24 +1198,31 @@ sd_question(
   label = "Salud",
   option = escala_justo_injusto
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'pres_5',
   label = "Educación",
   option = escala_justo_injusto
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'pres_6',
   label = "Pensiones",
   option = escala_justo_injusto
 )
+```
 
+```{r}
 sd_nav(page_next = "valor",
   label_next = "Siguiente")
 ```
+
 
 --- valor
 
@@ -1250,38 +1235,49 @@ sd_question(
   label = "Está bien que los hospitales públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'valor_2',
   label = "Está bien que los liceos públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'valor_3',
   label = "La calidad del sistema de salud debería ser igual para todos aunque esto signifique que mi familila no pueda pagar por mejores servicios ",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'valor_4',
   label = "La educación debería ser de igual calidad para todos aunque eso me impida pagar por una mejor para mi familia",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'valor_5',
   label = "Las pensiones deberían ser más igualitarias, aunque eso signifique que yo reciba una pensión similar a quienes aportaron menos que yo ",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_nav(page_next = "decomodifica",
   label_next = "Siguiente")
 ```
+
 
 --- decomodifica
 
@@ -1374,10 +1370,13 @@ sd_question(
   ),
   selected = '0'
 )
+```
 
+```{r}
 sd_nav(page_next = "lucro",
   label_next = "Siguiente")
 ```
+
 
 --- lucro 
 
@@ -1402,7 +1401,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'lucro_2',
@@ -1417,7 +1418,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'lucro_3',
@@ -1432,10 +1435,13 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_nav(page_next = "participa",
   label_next = "Siguiente")
 ```
+
 
 --- participa
 
@@ -1471,7 +1477,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'cargo_2',
@@ -1479,7 +1487,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'cargo_3',
@@ -1487,7 +1497,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'cargo_4',
@@ -1495,7 +1507,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'cargo_5',
@@ -1504,6 +1518,7 @@ sd_question(
   selected = '4'
 )
 ```
+
 
 <br>
 
@@ -1517,7 +1532,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'efic_2',
@@ -1525,7 +1542,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'efic_3',
@@ -1533,7 +1552,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'efic_4',
@@ -1541,7 +1562,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'efic_5',
@@ -1550,6 +1573,7 @@ sd_question(
   selected = '4'
 )
 ```
+
 
 <br>
 
@@ -1563,7 +1587,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'part_2',
@@ -1571,7 +1597,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'part_3',
@@ -1579,7 +1607,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'part_4',
@@ -1587,7 +1617,9 @@ sd_question(
   option = escala_estado_privados,
   selected = '4'
 )
+```
 
+```{r}
 sd_question(
   type   = 'slider',
   id     = 'part_5',
@@ -1596,6 +1628,7 @@ sd_question(
   selected = '4'
 )
 ```
+
 
 <br>
 
@@ -1615,31 +1648,40 @@ sd_question(
   label = "El Gobierno debería proporcionar a toda la población servicios básicos como la asistencia sanitaria y la asistencia jurídica de forma gratuita",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'neolib_2',
   label = "Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería hacerlo",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'neolib_3',
   label = "La sociedad debería proporcionar recursos y servicios gratuitos a las personas que no pueden permitírselos",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'neolib_4',
   label = "Las personas con ingresos más elevados deberían pagar más impuestos que las que tienen ingresos más bajos",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_nav(page_next = "deserve-1",
   label_next = "Siguiente")
 ```
+
 
 --- deserve-1
 
@@ -1662,38 +1704,49 @@ sd_question(
   label = "Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'control_2',
   label = "Quienes son responsables de sus propios problemas igualmente merecen recibir beneficios sociales.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'control_3',
   label = "El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'actitud_1',
   label = "Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'actitud_2',
   label = "Está bien que las personas que reciben apoyo del Estado puedan expresar su descontento con las condiciones de los beneficios.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_nav(page_next = "deserve-2",
   label_next = "Siguiente")
 ```
+
 
 --- deserve-2
 
@@ -1706,49 +1759,63 @@ sd_question(
   label = "Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'reciproc_2',
   label = "No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'reciproc_3',
   label = "Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'actitud_4',
   label = "El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'id_1',
   label = "Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'id_2',
   label = "Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'id_3',
   label = "Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_nav(page_next = "deserve-3",
   label_next = "Siguiente")
 ```
@@ -1765,59 +1832,76 @@ sd_question(
   label = "Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'nec_2',
   label = "Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'nec_3',
   label = "Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales.",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'esf_1',
   label = "Las personas que reciben beneficios sociales deberían estar haciendo algo activamente para mejorar su situación, como buscar trabajo o capacitarse",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'esf_2',
   label = "Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'esf_3',
   label = "El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'esf_4',
   label = "Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'esf_5',
   label = "No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual",
   option = escala_acuerdo_nsnr
 )
+```
 
+```{r}
 sd_nav(page_next = "deserve-4",
   label_next = "Siguiente")
 ```
+
 
 --- deserve-4
 
@@ -1859,7 +1943,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'adc_6',
@@ -1874,7 +1960,9 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_question(
   type  = 'mc',
   id    = 'adc_7',
@@ -1889,10 +1977,13 @@ sd_question(
     'Prefiero no responder' = '99'
   )
 )
+```
 
+```{r}
 sd_nav(page_next = "id-final",
   label_next = "Siguiente")
 ```
+
 
 ```{r}
 # Fin de la numeración automática de preguntas; se restaura sd_question()
@@ -1907,45 +1998,24 @@ A continuación se presentan algunas preguntas adicionales, el objetivo es recib
 ::: {style="width:500px; margin: 0 auto;"}
 
 ```{r}
-
-genders <- c(
-  "Hombre"                   = "male",
-  "Mujer"                    = "female", 
-  "No binario"               = "non_binary", 
-  "Hombre trans"             = "trans_male",
-  "Mujer trans"              = "trans_female",
-  "Prefiero no responder"        = "99"
-)
-
 sd_question(
   type   = 'select',
   id     = 'gender',
   label  = "¿Cuál es su identidad de género?",
   option = genders
 )
+```
 
-incomes <- c(
-  "$3.100.000 o más mensuales"          = "10",
-  "De $2.100.000 a $3.099.999 mensuales" = "9",
-  "De $1.600.000 a $2.099.999 mensuales"        = "8",
-  "De $1.300.000 a $1.599.999 mensuales"        = "7",
-  "De $1.050.000 a $1.299.999 mensuales"      = "6",
-  "De $850.000 a $1.049.999 mensuales"    = "5",
-  "De $680.000 a $849.999 mensuales"    = "4",
-  "De $520.000 a $679.999 mensuales"    = "3",
-  "De $345.000 a $519.999 mensuales"    = "2",
-  "Hasta $344.999 mensuales"          = "1",
-  "No sé" = '98',
-  "Prefiero no responder"        = "99"
-)
-
+```{r}
 sd_question(
   type   = 'select',
   id     = 'income',
   label  = "¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?",
   option = incomes
 )
+```
 
+```{r}
 sd_question(
   type   = 'mc',
   id     = 'salud_prov',
@@ -1955,7 +2025,9 @@ sd_question(
     "ISAPRE" = "isapre"
   )
 )
+```
 
+```{r}
 sd_question(
   type   = 'mc',
   id     = 'educ_prov',
@@ -1966,8 +2038,8 @@ sd_question(
     "Municipal" = "municipal"
   )
 )
-
 ```
+
 
 :::
 
