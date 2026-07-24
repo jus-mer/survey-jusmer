@@ -5,10 +5,19 @@ date: today
 format:
   html:
     toc: true
+    number-sections: true
     df-print: kable
     theme: cosmo
     embed-resources: true
 ---
+
+Este documento presenta los análisis de los tiempos de respuesta del pre-piloto *Encuesta JUSMER Justicia y Merecimiento*. El informe se estructura a partir de tres puntos principales: 
+
+- **1) Metodología**: Se describen los detalles metodológicos para el procesamiento de la información, enfocándose en capturar los tiempos de respuesta de la encuesta.
+
+- **2) Resultados**: Contiene los principales resultados sobre los tiempos de demora de la encuesta, permitiendo observar los tiempos promedios por respondente, por preguntas y por módulo respectivamente.
+
+- **3) Diagnóstico**: A partir de los resultados expuestos, se identifican los principales elementos a tener en consideración para mejorar la construcción de la encuesta.
 
 ```{r}
 #| label: setup
@@ -31,10 +40,10 @@ tiempo_estimado_total <- read.csv(
 )
 ```
 
-## Metodología
+# Metodología
 
-Base: `input/tbl/tiempos-prepiloto.csv`, restringida a los 12
-casos válidos. La encuesta tiene un tramo común y
+Base: `input/tbl/tiempos-prepiloto.csv`, extraída de Supabase con información actualizada el 23/07; restringida a los 13
+casos válidos (sólo la primera tabla utiliza 12 casos debido a un outlier). La encuesta tiene un tramo común y
 luego se ramifica en tres módulos aleatorizados (`assigned_module` A/B/C), de
 modo que cada respondente sólo contesta uno de los tres.
 
@@ -52,6 +61,8 @@ modo que cada respondente sólo contesta uno de los tres.
 - El "módulo" de cada pregunta en la tabla de resumen se infiere directamente
   de los datos: en qué `assigned_module` existe al menos un valor no vacío
   para esa pregunta. "Todos" indica preguntas del tramo común.
+
+# Resultados
 
 ## Tiempo total por caso
 
@@ -113,6 +124,10 @@ tiempo_pregunta_resumen |>
   )
 ```
 
+En la @tbl-tiempo-pregunta se puede observar que las variables `ranking_politicas_cuidado_ninos` y `ranking_politicas_cuidado_ninos` presentan valores negativos en su media y mediana. Además, `salud_prov` también tiene una media < 0. Esto resulta llamativo, pero se explica debido a que son preguntas que no exigen un orden de respuesta secuencial.
+
+Por ejemplo, para el caso de la matriz de políticas, los respondentes podían partir seleccionando cualquiera de las 5 alternativas. Como se explica en la metodología, los tiempos estimados de demora por pregunta fueron calculados a partir de la diferencia de tiempo entre la pregunta actual y su predecesora. Debido a la no-restricción de orden es que en algunos casos se presentan valores negativos, reflejando que la pregunta de valor negativo fue respondida antes que su predecesora.
+
 ## Estimado de tiempo total con los tres módulos
 
 La encuesta real solo muestra un módulo por respondente. Para estimar cuánto
@@ -142,3 +157,24 @@ tiempo_estimado_total |>
 
 `r min_total <- tiempo_estimado_total$promedio_min[tiempo_estimado_total$seccion == "Total estimado (comun + A + B + C)"]` Con esto, se estima que responder la sección común más los tres módulos
 completos tomaría en promedio **`r min_total` minutos**.
+
+# Diagnóstico
+
+El resultado principal del análisis refleja que el tiempo promedio para terminar la encuesta es de 33 minutos, lo cual excede por un gran margen los 10-15 minutos planteados al inicio.
+
+Cada módulo (sin considerar la tarea de asignación) contiene un aproximado de 25 preguntas. Para reducir el tiempo de respuesta de la encuesta a, al menos 15 minutos, se sugiere aplicar los siguientes cambios:
+
+**1) Reducir a la mitad el tiempo del conjoint**
+
+  - Para esto la solución más viable es reducir el tiempo de tareas, y en paralelo, incluir como una tarea válida para el análisis el ejemplo del ejercicio. No obstante, esto tiene implicancias en el diseño estadístico del experimento y el poder estadístico que puede alcanzar, por lo que debe estudiarse su viabilidad.
+
+**2) Reducir a la mitad el tiempo de los módulos**
+
+  - Los módulos que sean considerados en la versión final de la encuesta no pueden contener más de 12 preguntas, ya que esta cantidad permitiría que el módulo pudiera ser respondido en los márgenes establecidos junto a los demás módulos. 
+  
+  - Para saber qué preguntas eliminar y cuáles conservar, es necesario establecer los productos esperados que se pretenden generar con los resultados de la encuesta.
+
+
+**3) Considerar como máximo tres módulos en la encuesta (incluyendo el conjoint), donde cada uno pueda responderse en 5 minutos**
+
+  - Esto da la posibilidad de asegurar la diversidad temática de la encuesta, especialmente en el abordaje de preguntas asociadas a la justicia de mercado y el merecimiento.
