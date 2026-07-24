@@ -2,7 +2,7 @@
 format: html
 ---
 
-# Instrument design {#dis-instrument}
+# Questionnaire design B: Items {#dis-items}
 
 ## Questionnaire Structure and Content
 

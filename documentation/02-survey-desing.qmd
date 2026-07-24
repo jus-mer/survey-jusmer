@@ -2,7 +2,7 @@
 format: html
 ---
 
-# Statistical design {#dis-estadis}
+# Survey design {#dis-estadis}
 
 ## Target Population and Survey Population
 

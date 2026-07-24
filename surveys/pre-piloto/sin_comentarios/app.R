@@ -602,6 +602,18 @@ server <- function(input, output, session) {
   # Random attribute order fixed for this respondent across all 6 questions
   attr_order <- sample(c("need", "identity", "control", "effort", "reciprocity", "attitude"))
 
+  # Persist the display order so attribute-order effects (Hainmueller et al.
+  # 2014, sec. 5.3.4) can be diagnosed later. Stored as a 6-character NICERA
+  # code (Need, Identity, Control, Effort, Reciprocity, Attitude) - the first
+  # letters are unique across the six attributes, so e.g. "EANIRC" means the
+  # respondent saw effort first and control last. The order is not otherwise
+  # recoverable: cbc_profiles always serializes attributes in a fixed
+  # canonical order regardless of what was displayed. Sex is not included -
+  # it is signaled in the profile header and always occupies the first row.
+  attr_code <- c(need = "N", identity = "I", control = "C",
+                 effort = "E", reciprocity = "R", attitude = "A")
+  sd_store_value(paste(attr_code[attr_order], collapse = ""), "cbc_attr_order")
+  
   # Randomly assign each respondent to exactly one of the three response
   # modules so they only ever see and answer one of them:
   #   A: clasicos -> valor          (Actitudes hacia la desigualdad)

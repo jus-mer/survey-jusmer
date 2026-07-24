@@ -40,7 +40,8 @@ source(file = here("processing/cjpow.R"))
 ```
 
 
-# Statistical Design: Distributive Conjoint Pre-Plan
+# Questionnaire design A: Distributive Conjoint Survey Experiment {#dis-conjoint}
+
 
 ## Introduction
 
@@ -48,51 +49,6 @@ Entitlement to welfare provision is rarely unconditional. Even in solidaristic s
 
 We therefore administer a pre-registered paired-profile distributive conjoint experiment to a Chilean sample, adapting Gilgen's [-@gilgen_disentangling_2022] Distributional Survey Experiment to the tabular profile presentation and the complete, independent randomization of a conjoint design. Respondents act as members of a university committee dividing a fixed first-year scholarship fund between two applicants via a continuous slider, so that giving more to one means giving less to the other. Applicant profiles are built on the recast NICER scheme [@knotz_recast_2022], which integrates and refines van Oorschot's CARIN criteria, and vary need, control, effort, reciprocity, attitude, identity, and sex. The setting further moves deservingness research into a domain where it has rarely been tested experimentally: access to higher education rather than unemployment or social assistance. Chile is a demanding case. Its higher education system combines some of the highest shares of private household expenditure in the OECD with acute stratification by socioeconomic origin [@valenzuela_socioeconomic_2013], and its population holds unusually strong meritocratic beliefs relative to its level of inequality [@castillo_meritocracia_2019]. If need dominates allocations even here, its primacy as a distributive principle appears robust; if effort and control prevail, this reveals how commodification and meritocratic ideology jointly reshape distributive judgments.
 
-
-## Study Information
-
-### Research question
-
-**To what extent do deservingness criteria—need, control, effort, reciprocity, attitude, and identity—shape how citizens allocate scarce higher education scholarships between competing applicants in Chile?**
-
-### Hypotheses
-
-#### Main effects
-
-$H_1$ (Need): Applicants from households that struggle to make ends meet (*Dificultad*) will receive a larger share than applicants from financially comfortable households (*Holgura*). 
-
-$H_2$ (Effort): Applicants who study more than their peers will receive a larger share than those who study the same as or less than their peers.
-
-$H_3$ (Control): Applicants whose need for the scholarship is outside their control (having applied to other scholarships without securing funding) will receive a larger share than applicants whose need reflects a controllable failure (not having applied on time).
-
-$H_4$ (Reciprocity): Applicants who have contributed to their community through volunteering will receive a larger share than those who have not.
-
-$H_5$ (Attitude): Applicants who frame the scholarship as help they are grateful for will receive a larger share than those who frame it as something they deserve.
-
-$H_6$ (Identity): Country of birth will affect allocation. Relative to Chilean-born applicants, foreign-born applicants (Venezuela, Perú) may receive a smaller share. The direction is pre-registered as theoretically open.
-
-$H_7$ (Sex): Female applicants, signaled through gendered names, will receive a larger share of the scholarship than male applicants.
-
-#### Conditional effects (moderation)
-
-We expect merit and disadvantage-related attributes to be moderated by respondents' meritocratic orientation, measured following Castillo et al. (2023). For the pre-registered confirmatory tests we use the two *normative* components of that framework—meritocratic preference (the endorsement that effort and talent *should* be rewarded) and acceptance of privilege (the endorsement of advantage derived from non-meritocratic factors)—because they yield clearer directional predictions than the descriptive-perception components.
-
-$H_8$ (Effort × meritocratic preference): The positive effect of effort ($H_2$) will be stronger among respondents with higher meritocratic preference.
-
-$H_9$ (Control × meritocratic preference): The positive effect of uncontrollable need ($H_3$) will be stronger among respondents with higher meritocratic preference, who condition support on the applicant's lack of responsibility for their situation.
-
-$H_{10}$ (Need × acceptance of privilege): The positive effect of economic need ($H_1$) will be weaker among respondents with higher acceptance of privilege.
-
-#### Exploratory moderation
-
-The two descriptive-perception components of @castillo_multidimensional_2023, meritocratic perception (the belief that effort and talent *are* in fact rewarded) and perception of privilege (the recognition that non-meritocratic factors shape outcomes), are descriptive rather than normative beliefs, so their moderating direction is not theoretically determined. We therefore formalize the following as exploratory hypotheses, tested but not used for confirmatory inference.
-
-$H_{11}$ (Effort × meritocratic perception, exploratory): The positive effect of effort ($H_2$) may be stronger among respondents with higher meritocratic perception.
-
-$H_{12}$ (Need × perception of privilege, exploratory): The positive effect of need ($H_1$) may be stronger among respondents with higher perception of privilege.
-
-
-[POR DEFINIR]
 
 ## Experimental design
 

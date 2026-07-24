@@ -18,9 +18,9 @@ book:
   chapters:
     - index.qmd
     - 01-antecedents.qmd
-    - 02-sample-desing.qmd
-    - 03-instrument-desing.qmd
-    - 04-conjoint-desing.qmd
+    - 02-survey-desing.qmd
+    - 03-conjoint-desing.qmd
+    - 04-instrument-desing.qmd
     - 05-survey-implementation.qmd
     - 06-database.qmd
     - 07-etichs.qmd
