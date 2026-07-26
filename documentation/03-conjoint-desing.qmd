@@ -6,7 +6,6 @@ format:
     css: justify.css
 ---
 
-
 ```{r setup, include=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo=FALSE, 
                       warning = FALSE,
@@ -33,22 +32,17 @@ table_format = if (knitr::is_html_output()) {
 #| cache.extra: tools::md5sum("../processing/cjpow.R")
 
 library(here)
-here::i_am("documentation/04-conjoint-desing.qmd")
+here::i_am("documentation/03-conjoint-desing.qmd")
 
 source(file = here("processing/cjpow.R"))
 
 ```
 
-
 # Questionnaire design A: Distributive Conjoint Survey Experiment {#dis-conjoint}
 
+## Overview
 
-## Introduction
-
-Entitlement to welfare provision is rarely unconditional. Even in solidaristic systems, access to social goods rests on normative judgments about who deserves collective support and on what grounds, what welfare state research terms conditional solidarity and, at the individual level, deservingness [@oorschot_who_2000; @meuleman_welfare_2020]. A growing experimental literature has established how citizens weigh criteria such as need, control, reciprocity, effort, attitude and identity, overwhelmingly in the domain of unemployment benefits and social assistance: respondents rate how deserving a fictional claimant is, or state what share of a benefit that claimant should receive, one claimant at a time [@knotz_recast_2022; @meuleman_welfare_2020], or decide which of two claimants to prioritize for a service [@dietrich_prioritizing_2026]. Both formats evaluate claimants against a standard rather than against each other, which allows respondents to endorse each criterion independently without ever resolving the conflicts between them. Yet justice principles routinely point in opposite directions—a claimant may be needy but exert little effort, another may have contributed much but need little—so that honoring need and merit at once is a dilemma rather than a sum [@gilgen_disentangling_2022]. Only when a finite resource must be divided is a respondent forced to adopt a weighting among the competing principles, and it is that weighting, rather than the separate endorsement of each criterion, that constitutes a distributive preference. A division task also makes observable a principle the standard formats cannot register at all: equality, since an equal split is expressible only where respondents control how much each claimant receives.
-
-We therefore administer a pre-registered paired-profile distributive conjoint experiment to a Chilean sample, adapting Gilgen's [-@gilgen_disentangling_2022] Distributional Survey Experiment to the tabular profile presentation and the complete, independent randomization of a conjoint design. Respondents act as members of a university committee dividing a fixed first-year scholarship fund between two applicants via a continuous slider, so that giving more to one means giving less to the other. Applicant profiles are built on the recast NICER scheme [@knotz_recast_2022], which integrates and refines van Oorschot's CARIN criteria, and vary need, control, effort, reciprocity, attitude, identity, and sex. The setting further moves deservingness research into a domain where it has rarely been tested experimentally: access to higher education rather than unemployment or social assistance. Chile is a demanding case. Its higher education system combines some of the highest shares of private household expenditure in the OECD with acute stratification by socioeconomic origin [@valenzuela_socioeconomic_2013], and its population holds unusually strong meritocratic beliefs relative to its level of inequality [@castillo_meritocracia_2019]. If need dominates allocations even here, its primacy as a distributive principle appears robust; if effort and control prevail, this reveals how commodification and meritocratic ideology jointly reshape distributive judgments.
-
+This document specifies the design and implementation of the distributive conjoint module included in the survey. In this module, respondents act as members of a university committee and divide a fixed scholarship fund between two applicants whose attributes are experimentally randomized, so that allocating more to one applicant necessarily means allocating less to the other. The design adapts the Distributional Survey Experiment of @gilgen_disentangling_2022 to a conjoint format [@hainmueller_causal_2014], combining the tabular presentation and complete, independent randomization of a conjoint experiment with the fixed-sum allocation task characteristic of distributive designs. The applicant attributes operationalize deservingness criteria drawn from the welfare deservingness literature, specifically the CARIN and recast NICER frameworks [@oorschot_who_2000; @meuleman_welfare_2020; @knotz_recast_2022]; the theoretical rationale for each attribute, the derivation of the hypotheses, and the analysis plan are documented separately in the [Pre Analysis Plan](https://jus-mer.github.io/survey-jusmer/surveys/conjoint-test/design/conjoint-preplan.html). The remainder of this document describes the survey structure, the attributes and their levels, the randomization procedure, and the technical implementation of the module.
 
 ## Experimental design
 
@@ -59,6 +53,66 @@ The study uses a **paired-profile distributive conjoint**, a design that fuses t
 Formally, each task displays two applicants with randomized profiles, and the respondent divides a fixed scholarship fund between them, so that the share allocated to one and the share allocated to the other sum to 100% by construction. The outcome is the percentage assigned to each profile. This fixed-sum response is what makes the design distributive rather than evaluative: because the resource is scarce and interdependent, any share granted to one applicant is necessarily withheld from the other, forcing respondents to reveal how they prioritize competing criteria when the trade-off is concrete.
 
 This distributive logic follows the Distributional Survey Experiment of @gilgen_disentangling_2022, but the present design differs from hers in two consequential respects. First, it retains the full randomization of a conjoint rather than constructing a D-efficient design: attribute levels are drawn independently and uniformly at the profile level, which simplifies both implementation and the identification of AMCEs (see Causal identification). Second, it presents two profiles per task rather than three. Using two profiles reduces the cognitive load of a task that is already more demanding than a binary choice, and it keeps both the interface and the statistical model simple, since the interdependence of the outcome becomes trivial: the second applicant's share is the complement of the first (B = 100 − A). The result is a design that borrows the causal-inferential machinery of the conjoint tradition [@hainmueller_causal_2014] and the distributive, scarcity-based task of Gilgen's framework, without inheriting the design-efficiency complications of the latter.
+
+### Attributes and levels {#sec-attributes}
+
+These are the criteria, attributes, and levels used to build each applicant profile. Levels are numbered so that higher numbers correspond to the more deserving level, with level 1 as the reference category. Identity is the exception: its numbering places the reference category (Chilean-born) first and is not a deservingness ordering. 
+
+<table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
+  <thead>
+    <tr style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
+      <th style="padding:0.5rem 0.6rem; text-align:left; width:12%;">Attribute</th>
+      <th style="padding:0.5rem 0.6rem; text-align:left; width:14%;">Criterion</th>
+      <th style="padding:0.5rem 0.6rem; text-align:left; width:20%;">Profile label</th>
+      <th style="padding:0.5rem 0.6rem; text-align:left; width:34%;">Levels</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Need</strong></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Need (CARIN/NICER)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Makes ends meet with <em>(Su hogar llega a fin de mes con:)</em></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Comfort <em>(Holgura)</em><br>2 Hardship <em>(Dificultad)</em></td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Identity</strong></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Identity (CARIN/NICER)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Country of birth <em>(País de nacimiento:)</em></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Chile<br>2 Peru <em>(Perú)</em><br>3 Venezuela</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Control</strong></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Control (CARIN/NICER)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Needs the scholarship because <em>(Requiere la beca porque:)</em></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Did not apply to other scholarships in time <em>(No alcanzó a postular a tiempo a otras becas)</em><br>2 Applied to other scholarships but received no funding <em>(Postuló a otras becas pero no obtuvo financiamiento)</em></td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Effort</strong></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Effort (NICER)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Studies <em>(Estudia:)</em></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Less than their peers <em>(Menos que sus compañeros)</em><br>2 The same as their peers <em>(Igual que sus compañeros)</em><br>3 More than their peers <em>(Más que sus compañeros)</em></td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Reciprocity</strong></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Reciprocity (CARIN/NICER)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Outside their studies <em>(Fuera de sus estudios:)</em></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Has not done volunteer work <em>(No ha hecho voluntariado)</em><br>2 Has done volunteer work <em>(Ha hecho voluntariado)</em></td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Attitude</strong></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Attitude (CARIN)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Sees the scholarship as <em>(Ve la beca como:)</em></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Something they deserve <em>(Algo que se merece)</em><br>2 Help they are grateful for <em>(Una ayuda que agradece)</em></td>
+    </tr>
+    <tr style="border-bottom:2px solid #000;">
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Sex</strong></td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Ascriptive (signaled by name)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">First name (no explicit row)</td>
+      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Male name<br>2 Female name</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:0.8rem; color:#555; margin-top:0.8rem;">
 
 ### Scenario
 
@@ -76,7 +130,7 @@ Each applicant profile $(j)$ is defined by seven experimentally manipulated dime
 
 @fig-cbc-module shows the module as presented to respondents.
 
-![The scholarship allocation module as presented to respondents.](images/conjoint_screen.png){#fig-cbc-module width=90%}
+![The scholarship allocation module as presented to respondents.](images/conjoint_screen.png){#fig-cbc-module width="90%"}
 
 ### Causal identification and assumptions
 
@@ -118,78 +172,13 @@ where $T_{ijt}^{(-l)}$ denotes the remaining attributes and the expectation is t
 
 ## Variables
 
-### Attributes and levels
+### Attributes 
 
-The table below lists each attribute, the label shown to respondents, its levels, and the reference category used in estimation. Reference categories are set to the theoretically less deserving or baseline level of each attribute, so that estimated AMCEs read as the change in allocated share associated with moving toward the more deserving level. These reference categories are fixed in advance and applied identically in the analysis code.
-
-<table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
-  <thead>
-    <tr style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:12%;">Attribute</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:14%;">Criterion</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:20%;">Profile label</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:34%;">Levels</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:20%;">Reference category</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Need</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Need (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Makes ends meet with <em>(Su hogar llega a fin de mes con:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Hardship <em>(Dificultad)</em><br>Comfort <em>(Holgura)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Comfort <em>(Holgura)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Effort</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Effort (NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Studies <em>(Estudia:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">More than their peers <em>(Más que sus compañeros)</em><br>The same as their peers <em>(Igual que sus compañeros)</em><br>Less than their peers <em>(Menos que sus compañeros)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Less than their peers <em>(Menos que sus compañeros)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Control</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Control (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Needs the scholarship because <em>(Requiere la beca porque:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Applied to other scholarships but received no funding <em>(Postuló a otras becas pero no obtuvo financiamiento)</em><br>Did not apply to other scholarships in time <em>(No alcanzó a postular a tiempo a otras becas)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Did not apply in time <em>(No alcanzó a postular a tiempo)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Reciprocity</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Reciprocity (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Outside their studies <em>(Fuera de sus estudios:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Has done volunteer work <em>(Ha hecho voluntariado)</em><br>Has not done volunteer work <em>(No ha hecho voluntariado)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Has not done volunteer work <em>(No ha hecho voluntariado)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Attitude</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Attitude (CARIN)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Sees the scholarship as <em>(Ve la beca como:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Help they are grateful for <em>(Una ayuda que agradece)</em><br>Something they deserve <em>(Algo que se merece)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Something they deserve <em>(Algo que se merece)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Identity</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Identity (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Country of birth <em>(País de nacimiento:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Chile<br>Venezuela<br>Peru <em>(Perú)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Chile</td>
-    </tr>
-    <tr style="border-bottom:2px solid #000;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Sex</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Ascriptive (signaled by name)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">First name (no explicit row)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Female name<br>Male name</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Male</td>
-    </tr>
-  </tbody>
-</table>
-<p style="font-size:0.8rem; color:#555; margin-top:0.8rem;"><em>Note: Levels are given in English, with the original Spanish wording shown to respondents in parentheses. The factorial space comprises 2 (Need) × 3 (Effort) × 2 (Control) × 2 (Reciprocity) × 2 (Attitude) × 3 (Identity) × 2 (Sex) = 288 unique profiles. Attributes are assigned independently and uniformly at the profile level. Sex is signaled through gendered first names drawn from matched pools rather than as an explicit table row.</em></p>
+The full set of attributes, their levels, and the numeric coding used in estimation is given in @sec-attributes. Reference categories are set to the least deserving or baseline level of each attribute (level 1), so that estimated AMCEs read as the change in allocated share associated with moving toward the more deserving level. These reference categories are fixed in advance and applied identically in the analysis code.
 
 ### Outcome
 
-The outcome is the share of the scholarship fund allocated to each applicant. Respondents register their decision using a single continuous slider displayed beneath the profile table, initialized at an even split. The slider spans the full fund in Chilean pesos (CLP 0 to CLP 2,000,000), and as it moves, the percentage and peso amount for each applicant update in real time. The recorded value is the amount allocated to the right-hand applicant; the left-hand applicant's amount is its complement, so the two always sum to the fixed total. For analysis this amount is converted to a share of the fund, bounded between 0 and 100, with the two shares within a task summing to 100 by construction. This fixed-sum structure is the defining feature of the distributive design: it makes the allocation genuinely zero-sum, so that any share granted to one applicant is withheld from the other. Modeling the outcome as a share rather than a raw amount respects this structure and follows the strategy recommended by @gilgen_disentangling_2022 for distributional survey experiments. 
-
+The outcome is the share of the scholarship fund allocated to each applicant. Respondents register their decision using a single continuous slider displayed beneath the profile table, initialized at an even split. The slider spans the full fund in Chilean pesos (CLP 0 to CLP 2,000,000), and as it moves, the percentage and peso amount for each applicant update in real time. The recorded value is the amount allocated to the right-hand applicant; the left-hand applicant's amount is its complement, so the two always sum to the fixed total. For analysis this amount is converted to a share of the fund, bounded between 0 and 100, with the two shares within a task summing to 100 by construction. This fixed-sum structure is the defining feature of the distributive design: it makes the allocation genuinely zero-sum, so that any share granted to one applicant is withheld from the other. Modeling the outcome as a share rather than a raw amount respects this structure and follows the strategy recommended by @gilgen_disentangling_2022 for distributional survey experiments.
 
 ### Controls and moderators
 
@@ -201,17 +190,90 @@ Because attributes are randomized at the profile level, no covariates are requir
 
 The experiment uses complete and independent randomization of attribute levels, the reference case in Hainmueller et al. [-@hainmueller_causal_2014] and the default for most applied conjoint designs [@bansak_conjoint_2021]. For each profile $(j)$, every attribute is drawn independently of the others and of the competing profile, with uniform probability within its attribute ($1/2$ for the four two-level attributes, $1/3$ for Effort and Identity). No attribute is conditioned on another and no level is reweighted, so the joint distribution of profiles is the product of the attribute marginals [@hainmueller_causal_2014]. Randomization occurs at the profile level and is performed anew for each respondent and task, rather than as a fixed block assigned in advance.
 
-Under this scheme the assignment of each attribute is by construction independent of the potential outcomes, which is the condition that identifies the AMCE (see Causal identification), and no attribute can confound another. Crucially, identification does not require that every possible profile, or every possible pair, appear in the data: the AMCE is a marginal quantity, defined as the average effect of moving one attribute from its reference level to another while averaging over the distribution of the rest [@hainmueller_causal_2014]. It is therefore identified from the marginal variation in each attribute, not from joint coverage of the factorial space. With 288 possible profiles and thousands of profile evaluations, each level is observed many times across varying combinations of the others, which is all a marginal effect requires.
+Under this scheme the assignment of each attribute is by construction independent of the potential outcomes, which is the condition that identifies the AMCE (see Causal identification), and no attribute can confound another. Crucially, identification does not require that every possible profile, or every possible pair, appear in the data: the AMCE is a marginal quantity, defined as the average effect of moving one attribute from its reference level to another while averaging over the distribution of the rest [@hainmueller_causal_2014]. It is therefore identified from the marginal variation in each attribute, not from joint coverage of the factorial space. At the realized scale this coverage is overwhelming: the 54,000 profiles observed draw on a space of only 288 unique combinations, so each possible profile appears roughly 188 times, and each level of every attribute is observed between 18,000 and 27,000 times across widely varying combinations of the other attributes. That density, not the enumeration of the factorial or pair space, is what a marginal effect requires.
+
+A direct consequence of independent randomization is orthogonality: across the sample, the level of any one attribute is statistically independent of the level of every other, so the estimated effect of one attribute cannot be biased by the distribution of another. Exact zero correlation holds only in expectation, so it is worth stating what "independent" means at a finite sample. With 54,000 profiles the sampling standard error of a correlation between any two attribute indicators is approximately $1/\sqrt{54{,}000} \approx 0.004$, so inter-attribute correlations should fall within roughly $\pm 0.013$ of zero (three standard errors) purely by sampling variation. A simulation of the design under the realized sample size confirms this directly: across the full attribute set the largest observed within-profile correlation is $0.011$, within the expected band and stable across repeated seeds (see @sec-random-check). Departures of this magnitude are sampling noise, not structural dependence, and bias no AMCE.
 
 This is why a D-efficient design is not needed here. Such designs optimize the attribute covariance structure to minimize coefficient variance, and are valuable mainly when the factorial space is large relative to the sample, when specific interactions are the target, or when a forced-choice model is fit on few tasks—none of which binds in this design [@auspurg_factorial_2016; @gilgen_disentangling_2022]. The space is small (288 profiles), the estimands are marginal main effects, and complete randomization already guarantees in expectation the orthogonality a D-efficient design engineers, delivering unbiased AMCEs with near-optimal efficiency for main effects at this size [@bansak_conjoint_2021], without the added complexity.
 
 ### Restrictions
 
-The design imposes a single restriction, applied to the pair of profiles $(j)$ within a task $(t)$ rather than to individual attributes: the two profiles must differ on at least two attributes. When a pair is generated, the two profiles are drawn independently and retained only if they differ on two or more of the seven attributes, otherwise redrawn. This excludes identical pairs and pairs differing on exactly one attribute.
+The design imposes a single restriction, applied to the pair of profiles within a task rather than to individual attributes: the two profiles must differ on at least two of the six CARIN/NICER attributes (need, identity, control, effort, reciprocity, attitude). When a pair is generated, the six substantive attributes are drawn independently and the pair is retained only if it differs on two or more of them, otherwise it is redrawn. Sex is assigned afterward through the applicant's first name and does not enter the check, so the two profiles may share the same sex or not. The purpose is cognitive: a pair that is identical or differs on only one substantive attribute presents two near-indistinguishable applicants, yielding a task that carries little information about trade-offs.
 
-The purpose is cognitive, not statistical. A pair that is identical or nearly so presents two indistinguishable applicants, yielding a task that carries little information about trade-offs and that may read as degenerate. With seven attributes, the probability that an unconstrained draw produces such a near-identical pair is non-negligible across a respondent's six tasks, so the restriction improves the informativeness and face validity of the tasks.
+The restriction operates only on the joint distribution of the two profiles and leaves each attribute's marginal distribution unchanged: every level still appears with its original uniform probability and remains independent of the other attributes within a profile. Because AMCE identification depends on this marginal randomization and not on the joint distribution of pairs, identification and interpretation are left intact; the restriction rules out only the least informative comparisons. Empirical attribute balance and orthogonality are verified as design checks (see @sec-random-check).
 
-The restriction operates only on the joint distribution of the two profiles and leaves each attribute's marginal distribution unchanged: every level still appears with its original uniform probability and remains independent of the other attributes within a profile. Because AMCE identification depends on marginal randomization and not on the joint distribution of pairs, the restriction leaves identification and interpretation intact; it removes no level from any attribute's support and induces no within-profile correlation, ruling out only the least informative comparisons. Empirical attribute balance is verified as part of the quality checks (see Quality control).
+### Combinatorics
+
+The table below reports the size of the design space and the coverage the realized sample achieves. The distinction that matters is between the profile space, over which the AMCE is defined, and the pair space, which is a by-product of showing two profiles per task and plays no role in identification. The admissible-pair count reflects the restriction explained above.
+
+<table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
+  <thead>
+    <tr style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
+      <th style="padding:0.5rem 0.6rem; text-align:left; width:44%;">Quantity</th>
+      <th style="padding:0.5rem 0.6rem; text-align:right; width:20%;">Value</th>
+      <th style="padding:0.5rem 0.6rem; text-align:left; width:36%;">Derivation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.4rem 0.6rem;">Unique profiles</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">288</td>
+      <td style="padding:0.4rem 0.6rem;">2·3·2·3·2·2·2 (incl. sex)</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
+      <td style="padding:0.4rem 0.6rem;">Ordered pairs</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">82,656</td>
+      <td style="padding:0.4rem 0.6rem;">288 · 287</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.4rem 0.6rem;">Unordered pairs</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">41,328</td>
+      <td style="padding:0.4rem 0.6rem;">288 · 287 / 2</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
+      <td style="padding:0.4rem 0.6rem;">Pairs excluded by the restriction</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">2,448</td>
+      <td style="padding:0.4rem 0.6rem;">288 · 17 / 2 (differ on 0 or 1 of the six CARIN/NICER attributes, any sex)</td>
+    </tr>
+    <tr style="border-bottom:2px solid #000;">
+      <td style="padding:0.4rem 0.6rem;">Admissible pairs</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">38,880</td>
+      <td style="padding:0.4rem 0.6rem;">41,328 − 2,448</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.4rem 0.6rem;">Profiles observed <em>(N = 4,500, 6 tasks)</em></td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">54,000</td>
+      <td style="padding:0.4rem 0.6rem;">4,500 · 6 · 2</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
+      <td style="padding:0.4rem 0.6rem;">Mean appearances per profile</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">≈ 188</td>
+      <td style="padding:0.4rem 0.6rem;">54,000 / 288</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.4rem 0.6rem;">Observations per level (2-level attr.)</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">27,000</td>
+      <td style="padding:0.4rem 0.6rem;">54,000 / 2</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
+      <td style="padding:0.4rem 0.6rem;">Observations per level (3-level attr.)</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">18,000</td>
+      <td style="padding:0.4rem 0.6rem;">54,000 / 3</td>
+    </tr>
+    <tr style="border-bottom:1px solid #ddd;">
+      <td style="padding:0.4rem 0.6rem;">Tasks observed</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">27,000</td>
+      <td style="padding:0.4rem 0.6rem;">4,500 · 6</td>
+    </tr>
+    <tr style="border-bottom:2px solid #000; background:#fafafa;">
+      <td style="padding:0.4rem 0.6rem;">Distinct admissible pairs seen</td>
+      <td style="padding:0.4rem 0.6rem; text-align:right;">≈ 19,470 (50%)</td>
+      <td style="padding:0.4rem 0.6rem;">expected coverage of 38,880 over 27,000 draws</td>
+    </tr>
+  </tbody>
+</table>
+
+Two facts follow. First, the profile space is covered densely: each of the 288 profiles appears roughly 188 times, and every attribute level is observed between 18,000 and 27,000 times, which is what identifies the AMCE. Second, the pair space is covered only partially—about half of the admissible pairs are ever seen—but this is immaterial, since the AMCE averages over the marginal distribution of each attribute, not over the joint distribution of pairs (see Causal identification). Full enumeration of the pair space is neither necessary nor feasible.
 
 ## Analysis Plan
 
@@ -257,7 +319,6 @@ The absorbed main effect of the moderator is of no substantive interest here. Be
 
 One model is fitted per moderation hypothesis, with a single interaction term, so that each $\delta$ is interpretable and the moderators do not compete for the same variance. The exploratory hypotheses (H11–H12) use the identical specification with the two descriptive-perception components as moderators. Following @leeper_measuring_2020, any description of differences across subgroups is reported as differences in marginal means computed directly from the data, never by comparing conditional AMCEs across groups, since the latter depend on the choice of reference category.
 
-
 ### Inference criteria
 
 Hypotheses are evaluated two-sided at $\alpha = 0.05$, with 95% confidence intervals reported for all AMCEs and marginal means. For the two three-level attributes, Effort and Identity, the corresponding hypotheses (H2 and H6 for main effects, H8 for moderation) are assessed with a joint Wald test of the two non-reference coefficients rather than coefficient by coefficient. The joint test is invariant to the choice of reference category, whereas the individual coefficients—and, in the moderation case, the individual interaction terms—are not [@leeper_measuring_2020]. Level-specific AMCEs are still reported for interpretation, with the reference category stated explicitly.
@@ -280,15 +341,17 @@ where $N$ is the total number of profile evaluations ($N_{\text{respondents}} \t
 
 ### Parameters
 
-For the pilot, the minimum detectable effect at 80% power is $\delta_1 = \sqrt{(K/2)\,(7.84/N_{\text{profiles}})}$. The largest attribute effects are detectable with high confidence under any pilot scenario, while effects near 3 pp sit at the boundary of detectability. This is acceptable because the pilot's purpose is to validate the instrument, calibrate the true variance of the slider outcome, and estimate the intra-respondent correlation across tasks to fine-tune the main-study $N$, rather than to test the confirmatory hypotheses.
+The design administers six tasks per respondent, and we also report the four-task scenario as a sensitivity check on instrument length. Two questions organize the analysis: what minimum effect the study can detect at its planned size, and what sample each target effect would require. Both are reported for six and four tasks.
+
+At the planned sample of $N = 4{,}500$, the minimum detectable effect at 80% power is well below the 3 pp minimum of interest under either task count. With six tasks the study detects effects as small as 1.2 pp on two-level attributes and 1.5 pp on the three-level attributes (Effort, Identity); with four tasks the corresponding figures are 1.5 and 1.8 pp. Reducing the number of tasks therefore leaves the design comfortably powered for the main effects, since even the most demanding attributes are detectable well below the smallest effect the substantive literature leads us to expect.
 
 ```{r}
-#| label: tbl-power-pilot
+#| label: tbl-power-mde
 #| echo: false
-tbl_power_pilot
+tbl_power_main_2
 ```
 
-For the main study, the minimum $N$ is set by the most demanding attribute. For a three-level attribute (Effort, Identity) and a 3 pp AMCE, $N_{\text{profiles}} = (3/2)(7.84/0.03^2) \approx 13{,}067$, i.e. $N \approx 1{,}089$ respondents at six tasks and two profiles per task. For a heterogeneity analysis with a binary moderator, the required $N$ roughly doubles, giving $N \approx 2{,}200$.
+Read in the other direction, the minimum sample required to detect a 3 pp effect at 80% power ranges from roughly 730 respondents for a two-level main effect to about 1,090 for a three-level main effect, and doubles to around 2,180 for a heterogeneity test with a binary moderator. Under four tasks these minima rise by a factor of one and a half, as fewer tasks yield proportionally fewer profile evaluations. In every case the required minimum falls well within the planned sample of 4,500, so the study is adequately powered for all confirmatory main effects and moderation tests under both task counts.
 
 ```{r}
 #| label: tbl-power-main
@@ -298,17 +361,15 @@ tbl_power_main
 
 ### Reported indicators
 
-The power curves below report, for each attribute type, the statistical power achieved across candidate sample sizes and effect sizes, with the pilot and main-study targets marked. Because the analytic formula assumes a binary outcome and independent tasks, we complement it with a design-based simulation (DeclareDesign) that reproduces the realized design—continuous share outcome, six tasks per respondent, the pair restriction of at least two differing attributes, and respondent-level clustering—and reports bias, RMSE, power, and confidence-interval coverage across $N = 500; 750; 1{,}000; 1{,}500; 2{,}000$. The simulation provides a more realistic assessment than the closed-form approximation under the actual outcome distribution.
+The power curves in @fig-power report the statistical power achieved across sample sizes for a range of effect sizes, shown separately for six and four tasks, with the planned sample of $N = 4{,}500$ marked. At that sample the design attains power well above conventional thresholds for all effects at or above the 3 pp minimum of interest, under both task counts. Because the analytic formula assumes a binary outcome and independent tasks, these figures are conservative for a continuous share outcome; a design-based simulation reproducing the realized design—the share outcome, six tasks per respondent, the pair restriction, and respondent-level clustering—is reported in the supplementary appendix as a more realistic check.
 
 ```{r}
 #| label: fig-power
-#| fig-cap: "Statistical power curves by number of respondents"
+#| fig-cap: "Statistical power by number of respondents, six versus four tasks"
 #| fig-cap-location: top
 #| echo: false
 g1
 ```
-
-**Recommendation.** $N = 1{,}200$ suffices for main effects with power $\geq 0.80$ on all attributes; $N = 1{,}500$ adds margin and supports descriptive subgroup analysis; $N = 2{,}000$ is targeted when heterogeneity analyses are treated as confirmatory estimands. Given the conservative binary-outcome assumption, $N = 1{,}500$ is likely sufficient for the most relevant heterogeneity analyses of the design.
 
 ## Quality control
 
@@ -330,5 +391,3 @@ Two non-substantive patterns are monitored: invariant responding across the six 
 
 ::: {#refs}
 :::
-
-

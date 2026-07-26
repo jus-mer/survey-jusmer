@@ -1,7 +1,408 @@
 ---
-format: html
+format:
+  html:
+    toc: true
+    toc-expand: true
+    css: justify.css
 ---
+
+```{r setup-appendix, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      cache = TRUE,
+                      out.width = '85%',
+                      fig.pos = "H")
+options(scipen = 999)
+options(kableExtra.auto_format = FALSE)
+options(knitr.kable.NA = '')
+```
 
 # Appendix {#app}
 
 ## Questionnaries
+
+## Randomization design check: simulated data {#sec-random-check}
+
+### Purpose
+
+The distributive conjoint's identification argument (see [Questionnaire design A: Distributive Conjoint Survey Experiment](03-conjoint-desing.qmd#dis-conjoint), Causal identification) rests on complete, independent randomization of attribute levels: every attribute is drawn uniformly and independently of every other attribute and of the competing profile, subject only to a pairwise restriction that the two profiles in a task differ on at least two attributes. A natural concern is whether this restriction, or any implementation detail of the randomizer, inadvertently introduces correlation *between* attributes, which would threaten the orthogonality the AMCE estimator assumes.
+
+This appendix answers that concern empirically rather than asserting it. It simulates data using the exact randomization procedure implemented in `surveys/pre-piloto/sin_comentarios/app.R` (the pre-pilot Shiny/`surveydown` app), and then checks (a) how densely the design space is covered and (b) whether attribute levels are correlated with one another, both within a profile and across the two profiles of a task.
+
+### Design parameters, as implemented in `app.R`
+
+The parameters below are read directly from `build_default_conjoint_design()` and `make_cbc_table()` in `app.R`, not reconstructed from the design write-up, so that the simulation cannot silently drift from what the app actually does.
+
+-   **Seven attributes.** Six are explicit rows in the profile table — need, identity, control, effort, reciprocity, attitude — plus applicant sex, signaled only through a first name (never an explicit row).
+-   **Levels and marginal probabilities.** Every level within an attribute is drawn with `sample(lvls, 1)`, i.e. uniformly: 1/2 for the five binary attributes (need, control, reciprocity, attitude, sex) and 1/3 for the two three-level attributes (identity, effort). The exact level strings coded in `niveles` are reproduced in @tbl-attrs-code below.
+-   **Pairwise restriction.** `generate_pair()` draws the two profiles' six explicit attributes (identity/need/control/effort/reciprocity/attitude — *not* sex) independently and redraws the whole pair — both profiles, all six attributes — whenever they differ on fewer than `min_diff = 2` attributes. This is a rejection sampler operating on the joint distribution of the pair, not a constraint on any single attribute's marginal.
+-   **Attribute display order / NICERA code.** Once per respondent, `sample()` draws a random permutation of the six explicit attribute names; this order is held constant across that respondent's six tasks and is persisted as a 6-letter code (`N`eed, `I`dentity, `C`ontrol, `E`ffort, `R`eciprocity, `A`ttitude) via `attr_code`. Sex is not part of this code — it always occupies the profile header, never a randomized row position.
+-   **Six tasks, two profiles per task**, one respondent draws one respondent-level design row (`respID`) from the pre-generated `design` table, or, when the newer profile columns are absent, falls back to `build_default_conjoint_design()` — the function reproduced here.
+
+```{r tbl-attrs-code}
+#| tbl-cap: "Attributes and levels exactly as coded in app.R's `niveles` list"
+
+niveles <- list(
+  need        = c("Dificultad", "Holgura"),
+  identity    = c("Chile", "Venezuela", "Perú"),
+  control     = c("Postuló a otras becas pero no obtuvo financiamiento",
+                   "No alcanzó a postular a tiempo a otras becas"),
+  effort      = c("Más que sus compañeros",
+                   "Igual que sus compañeros",
+                   "Menos que sus compañeros"),
+  reciprocity = c("Ha hecho voluntariado", "No ha hecho voluntariado"),
+  attitude    = c("Una ayuda que agradece", "Algo que se merece")
+)
+
+attr_names <- names(niveles)
+n_levels   <- lengths(niveles)
+
+library(kableExtra)
+data.frame(
+  Attribute  = attr_names,
+  N_levels   = n_levels,
+  P_level    = paste0("1/", n_levels),
+  Levels     = sapply(niveles, paste, collapse = " | ")
+) |>
+  kbl(row.names = FALSE,
+      col.names = c("Attribute", "N levels", "P(level)", "Levels (as coded)")) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = TRUE)
+```
+
+Sex is not in `niveles` (it is generated separately), so it is added here only for reference: two levels, drawn uniformly, from an 8-name pool per sex (`male_names`, `female_names` in `app.R`).
+
+```{r sex-pools}
+male_names   <- c("Mateo", "Lucas", "Benjamin", "Nicolas", "Daniel",
+                   "Santiago", "Tomas", "Joaquin")
+female_names <- c("Sofia", "Valentina", "Isidora", "Martina", "Camila",
+                   "Florencia", "Catalina", "Antonia")
+attr_code    <- c(need = "N", identity = "I", control = "C",
+                   effort = "E", reciprocity = "R", attitude = "A")
+```
+
+With seven attributes at these level counts, the profile space has $2 \times 3 \times 2 \times 3 \times 2 \times 2 \times 2 = 288$ unique combinations, matching the [main design chapter](03-conjoint-desing.qmd#dis-conjoint).
+
+### Step 1 — Simulating respondents
+
+The simulation targets $N = 4{,}000$ respondents, 6 tasks each, 2 profiles per task. Pair generation replicates `generate_pair()` exactly (independent uniform draw per attribute for each profile, redraw the whole pair if it differs on fewer than 2 of the six explicit attributes), implemented here as a vectorized rejection sampler for speed rather than the app's per-pair `repeat` loop; the acceptance rule is identical, only the batching differs.
+
+```{r simulate-pairs}
+
+if (! require("pacman")) install.packages("pacman")
+
+pacman::p_load(dplyr,
+               tidyr, 
+               purrr,
+               tibble,
+               jsonlite,
+               stringr,
+               psych,
+               corrplot)
+
+set.seed(2026)
+
+N        <- 4000
+n_tasks  <- 6
+n_pairs  <- N * n_tasks  # one pair of profiles per task
+
+# Vectorized version of generate_pair(): draw a batch of candidate pairs,
+# keep only those differing on >= 2 of the 6 explicit attributes, repeat
+# until enough admissible pairs have been collected.
+gen_batch <- function(n) {
+  m1 <- sapply(n_levels, function(L) sample.int(L, n, replace = TRUE))
+  m2 <- sapply(n_levels, function(L) sample.int(L, n, replace = TRUE))
+  keep <- rowSums(m1 != m2) >= 2
+  list(m1 = m1[keep, , drop = FALSE], m2 = m2[keep, , drop = FALSE])
+}
+
+acc1 <- matrix(nrow = 0, ncol = 6)
+acc2 <- acc1
+while (nrow(acc1) < n_pairs) {
+  batch <- gen_batch(ceiling((n_pairs - nrow(acc1)) * 1.15) + 10)
+  acc1  <- rbind(acc1, batch$m1)
+  acc2  <- rbind(acc2, batch$m2)
+}
+acc1 <- acc1[seq_len(n_pairs), ]
+acc2 <- acc2[seq_len(n_pairs), ]
+colnames(acc1) <- attr_names
+colnames(acc2) <- attr_names
+
+stopifnot(min(rowSums(acc1 != acc2)) >= 2)  # restriction holds for every task
+
+# Map integer level codes back to the label strings coded in niveles
+to_labels <- function(m) {
+  as.data.frame(
+    lapply(attr_names, function(a) niveles[[a]][m[, a]]),
+    col.names = attr_names, stringsAsFactors = FALSE
+  )
+}
+lab1 <- to_labels(acc1)
+lab2 <- to_labels(acc2)
+
+# Sex/name: independent per profile-slot, exactly as in make_cbc_table()
+sex_draw <- function(n) {
+  is_male <- runif(n) < 0.5
+  nm <- character(n)
+  nm[is_male]  <- sample(male_names,   sum(is_male),  replace = TRUE)
+  nm[!is_male] <- sample(female_names, sum(!is_male), replace = TRUE)
+  nm
+}
+lab1$nombre <- sex_draw(n_pairs)
+lab2$nombre <- sex_draw(n_pairs)
+
+session_id <- rep(seq_len(N), each = n_tasks)
+task_id    <- rep(seq_len(n_tasks), times = N)
+lab1$session_id <- session_id; lab1$task_id <- task_id
+lab2$session_id <- session_id; lab2$task_id <- task_id
+
+# Attribute display order per respondent -> NICERA code, exactly as in app.R
+attr_order_mat <- t(replicate(N, sample(attr_names)))
+nicera_code    <- apply(attr_order_mat, 1, function(o) paste(attr_code[o], collapse = ""))
+```
+
+### Step 2 — Assembling the simulated `cbc_profiles` database {#sec-json}
+
+`app.R` stores one JSON blob per respondent (`cbc_profiles`) with the six tasks nested under keys `q1`–`q6`, each holding the two alternatives under `a1`/`a2`, each alternative holding the six attribute values plus `nombre`. It also stores the display order as `cbc_attr_order` (the NICERA code) and — via `surveydown`'s own input persistence — one slider answer per task (`cbc_q1`-`cbc_q6`).
+
+The slider/share values are **not** simulated from any effect model here: this appendix checks randomization structure, not treatment effects. 
+
+```{r build-json}
+build_json_for_session <- function(df1, df2) {
+  tasks <- vector("list", n_tasks)
+  for (t in seq_len(n_tasks)) {
+    tasks[[t]] <- list(
+      a1 = c(as.list(df1[t, attr_names, drop = FALSE]), nombre = df1$nombre[t]),
+      a2 = c(as.list(df2[t, attr_names, drop = FALSE]), nombre = df2$nombre[t])
+    )
+  }
+  names(tasks) <- paste0("q", seq_len(n_tasks))
+  as.character(toJSON(tasks, auto_unbox = TRUE))
+}
+
+split1 <- split(lab1, lab1$session_id)
+split2 <- split(lab2, lab2$session_id)
+profiles_json <- map2_chr(split1, split2, build_json_for_session)
+
+# Placeholder share: a random even split per task, complementary by
+# construction (share_a1 + share_a2 = 100) so the fixed-sum shape of the
+# real outcome is preserved structurally. NOT used to estimate anything.
+share_a1 <- matrix(runif(n_pairs, 0, 100), nrow = N, ncol = n_tasks, byrow = TRUE)
+
+sim_db <- tibble(
+  session_id     = as.integer(names(split1)),
+  cbc_attr_order = nicera_code,
+  cbc_profiles   = profiles_json
+) |>
+  bind_cols(as.data.frame(share_a1) |> setNames(paste0("cbc_q", seq_len(n_tasks))))
+
+glimpse(sim_db[1, ])
+```
+
+`sim_db` now has the same shape as the real response table would.
+
+### Step 3 — Reshape to long format
+
+This is the pipeline that will be applied to the real pilot export: parse each respondent's `cbc_profiles` JSON, unnest tasks and alternatives into one row per `session_id` × `task` × `altID`, and recover `sex` from `nombre` via the same name pools `app.R` draws from.
+
+```{r reshape-long}
+sex_lookup <- setNames(
+  c(rep("male", length(male_names)), rep("female", length(female_names))),
+  c(male_names, female_names)
+)
+
+reshape_one <- function(session_id, json_str) {
+  parsed <- fromJSON(json_str, simplifyVector = FALSE)
+  imap_dfr(parsed, function(task_data, qname) {
+    imap_dfr(task_data, function(alt_data, altname) {
+      as_tibble(alt_data) |>
+        mutate(task  = as.integer(sub("q", "", qname)),
+               altID = as.integer(sub("a", "", altname)))
+    })
+  }) |>
+    mutate(session_id = session_id, .before = 1)
+}
+
+long_df <- map2_dfr(sim_db$session_id, sim_db$cbc_profiles, reshape_one) |>
+  mutate(sex = unname(sex_lookup[nombre]))
+
+attr_cols <- c("need", "identity", "control", "effort", "reciprocity", "attitude", "sex")
+long_df |> select(session_id, task, altID, all_of(attr_cols)) |> head(4) |>
+  kbl(row.names = FALSE) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = TRUE) |>
+  scroll_box(width = "100%")
+```
+
+`long_df` has `r nrow(long_df)` rows — `r N` respondents × `r n_tasks` tasks × 2 alternatives — one row per presented profile, with the seven attributes as columns. This is the table format the pilot analysis (and the AMCE models in the [main design chapter](03-conjoint-desing.qmd#dis-conjoint)) will be estimated on.
+
+### Coverage {#sec-coverage}
+
+```{r coverage-profiles}
+long_df <- long_df |>
+  mutate(profile_id = paste(need, identity, control, effort,
+                             reciprocity, attitude, sex, sep = "|"))
+
+profile_counts <- long_df |> count(profile_id, name = "n_appearances")
+n_unique_profiles <- nrow(profile_counts)
+
+tibble(
+  Quantity = c("Unique profiles observed", "Possible profiles (2·3·2·3·2·2·2)",
+               "Mean appearances / profile", "Min appearances / profile",
+               "Max appearances / profile"),
+  Value = c(n_unique_profiles, 288,
+            round(mean(profile_counts$n_appearances), 1),
+            min(profile_counts$n_appearances),
+            max(profile_counts$n_appearances))
+) |>
+  kbl(row.names = FALSE) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = FALSE)
+```
+
+```{r coverage-levels}
+level_balance <- purrr::map_dfr(attr_cols, function(a) {
+  long_df |> count(level = .data[[a]]) |>
+    mutate(attribute = a, .before = 1)
+})
+
+level_balance |>
+  kbl(row.names = FALSE, col.names = c("Attribute", "Level", "N observed")) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = TRUE)
+```
+
+Every level of every attribute lands close to its expected count ($N \times 6 \times 2$ divided by the number of levels), consistent with uniform, independent draws.
+
+
+### Orthogonality: correlation matrix
+
+**Within-profile.** For each presented profile (48,000 of them: 4,000 respondents × 6 tasks × 2 alternatives). Under complete independent randomization these correlations should be indistinguishable from zero.
+
+```{r corr-within}
+dummy_df <- long_df |>
+  mutate(across(all_of(attr_cols), factor)) |>
+  select(all_of(attr_cols))
+
+#mm <- model.matrix(~ ., data = dummy_df)[, -1]
+
+mm <- dummy_df |> mutate_all(~as.numeric(.))
+
+cor_within <- cor(mm)
+diag(cor_within) <- NA
+
+rownames(cor_within) <- c("A. Need:",
+                     "B. Identity",
+                     "C. Control",
+                     "D. Effort",
+                     "E. Reciprocity",
+                     "F. Attitude",
+                     "G. Sex")
+
+#set Column names of the matrix
+colnames(cor_within) <-c("(A)", "(B)","(C)","(D)","(E)","(F)","(G)")
+
+testp <- cor.mtest(cor_within, conf.level = 0.95)
+
+#Plot the matrix using corrplot
+corrplot::corrplot(cor_within,
+                   method = "color",
+                   addCoef.col = "black",
+                   type = "upper",
+                   tl.col = "black",
+                   col = colorRampPalette(c("#E16462", "white", "#0D0887"))(12),
+                   bg = "white",
+                   na.label = "-") 
+
+max_r_within <- max(cor_within, na.rm = T)
+```
+
+Maximum $|r|$ across all atributtes: **`r round(max_r_within, 4)`**.
+
+```{r corr-benchmark}
+n_profiles_total <- nrow(long_df)
+se_r  <- 1 / sqrt(n_profiles_total)
+band3 <- 3 * se_r
+```
+
+With `r format(n_profiles_total, big.mark = ",")` simulated profiles, the sampling standard error of a correlation under the null of true independence is $1/\sqrt{`r format(n_profiles_total, big.mark=",")`} \approx `r round(se_r, 4)`$, so correlations within $\pm`r round(band3, 4)`$ (three standard errors) are indistinguishable from sampling noise. The observed maximum, `r round(max_r_within, 4)`, falls `r if (max_r_within <= band3) "inside" else "outside"` that band.
+
+**Between profiles, within the same task.** The restriction (differ on ≥2 attributes) is a constraint on the *pair*, so some negative dependence between the two profiles of a task is expected and is not a threat to identification — it is orthogonal to (does not touch) the within-profile independence checked above.
+
+```{r corr-between}
+wide_between <- long_df |>
+  select(session_id, task, altID, all_of(attr_cols)) |>
+  pivot_wider(id_cols = c(session_id, task), names_from = altID,
+              values_from = all_of(attr_cols), names_sep = "_")
+
+dummy_a <- wide_between |> select(ends_with("_1")) |> mutate(across(everything(), factor))
+dummy_b <- wide_between |> select(ends_with("_2")) |> mutate(across(everything(), factor))
+mm_a <- dummy_a |> mutate_all(~as.numeric(.))
+mm_b <- dummy_b |> mutate_all(~as.numeric(.))
+cross_cor <- cor(mm_a, mm_b)
+
+max_r_between  <- max(abs(cross_cor))
+mean_r_between <- mean(cross_cor)
+```
+
+Mean cross-profile correlation: `r round(mean_r_between, 4)` (slightly negative, as expected from the restriction). Maximum $|r|$: `r round(max_r_between, 4)`. This dependence is **between the two profiles of a task**, not between attributes within a profile — it plays no role in AMCE identification, which conditions on one profile's own attribute vector (see [main design chapter](03-conjoint-desing.qmd#dis-conjoint), Causal identification and Restrictions).
+
+
+### Summary
+
+Under the randomization exactly as coded in `app.R` — independent uniform draws per attribute, with a pair redrawn only when its six CARIN/NICER attributes differ on fewer than two of them, and sex assigned independently afterward — the simulated data show: (i) near-complete coverage of the 288-profile space (`r n_unique_profiles`/288 profiles observed, `r min(profile_counts$n_appearances)`–`r max(profile_counts$n_appearances)` appearances each); (ii) uniform level balance within every attribute; (iii) within-profile attribute correlations indistinguishable from sampling noise (max $|r|$ = `r round(max_r_within, 4)`, against a `r round(band3,4)` three-SE band); and (iv) a between-profile, within-task correlation that is mildly negative, as the pairwise restriction predicts, but structurally separate from within-profile orthogonality.
+
+## Attribute-order diagnostic (mechanics only)
+
+`app.R` persists the display order of the six explicit attributes per respondent as a 6-letter NICERA code (@sec-json). Hainmueller et al. [-@hainmueller_causal_2014], sec. 5.3.4, recommend testing whether an attribute's estimated effect depends on the screen position it was shown in, via a joint Wald test on an attribute-level × position interaction. The code below implements that test end to end: parsing the NICERA code back into a per-attribute, per-respondent position, joining it to the long-format data, and running the joint interaction test.
+
+```{r parse-nicera}
+code_to_attr <- c(N = "need", I = "identity", C = "control",
+                   E = "effort", R = "reciprocity", A = "attitude")
+
+attr_position <- function(nicera_code, attribute) {
+  map_int(str_split(nicera_code, ""), function(letters_seq) {
+    which(code_to_attr[letters_seq] == attribute)
+  })
+}
+
+position_df <- purrr::map_dfc(attr_names, function(a) {
+  tibble(!!paste0("pos_", a) := attr_position(sim_db$cbc_attr_order, a))
+}) |>
+  mutate(session_id = sim_db$session_id, .before = 1)
+
+head(position_df)
+```
+
+```{r wald-order-test}
+library(car)
+
+analysis_df <- long_df |>
+  left_join(position_df, by = "session_id") |>
+  left_join(
+    wide_share <- long_df |> distinct(session_id, task) |>
+      mutate(shareA = share_a1[cbind(session_id, task)]) |>
+      mutate(shareB = 100 - shareA),
+    by = c("session_id", "task")
+  ) |>
+  mutate(share = ifelse(altID == 1, shareA, shareB))
+
+order_test_one <- function(attribute) {
+  df <- analysis_df |>
+    mutate(lvl = factor(.data[[attribute]]),
+           pos = .data[[paste0("pos_", attribute)]])
+  fit <- lm(share ~ lvl * pos, data = df)
+  interaction_terms <- grep(":", names(coef(fit)), value = TRUE)
+  wt <- linearHypothesis(fit, interaction_terms)
+  tibble(attribute = attribute,
+         df_num = wt$Df[2],
+         F_stat = round(wt$F[2], 3),
+         p_value = round(wt$`Pr(>F)`[2], 3))
+}
+
+order_test_results <- map_dfr(attr_names, order_test_one)
+
+order_test_results |>
+  kbl(row.names = FALSE,
+      col.names = c("Attribute", "Df", "F statistic", "p value")) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = FALSE)
+```
+
+These results are **not evidence of anything about the real instrument.** The outcome fed into this test is the placeholder share generated in @sec-json — random noise, uncorrelated by construction with position or attribute level — so a null result here is guaranteed and validates only the *mechanics* of the parsing and testing code (NICERA decoding, position joining, interaction specification, joint Wald test), not the absence of order effects. The substantive version of this test will be run once on real pilot data, where `cbc_attr_order` reflects what respondents actually saw and `share` reflects what they actually allocated.

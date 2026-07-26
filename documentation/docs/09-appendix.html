@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.27">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>9&nbsp; Appendix – JUSMER Survey Methodological Manual</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
-
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -41,8 +92,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-03e2b95e75bd56a803f8525e7dcc3928.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-03e2b95e75bd56a803f8525e7dcc3928.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -67,17 +117,38 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="justify.css">
 </head>
-
 <body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -88,13 +159,9 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">JUSMER Survey Methodological Manual</a> 
         <div class="sidebar-tools-main">
@@ -114,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Presentation</span></a>
@@ -128,20 +195,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-sample-desing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical design</span></span></a>
+  <a href="./02-survey-desing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Survey design</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-instrument-desing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instrument design</span></span></a>
+  <a href="./03-conjoint-desing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Questionnaire design A: Distributive Conjoint Survey Experiment</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-conjoint-desing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistical Design: Distributive Conjoint Pre-Plan</span></span></a>
+  <a href="./04-instrument-desing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Questionnaire design B: Items</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -175,24 +242,32 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#questionnaries" id="toc-questionnaries" class="nav-link active" data-scroll-target="#questionnaries"><span class="header-section-number">9.1</span> Questionnaries</a></li>
+<li><a href="#questionnaries" id="toc-questionnaries" class="nav-link active" data-scroll-target="#questionnaries"><span class="header-section-number">9.1</span> Questionnaries</a></li>
+  <li>
+<a href="#sec-random-check" id="toc-sec-random-check" class="nav-link" data-scroll-target="#sec-random-check"><span class="header-section-number">9.2</span> Randomization design check: simulated data</a>
+  <ul class="collapse">
+<li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose"><span class="header-section-number">9.2.1</span> Purpose</a></li>
+  <li><a href="#design-parameters-as-implemented-in-app.r" id="toc-design-parameters-as-implemented-in-app.r" class="nav-link" data-scroll-target="#design-parameters-as-implemented-in-app.r"><span class="header-section-number">9.2.2</span> Design parameters, as implemented in <code>app.R</code></a></li>
+  <li><a href="#step-1-simulating-respondents" id="toc-step-1-simulating-respondents" class="nav-link" data-scroll-target="#step-1-simulating-respondents"><span class="header-section-number">9.2.3</span> Step 1 — Simulating respondents</a></li>
+  <li><a href="#sec-json" id="toc-sec-json" class="nav-link" data-scroll-target="#sec-json"><span class="header-section-number">9.2.4</span> Step 2 — Assembling the simulated <code>cbc_profiles</code> database</a></li>
+  <li><a href="#step-3-reshape-to-long-format" id="toc-step-3-reshape-to-long-format" class="nav-link" data-scroll-target="#step-3-reshape-to-long-format"><span class="header-section-number">9.2.5</span> Step 3 — Reshape to long format</a></li>
+  <li><a href="#sec-coverage" id="toc-sec-coverage" class="nav-link" data-scroll-target="#sec-coverage"><span class="header-section-number">9.2.6</span> Coverage</a></li>
+  <li><a href="#orthogonality-correlation-matrix" id="toc-orthogonality-correlation-matrix" class="nav-link" data-scroll-target="#orthogonality-correlation-matrix"><span class="header-section-number">9.2.7</span> Orthogonality: correlation matrix</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.2.8</span> Summary</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#attribute-order-diagnostic-mechanics-only" id="toc-attribute-order-diagnostic-mechanics-only" class="nav-link" data-scroll-target="#attribute-order-diagnostic-mechanics-only"><span class="header-section-number">9.3</span> Attribute-order diagnostic (mechanics only)</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title"><span id="app" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Appendix</span></span></h1>
 </div>
 
@@ -207,17 +282,693 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
+</header><section id="questionnaries" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="questionnaries">
+<span class="header-section-number">9.1</span> Questionnaries</h2>
+</section><section id="sec-random-check" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="sec-random-check">
+<span class="header-section-number">9.2</span> Randomization design check: simulated data</h2>
+<section id="purpose" class="level3" data-number="9.2.1"><h3 data-number="9.2.1" class="anchored" data-anchor-id="purpose">
+<span class="header-section-number">9.2.1</span> Purpose</h3>
+<p>The distributive conjoint’s identification argument (see <a href="./03-conjoint-desing.html#dis-conjoint">Questionnaire design A: Distributive Conjoint Survey Experiment</a>, Causal identification) rests on complete, independent randomization of attribute levels: every attribute is drawn uniformly and independently of every other attribute and of the competing profile, subject only to a pairwise restriction that the two profiles in a task differ on at least two attributes. A natural concern is whether this restriction, or any implementation detail of the randomizer, inadvertently introduces correlation <em>between</em> attributes, which would threaten the orthogonality the AMCE estimator assumes.</p>
+<p>This appendix answers that concern empirically rather than asserting it. It simulates data using the exact randomization procedure implemented in <code>surveys/pre-piloto/sin_comentarios/app.R</code> (the pre-pilot Shiny/<code>surveydown</code> app), and then checks (a) how densely the design space is covered and (b) whether attribute levels are correlated with one another, both within a profile and across the two profiles of a task.</p>
+</section><section id="design-parameters-as-implemented-in-app.r" class="level3" data-number="9.2.2"><h3 data-number="9.2.2" class="anchored" data-anchor-id="design-parameters-as-implemented-in-app.r">
+<span class="header-section-number">9.2.2</span> Design parameters, as implemented in <code>app.R</code>
+</h3>
+<p>The parameters below are read directly from <code>build_default_conjoint_design()</code> and <code>make_cbc_table()</code> in <code>app.R</code>, not reconstructed from the design write-up, so that the simulation cannot silently drift from what the app actually does.</p>
+<ul>
+<li>
+<strong>Seven attributes.</strong> Six are explicit rows in the profile table — need, identity, control, effort, reciprocity, attitude — plus applicant sex, signaled only through a first name (never an explicit row).</li>
+<li>
+<strong>Levels and marginal probabilities.</strong> Every level within an attribute is drawn with <code>sample(lvls, 1)</code>, i.e.&nbsp;uniformly: 1/2 for the five binary attributes (need, control, reciprocity, attitude, sex) and 1/3 for the two three-level attributes (identity, effort). The exact level strings coded in <code>niveles</code> are reproduced in <a href="#tbl-attrs-code" class="quarto-xref">Table&nbsp;<span>9.1</span></a> below.</li>
+<li>
+<strong>Pairwise restriction.</strong> <code>generate_pair()</code> draws the two profiles’ six explicit attributes (identity/need/control/effort/reciprocity/attitude — <em>not</em> sex) independently and redraws the whole pair — both profiles, all six attributes — whenever they differ on fewer than <code>min_diff = 2</code> attributes. This is a rejection sampler operating on the joint distribution of the pair, not a constraint on any single attribute’s marginal.</li>
+<li>
+<strong>Attribute display order / NICERA code.</strong> Once per respondent, <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> draws a random permutation of the six explicit attribute names; this order is held constant across that respondent’s six tasks and is persisted as a 6-letter code (<code>N</code>eed, <code>I</code>dentity, <code>C</code>ontrol, <code>E</code>ffort, <code>R</code>eciprocity, <code>A</code>ttitude) via <code>attr_code</code>. Sex is not part of this code — it always occupies the profile header, never a randomized row position.</li>
+<li>
+<strong>Six tasks, two profiles per task</strong>, one respondent draws one respondent-level design row (<code>respID</code>) from the pre-generated <code>design</code> table, or, when the newer profile columns are absent, falls back to <code>build_default_conjoint_design()</code> — the function reproduced here.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">niveles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  need        <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Dificultad"</span>, <span class="st">"Holgura"</span><span class="op">)</span>,</span>
+<span>  identity    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Chile"</span>, <span class="st">"Venezuela"</span>, <span class="st">"Perú"</span><span class="op">)</span>,</span>
+<span>  control     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Postuló a otras becas pero no obtuvo financiamiento"</span>,</span>
+<span>                   <span class="st">"No alcanzó a postular a tiempo a otras becas"</span><span class="op">)</span>,</span>
+<span>  effort      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Más que sus compañeros"</span>,</span>
+<span>                   <span class="st">"Igual que sus compañeros"</span>,</span>
+<span>                   <span class="st">"Menos que sus compañeros"</span><span class="op">)</span>,</span>
+<span>  reciprocity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ha hecho voluntariado"</span>, <span class="st">"No ha hecho voluntariado"</span><span class="op">)</span>,</span>
+<span>  attitude    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Una ayuda que agradece"</span>, <span class="st">"Algo que se merece"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">attr_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">niveles</span><span class="op">)</span></span>
+<span><span class="va">n_levels</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lengths.html">lengths</a></span><span class="op">(</span><span class="va">niveles</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  Attribute  <span class="op">=</span> <span class="va">attr_names</span>,</span>
+<span>  N_levels   <span class="op">=</span> <span class="va">n_levels</span>,</span>
+<span>  P_level    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"1/"</span>, <span class="va">n_levels</span><span class="op">)</span>,</span>
+<span>  Levels     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">niveles</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" | "</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Attribute"</span>, <span class="st">"N levels"</span>, <span class="st">"P(level)"</span>, <span class="st">"Levels (as coded)"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span>, <span class="st">"condensed"</span><span class="op">)</span>, full_width <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-attrs-code" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-attrs-code-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.1: Attributes and levels exactly as coded in app.R’s <code>niveles</code> list
+</figcaption><div aria-describedby="tbl-attrs-code-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Attribute</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N levels</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P(level)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Levels (as coded)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">need</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1/2</td>
+<td style="text-align: left;">Dificultad | Holgura</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">identity</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">1/3</td>
+<td style="text-align: left;">Chile | Venezuela | Perú</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">control</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1/2</td>
+<td style="text-align: left;">Postuló a otras becas pero no obtuvo financiamiento | No alcanzó a postular a tiempo a otras becas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">effort</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">1/3</td>
+<td style="text-align: left;">Más que sus compañeros | Igual que sus compañeros | Menos que sus compañeros</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">reciprocity</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1/2</td>
+<td style="text-align: left;">Ha hecho voluntariado | No ha hecho voluntariado</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">attitude</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1/2</td>
+<td style="text-align: left;">Una ayuda que agradece | Algo que se merece</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Sex is not in <code>niveles</code> (it is generated separately), so it is added here only for reference: two levels, drawn uniformly, from an 8-name pool per sex (<code>male_names</code>, <code>female_names</code> in <code>app.R</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">male_names</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Mateo"</span>, <span class="st">"Lucas"</span>, <span class="st">"Benjamin"</span>, <span class="st">"Nicolas"</span>, <span class="st">"Daniel"</span>,</span>
+<span>                   <span class="st">"Santiago"</span>, <span class="st">"Tomas"</span>, <span class="st">"Joaquin"</span><span class="op">)</span></span>
+<span><span class="va">female_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sofia"</span>, <span class="st">"Valentina"</span>, <span class="st">"Isidora"</span>, <span class="st">"Martina"</span>, <span class="st">"Camila"</span>,</span>
+<span>                   <span class="st">"Florencia"</span>, <span class="st">"Catalina"</span>, <span class="st">"Antonia"</span><span class="op">)</span></span>
+<span><span class="va">attr_code</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>need <span class="op">=</span> <span class="st">"N"</span>, identity <span class="op">=</span> <span class="st">"I"</span>, control <span class="op">=</span> <span class="st">"C"</span>,</span>
+<span>                   effort <span class="op">=</span> <span class="st">"E"</span>, reciprocity <span class="op">=</span> <span class="st">"R"</span>, attitude <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>With seven attributes at these level counts, the profile space has <span class="math inline">\(2 \times 3 \times 2 \times 3 \times 2 \times 2 \times 2 = 288\)</span> unique combinations, matching the <a href="./03-conjoint-desing.html#dis-conjoint">main design chapter</a>.</p>
+</section><section id="step-1-simulating-respondents" class="level3" data-number="9.2.3"><h3 data-number="9.2.3" class="anchored" data-anchor-id="step-1-simulating-respondents">
+<span class="header-section-number">9.2.3</span> Step 1 — Simulating respondents</h3>
+<p>The simulation targets <span class="math inline">\(N = 4{,}000\)</span> respondents, 6 tasks each, 2 profiles per task. Pair generation replicates <code>generate_pair()</code> exactly (independent uniform draw per attribute for each profile, redraw the whole pair if it differs on fewer than 2 of the six explicit attributes), implemented here as a vectorized rejection sampler for speed rather than the app’s per-pair <code>repeat</code> loop; the acceptance rule is identical, only the batching differs.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/trinker/pacman">"pacman"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pacman"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">dplyr</span>,</span>
+<span>               <span class="va">tidyr</span>, </span>
+<span>               <span class="va">purrr</span>,</span>
+<span>               <span class="va">tibble</span>,</span>
+<span>               <span class="va">jsonlite</span>,</span>
+<span>               <span class="va">stringr</span>,</span>
+<span>               <span class="va">psych</span>,</span>
+<span>               <span class="va">corrplot</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2026</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">N</span>        <span class="op">&lt;-</span> <span class="fl">4000</span></span>
+<span><span class="va">n_tasks</span>  <span class="op">&lt;-</span> <span class="fl">6</span></span>
+<span><span class="va">n_pairs</span>  <span class="op">&lt;-</span> <span class="va">N</span> <span class="op">*</span> <span class="va">n_tasks</span>  <span class="co"># one pair of profiles per task</span></span>
+<span></span>
+<span><span class="co"># Vectorized version of generate_pair(): draw a batch of candidate pairs,</span></span>
+<span><span class="co"># keep only those differing on &gt;= 2 of the 6 explicit attributes, repeat</span></span>
+<span><span class="co"># until enough admissible pairs have been collected.</span></span>
+<span><span class="va">gen_batch</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">n_levels</span>, <span class="kw">function</span><span class="op">(</span><span class="va">L</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="va">L</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">n_levels</span>, <span class="kw">function</span><span class="op">(</span><span class="va">L</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample.int</a></span><span class="op">(</span><span class="va">L</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">m1</span> <span class="op">!=</span> <span class="va">m2</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>m1 <span class="op">=</span> <span class="va">m1</span><span class="op">[</span><span class="va">keep</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span>, m2 <span class="op">=</span> <span class="va">m2</span><span class="op">[</span><span class="va">keep</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">acc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">0</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="va">acc2</span> <span class="op">&lt;-</span> <span class="va">acc1</span></span>
+<span><span class="kw">while</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">acc1</span><span class="op">)</span> <span class="op">&lt;</span> <span class="va">n_pairs</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">batch</span> <span class="op">&lt;-</span> <span class="fu">gen_batch</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="op">(</span><span class="va">n_pairs</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">acc1</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1.15</span><span class="op">)</span> <span class="op">+</span> <span class="fl">10</span><span class="op">)</span></span>
+<span>  <span class="va">acc1</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">acc1</span>, <span class="va">batch</span><span class="op">$</span><span class="va">m1</span><span class="op">)</span></span>
+<span>  <span class="va">acc2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">acc2</span>, <span class="va">batch</span><span class="op">$</span><span class="va">m2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">acc1</span> <span class="op">&lt;-</span> <span class="va">acc1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_pairs</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="va">acc2</span> <span class="op">&lt;-</span> <span class="va">acc2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_pairs</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">acc1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr_names</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">acc2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">attr_names</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">acc1</span> <span class="op">!=</span> <span class="va">acc2</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># restriction holds for every task</span></span>
+<span></span>
+<span><span class="co"># Map integer level codes back to the label strings coded in niveles</span></span>
+<span><span class="va">to_labels</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">attr_names</span>, <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="va">niveles</span><span class="op">[[</span><span class="va">a</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">m</span><span class="op">[</span>, <span class="va">a</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>    col.names <span class="op">=</span> <span class="va">attr_names</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">lab1</span> <span class="op">&lt;-</span> <span class="fu">to_labels</span><span class="op">(</span><span class="va">acc1</span><span class="op">)</span></span>
+<span><span class="va">lab2</span> <span class="op">&lt;-</span> <span class="fu">to_labels</span><span class="op">(</span><span class="va">acc2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sex/name: independent per profile-slot, exactly as in make_cbc_table()</span></span>
+<span><span class="va">sex_draw</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">is_male</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">0.5</span></span>
+<span>  <span class="va">nm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="va">nm</span><span class="op">[</span><span class="va">is_male</span><span class="op">]</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">male_names</span>,   <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">is_male</span><span class="op">)</span>,  replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">nm</span><span class="op">[</span><span class="op">!</span><span class="va">is_male</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">female_names</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">!</span><span class="va">is_male</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">nm</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">lab1</span><span class="op">$</span><span class="va">nombre</span> <span class="op">&lt;-</span> <span class="fu">sex_draw</span><span class="op">(</span><span class="va">n_pairs</span><span class="op">)</span></span>
+<span><span class="va">lab2</span><span class="op">$</span><span class="va">nombre</span> <span class="op">&lt;-</span> <span class="fu">sex_draw</span><span class="op">(</span><span class="va">n_pairs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">session_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>, each <span class="op">=</span> <span class="va">n_tasks</span><span class="op">)</span></span>
+<span><span class="va">task_id</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_tasks</span><span class="op">)</span>, times <span class="op">=</span> <span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">lab1</span><span class="op">$</span><span class="va">session_id</span> <span class="op">&lt;-</span> <span class="va">session_id</span>; <span class="va">lab1</span><span class="op">$</span><span class="va">task_id</span> <span class="op">&lt;-</span> <span class="va">task_id</span></span>
+<span><span class="va">lab2</span><span class="op">$</span><span class="va">session_id</span> <span class="op">&lt;-</span> <span class="va">session_id</span>; <span class="va">lab2</span><span class="op">$</span><span class="va">task_id</span> <span class="op">&lt;-</span> <span class="va">task_id</span></span>
+<span></span>
+<span><span class="co"># Attribute display order per respondent -&gt; NICERA code, exactly as in app.R</span></span>
+<span><span class="va">attr_order_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">N</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">attr_names</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">nicera_code</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">attr_order_mat</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">o</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">attr_code</span><span class="op">[</span><span class="va">o</span><span class="op">]</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="sec-json" class="level3" data-number="9.2.4"><h3 data-number="9.2.4" class="anchored" data-anchor-id="sec-json">
+<span class="header-section-number">9.2.4</span> Step 2 — Assembling the simulated <code>cbc_profiles</code> database</h3>
+<p><code>app.R</code> stores one JSON blob per respondent (<code>cbc_profiles</code>) with the six tasks nested under keys <code>q1</code>–<code>q6</code>, each holding the two alternatives under <code>a1</code>/<code>a2</code>, each alternative holding the six attribute values plus <code>nombre</code>. It also stores the display order as <code>cbc_attr_order</code> (the NICERA code) and — via <code>surveydown</code>’s own input persistence — one slider answer per task (<code>cbc_q1</code>-<code>cbc_q6</code>).</p>
+<p>The slider/share values are <strong>not</strong> simulated from any effect model here: this appendix checks randomization structure, not treatment effects.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">build_json_for_session</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df1</span>, <span class="va">df2</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">tasks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="va">n_tasks</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">t</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_tasks</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">tasks</span><span class="op">[[</span><span class="va">t</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="va">df1</span><span class="op">[</span><span class="va">t</span>, <span class="va">attr_names</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>, nombre <span class="op">=</span> <span class="va">df1</span><span class="op">$</span><span class="va">nombre</span><span class="op">[</span><span class="va">t</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="va">df2</span><span class="op">[</span><span class="va">t</span>, <span class="va">attr_names</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>, nombre <span class="op">=</span> <span class="va">df2</span><span class="op">$</span><span class="va">nombre</span><span class="op">[</span><span class="va">t</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tasks</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"q"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_tasks</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu">toJSON</span><span class="op">(</span><span class="va">tasks</span>, auto_unbox <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">split1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">lab1</span>, <span class="va">lab1</span><span class="op">$</span><span class="va">session_id</span><span class="op">)</span></span>
+<span><span class="va">split2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">lab2</span>, <span class="va">lab2</span><span class="op">$</span><span class="va">session_id</span><span class="op">)</span></span>
+<span><span class="va">profiles_json</span> <span class="op">&lt;-</span> <span class="fu">map2_chr</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span>, <span class="va">build_json_for_session</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Placeholder share: a random even split per task, complementary by</span></span>
+<span><span class="co"># construction (share_a1 + share_a2 = 100) so the fixed-sum shape of the</span></span>
+<span><span class="co"># real outcome is preserved structurally. NOT used to estimate anything.</span></span>
+<span><span class="va">share_a1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n_pairs</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="va">N</span>, ncol <span class="op">=</span> <span class="va">n_tasks</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sim_db</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
+<span>  session_id     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">split1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  cbc_attr_order <span class="op">=</span> <span class="va">nicera_code</span>,</span>
+<span>  cbc_profiles   <span class="op">=</span> <span class="va">profiles_json</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">bind_cols</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">share_a1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"cbc_q"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_tasks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">glimpse</span><span class="op">(</span><span class="va">sim_db</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1
+Columns: 9
+$ session_id     &lt;int&gt; 1
+$ cbc_attr_order &lt;chr&gt; "CNAEIR"
+$ cbc_profiles   &lt;chr&gt; "{\"q1\":{\"a1\":{\"need\":\"Dificultad\",\"identity\":…
+$ cbc_q1         &lt;dbl&gt; 13.83732
+$ cbc_q2         &lt;dbl&gt; 64.06149
+$ cbc_q3         &lt;dbl&gt; 95.98121
+$ cbc_q4         &lt;dbl&gt; 38.31619
+$ cbc_q5         &lt;dbl&gt; 32.36069
+$ cbc_q6         &lt;dbl&gt; 4.203217</code></pre>
+</div>
+</div>
+<p><code>sim_db</code> now has the same shape as the real response table would.</p>
+</section><section id="step-3-reshape-to-long-format" class="level3" data-number="9.2.5"><h3 data-number="9.2.5" class="anchored" data-anchor-id="step-3-reshape-to-long-format">
+<span class="header-section-number">9.2.5</span> Step 3 — Reshape to long format</h3>
+<p>This is the pipeline that will be applied to the real pilot export: parse each respondent’s <code>cbc_profiles</code> JSON, unnest tasks and alternatives into one row per <code>session_id</code> × <code>task</code> × <code>altID</code>, and recover <code>sex</code> from <code>nombre</code> via the same name pools <code>app.R</code> draws from.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sex_lookup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">male_names</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">female_names</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">male_names</span>, <span class="va">female_names</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">reshape_one</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">session_id</span>, <span class="va">json_str</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">parsed</span> <span class="op">&lt;-</span> <span class="fu">fromJSON</span><span class="op">(</span><span class="va">json_str</span>, simplifyVector <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="fu">imap_dfr</span><span class="op">(</span><span class="va">parsed</span>, <span class="kw">function</span><span class="op">(</span><span class="va">task_data</span>, <span class="va">qname</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">imap_dfr</span><span class="op">(</span><span class="va">task_data</span>, <span class="kw">function</span><span class="op">(</span><span class="va">alt_data</span>, <span class="va">altname</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu">as_tibble</span><span class="op">(</span><span class="va">alt_data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu">mutate</span><span class="op">(</span>task  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"q"</span>, <span class="st">""</span>, <span class="va">qname</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>               altID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">""</span>, <span class="va">altname</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">mutate</span><span class="op">(</span>session_id <span class="op">=</span> <span class="va">session_id</span>, .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">long_df</span> <span class="op">&lt;-</span> <span class="fu">map2_dfr</span><span class="op">(</span><span class="va">sim_db</span><span class="op">$</span><span class="va">session_id</span>, <span class="va">sim_db</span><span class="op">$</span><span class="va">cbc_profiles</span>, <span class="va">reshape_one</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">sex_lookup</span><span class="op">[</span><span class="va">nombre</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">attr_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"need"</span>, <span class="st">"identity"</span>, <span class="st">"control"</span>, <span class="st">"effort"</span>, <span class="st">"reciprocity"</span>, <span class="st">"attitude"</span>, <span class="st">"sex"</span><span class="op">)</span></span>
+<span><span class="va">long_df</span> <span class="op">|&gt;</span> <span class="fu">select</span><span class="op">(</span><span class="va">session_id</span>, <span class="va">task</span>, <span class="va">altID</span>, <span class="fu">all_of</span><span class="op">(</span><span class="va">attr_cols</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span>, <span class="st">"condensed"</span><span class="op">)</span>, full_width <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/scroll_box.html">scroll_box</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-condensed caption-top table-sm small">
+<thead><tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">session_id</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">task</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">altID</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">need</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">identity</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">control</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">effort</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">reciprocity</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">attitude</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">sex</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Dificultad</td>
+<td style="text-align: left;">Perú</td>
+<td style="text-align: left;">Postuló a otras becas pero no obtuvo financiamiento</td>
+<td style="text-align: left;">Igual que sus compañeros</td>
+<td style="text-align: left;">No ha hecho voluntariado</td>
+<td style="text-align: left;">Una ayuda que agradece</td>
+<td style="text-align: left;">female</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Dificultad</td>
+<td style="text-align: left;">Chile</td>
+<td style="text-align: left;">Postuló a otras becas pero no obtuvo financiamiento</td>
+<td style="text-align: left;">Igual que sus compañeros</td>
+<td style="text-align: left;">Ha hecho voluntariado</td>
+<td style="text-align: left;">Una ayuda que agradece</td>
+<td style="text-align: left;">female</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Dificultad</td>
+<td style="text-align: left;">Chile</td>
+<td style="text-align: left;">No alcanzó a postular a tiempo a otras becas</td>
+<td style="text-align: left;">Más que sus compañeros</td>
+<td style="text-align: left;">Ha hecho voluntariado</td>
+<td style="text-align: left;">Algo que se merece</td>
+<td style="text-align: left;">male</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Holgura</td>
+<td style="text-align: left;">Perú</td>
+<td style="text-align: left;">No alcanzó a postular a tiempo a otras becas</td>
+<td style="text-align: left;">Igual que sus compañeros</td>
+<td style="text-align: left;">Ha hecho voluntariado</td>
+<td style="text-align: left;">Una ayuda que agradece</td>
+<td style="text-align: left;">female</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><code>long_df</code> has 48000 rows — 4000 respondents × 6 tasks × 2 alternatives — one row per presented profile, with the seven attributes as columns. This is the table format the pilot analysis (and the AMCE models in the <a href="./03-conjoint-desing.html#dis-conjoint">main design chapter</a>) will be estimated on.</p>
+</section><section id="sec-coverage" class="level3" data-number="9.2.6"><h3 data-number="9.2.6" class="anchored" data-anchor-id="sec-coverage">
+<span class="header-section-number">9.2.6</span> Coverage</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">long_df</span> <span class="op">&lt;-</span> <span class="va">long_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>profile_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">need</span>, <span class="va">identity</span>, <span class="va">control</span>, <span class="va">effort</span>,</span>
+<span>                             <span class="va">reciprocity</span>, <span class="va">attitude</span>, <span class="va">sex</span>, sep <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">profile_counts</span> <span class="op">&lt;-</span> <span class="va">long_df</span> <span class="op">|&gt;</span> <span class="fu">count</span><span class="op">(</span><span class="va">profile_id</span>, name <span class="op">=</span> <span class="st">"n_appearances"</span><span class="op">)</span></span>
+<span><span class="va">n_unique_profiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">profile_counts</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">tibble</span><span class="op">(</span></span>
+<span>  Quantity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Unique profiles observed"</span>, <span class="st">"Possible profiles (2·3·2·3·2·2·2)"</span>,</span>
+<span>               <span class="st">"Mean appearances / profile"</span>, <span class="st">"Min appearances / profile"</span>,</span>
+<span>               <span class="st">"Max appearances / profile"</span><span class="op">)</span>,</span>
+<span>  Value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n_unique_profiles</span>, <span class="fl">288</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">profile_counts</span><span class="op">$</span><span class="va">n_appearances</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">profile_counts</span><span class="op">$</span><span class="va">n_appearances</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">profile_counts</span><span class="op">$</span><span class="va">n_appearances</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span>, <span class="st">"condensed"</span><span class="op">)</span>, full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="table table-striped table-condensed caption-top table-sm small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Quantity</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Unique profiles observed</td>
+<td style="text-align: right;">288.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Possible profiles (2·3·2·3·2·2·2)</td>
+<td style="text-align: right;">288.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mean appearances / profile</td>
+<td style="text-align: right;">166.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Min appearances / profile</td>
+<td style="text-align: right;">134.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Max appearances / profile</td>
+<td style="text-align: right;">212.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">level_balance</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr</a></span><span class="op">(</span><span class="va">attr_cols</span>, <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">long_df</span> <span class="op">|&gt;</span> <span class="fu">count</span><span class="op">(</span>level <span class="op">=</span> <span class="va">.data</span><span class="op">[[</span><span class="va">a</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">mutate</span><span class="op">(</span>attribute <span class="op">=</span> <span class="va">a</span>, .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">level_balance</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="cn">FALSE</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Attribute"</span>, <span class="st">"Level"</span>, <span class="st">"N observed"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span>, <span class="st">"condensed"</span><span class="op">)</span>, full_width <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="table table-striped table-condensed caption-top table-sm small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Attribute</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Level</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N observed</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">need</td>
+<td style="text-align: left;">Dificultad</td>
+<td style="text-align: right;">23988</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">need</td>
+<td style="text-align: left;">Holgura</td>
+<td style="text-align: right;">24012</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">identity</td>
+<td style="text-align: left;">Chile</td>
+<td style="text-align: right;">16027</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">identity</td>
+<td style="text-align: left;">Perú</td>
+<td style="text-align: right;">15905</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">identity</td>
+<td style="text-align: left;">Venezuela</td>
+<td style="text-align: right;">16068</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">No alcanzó a postular a tiempo a otras becas</td>
+<td style="text-align: right;">23848</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">Postuló a otras becas pero no obtuvo financiamiento</td>
+<td style="text-align: right;">24152</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">effort</td>
+<td style="text-align: left;">Igual que sus compañeros</td>
+<td style="text-align: right;">15943</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">effort</td>
+<td style="text-align: left;">Menos que sus compañeros</td>
+<td style="text-align: right;">16180</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">effort</td>
+<td style="text-align: left;">Más que sus compañeros</td>
+<td style="text-align: right;">15877</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">reciprocity</td>
+<td style="text-align: left;">Ha hecho voluntariado</td>
+<td style="text-align: right;">24039</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">reciprocity</td>
+<td style="text-align: left;">No ha hecho voluntariado</td>
+<td style="text-align: right;">23961</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">attitude</td>
+<td style="text-align: left;">Algo que se merece</td>
+<td style="text-align: right;">23930</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">attitude</td>
+<td style="text-align: left;">Una ayuda que agradece</td>
+<td style="text-align: right;">24070</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sex</td>
+<td style="text-align: left;">female</td>
+<td style="text-align: right;">23811</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sex</td>
+<td style="text-align: left;">male</td>
+<td style="text-align: right;">24189</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Every level of every attribute lands close to its expected count (<span class="math inline">\(N \times 6 \times 2\)</span> divided by the number of levels), consistent with uniform, independent draws.</p>
+</section><section id="orthogonality-correlation-matrix" class="level3" data-number="9.2.7"><h3 data-number="9.2.7" class="anchored" data-anchor-id="orthogonality-correlation-matrix">
+<span class="header-section-number">9.2.7</span> Orthogonality: correlation matrix</h3>
+<p><strong>Within-profile.</strong> For each presented profile (48,000 of them: 4,000 respondents × 6 tasks × 2 alternatives). Under complete independent randomization these correlations should be indistinguishable from zero.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dummy_df</span> <span class="op">&lt;-</span> <span class="va">long_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">attr_cols</span><span class="op">)</span>, <span class="va">factor</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">attr_cols</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#mm &lt;- model.matrix(~ ., data = dummy_df)[, -1]</span></span>
+<span></span>
+<span><span class="va">mm</span> <span class="op">&lt;-</span> <span class="va">dummy_df</span> <span class="op">|&gt;</span> <span class="fu">mutate_all</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cor_within</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">cor_within</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cor_within</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A. Need:"</span>,</span>
+<span>                     <span class="st">"B. Identity"</span>,</span>
+<span>                     <span class="st">"C. Control"</span>,</span>
+<span>                     <span class="st">"D. Effort"</span>,</span>
+<span>                     <span class="st">"E. Reciprocity"</span>,</span>
+<span>                     <span class="st">"F. Attitude"</span>,</span>
+<span>                     <span class="st">"G. Sex"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#set Column names of the matrix</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">cor_within</span><span class="op">)</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"(A)"</span>, <span class="st">"(B)"</span>,<span class="st">"(C)"</span>,<span class="st">"(D)"</span>,<span class="st">"(E)"</span>,<span class="st">"(F)"</span>,<span class="st">"(G)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">testp</span> <span class="op">&lt;-</span> <span class="fu">cor.mtest</span><span class="op">(</span><span class="va">cor_within</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Plot the matrix using corrplot</span></span>
+<span><span class="fu">corrplot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/corrplot/man/corrplot.html">corrplot</a></span><span class="op">(</span><span class="va">cor_within</span>,</span>
+<span>                   method <span class="op">=</span> <span class="st">"color"</span>,</span>
+<span>                   addCoef.col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>                   type <span class="op">=</span> <span class="st">"upper"</span>,</span>
+<span>                   tl.col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>                   col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#E16462"</span>, <span class="st">"white"</span>, <span class="st">"#0D0887"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>,</span>
+<span>                   bg <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>                   na.label <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="09-appendix_files/figure-html/corr-within-1.png" class="img-fluid figure-img" style="width:85.0%" data-fig-pos="H"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">max_r_within</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">cor_within</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Maximum <span class="math inline">\(|r|\)</span> across all atributtes: <strong>0.0107</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">n_profiles_total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">long_df</span><span class="op">)</span></span>
+<span><span class="va">se_r</span>  <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">n_profiles_total</span><span class="op">)</span></span>
+<span><span class="va">band3</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="va">se_r</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>With 48,000 simulated profiles, the sampling standard error of a correlation under the null of true independence is <span class="math inline">\(1/\sqrt{48,000} \approx 0.0046\)</span>, so correlations within <span class="math inline">\(\pm0.0137\)</span> (three standard errors) are indistinguishable from sampling noise. The observed maximum, 0.0107, falls inside that band.</p>
+<p><strong>Between profiles, within the same task.</strong> The restriction (differ on ≥2 attributes) is a constraint on the <em>pair</em>, so some negative dependence between the two profiles of a task is expected and is not a threat to identification — it is orthogonal to (does not touch) the within-profile independence checked above.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">wide_between</span> <span class="op">&lt;-</span> <span class="va">long_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">session_id</span>, <span class="va">task</span>, <span class="va">altID</span>, <span class="fu">all_of</span><span class="op">(</span><span class="va">attr_cols</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>id_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">session_id</span>, <span class="va">task</span><span class="op">)</span>, names_from <span class="op">=</span> <span class="va">altID</span>,</span>
+<span>              values_from <span class="op">=</span> <span class="fu">all_of</span><span class="op">(</span><span class="va">attr_cols</span><span class="op">)</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dummy_a</span> <span class="op">&lt;-</span> <span class="va">wide_between</span> <span class="op">|&gt;</span> <span class="fu">select</span><span class="op">(</span><span class="fu">ends_with</span><span class="op">(</span><span class="st">"_1"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span>, <span class="va">factor</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dummy_b</span> <span class="op">&lt;-</span> <span class="va">wide_between</span> <span class="op">|&gt;</span> <span class="fu">select</span><span class="op">(</span><span class="fu">ends_with</span><span class="op">(</span><span class="st">"_2"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span>, <span class="va">factor</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mm_a</span> <span class="op">&lt;-</span> <span class="va">dummy_a</span> <span class="op">|&gt;</span> <span class="fu">mutate_all</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mm_b</span> <span class="op">&lt;-</span> <span class="va">dummy_b</span> <span class="op">|&gt;</span> <span class="fu">mutate_all</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">cross_cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">mm_a</span>, <span class="va">mm_b</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">max_r_between</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">cross_cor</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">mean_r_between</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">cross_cor</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Mean cross-profile correlation: -0.006 (slightly negative, as expected from the restriction). Maximum <span class="math inline">\(|r|\)</span>: 0.0545. This dependence is <strong>between the two profiles of a task</strong>, not between attributes within a profile — it plays no role in AMCE identification, which conditions on one profile’s own attribute vector (see <a href="./03-conjoint-desing.html#dis-conjoint">main design chapter</a>, Causal identification and Restrictions).</p>
+</section><section id="summary" class="level3" data-number="9.2.8"><h3 data-number="9.2.8" class="anchored" data-anchor-id="summary">
+<span class="header-section-number">9.2.8</span> Summary</h3>
+<p>Under the randomization exactly as coded in <code>app.R</code> — independent uniform draws per attribute, with a pair redrawn only when its six CARIN/NICER attributes differ on fewer than two of them, and sex assigned independently afterward — the simulated data show: (i) near-complete coverage of the 288-profile space (288/288 profiles observed, 134–212 appearances each); (ii) uniform level balance within every attribute; (iii) within-profile attribute correlations indistinguishable from sampling noise (max <span class="math inline">\(|r|\)</span> = 0.0107, against a 0.0137 three-SE band); and (iv) a between-profile, within-task correlation that is mildly negative, as the pairwise restriction predicts, but structurally separate from within-profile orthogonality.</p>
+</section></section><section id="attribute-order-diagnostic-mechanics-only" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="attribute-order-diagnostic-mechanics-only">
+<span class="header-section-number">9.3</span> Attribute-order diagnostic (mechanics only)</h2>
+<p><code>app.R</code> persists the display order of the six explicit attributes per respondent as a 6-letter NICERA code (<a href="#sec-json" class="quarto-xref"><span>Section 9.2.4</span></a>). Hainmueller et al. <span class="citation" data-cites="hainmueller_causal_2014">(<a href="03-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">2014</a>)</span>, sec.&nbsp;5.3.4, recommend testing whether an attribute’s estimated effect depends on the screen position it was shown in, via a joint Wald test on an attribute-level × position interaction. The code below implements that test end to end: parsing the NICERA code back into a per-attribute, per-respondent position, joining it to the long-format data, and running the joint interaction test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">code_to_attr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>N <span class="op">=</span> <span class="st">"need"</span>, I <span class="op">=</span> <span class="st">"identity"</span>, C <span class="op">=</span> <span class="st">"control"</span>,</span>
+<span>                   E <span class="op">=</span> <span class="st">"effort"</span>, R <span class="op">=</span> <span class="st">"reciprocity"</span>, A <span class="op">=</span> <span class="st">"attitude"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">attr_position</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">nicera_code</span>, <span class="va">attribute</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">map_int</span><span class="op">(</span><span class="fu">str_split</span><span class="op">(</span><span class="va">nicera_code</span>, <span class="st">""</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">letters_seq</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">code_to_attr</span><span class="op">[</span><span class="va">letters_seq</span><span class="op">]</span> <span class="op">==</span> <span class="va">attribute</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">position_df</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfc</a></span><span class="op">(</span><span class="va">attr_names</span>, <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">tibble</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"pos_"</span>, <span class="va">a</span><span class="op">)</span> <span class="op">:=</span> <span class="fu">attr_position</span><span class="op">(</span><span class="va">sim_db</span><span class="op">$</span><span class="va">cbc_attr_order</span>, <span class="va">a</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>session_id <span class="op">=</span> <span class="va">sim_db</span><span class="op">$</span><span class="va">session_id</span>, .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">position_df</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  session_id pos_need pos_identity pos_control pos_effort pos_reciprocity
+       &lt;int&gt;    &lt;int&gt;        &lt;int&gt;       &lt;int&gt;      &lt;int&gt;           &lt;int&gt;
+1          1        2            5           1          4               6
+2          2        4            2           6          3               1
+3          3        6            5           3          2               1
+4          4        3            5           2          4               6
+5          5        6            3           2          4               1
+6          6        3            1           2          4               6
+# ℹ 1 more variable: pos_attitude &lt;int&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bprice2652/car_repo">car</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">analysis_df</span> <span class="op">&lt;-</span> <span class="va">long_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">position_df</span>, by <span class="op">=</span> <span class="st">"session_id"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span></span>
+<span>    <span class="va">wide_share</span> <span class="op">&lt;-</span> <span class="va">long_df</span> <span class="op">|&gt;</span> <span class="fu">distinct</span><span class="op">(</span><span class="va">session_id</span>, <span class="va">task</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">mutate</span><span class="op">(</span>shareA <span class="op">=</span> <span class="va">share_a1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">session_id</span>, <span class="va">task</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">mutate</span><span class="op">(</span>shareB <span class="op">=</span> <span class="fl">100</span> <span class="op">-</span> <span class="va">shareA</span><span class="op">)</span>,</span>
+<span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"session_id"</span>, <span class="st">"task"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>share <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">altID</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">shareA</span>, <span class="va">shareB</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">order_test_one</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">attribute</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">analysis_df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">mutate</span><span class="op">(</span>lvl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">.data</span><span class="op">[[</span><span class="va">attribute</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>           pos <span class="op">=</span> <span class="va">.data</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"pos_"</span>, <span class="va">attribute</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">share</span> <span class="op">~</span> <span class="va">lvl</span> <span class="op">*</span> <span class="va">pos</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
+<span>  <span class="va">interaction_terms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">":"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">wt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/car/man/linearHypothesis.html">linearHypothesis</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">interaction_terms</span><span class="op">)</span></span>
+<span>  <span class="fu">tibble</span><span class="op">(</span>attribute <span class="op">=</span> <span class="va">attribute</span>,</span>
+<span>         df_num <span class="op">=</span> <span class="va">wt</span><span class="op">$</span><span class="va">Df</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
+<span>         F_stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">wt</span><span class="op">$</span><span class="cn">F</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>         p_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">wt</span><span class="op">$</span><span class="va">`Pr(&gt;F)`</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">order_test_results</span> <span class="op">&lt;-</span> <span class="fu">map_dfr</span><span class="op">(</span><span class="va">attr_names</span>, <span class="va">order_test_one</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">order_test_results</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span>row.names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Attribute"</span>, <span class="st">"Df"</span>, <span class="st">"F statistic"</span>, <span class="st">"p value"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>bootstrap_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"striped"</span>, <span class="st">"condensed"</span><span class="op">)</span>, full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="table table-striped table-condensed caption-top table-sm small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Attribute</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Df</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">F statistic</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">need</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.909</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">identity</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.909</td>
+<td style="text-align: right;">0.403</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">control</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.449</td>
+<td style="text-align: right;">0.503</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">effort</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.819</td>
+<td style="text-align: right;">0.060</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">reciprocity</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.940</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">attitude</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">0.764</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>These results are <strong>not evidence of anything about the real instrument.</strong> The outcome fed into this test is the placeholder share generated in <a href="#sec-json" class="quarto-xref"><span>Section 9.2.4</span></a> — random noise, uncorrelated by construction with position or attribute level — so a null result here is guaranteed and validates only the <em>mechanics</em> of the parsing and testing code (NICERA decoding, position joining, interaction specification, joint Wald test), not the absence of order effects. The substantive version of this test will be run once on real pilot data, where <code>cbc_attr_order</code> reflects what respondents actually saw and <code>share</code> reflects what they actually allocated.</p>
 
 
-<section id="questionnaries" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="questionnaries"><span class="header-section-number">9.1</span> Questionnaries</h2>
-
-
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-hainmueller_causal_2014" class="csl-entry" role="listitem">
+Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2014). Causal <span>Inference</span> in <span>Conjoint Analysis</span>: <span>Understanding Multidimensional Choices</span> via <span>Stated Preference Experiments</span>. <em>Political Analysis</em>, <em>22</em>(1), 1–30. <a href="https://doi.org/10.1093/pan/mpt024">https://doi.org/10.1093/pan/mpt024</a>
+</div>
+</div>
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -616,9 +1367,7 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
-  </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./08-codebook.html" class="pagination-link" aria-label="Codebook">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Codebook</span></span>
       </a>          
@@ -627,8 +1376,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p>Project “Market Justice and the Deservingness of Social Welfare”</p>
 </div>   
@@ -640,8 +1388,6 @@ ul.task-list li input[type="checkbox"] {
 </div>
   </div>
 </footer>
-
-
 
 
 </body></html>
