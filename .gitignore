@@ -9,6 +9,10 @@
 *_cache/
 *_files/
 
+# ...except the ones inside the published book output, which must be committed
+!documentation/docs/**/*_files/
+!documentation/docs/**/*_files/**
+
 # macOS
 .DS_Store
 
