@@ -4,18 +4,161 @@ format: html
 
 # Survey design {#dis-estadis}
 
-## Target Population and Survey Population
+This section specifies the statistical and sampling design of the JUSMER survey. It states the population targeted, the frame from which cases are drawn, the units and domains of inference, the selection mechanism and its field controls, the quota and sample-size structure, the longitudinal architecture, and the post-fieldwork weighting and error framework. Where operational parameters are still being negotiated with the panel provider, they are flagged explicitly so they can be completed once the scenario is awarded.
 
-## Sampling Frame
+The substantive instrument is organized in two parts. **Part A** presents the statistical design of the experimental module, which is a distributive conjoint experiment. In this module, respondents act as members of a university committee and divide a fixed scholarship fund between two applicants whose attributes are experimentally randomized, so that allocating more to one applicant necessarily means allocating less to the other. The attributes are operationalized to reflect the CARIN and NICER deservingness criteria framework. **Part B** exposes the substantive item batteries of the survey: market justice preferences, deservingness scales, the scale of meritocratic perceptions and preferences, and neoliberalism scales together with the sociodemographic and attitudinal blocks, documented in the instrument chapter. The present section governs the design that underlies data collection for *both* parts, since they are administered to the same respondents within a single questionnaire.
 
-## Units of Analysis and Domains
+## Type of survey
 
-## Sampling Strategy and Sample Selection
+The survey is fielded using the **CAWI** methodology (*Computer-Assisted Web Interviewing*): a self-administered questionnaire completed over the internet, with no interviewer present, distributed to eligible members of an online access panel through a personalized link [@biffignandi2021; @callegaro2015]. CAWI is well suited to this study for four reasons. It permits **rapid, lower-cost collection of large samples** across the national territory; its **visual and programmatic environment** supports the complex randomization, per-respondent profile generation, and tasks that the experimental module in Part A requires, something impractical in telephone or paper modes; the **absence of an interviewer** reduces interviewer effects and social-desirability pressure on the sensitive distributive and deservingness items; and **automated routing, validation, and consistency checks** improve data quality at the point of entry [@fowler2013; @groves2009].
 
-## Quotas and Sample Size
+These possibilities come with well-documented limitations that shape every downstream decision in this section. Because access to the internet is not universal and the panel is an **opt-in, non-probability** frame, the covered population does not coincide with the target population, and the classical apparatus of probability inference (known selection probabilities, design-unbiased estimators, quantifiable sampling error) does not apply without additional modeling assumptions [@biffignandi2021; @callegaro2015; @toepoel2012]. Self-administration without an interviewer introduces measurement error and satisficing, and professionalized panel behavior (speeding, straightlining, duplicate participation) must be actively screened [@groves2009]. These constraints are addressed where they arise: coverage and self-selection in @sec-target and @sec-errors, measurement and processing error in @sec-errors, and attrition in @sec-longitudinal.
 
-## Longitudinal Design
+The questionnaire is designed for an approximate response time of **15 minutes per wave**. The study is **longitudinal**: the same panelists are re-measured across waves to observe change rather than a single cross-section. The number of waves, the inter-wave interval, and the presence of a pilot phase are being finalized with the provider and are laid out as a completable structure in @sec-longitudinal.
 
-## Weighting and Calibration
+## Target Population and Survey Population {#sec-target}
 
-## Precision, Uncertainty, and Non-sampling Errors
+The **target population** is defined as persons aged 18 or older residing in the national territory during fieldwork. The conditions of a self-administered questionnaire do not substantively redefine this population [@groves2009].
+
+The **survey population** (covered population) is the subset of the target population that has internet access, belongs to the provider's panel, and is available during the field period. Because the panel is a voluntary opt-in, non-probability structure, the survey population does **not** fully coincide with the target population: persons without internet access and eligible persons who are not panel members have, in practice, no chance of selection. This coverage gap is a defining feature of the design rather than an incidental shortcoming, and it is carried forward explicitly into the interpretation of results and into the error assessment in @sec-errors [@biffignandi2021; @callegaro2015].
+
+## Units of Analysis and Domains {#sec-units}
+
+The **observation unit, information unit, and sampling unit coincide**: the individual panelist aged 18 or older who completes the self-administered questionnaire. The **unit of analysis** is the population aged 18 or older resident in Chile, to which estimates are directed.
+
+The study defines a **single national-coverage domain**. No territorial (regional or urban/rural) domains are defined, and the design is not powered to produce domain-level estimates below the national level. Sample size is therefore driven by the analytical and experimental objectives of the study as a whole rather than by sub-domain precision targets (@sec-quotas).
+
+## Sampling Frame {#sec-frame}
+
+A sampling frame refers to the list, database, or operational mechanism that makes it possible to define, identify, and access the elements of the population covered by a survey. In practice, the frame defines the set of units from which the sample can be selected and, therefore, determines the empirical scope of the study and its potential sources of error (Groves et al., 2009; Lohr, 2009).
+
+In this case, the **sampling frame** is the online panel operated by the provider (Netquest). It is a non-probability, voluntary-membership frame that may exhibit self-selection bias and internet-access coverage bias. To document the frame's properties and support the coverage assessment, the provider is required to report: the total panel size and the number of active panelists; recruitment mechanisms; eligibility criteria; the profile variables available for targeting and validation; updating and de-duplication procedures; and activity, invitation, and participation rates.
+
+Because the frame is not a probability list of the target population, no frame-based inclusion probabilities can be derived from it; selection proceeds by quota-controlled invitation [grooves] (@sec-strategy), and inference to the target population depends on the modeling and calibration described in @sec-weighting.
+
+## Sampling Strategy and Sample Selection {#sec-strategy}
+
+The survey design employs a **non-probabilistic quota-based selection strategy**, implemented through targeted invitations (purposive sampling). In this type of design, the sample is not selected based on known probabilities of inclusion, but rather on sample composition specifications defined in advance, aimed at replicating certain population distributions across relevant control variables (Callegaro et al., 2015; Lohr, 2009). The provider draws invited panelists from profile information already held in the frame and directs fieldwork toward the quota margins defined in @sec-quotas.
+
+The questionnaire is programmed and hosted by the research team in surveydown, and substantive responses are stored in the team's database rather than the provider's; quota management relies on a **technical integration** between panel and instrument.
+
+A **case is counted as effective** when the questionnaire is completed and passes the quality filters.
+
+## Quotas and Sample Size {#sec-quotas}
+
+Quotas are **simple (marginal) quotas**: independent marginal control on each variable, with no crossed cells. They are defined by sex, age, and education, benchmarked to the **2024 Census (INE)**; universe: population aged 18 or older resident in Chile.
+
+| Quota variable | Category | N (Census 2024) | % |
+|---|---|---:|---:|
+| Sex | Male | 6,780,956 | 47.76 |
+|  | Female | 7,416,995 | 52.24 |
+| Age | 18–29 | 3,074,306 | 21.65 |
+|  | 30–44 | 4,128,793 | 29.08 |
+|  | 45–59 | 3,396,454 | 23.92 |
+|  | 60 or older | 3,598,398 | 25.34 |
+| Education | Basic or less | 4,079,158 | 28.73 |
+|  | Secondary | 5,874,173 | 41.37 |
+|  | Higher technical | 1,402,491 | 9.88 |
+|  | University or more | 2,842,129 | 20.02 |
+: Marginal quota targets, population aged 18+ resident in Chile {#tbl-quotas}
+
+*Source: 2024 Census (INE), population aged 18 or older resident in Chile.*
+
+The correspondence with ISCED (CINE) levels is as follows: *basic or less* groups CINE codes 01, 02, 03, 10, 14, and 98; *secondary* corresponds to codes 24 and 25; *higher technical* to code 35; and *university or more* groups codes 46, 56, and 64. The "60 or older" band has no defined upper bound; the provider must ensure the questionnaire correctly captures respondents aged 75 and over where such panelists exist in the frame.
+
+Sample size is set by the analytical and experimental objectives of the study, not as a fixed fraction of the population [@groves2009]. The following scenarios are under negotiation with the provider; the awarded scenario determines the final targets.
+
+| Scenario | Waves | Wave 1 (effective) | Later waves | Retention assumption |
+|---|:--:|--:|---|---|
+| Base (recommended) | 2 | 3,000 | Wave 2 ≈ 2,250 | 75% retention (25% attrition) |
+| Alternative 1 (minimalist) | 2 | 2,500 | Wave 2 ≈ 1,875 | 75% retention |
+| Alternative 2 (maximalist) | 3 | 3,000 | 3,000 per wave | maintained via over-recruitment or controlled inter-wave replacement |
+| Alternative 3 (open) | — | provider proposal | — | technically justified |
+
+: Sample-size and wave scenarios under negotiation {#tbl-scenarios}
+
+::: {.callout-important}
+## Known feasibility constraint (basic education)
+The provider (Netquest) has flagged a feasibility constraint on panelists with **basic education or less**: the active pool in this stratum is materially below the 28.73% marginal target in @tbl-quotas. The design therefore anticipates a **documented deviation** in this quota, to be addressed through [controlled over-invitation of the stratum / a capped achieved share with the residual gap corrected at the weighting stage — see @sec-weighting]. The final treatment must be recorded here once agreed with the provider.
+:::
+
+## Longitudinal Design {#sec-longitudinal}
+
+The study follows a **web-panel logic**: the same panelists are re-measured at successive waves to identify within-person change, with the provider guaranteeing re-contact of Wave 1 respondents in later waves [@biffignandi2021]. The fielding architecture below combines parameters already fixed in the terms of reference with parameters still to be closed with the provider. Confirmed elements are stated as text; open elements are marked for completion.
+
+**(1) Technical pilot.**
+
+::: {.callout-note}
+## To confirm — technical pilot
+A pilot with a reduced group verifies the access link, the integration of disposition returns, cross-device and cross-browser rendering, response times, and skip/filter logic.
+- Included: [yes / no]
+- Approximate size: [~n cases]
+- Timing relative to Wave 1: [before soft launch / concurrent]
+- Scope: [technical only / technical + substantive pretest]
+:::
+
+**(2) Wave 1 two-phase fielding (soft launch).** Regardless of the awarded scenario, Wave 1 is fielded in two phases:
+
+- **Phase 1 — soft launch:** the first **500 effective cases** are collected and the field is halted.
+- **Pause of 1–2 weeks:** the team reviews data quality and the pace of quota compliance in those 500 cases. Resumption is subject to **written go/no-go approval** by the team.
+- **Phase 2:** once authorized, the field resumes until the scenario's target N is reached.
+
+The provider must accommodate this stop-and-pause in both the schedule and the financial proposal.
+
+**(3) Wave structure and cadence.**
+
+::: {.callout-note}
+## To confirm — waves and interval
+- Number of waves: [two (base) / three (maximalist)]
+- Inter-wave interval: [n months between waves]
+- Approximate field window per wave: [dates / duration]
+- Questionnaire duration per wave: ~15 minutes
+:::
+
+**(4) Attrition and retention.** The base scenario assumes **75% inter-wave retention (25% attrition)**. Under a three-wave scenario, the target N is sustained through [initial over-recruitment / controlled inter-wave replacement], to be specified once awarded.
+
+**(5) Longitudinal re-consent.** A **re-consent model across waves** is required: consent is framed for open-ended longitudinal re-contact ("at least one additional measurement") and does not promise immediate anonymization, since immediate anonymization is incompatible with re-contact. The consent wording and its ethics approval are documented in the ethics chapter; this section only records that re-consent is a design requirement affecting retention.
+
+::: {.callout-note}
+## To confirm — retention incentives
+Incentive scheme for maximizing between-wave retention: [structure, amount, timing, and whether administered by the provider]. The provider must describe this in its proposal.
+:::
+
+**(6) Panel refreshment.**
+
+::: {.callout-note}
+## To confirm — refreshment (conditional)
+Applicable only if a three-wave scenario is awarded and attrition threatens the achieved margins: [refreshment strategy, timing, and how added cases are handled in weighting].
+:::
+
+## Weighting and Calibration {#sec-weighting}
+
+Weighting is performed **internally by the research team** (not by the provider) after fieldwork. Because the frame is a non-probability panel, there are no design-based inclusion probabilities from which classical design weights could be constructed; weighting is therefore **calibration to known population margins** rather than design-weight estimation [@biffignandi2021; @lohr2009].
+
+The procedure calibrates the achieved sample to the **2024 Census marginal distributions** of sex, age, and education (the quota variables in @tbl-quotas). Since only marginal population totals are used and cross-classified population cells are not the calibration target, **raking (iterative proportional fitting)** is the natural technique; it coincides with simple post-stratification in the single-variable limit and behaves similarly to generalized regression estimation when interaction effects among the auxiliary variables are weak [@lohr2009; @biffignandi2021]. Where the basic-education stratum is under-filled (@sec-quotas), calibration additionally corrects the residual gap, within the limits noted below.
+
+Two caveats govern interpretation:
+
+- Calibration reduces bias **only** to the extent that the auxiliary variables are correlated both with participation and with the target constructs; it does not remove bias arising from selection on characteristics unrelated to sex, age, and education [@biffignandi2021; @lohr2009]. It is not a complete remedy for the non-probability nature of the frame.
+- The weighting model, the auxiliary variables, the achieved-versus-target margins, and the resulting weight distribution (including any trimming) will be reported so that the assumptions can be assessed rather than taken on faith [@lohr2009].
+
+::: {.callout-note}
+## To confirm — weighting specification
+- Calibration variables beyond sex × age × education: [e.g., macrozone, if a reliable benchmark is adopted]
+- Raking convergence criterion and weight-trimming rule: [thresholds]
+- Longitudinal weights: [per-wave calibration weights / attrition-adjustment weights for Wave 2+]
+:::
+
+## Precision, Uncertainty, and Non-sampling Errors {#sec-errors}
+
+Because selection is non-probabilistic, **design-based sampling variance and classical margins of error do not strictly apply**: there is no randomization distribution from which to derive them, and a reported "±X%" would misrepresent the design [@biffignandi2021; @callegaro2015]. Uncertainty for descriptive estimates is therefore reported on a **model-based / approximate** basis, with variance estimated on the calibrated sample and interpreted as conditional on the weighting model rather than as a probability-sample confidence statement. For the experimental module in Part A, inference rests on **within-survey randomization of profile attributes**, which is internally valid regardless of how the sample was selected; the causal quantities (e.g., average marginal component effects) are identified by the experimental design, while their generalization to the target population inherits the sample's coverage and selection limitations [@hainmueller2014].
+
+Following the **Total Survey Error** framework, the design attends to the following non-sampling error sources [@biffignandi2021; @groves2009; @fowler2013]:
+
+- **Coverage error** — non-internet users and eligible non-members of the panel are outside the frame (@sec-target, @sec-frame). This is the dominant structural error of the design.
+- **Selection / self-selection error** — opt-in membership and differential willingness to be invited; quota control constrains the achieved margins but does not equalize selection propensities within categories.
+- **Nonresponse error** — arising at two stages, panel recruitment and the specific survey, and, in the panel, **attrition** across waves (@sec-longitudinal). Response rates in the classical sense are not fully computable for an opt-in panel; field-rate indicators (invitation, start, completion) are reported instead.
+- **Measurement error** — self-administration without an interviewer can produce satisficing, straightlining, and order effects; sensitive items may still attract social-desirability distortion despite the reduced interviewer pressure. Instrument-side mitigations (item wording, response formats, attention checks) are documented in the instrument chapter.
+- **Processing error** — mis-clicks (notably on mobile devices) and errors introduced when derived variables are constructed; addressed through validation rules at entry and documented data-editing procedures.
+
+These sources are not independent, and trade-offs among them (e.g., between coverage and nonresponse) are managed at the design stage rather than assumed away [@biffignandi2021]. The residual, non-eliminable errors — chiefly coverage and self-selection — are reported transparently and treated as bounds on the external validity of the estimates rather than as quantities removed by weighting.

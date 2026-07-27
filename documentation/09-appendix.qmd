@@ -324,6 +324,62 @@ band3 <- 3 * se_r
 
 With `r format(n_profiles_total, big.mark = ",")` simulated profiles, the sampling standard error of a correlation under the null of true independence is $1/\sqrt{`r format(n_profiles_total, big.mark=",")`} \approx `r round(se_r, 4)`$, so correlations within $\pm`r round(band3, 4)`$ (three standard errors) are indistinguishable from sampling noise. The observed maximum, `r round(max_r_within, 4)`, falls `r if (max_r_within <= band3) "inside" else "outside"` that band.
 
+**Robustness across sample sizes.** The check above uses the full $N = 4{,}000$ simulated sample. To confirm that the near-zero correlations are a small-sample-noise phenomenon that shrinks with $N$ — rather than an artifact of averaging over a large sample — the same within-profile check (one numeric column per attribute, off-diagonal correlations) is repeated at $N =$ 500, 1,000, 1,500 and 4,000 respondents, 6 tasks each. Each run reuses `gen_batch()` for the pairwise-restricted draws and adds sex independently per profile, exactly as in the rest of this appendix.
+
+```{r corr-multiN}
+check_orthogonality_at_N <- function(N_resp, n_tasks_check = 6, seed = 2026) {
+  set.seed(seed)
+  n_pairs_check <- N_resp * n_tasks_check
+
+  acc1_n <- matrix(nrow = 0, ncol = length(n_levels))
+  acc2_n <- acc1_n
+  while (nrow(acc1_n) < n_pairs_check) {
+    batch  <- gen_batch(ceiling((n_pairs_check - nrow(acc1_n)) * 1.15) + 10)
+    acc1_n <- rbind(acc1_n, batch$m1)
+    acc2_n <- rbind(acc2_n, batch$m2)
+  }
+  acc1_n <- acc1_n[seq_len(n_pairs_check), ]
+  acc2_n <- acc2_n[seq_len(n_pairs_check), ]
+  colnames(acc1_n) <- attr_names
+  colnames(acc2_n) <- attr_names
+
+  lab1_n <- to_labels(acc1_n)
+  lab2_n <- to_labels(acc2_n)
+  lab1_n$sex <- ifelse(runif(n_pairs_check) < 0.5, "male", "female")
+  lab2_n$sex <- ifelse(runif(n_pairs_check) < 0.5, "male", "female")
+
+  mm_n <- bind_rows(lab1_n[, attr_cols], lab2_n[, attr_cols]) |>
+    mutate(across(everything(), factor)) |>
+    mutate_all(~ as.numeric(.))
+
+  cor_n <- cor(mm_n)
+  diag(cor_n) <- NA
+
+  n_profiles_check <- nrow(mm_n)
+  max_r_check <- max(abs(cor_n), na.rm = TRUE)
+  band3_check <- 3 / sqrt(n_profiles_check)
+
+  tibble(
+    N_respondents = N_resp,
+    N_profiles    = n_profiles_check,
+    Max_abs_r     = round(max_r_check, 4),
+    Band_3SE      = round(band3_check, 4),
+    Within_band   = ifelse(max_r_check <= band3_check, "yes", "no")
+  )
+}
+
+N_grid <- c(500, 1000, 1500, 4000)
+orthogonality_by_N <- purrr::map_dfr(N_grid, check_orthogonality_at_N)
+
+orthogonality_by_N |>
+  kbl(row.names = FALSE,
+      col.names = c("N respondents", "N profiles (N×6×2)", "Max |r| (cross-attribute)",
+                    "3-SE band (±)", "Within band?")) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = FALSE)
+```
+
+The 3-SE band widens as $N$ shrinks — from $\pm$`r subset(orthogonality_by_N, N_respondents == 4000)$Band_3SE` at $N=4{,}000$ to $\pm$`r subset(orthogonality_by_N, N_respondents == 500)$Band_3SE` at $N=500$ — and the observed maximum $|r|$ widens along with it (`r subset(orthogonality_by_N, N_respondents == 500)$Max_abs_r` at $N=500$ down to `r subset(orthogonality_by_N, N_respondents == 4000)$Max_abs_r` at $N=4{,}000$), staying inside the band at every $N$ tested. That the maximum *tracks* the shrinking band rather than sitting at a fixed floor is the signature of sampling noise around a true zero correlation, not of a residual structural dependence a larger sample would eventually reveal.
+
 **Between profiles, within the same task.** The restriction (differ on ≥2 attributes) is a constraint on the *pair*, so some negative dependence between the two profiles of a task is expected and is not a threat to identification — it is orthogonal to (does not touch) the within-profile independence checked above.
 
 ```{r corr-between}
@@ -370,6 +426,52 @@ position_df <- purrr::map_dfc(attr_names, function(a) {
 
 head(position_df)
 ```
+
+**Round-trip validation (single case).** Before either pipeline (reshape or NICERA decoding) is trusted on the real pilot export, both are checked end to end on one randomly chosen simulated respondent: (a) the raw `cbc_profiles` JSON for that respondent is parsed independently of the `reshape_one()` pipeline and compared, value by value, against what `long_df` produced for that respondent's first task/first alternative; (b) the NICERA code stored in `sim_db$cbc_attr_order` is decoded with `code_to_attr` and compared against the original attribute-order permutation drawn for that respondent in `attr_order_mat` — the ground truth, which is otherwise never consulted again once the code is generated. Passing both is a necessary (not sufficient) condition for trusting the pipeline on real data: it catches encoding/decoding bugs that a check run only on the simulator's own generative assumptions would not.
+
+```{r roundtrip-check}
+set.seed(99)
+check_session <- sample(sim_db$session_id, 1)
+
+# (a) Reshape: raw JSON for q1/a1 vs. what long_df produced
+raw_q1a1 <- fromJSON(
+  sim_db$cbc_profiles[sim_db$session_id == check_session],
+  simplifyVector = FALSE
+)$q1$a1
+raw_q1a1_vec <- unlist(raw_q1a1)[c(attr_names, "nombre")]
+
+long_q1a1 <- long_df |>
+  filter(session_id == check_session, task == 1, altID == 1) |>
+  select(all_of(attr_names), nombre) |>
+  unlist()
+
+reshape_match <- identical(unname(raw_q1a1_vec), unname(long_q1a1))
+
+# (b) NICERA: decoded stored code vs. the original permutation drawn for this respondent
+original_perm  <- attr_order_mat[check_session, ]
+stored_code    <- sim_db$cbc_attr_order[sim_db$session_id == check_session]
+recovered_perm <- unname(code_to_attr[str_split(stored_code, "")[[1]]])
+
+nicera_match <- identical(unname(original_perm), recovered_perm)
+
+roundtrip_results <- tibble(
+  Check   = c("Reshape (JSON -> long_df)", "NICERA (code -> attr_order_mat)"),
+  Session = check_session,
+  Detail  = c(
+    paste0("q1/a1 attributes (", paste(attr_names, collapse = ", "), ", nombre)"),
+    paste0("stored code '", stored_code, "' decoded vs. original permutation")
+  ),
+  Pass = c(reshape_match, nicera_match)
+)
+
+roundtrip_results |>
+  kbl(row.names = FALSE) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = TRUE)
+
+stopifnot(reshape_match, nicera_match)
+```
+
+Part (a) verifies that unnesting the JSON into one row per session × task × alternative did not drop, shift, or relabel any attribute along the way; part (b) verifies that the NICERA code is a lossless encoding of the display-order permutation. Checking one concrete, real case round-trip end to end catches indexing and ordering bugs that a check written against the simulator's own assumptions (e.g. re-deriving the answer with the same logic used to produce it) would not; the `stopifnot()` above makes the render fail loudly rather than let either pipeline silently drift once this appendix is pointed at the real pilot export.
 
 ```{r wald-order-test}
 library(car)
