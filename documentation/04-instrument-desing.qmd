@@ -1,8 +1,11 @@
 ---
-format: html
+format:
+  html:
+    toc: true
+    css: justify.css
 ---
 
-# Questionnaire design B: Items {#dis-items}
+# Questionnaire design B: Items {#sec-items}
 
 ## Questionnaire Structure and Content
 

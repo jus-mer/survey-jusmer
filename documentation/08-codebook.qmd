@@ -1,5 +1,8 @@
 ---
-format: html
+format:
+  html:
+    toc: true
+    css: justify.css
 ---
 
 # Codebook {#codebook}

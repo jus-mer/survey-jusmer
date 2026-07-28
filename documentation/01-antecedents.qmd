@@ -1,3 +1,11 @@
+---
+format:
+  html:
+    toc: true
+    css: justify.css
+---
+
+
 # Background {#sec-background}
 
 The provision of welfare and the collective management of social risk are defining functions of modern states, yet the arrangements through which societies discharge them vary widely, from tax-financed universal provision to systems where access is mediated by ability to pay [@esping-andersen_three_1990; @mau_inequality_2015]. Chile is an emblematic case of the latter. Its pension system is privately administered, 84% of higher education is privately managed, and social expenditure reaches 14.5% of GDP, placing the country 30th among 34 OECD members. This configuration has become a persistent source of contention — the 2019 social uprising, the constitutional processes, the crisis of private health insurers, the pension fund withdrawals, the debate over student debt forgiveness. Despite an extensive literature on the consequences of privatisation in Chile, no study has systematically examined how the population evaluates the application of market criteria to social policy, what shapes those evaluations, and how they have changed.

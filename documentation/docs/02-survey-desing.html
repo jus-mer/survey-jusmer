@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.27">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>2&nbsp; Survey design – JUSMER Survey Methodological Manual</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
-
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -42,8 +58,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-03e2b95e75bd56a803f8525e7dcc3928.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-03e2b95e75bd56a803f8525e7dcc3928.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -68,17 +83,38 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="justify.css">
 </head>
-
 <body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -89,13 +125,9 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">JUSMER Survey Methodological Manual</a> 
         <div class="sidebar-tools-main">
@@ -115,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Presentation</span></a>
@@ -176,25 +208,27 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#target-population-and-survey-population" id="toc-target-population-and-survey-population" class="nav-link active" data-scroll-target="#target-population-and-survey-population"><span class="header-section-number">2.1</span> Target Population and Survey Population</a></li>
-  </ul>
-</nav>
+<li><a href="#type-of-survey" id="toc-type-of-survey" class="nav-link active" data-scroll-target="#type-of-survey"><span class="header-section-number">2.1</span> Type of survey</a></li>
+  <li><a href="#sec-target" id="toc-sec-target" class="nav-link" data-scroll-target="#sec-target"><span class="header-section-number">2.2</span> Target Population and Survey Population</a></li>
+  <li><a href="#sec-units" id="toc-sec-units" class="nav-link" data-scroll-target="#sec-units"><span class="header-section-number">2.3</span> Units of Analysis and Domains</a></li>
+  <li><a href="#sec-frame" id="toc-sec-frame" class="nav-link" data-scroll-target="#sec-frame"><span class="header-section-number">2.4</span> Sampling Frame</a></li>
+  <li><a href="#sec-strategy" id="toc-sec-strategy" class="nav-link" data-scroll-target="#sec-strategy"><span class="header-section-number">2.5</span> Sampling Strategy and Sample Selection</a></li>
+  <li><a href="#sec-quotas" id="toc-sec-quotas" class="nav-link" data-scroll-target="#sec-quotas"><span class="header-section-number">2.6</span> Quotas and Sample Size</a></li>
+  <li><a href="#sec-longitudinal" id="toc-sec-longitudinal" class="nav-link" data-scroll-target="#sec-longitudinal"><span class="header-section-number">2.7</span> Longitudinal Design</a></li>
+  <li><a href="#sec-weighting" id="toc-sec-weighting" class="nav-link" data-scroll-target="#sec-weighting"><span class="header-section-number">2.8</span> Weighting and Calibration</a></li>
+  <li><a href="#sec-errors" id="toc-sec-errors" class="nav-link" data-scroll-target="#sec-errors"><span class="header-section-number">2.9</span> Precision, Uncertainty, and Non-sampling Errors</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="dis-estadis" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Survey design</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-estadis" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Survey design</span></span></h1>
 </div>
 
 
@@ -208,24 +242,329 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
+</header><p>This section specifies the statistical and sampling design of the JUSMER survey. It states the population targeted, the frame from which cases are drawn, the units and domains of inference, the selection mechanism and its field controls, the quota and sample-size structure, the longitudinal architecture, and the post-fieldwork weighting and error framework. Where operational parameters are still being negotiated with the panel provider, they are flagged explicitly so they can be completed once the scenario is awarded.</p>
+<section id="type-of-survey" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="type-of-survey">
+<span class="header-section-number">2.1</span> Type of survey</h2>
+<p>The survey is fielded using the CAWI methodology (<em>Computer-Assisted Web Interviewing</em>): a self-administered questionnaire completed over the internet, with no interviewer present, distributed to eligible members of an online access panel through a personalized link <span class="citation" data-cites="biffignandi_handbook_2021 callegaro_web_2015">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>; <a href="03-conjoint-desing.html#ref-callegaro_web_2015" role="doc-biblioref">Callegaro et al., 2015</a>)</span>. CAWI is well suited to this study for four reasons. It permits rapid, lower-cost collection of large samples across the national territory; its visual and programmatic environment supports the complex randomization, per-respondent profile generation, and tasks that the experimental module in Part A requires, something impractical in telephone or paper modes; the absence of an interviewer reduces interviewer effects and social-desirability pressure on the sensitive distributive and deservingness items; and automated routing, validation, and consistency checks improve data quality at the point of entry <span class="citation" data-cites="fowler_survey_2014 groves_survey_2011">(<a href="03-conjoint-desing.html#ref-fowler_survey_2014" role="doc-biblioref">Fowler, 2014</a>; <a href="03-conjoint-desing.html#ref-groves_survey_2011" role="doc-biblioref">Groves, 2011</a>)</span>. The instrument is implemented as an all-device (responsive) questionnaire, so that panelists may respond from desktop, tablet, or smartphone without loss of functionality.</p>
+<p>These possibilities come with well-documented limitations that shape every downstream decision in this section. Because access to the internet is not universal and the panel is an <strong>opt-in, non-probability</strong> frame, the covered population does not coincide with the target population, and the classical apparatus of probability inference (known selection probabilities, design-unbiased estimators, quantifiable sampling error) does not apply without additional modeling assumptions <span class="citation" data-cites="biffignandi_handbook_2021 callegaro_web_2015 scherpenzeel_recruiting_2012">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>; <a href="03-conjoint-desing.html#ref-callegaro_web_2015" role="doc-biblioref">Callegaro et al., 2015</a>; <a href="03-conjoint-desing.html#ref-scherpenzeel_recruiting_2012" role="doc-biblioref">Scherpenzeel &amp; Toepoel, 2012</a>)</span>. Self-administration without an interviewer introduces measurement error and satisficing, and professionalized panel behavior (speeding, straightlining, duplicate participation) must be actively screened <span class="citation" data-cites="groves_survey_2011">(<a href="03-conjoint-desing.html#ref-groves_survey_2011" role="doc-biblioref">Groves, 2011</a>)</span>. These constraints are addressed where they arise: coverage and self-selection in <a href="#sec-target" class="quarto-xref"><span>Section 2.2</span></a> and <a href="#sec-errors" class="quarto-xref"><span>Section 2.9</span></a>, measurement and processing error in <a href="#sec-errors" class="quarto-xref"><span>Section 2.9</span></a>, and attrition in <a href="#sec-longitudinal" class="quarto-xref"><span>Section 2.7</span></a>.</p>
+<p>The questionnaire is designed for an approximate response time of <strong>15 minutes per wave</strong>. The study is <strong>longitudinal</strong>: the same panelists are re-measured across waves to observe change rather than a single cross-section. The number of waves and their timing are set out in <a href="#sec-longitudinal" class="quarto-xref"><span>Section 2.7</span></a>.</p>
+</section><section id="sec-target" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="sec-target">
+<span class="header-section-number">2.2</span> Target Population and Survey Population</h2>
+<p>The <strong>target population</strong> is defined as persons aged 18 or older residing in the national territory during fieldwork. The conditions of a self-administered questionnaire do not substantively redefine this population <span class="citation" data-cites="groves_survey_2011">(<a href="03-conjoint-desing.html#ref-groves_survey_2011" role="doc-biblioref">Groves, 2011</a>)</span>.</p>
+<p>The <strong>survey population</strong> (covered population) is the subset of the target population that has internet access, belongs to the provider’s panel, and is available during the field period. Because the panel is a voluntary opt-in, non-probability structure, the survey population does not fully coincide with the target population: persons without internet access and eligible persons who are not panel members have, in practice, no chance of selection. This coverage gap is a defining feature of the design rather than an incidental shortcoming, and it is carried forward explicitly into the interpretation of results and into the error assessment in <a href="#sec-errors" class="quarto-xref"><span>Section 2.9</span></a>.</p>
+</section><section id="sec-units" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="sec-units">
+<span class="header-section-number">2.3</span> Units of Analysis and Domains</h2>
+<p>The <strong>observation unit, information unit, and sampling unit coincide</strong>: the individual panelist aged 18 or older who completes the self-administered questionnaire. The <strong>unit of analysis</strong> is the population aged 18 or older resident in Chile, to which estimates are directed.</p>
+<p>The study defines a <strong>single national-coverage domain</strong>. No territorial (regional or urban/rural) domains are defined, and the design is not powered to produce domain-level estimates below the national level. Sample size is therefore driven by the analytical and experimental objectives of the study as a whole rather than by sub-domain precision targets (<a href="#sec-quotas" class="quarto-xref"><span>Section 2.6</span></a>).</p>
+</section><section id="sec-frame" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="sec-frame">
+<span class="header-section-number">2.4</span> Sampling Frame</h2>
+<p>A sampling frame refers to the list, database, or operational mechanism that makes it possible to define, identify, and access the elements of the population covered by a survey. In practice, the frame defines the set of units from which the sample can be selected and, therefore, determines the empirical scope of the study and its potential sources of error <span class="citation" data-cites="groves_survey_2011">(<a href="03-conjoint-desing.html#ref-groves_survey_2011" role="doc-biblioref">Groves, 2011</a>)</span>.</p>
+<p>In this case, the <strong>sampling frame</strong> is the online panel operated by the provider (Netquest). It is a non-probability, voluntary-membership frame that may exhibit self-selection bias and internet-access coverage bias. To document the frame’s properties and support the coverage assessment, the provider is required to report: the total panel size and the number of active panelists; recruitment mechanisms; eligibility criteria; the profile variables available for targeting and validation; updating and duplication procedures; and activity, invitation, and participation rates.</p>
+<p>Because the frame is not a probability list of the target population, no frame-based inclusion probabilities can be derived from it; selection proceeds by quota-controlled invitation <span class="citation" data-cites="groves_survey_2011">(<a href="03-conjoint-desing.html#ref-groves_survey_2011" role="doc-biblioref">Groves, 2011</a>)</span> (<a href="#sec-strategy" class="quarto-xref"><span>Section 2.5</span></a>), and inference to the target population depends on the modeling and calibration described in <a href="#sec-weighting" class="quarto-xref"><span>Section 2.8</span></a>.</p>
+</section><section id="sec-strategy" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="sec-strategy">
+<span class="header-section-number">2.5</span> Sampling Strategy and Sample Selection</h2>
+<p>The survey design employs a <strong>non-probabilistic quota-based selection strategy</strong>, implemented through targeted invitations (purposive sampling). In this type of design, the sample is not selected based on known probabilities of inclusion, but rather on sample composition specifications defined in advance, aimed at replicating certain population distributions across relevant control variables <span class="citation" data-cites="callegaro_web_2015 lohr_sampling_2010">(<a href="03-conjoint-desing.html#ref-callegaro_web_2015" role="doc-biblioref">Callegaro et al., 2015</a>; <a href="03-conjoint-desing.html#ref-lohr_sampling_2010" role="doc-biblioref">Lohr, 2010</a>)</span>. The provider draws invited panelists from profile information already held in the frame and directs fieldwork toward the quota margins defined in <a href="#sec-quotas" class="quarto-xref"><span>Section 2.6</span></a>. Quota control operates in Wave 1 only; the composition of Waves 2 and 3 results from natural panel attrition (<a href="#sec-quotas" class="quarto-xref"><span>Section 2.6</span></a>, <a href="#sec-longitudinal" class="quarto-xref"><span>Section 2.7</span></a>).</p>
+<p>The questionnaire is programmed and hosted by the research team in <code>surveydown</code>, and substantive responses are stored in the team’s database rather than the provider’s; quota management relies on a technical integration between panel and instrument. Multiple access is enabled in all phases: panelists who do not complete the questionnaire in a single sitting may re-enter and resume. In the final wave, the research team, as client, manages the corresponding stop-quota to prevent any surplus over the planned sample size.</p>
+<p>A <strong>case is counted as effective</strong> when the questionnaire is completed and passes the quality filters.</p>
+</section><section id="sec-quotas" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="sec-quotas">
+<span class="header-section-number">2.6</span> Quotas and Sample Size</h2>
+<p>Quotas are <strong>simple (marginal) quotas</strong>: independent marginal control on each variable, with no crossed cells. They are defined by sex, age, and education, benchmarked to the <strong>2024 Census (INE)</strong>; universe: population aged 18 or older resident in Chile.</p>
+<div class="cell">
+<div id="tbl-quotas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-quotas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: Marginal quota targets, population aged 18+ resident in Chile
+</figcaption><div aria-describedby="tbl-quotas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Category</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">6780956</td>
+<td style="text-align: right;">47.76</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">7416995</td>
+<td style="text-align: right;">52.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">18–29</td>
+<td style="text-align: right;">3074306</td>
+<td style="text-align: right;">21.65</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">30–44</td>
+<td style="text-align: right;">4128793</td>
+<td style="text-align: right;">29.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">45–59</td>
+<td style="text-align: right;">3396454</td>
+<td style="text-align: right;">23.92</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: left;">60 or older</td>
+<td style="text-align: right;">3598398</td>
+<td style="text-align: right;">25.34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Education</td>
+<td style="text-align: left;">Basic or less</td>
+<td style="text-align: right;">4079158</td>
+<td style="text-align: right;">28.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Education</td>
+<td style="text-align: left;">Secondary</td>
+<td style="text-align: right;">5874173</td>
+<td style="text-align: right;">41.37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Education</td>
+<td style="text-align: left;">Higher technical</td>
+<td style="text-align: right;">1402491</td>
+<td style="text-align: right;">9.88</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Education</td>
+<td style="text-align: left;">University or more</td>
+<td style="text-align: right;">2842129</td>
+<td style="text-align: right;">20.02</td>
+</tr>
+</tbody>
+<tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0;">
+<sup></sup> Source: 2024 Census (INE), population aged 18 or older resident in Chile.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0;">
+<sup></sup> ISCED (CINE) correspondence: basic or less groups codes 01, 02, 03, 10, 14, and 98; secondary corresponds to codes 24 and 25; higher technical to code 35; university or more groups codes 46, 56, and 64.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0;">
+<sup></sup> The '60 or older' band has no defined upper bound; the provider must ensure the questionnaire captures respondents aged 75 and over where such panelists exist in the frame.</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Quota control scope
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sociodemographic quotas are enforced only in the first wave. Quota compliance is not guaranteed for later waves: the composition of Waves 2 and 3 arises from the natural attrition of the panel, without quota enforcement. This is the design feature that motivates the longitudinal weighting scheme in <a href="#sec-weighting" class="quarto-xref"><span>Section 2.8</span></a>.</p>
+</div>
+</div>
+<p>Sample size is set by the analytical and experimental objectives of the study, not as a fixed fraction of the population <span class="citation" data-cites="groves_survey_2011">(<a href="03-conjoint-desing.html#ref-groves_survey_2011" role="doc-biblioref">Groves, 2011</a>)</span>. The awarded design is a three-wave panel with a Wave-1 target of 4,500 effective cases, decreasing to 2,473 in Wave 2 and 1,500 in Wave 3.</p>
+<div class="cell">
+<div id="tbl-design" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.2: Awarded sample-size and wave structure (Alternative 4)
+</figcaption><div aria-describedby="tbl-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Wave</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Effective cases</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Retention from previous wave (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cumulative retention from Wave 1 (%)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Quota control</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Wave 1</td>
+<td style="text-align: right;">4500</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: left;">Wave-1 quotas (Census 2024)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wave 2</td>
+<td style="text-align: right;">2473</td>
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">55.0</td>
+<td style="text-align: left;">Natural attrition</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wave 3</td>
+<td style="text-align: right;">1500</td>
+<td style="text-align: right;">60.7</td>
+<td style="text-align: right;">33.3</td>
+<td style="text-align: left;">Natural attrition</td>
+</tr>
+</tbody>
+<tfoot><tr class="odd">
+<td style="text-align: left; padding: 0;">
+<sup></sup> Sociodemographic quotas are enforced in Wave 1 only; Waves 2 and 3 result from natural panel attrition. Attrition is above the standard for panel studies and is conditioned by the feasible re-contact windows (minimum four weeks between waves).</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;"></td>
+</tr></tfoot>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Inter-wave attrition is above the standard for panel studies, close to half the sample at the first transition. This is not a design choice but a constraint of the feasible re-contact windows: recontacts require a minimum of four weeks, and the interval between waves conditions the viable sample size, since a longer interval reduces the number of panelists retrievable from the panel. No panel refreshment or controlled replacement is applied; the decreasing N reflects natural attrition alone.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Known feasibility constraint (basic education)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The provider (Netquest) has flagged a feasibility constraint on panelists with basic education or less: the active pool in this stratum is materially below the 28.73% marginal target in <a href="#tbl-quotas" class="quarto-xref">Table&nbsp;<span>2.1</span></a>. The design therefore anticipates a documented deviation in this quota, to be addressed through <a href="#sec-weighting" class="quarto-xref">controlled over-invitation of the stratum / a capped achieved share with the residual gap corrected at the weighting stage — see&nbsp;<span>2.8</span></a>. The final treatment must be recorded here once agreed with the provider.</p>
+</div>
+</div>
+</section><section id="sec-longitudinal" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="sec-longitudinal">
+<span class="header-section-number">2.7</span> Longitudinal Design</h2>
+<p>The study follows a web-panel logic: the same panelists are re-measured at successive waves to identify within-person change, with the provider guaranteeing re-contact of Wave 1 respondents in later waves <span class="citation" data-cites="biffignandi_handbook_2021">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>)</span>. The awarded design comprises three waves (4,500 / 2,473 / 1,500 effective cases; <a href="#tbl-design" class="quarto-xref">Table&nbsp;<span>2.2</span></a>). Two features distinguish it from a standard panel and condition the rest of this section:</p>
+<ul>
+<li>First, sociodemographic quotas are enforced only in Wave 1; Waves 2 and 3 are the product of natural attrition (<a href="#sec-quotas" class="quarto-xref"><span>Section 2.6</span></a>).</li>
+<li>Second, inter-wave attrition is high, close to half the sample at the first transition, because the feasible re-contact windows (a minimum of four weeks between waves, subject to what the provider can retrieve at each interval) trade sample size against elapsed time. The elements below are fixed; the pilot decision remains open.</li>
+</ul>
+<p>Wave-1 validation phase (pilot or soft launch). A validation phase is planned for Wave 1 only, with the sole purpose of testing the conjoint module before full fielding. Whether it takes the form of a small technical pilot or a soft launch is still to be decided; the two are alternatives, not a sequence.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>To confirm — Wave-1 validation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Form: [technical pilot / soft launch — one or the other]</li>
+<li>If soft launch: the provider’s current schedule pencils in a first tranche of 500 effective cases, a pause of 1–2 weeks for data-quality and quota-pacing review, and resumption subject to written go/no-go approval by the team.</li>
+<li>If pilot: [approximate size, cross-device and cross-browser checks, response-time and skip/filter verification].</li>
+<li>Applies to Wave 1 only, focused on the conjoint module.</li>
+</ul>
+</div>
+</div>
+<p>Attrition and retention. Retention is 55.0% from Wave 1 to Wave 2 and 60.7% from Wave 2 to Wave 3, i.e.&nbsp;33.3% cumulative from Wave 1 to Wave 3. The balanced panel of respondents present in all three waves is therefore on the order of 1,500 cases, one third of Wave 1. This attrition is treated as non-ignorable and modeled at the weighting stage (<a href="#sec-weighting" class="quarto-xref"><span>Section 2.8</span></a>), not assumed away.</p>
+<p>Longitudinal re-consent. A re-consent model across waves is required: consent is framed for open-ended longitudinal re-contact (“at least one additional measurement”) and does not promise immediate anonymization, since immediate anonymization is incompatible with re-contact. The consent wording and its ethics approval are documented in the ethics chapter; this section only records that re-consent is a design requirement affecting retention.</p>
+</section><section id="sec-weighting" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="sec-weighting">
+<span class="header-section-number">2.8</span> Weighting and Calibration</h2>
+<p>Because the frame is a non-probability panel, there are no design-based inclusion probabilities and hence no classical design weights; weighting is calibration to known population margins <span class="citation" data-cites="biffignandi_handbook_2021 lohr_sampling_2010">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>; <a href="03-conjoint-desing.html#ref-lohr_sampling_2010" role="doc-biblioref">Lohr, 2010</a>)</span>. Two features force two distinct families of weights: quotas operate in Wave 1 only, and attrition in Waves 2–3 is high and non-ignorable (<a href="#sec-quotas" class="quarto-xref"><span>Section 2.6</span></a>).</p>
+<p>Cross-sectional weights (one per wave). Each wave is raked to the 2024 Census margins of sex, age, and education (<a href="#tbl-quotas" class="quarto-xref">Table&nbsp;<span>2.1</span></a>). Raking (iterative proportional fitting) finds weights <span class="math inline">\(w_i\)</span> that reproduce every population marginal simultaneously,</p>
+<p><span class="math display">\[
+\sum_{i \in \text{wave}} w_i \, \mathbb{1}\{x_i = k\} \;=\; N_k
+\quad\text{for each category } k \text{ of each quota variable,}
+\]</span></p>
+<p>where <span class="math inline">\(N_k\)</span> is the Census count in category <span class="math inline">\(k\)</span>. In Wave 1 this reproduces the quota structure; in Waves 2–3 it also absorbs the marginal imbalance left by attrition. These weights describe the population at each point in time.</p>
+<p>Longitudinal weight (balanced panel). For within-person change, including the multilevel distributive model, the relevant sample is the balanced panel present in all three waves (<span class="math inline">\(\approx 1{,}500\)</span> cases). Following recruitment-times-survey logic <span class="citation" data-cites="biffignandi_handbook_2021">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>)</span>, the weight combines the Wave-1 base weight with an attrition correction. Let <span class="math inline">\(R_i = 1\)</span> if respondent <span class="math inline">\(i\)</span> completes the final wave, and estimate the retention probability by logistic regression on Wave-1 covariates <span class="math inline">\(z_i\)</span> (sex, age, education, access device, total response time):</p>
+<p><span class="math display">\[
+\hat{p}_i \;=\; \Pr(R_i = 1 \mid z_i).
+\]</span></p>
+<p>The longitudinal weight is the base weight times the inverse retention probability, re-anchored to the Census margins by a final raking pass:</p>
+<p><span class="math display">\[
+w_i^{L} \;=\; w_i^{(1)} \times \frac{1}{\hat{p}_i}
+\;\xrightarrow{\ \text{rake to } N_k\ }\; w_i^{L\ast}.
+\]</span></p>
+<p>Anchoring to population margins is always available because the margins are known in every wave, which is what makes this feasible without a probability reference sample.</p>
+<p>Caveats. Inverse-probability weighting corrects attrition only through the observed <span class="math inline">\(z_i\)</span>; selection on unobservables is not resolved. With attrition near half the sample, the weights are variable, so a trimming rule is applied and precision is reported through the effective sample size and design effect,</p>
+<p><span class="math display">\[
+n_{\text{eff}} \;=\; \frac{\left(\sum_i w_i\right)^2}{\sum_i w_i^{2}},
+\qquad
+\text{deff} \;=\; \frac{n}{n_{\text{eff}}},
+\]</span></p>
+<p>so the loss relative to the nominal <span class="math inline">\(N\)</span> is explicit (<a href="#sec-errors" class="quarto-xref"><span>Section 2.9</span></a>). The model, auxiliary variables, achieved-versus-target margins, and weight distribution are reported so the assumptions can be assessed <span class="citation" data-cites="lohr_sampling_2010">(<a href="03-conjoint-desing.html#ref-lohr_sampling_2010" role="doc-biblioref">Lohr, 2010</a>)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>To confirm — weighting specification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Wave-1 covariate set <span class="math inline">\(z_i\)</span>, fixed in advance: sex, age, education, access device, total response time [add/remove any].</li>
+<li>Raking convergence criterion and weight-trimming threshold: [values].</li>
+<li>Calibration variables beyond sex × age × education: [e.g., macrozone, if a reliable benchmark is adopted].</li>
+</ul>
+</div>
+</div>
+</section><section id="sec-errors" class="level2" data-number="2.9"><h2 data-number="2.9" class="anchored" data-anchor-id="sec-errors">
+<span class="header-section-number">2.9</span> Precision, Uncertainty, and Non-sampling Errors</h2>
+<p>Because selection is non-probabilistic, design-based sampling variance and classical margins of error do not strictly apply: there is no randomization distribution from which to derive them <span class="citation" data-cites="biffignandi_handbook_2021 callegaro_web_2015">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>; <a href="03-conjoint-desing.html#ref-callegaro_web_2015" role="doc-biblioref">Callegaro et al., 2015</a>)</span>. Uncertainty for descriptive estimates is therefore reported on an approximate basis, with variance estimated on the calibrated sample and interpreted as conditional on the weighting model rather than as a probability-sample confidence statement. For the experimental module in Part A, inference rests on <strong>within-survey randomization of profile attributes</strong>, which is internally valid regardless of how the sample was selected; the causal quantities (e.g., average marginal component effects) are identified by the experimental design, while their generalization to the target population inherits the sample’s coverage and selection limitations <span class="citation" data-cites="hainmueller_causal_2014">(<a href="03-conjoint-desing.html#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>.</p>
+<p>Because the weights, and the longitudinal weight in particular, carry non-trivial variance, precision is reported through the effective sample size and the design effect rather than the nominal case counts: the useful n in Wave 3 is appreciably below the 1,500 nominal cases of the balanced panel <span class="citation" data-cites="lohr_sampling_2010">(<a href="03-conjoint-desing.html#ref-lohr_sampling_2010" role="doc-biblioref">Lohr, 2010</a>)</span>.</p>
+<p>Following the <strong>Total Survey Error</strong> framework, the design attends to the following non-sampling error sources <span class="citation" data-cites="biffignandi_handbook_2021 groves_survey_2011">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>; <a href="03-conjoint-desing.html#ref-groves_survey_2011" role="doc-biblioref">Groves, 2011</a>)</span>:</p>
+<ul>
+<li>
+<strong>Coverage error</strong>: non-internet users and eligible non-members of the panel are outside the frame (<a href="#sec-target" class="quarto-xref"><span>Section 2.2</span></a>, <a href="#sec-frame" class="quarto-xref"><span>Section 2.4</span></a>). This is the dominant structural error of the design.</li>
+<li>
+<strong>Selection / self-selection error</strong>: opt-in membership and differential willingness to be invited; quota control constrains the achieved margins in Wave 1 but does not equalize selection propensities within categories.</li>
+<li>
+<strong>Nonresponse error</strong>: arising at two stages, panel recruitment and the specific survey, and, in the panel, attrition across waves, which under the awarded design removes roughly half the sample at the first transition and is the main threat to inference in Waves 2 and 3 (<a href="#sec-longitudinal" class="quarto-xref"><span>Section 2.7</span></a>). Because this attrition is plausibly non-ignorable, it is modeled at the weighting stage (<a href="#sec-weighting" class="quarto-xref"><span>Section 2.8</span></a>) rather than assumed away. Response rates in the classical sense are not fully computable for an opt-in panel; field-rate indicators (invitation, start, completion) are reported instead.</li>
+<li>
+<strong>Measurement error</strong>: self-administration without an interviewer can produce satisficing, straightlining, and order effects; sensitive items may still attract social-desirability distortion despite the reduced interviewer pressure. Instrument-side mitigations (item wording, response formats, attention checks) are documented in the instrument chapter.</li>
+</ul>
+<p>These sources are not independent, and trade-offs among them (e.g., between coverage and nonresponse) are managed at the design stage rather than assumed away <span class="citation" data-cites="biffignandi_handbook_2021">(<a href="03-conjoint-desing.html#ref-biffignandi_handbook_2021" role="doc-biblioref">Biffignandi &amp; Bethlehem, 2021</a>)</span>. The residual, non-eliminable errors (chiefly coverage and self-selection) are reported transparently and treated as bounds on the external validity of the estimates rather than as quantities removed by weighting.</p>
 
 
-<section id="target-population-and-survey-population" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="target-population-and-survey-population"><span class="header-section-number">2.1</span> Target Population and Survey Population</h2>
-<p>##&nbsp;Sampling Frame</p>
-<p>##&nbsp;Units of Analysis and Domains</p>
-<p>##&nbsp;Sampling Strategy and Sample Selection</p>
-<p>##&nbsp;Quotas and Sample Size</p>
-<p>##&nbsp;Longitudinal Design</p>
-<p>##&nbsp;Weighting and Calibration</p>
-<p>##&nbsp;Precision, Uncertainty, and Non-sampling Errors</p>
-
-
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-biffignandi_handbook_2021" class="csl-entry" role="listitem">
+Biffignandi, S., &amp; Bethlehem, J. G. (2021). <em>Handbook of <span>Web Surveys</span></em> (Second edition). Hoboken, NJ: John Wiley &amp; Sons.
+</div>
+<div id="ref-callegaro_web_2015" class="csl-entry" role="listitem">
+Callegaro, M., Lozar Manfreda, K., &amp; Vehovar, V. (2015). <em>Web survey methodology</em>. Los Angeles London New Delhi Singapore Washington DC Boston: Sage.
+</div>
+<div id="ref-fowler_survey_2014" class="csl-entry" role="listitem">
+Fowler, F. J. (2014). <em>Survey research methods</em> (5. ed). Los Angeles, Calif.: SAGE.
+</div>
+<div id="ref-groves_survey_2011" class="csl-entry" role="listitem">
+Groves, R. M. (2011). <em>Survey <span>Methodology</span></em>. (F. J. Fowler, M. Couper, J. M. Lepkowski, E. Singer, &amp; R. Tourangeau, Eds.) (2nd ed (Online-Ausg.)). Somerset: Wiley.
+</div>
+<div id="ref-hainmueller_causal_2014" class="csl-entry" role="listitem">
+Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2014). Causal <span>Inference</span> in <span>Conjoint Analysis</span>: <span>Understanding Multidimensional Choices</span> via <span>Stated Preference Experiments</span>. <em>Political Analysis</em>, <em>22</em>(1), 1–30. <a href="https://doi.org/10.1093/pan/mpt024">https://doi.org/10.1093/pan/mpt024</a>
+</div>
+<div id="ref-lohr_sampling_2010" class="csl-entry" role="listitem">
+Lohr, S. L. (2010). <em>Sampling: Design and analysis</em> (2. ed). Boston, MA: Cengage Learning.
+</div>
+<div id="ref-scherpenzeel_recruiting_2012" class="csl-entry" role="listitem">
+Scherpenzeel, A., &amp; Toepoel, V. (2012). Recruiting a <span>Probability Sample</span> for an <span>Online Panel</span>. <em>Public Opinion Quarterly</em>, <em>76</em>(3), 470–490. <a href="https://doi.org/10.1093/poq/nfs037">https://doi.org/10.1093/poq/nfs037</a>
+</div>
+</div>
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -624,9 +963,7 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
-  </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./01-antecedents.html" class="pagination-link" aria-label="Background">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Background</span></span>
       </a>          
@@ -638,8 +975,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p>Project “Market Justice and the Deservingness of Social Welfare”</p>
 </div>   
@@ -651,8 +987,6 @@ ul.task-list li input[type="checkbox"] {
 </div>
   </div>
 </footer>
-
-
 
 
 </body></html>

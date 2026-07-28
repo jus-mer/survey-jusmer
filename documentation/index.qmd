@@ -1,6 +1,8 @@
 ---
-format: html
-toc: false
+format:
+  html:
+    toc: false
+    css: justify.css
 ---
 
 ![](images/jusmer-logo-vert.png){.float-end width="160px"}
@@ -10,6 +12,8 @@ toc: false
 This manual documents the survey conducted within the framework of the project *Market Justice and Deservingness of Social Welfare* (JUSMER), FONDECYT Regular N° 1250518, directed by Prof. Juan Carlos Castillo at the Department of Sociology, Universidad de Chile, and funded by ANID (2025–2028). The survey examines the extent to which the Chilean adult population endorses the application of market criteria to the distribution of social services (such as health care, education, and pensions) and how those preferences relate to criteria of welfare deservingness, merit, and redistribution.
 
 The study was fielded as a [two/three]-wave online panel survey (CAWI) with a national scope, based on a non-probability quota design. The questionnaire was programmed by the research team in `surveydown` and self-hosted, while sample provision and fieldwork operations were contracted to an external panel provider.
+
+The substantive instrument is organized in two parts. **Part A** presents the statistical design of the experimental module, which is a distributive conjoint experiment (see @sec-conjoint). In this module, respondents act as members of a university committee and divide a fixed scholarship fund between two applicants whose attributes are experimentally randomized, so that allocating more to one applicant necessarily means allocating less to the other. The attributes are operationalized to reflect the CARIN and NICER deservingness criteria framework. ´**Part B** exposes the substantive item batteries of the survey: market justice preferences, deservingness scales, the scale of meritocratic perceptions and preferences, and neoliberalism scales together with the sociodemographic and attitudinal blocks, documented in the instrument chapter (see @sec-items).
 
 The manual serves two purposes. First, it provides a public and verifiable record of the design, fieldwork, and processing decisions behind the data, so that users can assess their scope and limitations. Second, it works as a reference for anyone using the datasets: what each file contains, how each variable was constructed, and under what conditions it should be interpreted. Chapters follow the lifecycle of the survey, from statistical design to the released datasets.
 

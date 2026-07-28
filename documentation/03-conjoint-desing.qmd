@@ -2,7 +2,6 @@
 format:
   html:
     toc: true
-    toc-expand: true
     css: justify.css
 ---
 
@@ -38,7 +37,7 @@ source(file = here("processing/cjpow.R"))
 
 ```
 
-# Questionnaire design A: Distributive Conjoint Survey Experiment {#dis-conjoint}
+# Questionnaire design A: Distributive Conjoint Survey Experiment {#sec-conjoint}
 
 ## Overview
 
