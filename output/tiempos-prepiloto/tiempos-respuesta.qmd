@@ -21,9 +21,32 @@ Este documento presenta los análisis del pre-piloto de la *Encuesta JUSMER Just
 
 - **3) Diagnóstico**: A partir de los resultados expuestos, se identifican los principales elementos a tener en consideración para mejorar la construcción de la encuesta.
 
+# Metodología
+
+Se unificaron los datos de ambas tablas de Supabase con información actualizada el 23/07, las cuales almacenaron información de las dos versiones de pilotaje implementadas; existen 19 casos válidos para el análisis. 
+
+- **Tiempo total de la encuesta**: `time_end - time_start` para cada caso.
+- **Tiempo por pregunta (acumulado)**: para cada columna `time_q_*`
+  (timestamp al responder esa pregunta), se calcula `time_q_* - time_start`.
+  Es decir, es el tiempo transcurrido **desde el inicio de la encuesta hasta
+  esa pregunta**, no la duración exclusiva dedicada a esa pregunta puntual.
+- **Duración por pregunta**: `time_q_*` menos el checkpoint anterior de ese
+  mismo caso (el `time_start` para la primera pregunta con valor, o el
+  `time_q_*` previo con valor, saltando las preguntas del módulo no
+  asignado). Aproxima el tiempo dedicado específicamente a esa pregunta.
+  Las columnas `time_p_*` (a nivel de página, que pueden agrupar varias
+  preguntas) no se incluyen en ninguno de los dos cálculos.
+- El "módulo" de cada pregunta en la tabla de resumen se infiere directamente
+  de los datos: en qué `assigned_module` existe al menos un valor no vacío
+  para esa pregunta. "Todos" indica preguntas del tramo común.
+
+
 ```{r}
-#| include: false
+#| warning: false
 #| label: union bases
+
+pacman::p_load(dplyr, DT)
+
 
 # Une tiempos-prepiloto.csv con un subconjunto de comentarios-prepiloto.csv
 # (mismo Supabase, columnas equivalentes) para incorporar casos adicionales
@@ -31,6 +54,9 @@ Este documento presenta los análisis del pre-piloto de la *Encuesta JUSMER Just
 
 comentarios_csv <- here::here("input/tbl/comentarios-prepiloto.csv")
 tiempos_csv     <- here::here("input/tbl/tiempos-prepiloto.csv")
+# Ruta de salida para dejar la base unida disponible como archivo en el
+# espacio de trabajo; el contenido se genera mas abajo (rbind), no se lee
+# de aqui.
 union_csv       <- here::here("output/tiempos-prepiloto/tiempos-prepiloto-union.csv")
 
 ids_muestra <- c(1394, 1924, 501, 1785, 1722, 1968, 374, 1878) # casos validos del primer prepiloto
@@ -54,7 +80,7 @@ write.csv(df_union, union_csv, row.names = FALSE, na = "")
 ```
 
 ```{r}
-#| include: false
+#| warning: false
 #| label: proc
 
 # Tiempos de respuesta de tiempos-prepiloto.csv
@@ -69,11 +95,12 @@ write.csv(df_union, union_csv, row.names = FALSE, na = "")
 
 
 
-input_csv <- union_csv
-out_dir   <- here::here("output/tiempos-prepiloto")
+out_dir <- here::here("output/tiempos-prepiloto")
 
-df <- read.csv(input_csv, stringsAsFactors = FALSE, check.names = FALSE,
-                colClasses = "character", na.strings = "", encoding = "UTF-8")
+# df_union ya quedo construido en el chunk "union bases" (y guardado como
+# CSV en union_csv); se reutiliza directamente para no depender de releer
+# el archivo recien escrito.
+df <- df_union
 
 # -----------------------------------------------------------------------------
 # 1. Filtrar a consentimiento valido y parsear timestamps.
@@ -252,38 +279,18 @@ write.csv(tiempo_caso, file.path(out_dir, "tiempos-caso.csv"), row.names = FALSE
 write.csv(tiempo_pregunta_detalle, file.path(out_dir, "tiempos-pregunta-detalle.csv"), row.names = FALSE, na = "")
 write.csv(tiempo_pregunta_resumen, file.path(out_dir, "tiempos-pregunta-resumen.csv"), row.names = FALSE, na = "")
 write.csv(tiempo_estimado_total, file.path(out_dir, "tiempos-estimado-total.csv"), row.names = FALSE, na = "")
-
-cat("Casos con consent_understand == 'yes':", nrow(tiempo_caso), "\n")
-cat("Preguntas (time_q_*) resumidas:", nrow(tiempo_pregunta_resumen), "\n")
-cat("Tiempo total estimado (comun + A + B + C):",
-    tiempo_estimado_total$promedio_min[tiempo_estimado_total$seccion == "Total estimado (comun + A + B + C)"],
-    "min\n")
-cat("Guardado en:", out_dir, "\n")
 ```
 
 ```{r}
 #| label: setup
-#| include: false
+#| warning: false
 
-library(dplyr)
-library(DT)
+# tiempo_caso, tiempo_pregunta_resumen, tiempo_estimado_total y
+# tiempo_pregunta_detalle ya quedaron construidos en el chunk "proc" (y
+# guardados como CSV en output/tiempos-prepiloto/ para dejar esas bases
+# disponibles como archivos); se reutilizan directamente en memoria para que
+# el render no dependa de que esos CSV ya existan de antemano.
 
-tiempo_caso <- read.csv(
-  here::here("output/tiempos-prepiloto/tiempos-caso.csv"),
-  stringsAsFactors = FALSE, check.names = FALSE
-)
-tiempo_pregunta_resumen <- read.csv(
-  here::here("output/tiempos-prepiloto/tiempos-pregunta-resumen.csv"),
-  stringsAsFactors = FALSE, check.names = FALSE
-)
-tiempo_estimado_total <- read.csv(
-  here::here("output/tiempos-prepiloto/tiempos-estimado-total.csv"),
-  stringsAsFactors = FALSE, check.names = FALSE
-)
-tiempo_pregunta_detalle <- read.csv(
-  here::here("output/tiempos-prepiloto/tiempos-pregunta-detalle.csv"),
-  stringsAsFactors = FALSE, check.names = FALSE
-)
 tiempos_part <- read.csv(
   here::here("input/tbl/tiempos-part.csv"),
   stringsAsFactors = FALSE, check.names = FALSE, na.strings = ""
@@ -297,32 +304,13 @@ tiempo_ranking <- read.csv(
 names(tiempo_ranking)[1] <- "respID"
 ```
 
-# Metodología
-
-Se unificaron los datos de ambas tablas de Supabase con información actualizada el 23/07, las cuales almacenaron información de las dos versiones de pilotaje implementadas; existen 19 casos válidos para el análisis. 
-
-- **Tiempo total de la encuesta**: `time_end - time_start` para cada caso.
-- **Tiempo por pregunta (acumulado)**: para cada columna `time_q_*`
-  (timestamp al responder esa pregunta), se calcula `time_q_* - time_start`.
-  Es decir, es el tiempo transcurrido **desde el inicio de la encuesta hasta
-  esa pregunta**, no la duración exclusiva dedicada a esa pregunta puntual.
-- **Duración por pregunta**: `time_q_*` menos el checkpoint anterior de ese
-  mismo caso (el `time_start` para la primera pregunta con valor, o el
-  `time_q_*` previo con valor, saltando las preguntas del módulo no
-  asignado). Aproxima el tiempo dedicado específicamente a esa pregunta.
-  Las columnas `time_p_*` (a nivel de página, que pueden agrupar varias
-  preguntas) no se incluyen en ninguno de los dos cálculos.
-- El "módulo" de cada pregunta en la tabla de resumen se infiere directamente
-  de los datos: en qué `assigned_module` existe al menos un valor no vacío
-  para esa pregunta. "Todos" indica preguntas del tramo común.
-
 # Resultados
 
 ## Tiempo total por caso
 
 ```{r}
 #| label: tbl-tiempo-caso
-#| echo: false
+#| warning: false
 #| tbl-cap: Tiempo de respuesta por respondente
 
 tiempo_caso |>
@@ -356,7 +344,7 @@ A partir de los resultados presentados en la tabla se observa que solamente hay 
 
 ```{r}
 #| label: tbl-tiempo-pregunta
-#| echo: false
+#| warning: false
 #| tbl-cap: Tiempo de respuesta por pregunta
 
 tiempo_pregunta_resumen |>
@@ -387,7 +375,7 @@ Por último, se puede observar que las variables `ranking_politicas_cuidado_nino
 ## Tiempo de respuesta para Ranking y participación Estado/Mercado
 
 ```{r}
-#| echo: false
+#| warning: false
 #| label: tbl-ranking
 #| tbl-cap: Tiempos de respuesta Ranking de políticas
 
@@ -409,7 +397,7 @@ En esta situación, los respondentes podían partir seleccionando cualquiera de 
 Para calcular el tiempo estimado de respuesta del ranking, se calculó la diferencia entre la última alternativa en ser respondida y la primera para cada respondente. Al promediar los tiempos de respuesta de cada encuestado, **la media de tiempo para el ranking fue de 93 segundos**.  
 
 ```{r}
-#| echo: false
+#| warning: false
 #| label: tbl-part
 #| tbl-cap: Tiempos de respuesta batería de participación E/M
 
@@ -432,7 +420,7 @@ Considerando los 4 casos que respondieron esta batería, **el tiempo promedio es
 
 ```{r}
 #| label: tbl-tiempo-estimado
-#| echo: false
+#| warning: false
 #| tbl-cap: Tiempo promedio de respuesta por módulo
 
 tiempo_estimado_total |>
@@ -455,7 +443,7 @@ Con esto, se estima que responder la sección común más los tres módulos comp
 ## Descriptivos generales
 
 ```{r}
-#| echo: false
+#| warning: false
 #| label: tbl-desc
 #| tbl-cap: Descriptivos de variables pre-piloto
 
