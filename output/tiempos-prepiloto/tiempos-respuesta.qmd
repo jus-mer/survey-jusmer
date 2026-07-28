@@ -1,7 +1,8 @@
 ---
-title: Tiempos de respuesta pre-piloto
+title: Análisis pre-piloto
 author: Tomás Urzúa - Asistente de investigación
 date: today
+lang: es
 format:
   html:
     toc: true
@@ -9,15 +10,256 @@ format:
     df-print: kable
     theme: cosmo
     embed-resources: true
+code-fold: true
 ---
 
-Este documento presenta los análisis de los tiempos de respuesta del pre-piloto *Encuesta JUSMER Justicia y Merecimiento*. El informe se estructura a partir de tres puntos principales: 
+Este documento presenta los análisis del pre-piloto de la *Encuesta JUSMER Justicia y Merecimiento*, abordando tanto los tiempos de respuesta como los valores de las respuestas. El objetivo de este insumo es orientar la toma de decisiones para la construcción de la versión final de la encuesta. Para cumplir con ello, el informe se estructura en tres puntos principales: 
 
-- **1) Metodología**: Se describen los detalles metodológicos para el procesamiento de la información, enfocándose en capturar los tiempos de respuesta de la encuesta.
+- **1) Metodología**: Se describen los detalles metodológicos para el procesamiento de la información.
 
-- **2) Resultados**: Contiene los principales resultados sobre los tiempos de demora de la encuesta, permitiendo observar los tiempos promedios por respondente, por preguntas y por módulo respectivamente.
+- **2) Resultados**: Contiene los principales resultados sobre los tiempos de demora de la encuesta, permitiendo observar los tiempos promedios por respondente, por preguntas y por módulo respectivamente. Además, se presentan los resultados descriptivos de los valores registrados en la encuesta.
 
 - **3) Diagnóstico**: A partir de los resultados expuestos, se identifican los principales elementos a tener en consideración para mejorar la construcción de la encuesta.
+
+```{r}
+#| include: false
+#| label: union bases
+
+# Une tiempos-prepiloto.csv con un subconjunto de comentarios-prepiloto.csv
+# (mismo Supabase, columnas equivalentes) para incorporar casos adicionales
+# a la base de tiempos.
+
+comentarios_csv <- here::here("input/tbl/comentarios-prepiloto.csv")
+tiempos_csv     <- here::here("input/tbl/tiempos-prepiloto.csv")
+union_csv       <- here::here("output/tiempos-prepiloto/tiempos-prepiloto-union.csv")
+
+ids_muestra <- c(1394, 1924, 501, 1785, 1722, 1968, 374, 1878) # casos validos del primer prepiloto
+
+comentarios <- read.csv(comentarios_csv, stringsAsFactors = FALSE, check.names = FALSE,
+                         colClasses = "character", na.strings = "", encoding = "UTF-8")
+comentarios <- comentarios[comentarios$respID %in% ids_muestra, ]
+
+tiempos <- read.csv(tiempos_csv, stringsAsFactors = FALSE, check.names = FALSE,
+                     colClasses = "character", na.strings = "", encoding = "UTF-8")
+
+# comentarios-prepiloto.csv trae columnas adicionales (bloque de comentarios)
+# que no existen en tiempos-prepiloto.csv; se conservan solo las columnas en
+# comun para poder unir ambas bases.
+comentarios <- comentarios[, names(tiempos)]
+
+df_union <- rbind(tiempos, comentarios)
+
+dir.create(dirname(union_csv), showWarnings = FALSE, recursive = TRUE)
+write.csv(df_union, union_csv, row.names = FALSE, na = "")
+```
+
+```{r}
+#| include: false
+#| label: proc
+
+# Tiempos de respuesta de tiempos-prepiloto.csv
+# Construye, a partir de las respuestas crudas (filtradas a
+# consent_understand == "yes"):
+#   - tiempo total de la encuesta por caso (time_end - time_start)
+#   - tiempo de respuesta de cada pregunta por caso, medido como el tiempo
+#     transcurrido desde time_start hasta el timestamp de esa pregunta
+#     (time_q_*), ya que el instrumento se ramifica en tres modulos
+#     (assigned_module A/B/C) y cada respondente solo contesta uno
+#   - un resumen agregado (n, media, mediana, min, max) por pregunta
+
+
+
+input_csv <- union_csv
+out_dir   <- here::here("output/tiempos-prepiloto")
+
+df <- read.csv(input_csv, stringsAsFactors = FALSE, check.names = FALSE,
+                colClasses = "character", na.strings = "", encoding = "UTF-8")
+
+# -----------------------------------------------------------------------------
+# 1. Filtrar a consentimiento valido y parsear timestamps.
+# -----------------------------------------------------------------------------
+
+df <- df[!is.na(df$consent_understand) & df$consent_understand == "yes", ]
+
+parse_ts <- function(x) {
+  as.POSIXct(sub(" UTC$", "", x), format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+}
+
+df$time_start <- parse_ts(df$time_start)
+df$time_end   <- parse_ts(df$time_end)
+
+qcols <- grep("^time_q_", names(df), value = TRUE)
+for (col in qcols) df[[col]] <- parse_ts(df[[col]])
+
+# -----------------------------------------------------------------------------
+# 2. Tiempo total de la encuesta por caso.
+# -----------------------------------------------------------------------------
+
+tiempo_caso <- data.frame(
+  session_id       = df$session_id,
+  respID           = df$respID,
+  assigned_module  = df$assigned_module,
+  time_start       = df$time_start,
+  time_end         = df$time_end,
+  tiempo_total_seg = as.numeric(difftime(df$time_end, df$time_start, units = "secs")),
+  stringsAsFactors = FALSE
+)
+tiempo_caso$tiempo_total_min <- round(tiempo_caso$tiempo_total_seg / 60, 2)
+
+# -----------------------------------------------------------------------------
+# 3. Tiempo de respuesta de cada pregunta por caso:
+#    - tiempo_seg: time_q_<pregunta> - time_start (acumulado desde el inicio)
+#    - duracion_seg: time_q_<pregunta> - checkpoint anterior, donde el
+#      checkpoint anterior es time_start (para la primera pregunta con valor)
+#      o el time_q_* previo con valor de ESE caso
+#    Ambas quedan en NA para los casos que no vieron esa pregunta (módulo
+#    distinto).
+# -----------------------------------------------------------------------------
+
+duracion_mat <- matrix(NA_real_, nrow = nrow(df), ncol = length(qcols),
+                        dimnames = list(NULL, qcols))
+for (i in seq_len(nrow(df))) {
+  last_time <- df$time_start[i]
+  for (col in qcols) {
+    cur <- df[[col]][i]
+    if (!is.na(cur)) {
+      duracion_mat[i, col] <- as.numeric(difftime(cur, last_time, units = "secs"))
+      last_time <- cur
+    }
+  }
+}
+
+detalle_list <- lapply(qcols, function(col) {
+  data.frame(
+    session_id      = df$session_id,
+    respID          = df$respID,
+    assigned_module = df$assigned_module,
+    pregunta        = sub("^time_q_", "", col),
+    tiempo_seg       = as.numeric(difftime(df[[col]], df$time_start, units = "secs")),
+    duracion_seg     = duracion_mat[, col],
+    stringsAsFactors = FALSE
+  )
+})
+tiempo_pregunta_detalle <- do.call(rbind, detalle_list)
+tiempo_pregunta_detalle <- tiempo_pregunta_detalle[!is.na(tiempo_pregunta_detalle$tiempo_seg), ]
+
+# Desviacion estandar, por caso, de la duracion (duracion_seg) entre todas
+# las preguntas que respondio: mide que tan variable fue su ritmo de
+# respuesta pregunta a pregunta.
+sd_duracion_caso <- stats::aggregate(
+  duracion_seg ~ session_id,
+  data = tiempo_pregunta_detalle,
+  FUN = function(x) sd(x, na.rm = TRUE)
+)
+names(sd_duracion_caso)[2] <- "sd_duracion_pregunta_seg"
+tiempo_caso <- merge(tiempo_caso, sd_duracion_caso, by = "session_id", all.x = TRUE)
+tiempo_caso$sd_duracion_pregunta_seg <- round(tiempo_caso$sd_duracion_pregunta_seg, 2)
+
+# -----------------------------------------------------------------------------
+# 4. Resumen agregado por pregunta (n, media, mediana, sd, min, max) + modulo(s)
+#    en que se presenta esa pregunta (inferido a partir de los datos: en que
+#    assigned_module hay al menos un valor no vacio de time_q_<pregunta>).
+# -----------------------------------------------------------------------------
+
+resumen_list <- lapply(qcols, function(col) {
+  pregunta <- sub("^time_q_", "", col)
+  modulos_presentes <- sort(unique(df$assigned_module[!is.na(df[[col]])]))
+  modulo_txt <- if (length(modulos_presentes) == 0) {
+    NA_character_
+  } else if (length(modulos_presentes) == length(unique(na.omit(df$assigned_module)))) {
+    "Todos"
+  } else {
+    paste(modulos_presentes, collapse = "/")
+  }
+
+  x <- tiempo_pregunta_detalle$tiempo_seg[tiempo_pregunta_detalle$pregunta == pregunta]
+  d <- tiempo_pregunta_detalle$duracion_seg[tiempo_pregunta_detalle$pregunta == pregunta]
+  data.frame(
+    pregunta = pregunta,
+    modulo   = modulo_txt,
+    n        = length(x),
+    media_seg   = round(mean(x), 2),
+    mediana_seg = round(median(x), 2),
+    sd_seg      = round(sd(x), 2),
+    min_seg     = round(min(x, Inf), 2),
+    max_seg     = round(max(x, -Inf), 2),
+    duracion_media_seg   = round(mean(d), 2),
+    duracion_mediana_seg = round(median(d), 2),
+    stringsAsFactors = FALSE
+  )
+})
+tiempo_pregunta_resumen <- do.call(rbind, resumen_list)
+tiempo_pregunta_resumen <- tiempo_pregunta_resumen[tiempo_pregunta_resumen$n > 0, ]
+
+# -----------------------------------------------------------------------------
+# 5. Estimacion del tiempo total si un mismo respondente tuviera que responder
+#    la seccion comun + los tres modulos (A + B + C), en vez de solo el que le
+#    toco por aleatorizacion. Para cada caso se suman las duraciones
+#    (duracion_seg) de sus preguntas comunes y, por separado, las de su
+#    modulo asignado; luego se promedia cada suma por separado y se suman los
+#    4 promedios.
+# -----------------------------------------------------------------------------
+
+tiempo_pregunta_detalle <- merge(
+  tiempo_pregunta_detalle,
+  tiempo_pregunta_resumen[, c("pregunta", "modulo")],
+  by = "pregunta", all.x = TRUE
+)
+
+# El caso 374 se excluye solo de esta estimacion (tabla 5) para no alterar los tiempos promedio de respuesta; sigue presente en el resto del reporte.
+detalle_estimado <- tiempo_pregunta_detalle[tiempo_pregunta_detalle$respID != "374", ]
+
+suma_por_caso <- function(seccion) {
+  sub <- detalle_estimado[detalle_estimado$modulo == seccion, ]
+  stats::aggregate(duracion_seg ~ session_id, data = sub, FUN = sum, na.rm = TRUE)
+}
+
+comun_caso   <- suma_por_caso("Todos")
+moduloA_caso <- suma_por_caso("A")
+moduloB_caso <- suma_por_caso("B")
+moduloC_caso <- suma_por_caso("C")
+
+tiempo_estimado_total <- data.frame(
+  seccion = c("Común (todos)", "Modulo A", "Modulo B", "Modulo C"),
+  n_casos = c(nrow(comun_caso), nrow(moduloA_caso), nrow(moduloB_caso), nrow(moduloC_caso)),
+  promedio_seg = round(c(
+    mean(comun_caso$duracion_seg),
+    mean(moduloA_caso$duracion_seg),
+    mean(moduloB_caso$duracion_seg),
+    mean(moduloC_caso$duracion_seg)
+  ), 2),
+  stringsAsFactors = FALSE
+)
+tiempo_estimado_total$promedio_min <- round(tiempo_estimado_total$promedio_seg / 60, 2)
+
+tiempo_estimado_total <- rbind(
+  tiempo_estimado_total,
+  data.frame(
+    seccion = "Total estimado (común + A + B + C)",
+    n_casos = NA_integer_,
+    promedio_seg = round(sum(tiempo_estimado_total$promedio_seg), 2),
+    promedio_min = round(sum(tiempo_estimado_total$promedio_seg) / 60, 2)
+  )
+)
+
+# -----------------------------------------------------------------------------
+# 6. Guardar salidas.
+# -----------------------------------------------------------------------------
+
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+
+write.csv(tiempo_caso, file.path(out_dir, "tiempos-caso.csv"), row.names = FALSE, na = "")
+write.csv(tiempo_pregunta_detalle, file.path(out_dir, "tiempos-pregunta-detalle.csv"), row.names = FALSE, na = "")
+write.csv(tiempo_pregunta_resumen, file.path(out_dir, "tiempos-pregunta-resumen.csv"), row.names = FALSE, na = "")
+write.csv(tiempo_estimado_total, file.path(out_dir, "tiempos-estimado-total.csv"), row.names = FALSE, na = "")
+
+cat("Casos con consent_understand == 'yes':", nrow(tiempo_caso), "\n")
+cat("Preguntas (time_q_*) resumidas:", nrow(tiempo_pregunta_resumen), "\n")
+cat("Tiempo total estimado (comun + A + B + C):",
+    tiempo_estimado_total$promedio_min[tiempo_estimado_total$seccion == "Total estimado (comun + A + B + C)"],
+    "min\n")
+cat("Guardado en:", out_dir, "\n")
+```
 
 ```{r}
 #| label: setup
@@ -38,14 +280,26 @@ tiempo_estimado_total <- read.csv(
   here::here("output/tiempos-prepiloto/tiempos-estimado-total.csv"),
   stringsAsFactors = FALSE, check.names = FALSE
 )
+tiempo_pregunta_detalle <- read.csv(
+  here::here("output/tiempos-prepiloto/tiempos-pregunta-detalle.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE
+)
+tiempos_part <- read.csv(
+  here::here("input/tbl/tiempos-part.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE, na.strings = ""
+)
+names(tiempos_part)[1] <- "respID"
+
+tiempo_ranking <- read.csv(
+  here::here("input/tbl/tiempo-ranking.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE, na.strings = ""
+)
+names(tiempo_ranking)[1] <- "respID"
 ```
 
 # Metodología
 
-Base: `input/tbl/tiempos-prepiloto.csv`, extraída de Supabase con información actualizada el 23/07; restringida a los 13
-casos válidos (sólo la primera tabla utiliza 12 casos debido a un outlier). La encuesta tiene un tramo común y
-luego se ramifica en tres módulos aleatorizados (`assigned_module` A/B/C), de
-modo que cada respondente sólo contesta uno de los tres.
+Se unificaron los datos de ambas tablas de Supabase con información actualizada el 23/07, las cuales almacenaron información de las dos versiones de pilotaje implementadas; existen 19 casos válidos para el análisis. 
 
 - **Tiempo total de la encuesta**: `time_end - time_start` para cada caso.
 - **Tiempo por pregunta (acumulado)**: para cada columna `time_q_*`
@@ -66,17 +320,10 @@ modo que cada respondente sólo contesta uno de los tres.
 
 ## Tiempo total por caso
 
-`DE duración por pregunta (s)` es la desviación estándar, para cada
-respondente, de la duración (delta respecto al checkpoint anterior) de cada
-una de las preguntas que respondió: mide qué tan parejo o disparejo fue su
-ritmo de respuesta a lo largo de la encuesta. El caso respID 749 se excluye
-de esta tabla porque solo dejó timestamp en una pregunta (`consent_understand`),
-por lo que la desviación estándar no está definida (requiere al menos 2
-valores).
-
 ```{r}
 #| label: tbl-tiempo-caso
 #| echo: false
+#| tbl-cap: Tiempo de respuesta por respondente
 
 tiempo_caso |>
   filter(respID != "749") |>
@@ -96,20 +343,21 @@ tiempo_caso |>
   )
 ```
 
+La @tbl-tiempo-caso expone los tiempos de demora en finalizar la encuesta para cada respondente válido. Las últimas dos columnas son las más importantes: Tiempo total muestra los minutos que utilizó el encuestado para completar la encuesta, y DE duración por pregunta representa la dispersión en cantidad de segundos de las personas para responder una pregunta.
+
+Es importante señalar que el caso respID = 749 se excluye de esta tabla porque solo respondió la pregunta `consent_understand`.
+
 `r resp_max <- tiempo_caso$respID[which.max(tiempo_caso$tiempo_total_min)]; max_min <- round(max(tiempo_caso$tiempo_total_min), 1)` El caso respID `r resp_max` tiene un tiempo total de `r max_min` minutos, muy por
-sobre el resto (probablemente dejó la encuesta abierta sin completarla de
-corrido). Sin embargo, sus respuestas se mantienen en los tiempos normales, comprobando el tiempo en el que respondió la última pregunta (se demoró aprox 13 minutos).
+sobre el resto (abrió la encuesta en un inicio, marcando el time_start, pero la completó con más de una semana de dilación). Sin embargo, sus respuestas se mantienen en los tiempos normales, comprobando el tiempo en el que respondió la primera y última pregunta (se demoró aproximadamente 15 minutos).
+
+A partir de los resultados presentados en la tabla se observa que solamente hay **3 casos de los 20 totales** que lograron responder la encuesta en el tiempo establecido inicialmente (15 minutos como máximo). Si se considera el caso 374, junto con los 3 que se demoraron ~16 minutos, quienes estuvieron en un margen de tiempo de respuesta aceptable se eleva a 7 casos. Aun así, no se alcanza un 50% de éxito en los tiempos de respuesta, aun considerando que se aplicó una aleatorización de módulos para que la encuesta no fuese demasiado extensa. 
 
 ## Tiempo de respuesta por pregunta
-
-Resumen por pregunta (`time_q_*`): columnas `Duración media (s)`/
-`Duración mediana (s)` describen la duración específica de esa pregunta
-(delta respecto al checkpoint anterior). `n` corresponde al número de casos
-que alcanzaron esa pregunta (varía según el módulo asignado).
 
 ```{r}
 #| label: tbl-tiempo-pregunta
 #| echo: false
+#| tbl-cap: Tiempo de respuesta por pregunta
 
 tiempo_pregunta_resumen |>
   select(pregunta, modulo, n, duracion_media_seg, duracion_mediana_seg) |>
@@ -121,46 +369,174 @@ tiempo_pregunta_resumen |>
       "Pregunta", "Módulo", "N",
       "Duración media (s)", "Duración mediana (s)"
     )
+  ) |>
+  formatStyle(
+    c("duracion_media_seg", "duracion_mediana_seg"),
+    backgroundColor = styleInterval(30, c("white", "#f79b9b"))
   )
 ```
 
-En la @tbl-tiempo-pregunta se puede observar que las variables `ranking_politicas_cuidado_ninos` y `ranking_politicas_cuidado_ninos` presentan valores negativos en su media y mediana. Además, `salud_prov` también tiene una media < 0. Esto resulta llamativo, pero se explica debido a que son preguntas que no exigen un orden de respuesta secuencial.
+En la @tbl-tiempo-pregunta se presenta la duración estimada de cada pregunta del cuestionario a partir del promedio de todos los respondentes. El tiempo por pregunta se calcula mediante la diferencia entre la hora registrada y la hora del checkpoint anterior, es decir, la pregunta que la precede. 
 
-Por ejemplo, para el caso de la matriz de políticas, los respondentes podían partir seleccionando cualquiera de las 5 alternativas. Como se explica en la metodología, los tiempos estimados de demora por pregunta fueron calculados a partir de la diferencia de tiempo entre la pregunta actual y su predecesora. Debido a la no-restricción de orden es que en algunos casos se presentan valores negativos, reflejando que la pregunta de valor negativo fue respondida antes que su predecesora.
+Para establecer una comparación entre las preguntas más rápidas de responder y aquellas más demorosas, se fijó como umbral un máximo de 30 segundos, es decir, las preguntas que demoran (tanto en su promedio como en la mediana) > 30 segundos en ser respondidas, se encuentran destacadas con rojo. 
+
+Los resultados demuestran, en primer lugar, que todas la tareas de asignación rondan el minuto de demora, a excepción de la última tarea; esto puede deberse a la costumbre con el ejercicio, por lo que requiere menos esfuerzo cognitivo en comparación a las primeras tareas. Ya en la segunda parte de la encuesta, el módulo A cuenta con 5 preguntas de larga duración, el módulo B presenta la misma cantidad de este tipo de preguntas, mientras que el módulo C supera a los dos anteriores, conteniendo 6 preguntas de larga duración (para observar el fraseo de las preguntas específicas, dirigirse a la sección de Anexos). 
+
+Por último, se puede observar que las variables `ranking_politicas_cuidado_ninos` y `ranking_politicas_cuidado_ninos` presentan valores negativos en su media y mediana. Esto resulta llamativo, pero se explica debido a que son preguntas que no exigen un orden de respuesta secuencial, por lo que algunos respondentes se saltan preguntas, y posteriormente vuelven a las que dejaron en blanco (en la siguiente sección se detallan los tiempos estimados para estos casos).
+
+## Tiempo de respuesta para Ranking y participación Estado/Mercado
+
+```{r}
+#| echo: false
+#| label: tbl-ranking
+#| tbl-cap: Tiempos de respuesta Ranking de políticas
+
+tiempo_ranking |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempo_ranking), scrollX = TRUE),
+    colnames = c(
+      "respID", "Precedente", "Educación", "Salud", "Pensiones",
+      "Cuidado niños", "Carreteras", "Tiempo estimado (s)"
+    )
+  )
+```
+
+En la @tbl-ranking se presentan los tiempos de respuesta registrados en la base de datos original para cada política considerada en el ranking. Al no poder estimar el tiempo de respuesta con el método aplicado en las demás preguntas, el tiempo aproximado fue calculado a partir de la diferencia entre el último y el primer registro temporal. 
+
+En esta situación, los respondentes podían partir seleccionando cualquiera de las 5 alternativas. Como se explica en la metodología, los tiempos estimados de demora por pregunta fueron calculados a partir de la diferencia de tiempo entre la pregunta actual y su predecesora. Debido a la no-restricción de orden es que en algunos casos se presentan valores negativos, reflejando que la pregunta de valor negativo fue respondida antes que su predecesora.
+
+Para calcular el tiempo estimado de respuesta del ranking, se calculó la diferencia entre la última alternativa en ser respondida y la primera para cada respondente. Al promediar los tiempos de respuesta de cada encuestado, **la media de tiempo para el ranking fue de 93 segundos**.  
+
+```{r}
+#| echo: false
+#| label: tbl-part
+#| tbl-cap: Tiempos de respuesta batería de participación E/M
+
+tiempos_part |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempos_part), scrollX = TRUE),
+    colnames = c(
+      "respID", "Precedente", "Primera pregunta part", "Última pregunta part",
+      "Siguiente", "Tiempo aprox. batería (s)"
+    )
+  )
+```
+
+En la @tbl-part se presentan los tiempos aproximados de respuesta en la batería de participación Estado/Mercado. Cabe considerar que esta batería está construida a partir de sliders, los cuales estaban fijados en la categoría media (4). Puede ser que debido a esto, algunos respondentes no interactuaron en el slider, por lo que el valor de su respuesta se registró pero no así el tiempo en responder. En consecuencia, para estimar el tiempo de respuesta se recurrió a las preguntas que precedían y proseguían la batería. 
+
+Considerando los 4 casos que respondieron esta batería, **el tiempo promedio es de 39 segundos**. Si se excluye el caso con el tiempo registrado más alto (74 segundos), el tiempo promedio de la batería disminuye a 28 segundos.
 
 ## Estimado de tiempo total con los tres módulos
-
-La encuesta real solo muestra un módulo por respondente. Para estimar cuánto
-se demoraría alguien en responder la encuesta completa si los tres módulos
-estuvieran disponibles (en vez de uno solo asignado al azar), se suma:
-
-- el promedio, por caso, del tiempo dedicado a la sección común (tramo
-  compartido antes y después de los módulos), y
-- el promedio, por caso, del tiempo dedicado a cada módulo (A, B y C) —
-  calculado solo con los casos que efectivamente respondieron ese módulo.
-
-Cada promedio se calcula sumando, para cada caso, las duraciones
-(`duracion_seg`, delta respecto al checkpoint anterior) de las preguntas de
-esa sección, y luego promediando esas sumas entre los casos correspondientes.
 
 ```{r}
 #| label: tbl-tiempo-estimado
 #| echo: false
+#| tbl-cap: Tiempo promedio de respuesta por módulo
 
 tiempo_estimado_total |>
   datatable(
     rownames = FALSE,
     options = list(dom = "t", pageLength = 5),
-    colnames = c("Sección", "N casos", "Promedio (s)", "Promedio (min)")
+    colnames = c("Sección", "N casos", "Promedio (s)", "Promedio (min)"),
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;",
+      "En la suma total de los módulos falta un caso en comparación al total ",
+      "debido a que solamente respondió el consentimiento"
+    )
   )
 ```
 
-`r min_total <- tiempo_estimado_total$promedio_min[tiempo_estimado_total$seccion == "Total estimado (comun + A + B + C)"]` Con esto, se estima que responder la sección común más los tres módulos
-completos tomaría en promedio **`r min_total` minutos**.
+En la @tbl-tiempo-estimado se observan los tiempos de demora en responder las secciones comúnes de la encuesta, es decir, aquellas que todos los respondentes pudieron atender, junto con los tres módulos aleatorizados. Para estimar cuánto se demoraría alguien en responder la encuesta completa si los tres módulos estuvieran disponibles (en vez de uno solo asignado al azar), se realiza lo siguiente: La suma del tiempo promedio dedicado a la sección común y de la media temporal dedicada a cada módulo (A, B y C) — calculado solo con los casos que efectivamente respondieron ese módulo.
+
+Con esto, se estima que responder la sección común más los tres módulos completos tomaría en promedio **28 minutos**.
+
+## Descriptivos generales
+
+```{r}
+#| echo: false
+#| label: tbl-desc
+#| tbl-cap: Descriptivos de variables pre-piloto
+
+meta_cols <- c(
+  "session_id", "time_start", "time_end", "completion_code", "respID",
+  "assigned_module", "cbc_profiles", "browser", "ip_address",
+  "consent_understand", "current_page"
+)
+vars_encuesta <- setdiff(names(df_union), meta_cols)
+vars_encuesta <- vars_encuesta[!grepl("^time_q_|^time_p_", vars_encuesta)]
+
+df_desc <- df_union[df_union$consent_understand == "yes", vars_encuesta]
+
+es_numerica <- function(x) {
+  x <- x[!is.na(x)]
+  length(x) > 0 && !anyNA(suppressWarnings(as.numeric(x)))
+}
+
+moda <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) return(NA_character_)
+  tab <- sort(table(x), decreasing = TRUE)
+  names(tab)[1]
+}
+
+tabla_desc <- do.call(rbind, lapply(vars_encuesta, function(v) {
+  x <- df_desc[[v]]
+  n_valid    <- sum(!is.na(x))
+  n_blanco   <- sum(is.na(x))
+  n_9899     <- sum(x %in% c("98", "99"), na.rm = TRUE)
+
+  if (es_numerica(x)) {
+    xn <- as.numeric(x)
+    data.frame(
+      variable = v, tipo = "Numérica", n = n_valid,
+      n_9899 = n_9899, n_blanco = n_blanco,
+      media   = round(mean(xn, na.rm = TRUE), 2),
+      mediana = round(median(xn, na.rm = TRUE), 2),
+      sd      = round(sd(xn, na.rm = TRUE), 2),
+      min     = round(min(xn, na.rm = TRUE), 2),
+      max     = round(max(xn, na.rm = TRUE), 2),
+      n_categorias = NA_integer_,
+      moda         = NA_character_,
+      stringsAsFactors = FALSE
+    )
+  } else {
+    data.frame(
+      variable = v, tipo = "Categórica", n = n_valid,
+      n_9899 = n_9899, n_blanco = n_blanco,
+      media = NA_real_, mediana = NA_real_, sd = NA_real_,
+      min = NA_real_, max = NA_real_,
+      n_categorias = length(unique(x[!is.na(x)])),
+      moda         = moda(x),
+      stringsAsFactors = FALSE
+    )
+  }
+}))
+
+tabla_desc |>
+  datatable(
+    filter = "top",
+    rownames = FALSE,
+    options = list(pageLength = 25, scrollX = TRUE),
+    colnames = c(
+      "Variable", "Tipo", "N válido", "NA", "Sin responder",
+      "Media", "Mediana", "DE", "Mín", "Máx", "N categorías", "Moda"
+    )
+  ) |>
+  formatStyle(
+    "sd",
+    backgroundColor = styleInterval(1.0, c("white", "#f79b9b"))
+  )
+```
+
+En la @tbl-desc se observan los descriptivos generales de cada pregunta de la encuesta, excluyendo del análisis aquellas preguntas asociadas a metadatos y marcas temporales. 
+
+Para observar qué preguntas obtuvieron respuestas más homogéneas, se calculó la DE de cada pregunta, y se destacaron con rojo aquellas que tienen una DE > 1.0. Si bien, se reflejan distinciones entre todas las preguntas, las que están concentradas en el módullo Merecimiento son las que poseen mayor heterogeneidad en sus valores, por lo que vale especialmente la pena considerarlas para la versión final.
 
 # Diagnóstico
 
-El resultado principal del análisis refleja que el tiempo promedio para terminar la encuesta es de 33 minutos, lo cual excede por un gran margen los 10-15 minutos planteados al inicio.
+El resultado principal del análisis refleja que el tiempo promedio para terminar la encuesta es de 28 minutos, lo cual excede por un gran margen los 10-15 minutos planteados al inicio.
 
 Cada módulo (sin considerar la tarea de asignación) contiene un aproximado de 25 preguntas. Para reducir el tiempo de respuesta de la encuesta a, al menos 15 minutos, se sugiere aplicar los siguientes cambios:
 
@@ -178,3 +554,52 @@ Cada módulo (sin considerar la tarea de asignación) contiene un aproximado de 
 **3) Considerar como máximo tres módulos en la encuesta (incluyendo el conjoint), donde cada uno pueda responderse en 5 minutos**
 
   - Esto da la posibilidad de asegurar la diversidad temática de la encuesta, especialmente en el abordaje de preguntas asociadas a la justicia de mercado y el merecimiento.
+
+# Propuestas para versión final de encuesta
+
+- Reducción de tareas conjoint: Tomando en cuenta el N que tendremos en la primera ola, podemos reducir el número de tareas a 4 sin perjudicar el poder estadístico
+
+- Selección de ítems para repartir entre olas: En principio, quedarnos con los ítems clásicos de Market Justice y dejar la sección de sliders para las próximas olas, al igual que las preguntas de distribución (caso salud y educación). Además, considerar que hay que integrar la batería de meritocracia para cruzarla con los datos del conjoint.
+
+## Anexos {.unnumbered}
+
+### Preguntas de larga duración (fraseo) {.unnumbered}
+
+**Módulo A**
+
+- Es justo que en Chile las personas de altos ingresos puedan acceder a una mejor atención de salud que las personas con ingresos más bajos
+
+- Es justo que en Chile las personas de altos ingresos tengan mejores pensiones que las personas con ingresos más bajos
+
+- Los recursos del Estado son limitados y deben distribuirse entre distintas áreas de inversión pública. Pensando en cómo usted asignaría esos recursos, le pedimos ordene según prioridad las siguientes áreas de inversión de fondos públicos (seleccione al menos 3)
+
+- A continuación, se mencionan algunos ámbitos de la actividad gubernamental. Por favor, señale si le gustaría que se aumentara o se redujera el gasto público en cada uno de ellos. Tenga en cuenta que «más» o «mucho más» podría implicar un alza de impuestos. En qué medida le gustaría que hubiera más o menos gasto público en…
+
+- Está bien que los hospitales públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio
+
+**Módulo B**
+
+- Imagine que usted está en un plan de Isapre que está evaluando dar acceso a un 10% de personas en su mismo plan que no pueden pagarlo. Para ello, usted debería pagar un monto adicional a su cotización. En tal situación, ¿cuánto más estaría dispuesto a pagar?
+
+- Qué tan justo o injusto le parece que empresas privadas obtengan ganancias monetarias administrando…
+
+- En Chile, ¿quién participa más en la provisión de los siguientes servicios?
+
+- Considerando la realidad chilena, ¿quién debería participar más en la provisión de los siguientes servicios?
+
+- El Gobierno debería proporcionar a toda la población servicios básicos como la asistencia sanitaria y la asistencia jurídica de forma gratuita
+
+
+**Módulo C**
+
+- Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado
+
+- Quienes son responsables de sus propios problemas igualmente merecen recibir beneficios sociales
+
+- No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho
+
+- Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real
+
+- Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan
+
+- ¿Cuál de las siguientes afirmaciones describe mejor su situación actual, considerando el total de ingresos que tiene actualmente?
