@@ -9,14 +9,15 @@ format:
 
 This section specifies the statistical and sampling design of the JUSMER survey. It states the population targeted, the frame from which cases are drawn, the units and domains of inference, the selection mechanism and its field controls, the quota and sample-size structure, the longitudinal architecture, and the post-fieldwork weighting and error framework. Where operational parameters are still being negotiated with the panel provider, they are flagged explicitly so they can be completed once the scenario is awarded.
 
+The design is sequential and conditional. A first cross-sectional study (Stage 1, @sec-crosssec) is fielded on its own, with a sample size fixed by the minimum power requirements of the conjoint module (documented in the experimental-design chapter). Only if its results are satisfactory is the study scaled to a three-wave panel (Stage 2, @sec-longitudinal). The panel architecture, and the longitudinal weighting scheme in particular, therefore applies to Stage 2 and is flagged as conditional throughout; Stage 1 is a self-standing cross-section governed by the cross-sectional weight alone. The Stage 2 design is retained in full because it specifies the target should the go/no-go decision favor continuation.
+
 ## Type of survey
 
 The survey is fielded using the CAWI methodology (*Computer-Assisted Web Interviewing*): a self-administered questionnaire completed over the internet, with no interviewer present, distributed to eligible members of an online access panel through a personalized link [@biffignandi_handbook_2021; @callegaro_web_2015]. CAWI is well suited to this study for four reasons. It permits rapid, lower-cost collection of large samples across the national territory; its visual and programmatic environment supports the complex randomization, per-respondent profile generation, and tasks that the experimental module in Part A requires, something impractical in telephone or paper modes; the absence of an interviewer reduces interviewer effects and social-desirability pressure on the sensitive distributive and deservingness items; and automated routing, validation, and consistency checks improve data quality at the point of entry [@fowler_survey_2014; @groves_survey_2011]. The instrument is implemented as an all-device (responsive) questionnaire, so that panelists may respond from desktop, tablet, or smartphone without loss of functionality.
 
 These possibilities come with well-documented limitations that shape every downstream decision in this section. Because access to the internet is not universal and the panel is an **opt-in, non-probability** frame, the covered population does not coincide with the target population, and the classical apparatus of probability inference (known selection probabilities, design-unbiased estimators, quantifiable sampling error) does not apply without additional modeling assumptions [@biffignandi_handbook_2021; @callegaro_web_2015; @scherpenzeel_recruiting_2012]. Self-administration without an interviewer introduces measurement error and satisficing, and professionalized panel behavior (speeding, straightlining, duplicate participation) must be actively screened [@groves_survey_2011]. These constraints are addressed where they arise: coverage and self-selection in @sec-target and @sec-errors, measurement and processing error in @sec-errors, and attrition in @sec-longitudinal.
 
-The questionnaire is designed for an approximate response time of **15 minutes per wave**. The study is **longitudinal**: the same panelists are re-measured across waves to observe change rather than a single cross-section. The number of waves and their timing are set out in @sec-longitudinal.
-
+The questionnaire is designed for an approximate response time of **15 minutes** per wave. Stage 1 is a self-standing cross-sectional study, sized for the conjoint module (@sec-crosssec) and analyzed on its own terms; it also serves to assess the instrument and the field operation before any longitudinal commitment. Stage 2, if activated, is longitudinal: the same panelists are re-measured across waves to observe change rather than a single cross-section. The staged structure and the wave timing are set out in @sec-crosssec and @sec-longitudinal.
 
 ## Target Population and Survey Population {#sec-target}
 
@@ -28,7 +29,7 @@ The **survey population** (covered population) is the subset of the target popul
 
 The **observation unit, information unit, and sampling unit coincide**: the individual panelist aged 18 or older who completes the self-administered questionnaire. The **unit of analysis** is the population aged 18 or older resident in Chile, to which estimates are directed.
 
-The study defines a **single national-coverage domain**. No territorial (regional or urban/rural) domains are defined, and the design is not powered to produce domain-level estimates below the national level. Sample size is therefore driven by the analytical and experimental objectives of the study as a whole rather than by sub-domain precision targets (@sec-quotas).
+The study defines a **single national-coverage domain**. No territorial (regional or urban/rural) domains are defined, and the design is not powered to produce domain-level estimates below the national level. Sample size is therefore driven by the analytical and experimental objectives of each stage rather than by sub-domain precision targets (@sec-quotas).
 
 ## Sampling Frame {#sec-frame}
 
@@ -40,7 +41,7 @@ Because the frame is not a probability list of the target population, no frame-b
 
 ## Sampling Strategy and Sample Selection {#sec-strategy}
 
-The survey design employs a **non-probabilistic quota-based selection strategy**, implemented through targeted invitations (purposive sampling). In this type of design, the sample is not selected based on known probabilities of inclusion, but rather on sample composition specifications defined in advance, aimed at replicating certain population distributions across relevant control variables [@callegaro_web_2015; @lohr_sampling_2010]. The provider draws invited panelists from profile information already held in the frame and directs fieldwork toward the quota margins defined in @sec-quotas. Quota control operates in Wave 1 only; the composition of Waves 2 and 3 results from natural panel attrition (@sec-quotas, @sec-longitudinal).
+The survey design employs a **non-probabilistic quota-based selection strategy**, implemented through targeted invitations (purposive sampling). In this type of design, the sample is not selected based on known probabilities of inclusion, but rather on sample composition specifications defined in advance, aimed at replicating certain population distributions across relevant control variables [@callegaro_web_2015; @lohr_sampling_2010]. The provider draws invited panelists from profile information already held in the frame and directs fieldwork toward the quota margins defined in @sec-quotas. Quota control operates in the Stage 1 cross-section and, if the panel is activated, in Wave 1 of Stage 2; the composition of Waves 2 and 3 then results from natural panel attrition (@sec-quotas, @sec-longitudinal).
 
 The questionnaire is programmed and hosted by the research team in `surveydown`, and substantive responses are stored in the team's database rather than the provider's; quota management relies on a technical integration between panel and instrument. Multiple access is enabled in all phases: panelists who do not complete the questionnaire in a single sitting may re-enter and resume. In the final wave, the research team, as client, manages the corresponding stop-quota to prevent any surplus over the planned sample size.
 
@@ -71,18 +72,40 @@ knitr::kable(cuotas) |>   # replace knitr::kable() with your jable() wrapper
   )
 ```
 
-
 ::: callout-important
 ## Quota control scope
 
-Sociodemographic quotas are enforced only in the first wave. Quota compliance is not guaranteed for later waves: the composition of Waves 2 and 3 arises from the natural attrition of the panel, without quota enforcement. This is the design feature that motivates the longitudinal weighting scheme in @sec-weighting.
+Sociodemographic quotas are enforced in the Stage 1 cross-section and, if the panel is activated, in Wave 1 of Stage 2. Quota compliance is not guaranteed for the later panel waves: the composition of Waves 2 and 3 arises from the natural attrition of the panel, without quota enforcement. This is the design feature that motivates the longitudinal weighting scheme in @sec-weighting, which applies only if Stage 2 proceeds.
 :::
 
-Sample size is set by the analytical and experimental objectives of the study, not as a fixed fraction of the population [@groves_survey_2011]. The awarded design is a three-wave panel with a Wave-1 target of 4,500 effective cases, decreasing to 2,473 in Wave 2 and 1,500 in Wave 3.
+Sample size is set by the analytical and experimental objectives of each stage, not as a fixed fraction of the population [@groves_survey_2011]. The Stage 1 cross-section is sized by the minimum power requirements of the conjoint module (documented in the experimental-design chapter; see @sec-crosssec). The Stage 2 sample size, should the panel be activated, is the awarded three-wave structure detailed in @sec-longitudinal.
+
+::: callout-important
+## Known feasibility constraint (basic education)
+
+The provider (Netquest) has flagged a feasibility constraint on panelists with basic education or less: the active pool in this stratum is materially below the 28.73% marginal target in @tbl-quotas. The design therefore anticipates a documented deviation in this quota, to be addressed through [controlled over-invitation of the stratum / a capped achieved share with the residual gap corrected at the weighting stage — see @sec-weighting]. The final treatment must be recorded here once agreed with the provider.
+:::
+
+## Stage 1: Cross-sectional Design {#sec-crosssec}
+
+Stage 1 is a self-standing cross-sectional study and the first field of the project. Its sample size is set by the minimum power requirements of the conjoint module rather than by domain precision (documented in the experimental-design chapter), and it applies the sociodemographic quotas of @sec-quotas. Because it is a single measurement, it carries no inter-wave attrition and no longitudinal weight; inference relies on the cross-sectional weight alone (@sec-weighting). 
+
+Stage 1 may open with a soft launch: a first tranche of 500 effective cases, after which the field halts for a data-quality and quota-pacing review.
+
+::: callout-note
+## To confirm — Stage 1 validation
+
+-   Soft launch: [yes, 500 effective cases with a review pause].
+-   Focus of the review: conjoint module behavior, deservingness and meritocracy scales, redirection links, response times, and skip/filter logic.
+:::
+
+## Stage 2: Longitudinal Design {#sec-longitudinal}
+
+Stage 2, activated only if the Stage 1 results are satisfactory, follows a web-panel logic: the same panelists are re-measured at successive waves to identify within-person change, with the provider guaranteeing re-contact of Wave 1 respondents in later waves [@biffignandi_handbook_2021]. The awarded Stage 2 design comprises three waves, with a Wave-1 target of 4,500 effective cases decreasing to 2,473 in Wave 2 and 1,500 in Wave 3 (@tbl-design).
 
 ```{r}
 #| label: tbl-design
-#| tbl-cap: "Awarded sample-size and wave structure (Alternative 4)"
+#| tbl-cap: "Awarded Stage 2 sample-size and wave structure (three-wave panel)"
 #| echo: false
 #| message: false
 #| warning: false
@@ -91,55 +114,51 @@ diseno <- readxl::read_excel(here::here("diseno_olas.xlsx"))
 knitr::kable(diseno) |>   # replace knitr::kable() with your jable() wrapper
   kableExtra::footnote(
     general_title = "",
-    general = "Sociodemographic quotas are enforced in Wave 1 only; Waves 2 and 3 result from natural panel attrition. Attrition is above the standard for panel studies and is conditioned by the feasible re-contact windows (minimum four weeks between waves).",
+    general = "Stage 2 (conditional on the go/no-go decision). Within Stage 2, sociodemographic quotas are enforced in Wave 1 only; Waves 2 and 3 result from natural panel attrition. Attrition is above the standard for panel studies and is conditioned by the feasible re-contact windows (minimum four weeks between waves).",
     threeparttable = TRUE
   )
 ```
 
-Inter-wave attrition is above the standard for panel studies, close to half the sample at the first transition. This is not a design choice but a constraint of the feasible re-contact windows: recontacts require a minimum of four weeks, and the interval between waves conditions the viable sample size, since a longer interval reduces the number of panelists retrievable from the panel. No panel refreshment or controlled replacement is applied; the decreasing N reflects natural attrition alone.
+Two features distinguish this design from a standard panel and condition the weighting scheme:
 
-::: callout-important
-## Known feasibility constraint (basic education)
+-   First, sociodemographic quotas are enforced only in Wave 1; Waves 2 and 3 are the product of natural attrition (@sec-quotas).
+-   Second, inter-wave attrition is high, close to half the sample at the first transition, because the feasible re-contact windows (a minimum of four weeks between waves, subject to what the provider can retrieve at each interval) trade sample size against elapsed time.
 
-The provider (Netquest) has flagged a feasibility constraint on panelists with basic education or less: the active pool in this stratum is materially below the 28.73% marginal target in @tbl-quotas. The design therefore anticipates a documented deviation in this quota, to be addressed through [controlled over-invitation of the stratum / a capped achieved share with the residual gap corrected at the weighting stage — see @sec-weighting]. The final treatment must be recorded here once agreed with the provider.
-:::
+No panel refreshment or controlled replacement is applied; the decreasing N reflects natural attrition alone. Retention is 55.0% from Wave 1 to Wave 2 and 60.7% from Wave 2 to Wave 3, i.e. 33.3% cumulative from Wave 1 to Wave 3. The balanced panel of respondents present in all three waves is therefore on the order of 1,500 cases, one third of Wave 1. This attrition is treated as non-ignorable and modeled at the weighting stage (@sec-weighting), not assumed away.
 
-## Longitudinal Design {#sec-longitudinal}
-
-The study follows a web-panel logic: the same panelists are re-measured at successive waves to identify within-person change, with the provider guaranteeing re-contact of Wave 1 respondents in later waves [@biffignandi_handbook_2021]. The awarded design comprises three waves (4,500 / 2,473 / 1,500 effective cases; @tbl-design). Two features distinguish it from a standard panel and condition the rest of this section:
-
-- First, sociodemographic quotas are enforced only in Wave 1; Waves 2 and 3 are the product of natural attrition (@sec-quotas). 
-- Second, inter-wave attrition is high, close to half the sample at the first transition, because the feasible re-contact windows (a minimum of four weeks between waves, subject to what the provider can retrieve at each interval) trade sample size against elapsed time. The elements below are fixed; the pilot decision remains open.
-
-Wave-1 validation phase (pilot or soft launch). A validation phase is planned for Wave 1 only, with the sole purpose of testing the conjoint module before full fielding. Whether it takes the form of a small technical pilot or a soft launch is still to be decided; the two are alternatives, not a sequence.
+Wave-1 validation. If Stage 2 proceeds, Wave 1 may itself open with a validation tranche, a technical pilot or a soft launch, to re-check the conjoint module at panel scale before committing the full Wave-1 N. This is distinct from, and additional to, the Stage 1 soft launch (@sec-crosssec); the two belong to different stages and are not a sequence within a single field.
 
 ::: callout-note
-## To confirm — Wave-1 validation
+## To confirm — Stage 2 Wave-1 validation
 
--   Form: [technical pilot / soft launch — one or the other]
--   If soft launch: the provider's current schedule pencils in a first tranche of 500 effective cases, a pause of 1–2 weeks for data-quality and quota-pacing review, and resumption subject to written go/no-go approval by the team.
--   If pilot: [approximate size, cross-device and cross-browser checks, response-time and skip/filter verification].
--   Applies to Wave 1 only, focused on the conjoint module.
+-   Form: [technical pilot / soft launch — specify which].
+-   If soft launch: a first tranche of 500 effective cases, a pause of 1–2 weeks for data-quality and quota-pacing review, and resumption on written go/no-go approval by the team.
+-   Focus: the conjoint module.
 :::
-
-Attrition and retention. Retention is 55.0% from Wave 1 to Wave 2 and 60.7% from Wave 2 to Wave 3, i.e. 33.3% cumulative from Wave 1 to Wave 3. The balanced panel of respondents present in all three waves is therefore on the order of 1,500 cases, one third of Wave 1. This attrition is treated as non-ignorable and modeled at the weighting stage (@sec-weighting), not assumed away.
 
 Longitudinal re-consent. A re-consent model across waves is required: consent is framed for open-ended longitudinal re-contact ("at least one additional measurement") and does not promise immediate anonymization, since immediate anonymization is incompatible with re-contact. The consent wording and its ethics approval are documented in the ethics chapter; this section only records that re-consent is a design requirement affecting retention.
 
 ## Weighting and Calibration {#sec-weighting}
 
-Because the frame is a non-probability panel, there are no design-based inclusion probabilities and hence no classical design weights; weighting is calibration to known population margins [@biffignandi_handbook_2021; @lohr_sampling_2010]. Two features force two distinct families of weights: quotas operate in Wave 1 only, and attrition in Waves 2–3 is high and non-ignorable (@sec-quotas).
+Because the frame is a non-probability panel, there are no design-based inclusion probabilities and hence no classical design weights; weighting is calibration to known population margins [@biffignandi_handbook_2021; @lohr_sampling_2010]. The two stages differ in structure and therefore in the weights they require: Stage 1 needs only a cross-sectional calibration weight, while Stage 2 needs a per-wave cross-sectional weight and, for change analysis, a longitudinal weight defined on the balanced panel. The longitudinal machinery applies only if Stage 2 is activated.
 
-Cross-sectional weights (one per wave). Each wave is raked to the 2024 Census margins of sex, age, and education (@tbl-quotas). Raking (iterative proportional fitting) finds weights $w_i$ that reproduce every population marginal simultaneously,
+### Stage 1: cross-sectional weight
+
+The Stage 1 cross-section is raked to the 2024 Census margins of sex, age, and education (@tbl-quotas). Raking (iterative proportional fitting) finds weights $w_i$ that reproduce every population marginal simultaneously,
 
 $$
-\sum_{i \in \text{wave}} w_i \, \mathbb{1}\{x_i = k\} \;=\; N_k
-\quad\text{for each category } k \text{ of each quota variable,}
-$$
+\sum_{i} w_i \, \mathbb{1}\{x_i = k\} \;=\; N_k
+$$ {#eq-raking}
 
-where $N_k$ is the Census count in category $k$. In Wave 1 this reproduces the quota structure; in Waves 2–3 it also absorbs the marginal imbalance left by attrition. These weights describe the population at each point in time.
+for each category $k$ of each quota variable, where $N_k$ is the Census count in category $k$. Because Stage 1 enforces the quotas at the point of selection, this weight corrects only residual departures from the target margins, and it is the sole weight the cross-section requires.
 
-Longitudinal weight (balanced panel). For within-person change, including the multilevel distributive model, the relevant sample is the balanced panel present in all three waves ($\approx 1{,}500$ cases). Following recruitment-times-survey logic [@biffignandi_handbook_2021], the weight combines the Wave-1 base weight with an attrition correction. Let $R_i = 1$ if respondent $i$ completes the final wave, and estimate the retention probability by logistic regression on Wave-1 covariates $z_i$ (sex, age, education, access device, total response time):
+### Stage 2: cross-sectional and longitudinal weights
+
+Two features force two distinct weights in Stage 2: quotas operate in Wave 1 only, and attrition in Waves 2–3 is high and non-ignorable (@sec-quotas).
+
+Cross-sectional weight, one per wave. Each wave is raked to the Census margins by the same condition (@eq-raking). In Wave 1 this reproduces the quota structure; in Waves 2 and 3 it additionally absorbs the marginal imbalance left by attrition. These weights describe the population at each wave.
+
+Longitudinal weight, balanced panel. For within-person change, including the multilevel distributive model, the relevant sample is the balanced panel present in all three waves ($\approx 1{,}500$ cases). Following recruitment-times-survey logic [@biffignandi_handbook_2021], the weight combines the Wave-1 base weight with an attrition correction. Let $R_i = 1$ if respondent $i$ completes the final wave, and estimate the retention probability by logistic regression on Wave-1 covariates $z_i$ (sex, age, education, access device, total response time):
 
 $$
 \hat{p}_i \;=\; \Pr(R_i = 1 \mid z_i).
@@ -172,19 +191,19 @@ so the loss relative to the nominal $N$ is explicit (@sec-errors). The model, au
 -   Calibration variables beyond sex × age × education: [e.g., macrozone, if a reliable benchmark is adopted].
 :::
 
-
-
 ## Precision, Uncertainty, and Non-sampling Errors {#sec-errors}
+
+The error framework applies to both stages, with one simplification: the Stage 1 cross-section has neither inter-wave attrition nor a longitudinal weight, so its nonresponse and precision assessment reduces to the coverage, self-selection, and measurement components below. The attrition and longitudinal-weight considerations apply to Stage 2 if activated.
 
 Because selection is non-probabilistic, design-based sampling variance and classical margins of error do not strictly apply: there is no randomization distribution from which to derive them [@biffignandi_handbook_2021; @callegaro_web_2015]. Uncertainty for descriptive estimates is therefore reported on an approximate basis, with variance estimated on the calibrated sample and interpreted as conditional on the weighting model rather than as a probability-sample confidence statement. For the experimental module in Part A, inference rests on **within-survey randomization of profile attributes**, which is internally valid regardless of how the sample was selected; the causal quantities (e.g., average marginal component effects) are identified by the experimental design, while their generalization to the target population inherits the sample's coverage and selection limitations [@hainmueller_causal_2014].
 
-Because the weights, and the longitudinal weight in particular, carry non-trivial variance, precision is reported through the effective sample size and the design effect rather than the nominal case counts: the useful n in Wave 3 is appreciably below the 1,500 nominal cases of the balanced panel [@lohr_sampling_2010].
+In Stage 2, because the weights, and the longitudinal weight in particular, carry non-trivial variance, precision is reported through the effective sample size and the design effect rather than the nominal case counts: the useful n in Wave 3 is appreciably below the 1,500 nominal cases of the balanced panel [@lohr_sampling_2010].
 
 Following the **Total Survey Error** framework, the design attends to the following non-sampling error sources [@biffignandi_handbook_2021; @groves_survey_2011]:
 
 -   **Coverage error**: non-internet users and eligible non-members of the panel are outside the frame (@sec-target, @sec-frame). This is the dominant structural error of the design.
--   **Selection / self-selection error**: opt-in membership and differential willingness to be invited; quota control constrains the achieved margins in Wave 1 but does not equalize selection propensities within categories.
--   **Nonresponse error**: arising at two stages, panel recruitment and the specific survey, and, in the panel, attrition across waves, which under the awarded design removes roughly half the sample at the first transition and is the main threat to inference in Waves 2 and 3 (@sec-longitudinal). Because this attrition is plausibly non-ignorable, it is modeled at the weighting stage (@sec-weighting) rather than assumed away. Response rates in the classical sense are not fully computable for an opt-in panel; field-rate indicators (invitation, start, completion) are reported instead.
+-   **Selection / self-selection error**: opt-in membership and differential willingness to be invited; quota control constrains the achieved margins where it is enforced (Stage 1 and Wave 1 of Stage 2) but does not equalize selection propensities within categories.
+-   **Nonresponse error**: arising at two stages, panel recruitment and the specific survey, and, in the panel, attrition across waves, which under the Stage 2 panel removes roughly half the sample at the first transition and is the main threat to inference in Waves 2 and 3 (@sec-longitudinal). Because this attrition is plausibly non-ignorable, it is modeled at the weighting stage (@sec-weighting) rather than assumed away. Response rates in the classical sense are not fully computable for an opt-in panel; field-rate indicators (invitation, start, completion) are reported instead.
 -   **Measurement error**: self-administration without an interviewer can produce satisficing, straightlining, and order effects; sensitive items may still attract social-desirability distortion despite the reduced interviewer pressure. Instrument-side mitigations (item wording, response formats, attention checks) are documented in the instrument chapter.
 
 These sources are not independent, and trade-offs among them (e.g., between coverage and nonresponse) are managed at the design stage rather than assumed away [@biffignandi_handbook_2021]. The residual, non-eliminable errors (chiefly coverage and self-selection) are reported transparently and treated as bounds on the external validity of the estimates rather than as quantities removed by weighting.
