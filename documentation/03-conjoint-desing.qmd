@@ -55,7 +55,7 @@ This distributive logic follows the Distributional Survey Experiment of @gilgen_
 
 ### Attributes and levels {#sec-attributes}
 
-These are the criteria, attributes, and levels used to build each applicant profile. Levels are numbered so that higher numbers correspond to the more deserving level, with level 1 as the reference category. Identity is the exception: its numbering places the reference category (Chilean-born) first and is not a deservingness ordering. 
+These are the criteria, attributes, and levels used to build each applicant profile. Levels are numbered so that higher numbers correspond to the more deserving level, with level 1 as the reference category. Identity is the exception: its numbering places the reference category (Chilean-born) first and is not a deservingness ordering.
 
 <table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
   <thead>
@@ -112,6 +112,7 @@ These are the criteria, attributes, and levels used to build each applicant prof
   </tbody>
 </table>
 <p style="font-size:0.8rem; color:#555; margin-top:0.8rem;">
+
 
 ### Scenario
 
@@ -171,7 +172,7 @@ where $T_{ijt}^{(-l)}$ denotes the remaining attributes and the expectation is t
 
 ## Variables
 
-### Attributes 
+### Attributes
 
 The full set of attributes, their levels, and the numeric coding used in estimation is given in @sec-attributes. Reference categories are set to the least deserving or baseline level of each attribute (level 1), so that estimated AMCEs read as the change in allocated share associated with moving toward the more deserving level. These reference categories are fixed in advance and applied identically in the analysis code.
 
@@ -205,72 +206,31 @@ The restriction operates only on the joint distribution of the two profiles and 
 
 The table below reports the size of the design space and the coverage the realized sample achieves. The distinction that matters is between the profile space, over which the AMCE is defined, and the pair space, which is a by-product of showing two profiles per task and plays no role in identification. The admissible-pair count reflects the restriction explained above.
 
-<table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
-  <thead>
-    <tr style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:44%;">Quantity</th>
-      <th style="padding:0.5rem 0.6rem; text-align:right; width:20%;">Value</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:36%;">Derivation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.4rem 0.6rem;">Unique profiles</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">288</td>
-      <td style="padding:0.4rem 0.6rem;">2·3·2·3·2·2·2 (incl. sex)</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.4rem 0.6rem;">Ordered pairs</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">82,656</td>
-      <td style="padding:0.4rem 0.6rem;">288 · 287</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.4rem 0.6rem;">Unordered pairs</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">41,328</td>
-      <td style="padding:0.4rem 0.6rem;">288 · 287 / 2</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.4rem 0.6rem;">Pairs excluded by the restriction</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">2,448</td>
-      <td style="padding:0.4rem 0.6rem;">288 · 17 / 2 (differ on 0 or 1 of the six CARIN/NICER attributes, any sex)</td>
-    </tr>
-    <tr style="border-bottom:2px solid #000;">
-      <td style="padding:0.4rem 0.6rem;">Admissible pairs</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">38,880</td>
-      <td style="padding:0.4rem 0.6rem;">41,328 − 2,448</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.4rem 0.6rem;">Profiles observed <em>(N = 4,500, 6 tasks)</em></td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">54,000</td>
-      <td style="padding:0.4rem 0.6rem;">4,500 · 6 · 2</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.4rem 0.6rem;">Mean appearances per profile</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">≈ 188</td>
-      <td style="padding:0.4rem 0.6rem;">54,000 / 288</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.4rem 0.6rem;">Observations per level (2-level attr.)</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">27,000</td>
-      <td style="padding:0.4rem 0.6rem;">54,000 / 2</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.4rem 0.6rem;">Observations per level (3-level attr.)</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">18,000</td>
-      <td style="padding:0.4rem 0.6rem;">54,000 / 3</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.4rem 0.6rem;">Tasks observed</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">27,000</td>
-      <td style="padding:0.4rem 0.6rem;">4,500 · 6</td>
-    </tr>
-    <tr style="border-bottom:2px solid #000; background:#fafafa;">
-      <td style="padding:0.4rem 0.6rem;">Distinct admissible pairs seen</td>
-      <td style="padding:0.4rem 0.6rem; text-align:right;">≈ 19,470 (50%)</td>
-      <td style="padding:0.4rem 0.6rem;">expected coverage of 38,880 over 27,000 draws</td>
-    </tr>
-  </tbody>
-</table>
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Quantity                                 | Value          | Derivation                                                                 |
++:=========================================+===============:+:===========================================================================+
+| Unique profiles                          | 288            | 2·3·2·3·2·2·2 (incl. sex)                                                  |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Ordered pairs                            | 82,656         | 288 · 287                                                                  |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Unordered pairs                          | 41,328         | 288 · 287 / 2                                                              |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Pairs excluded by the restriction        | 2,448          | 288 · 17 / 2 (differ on 0 or 1 of the six CARIN/NICER attributes, any sex) |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Admissible pairs                         | 38,880         | 41,328 − 2,448                                                             |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Profiles observed *(N = 4,500, 6 tasks)* | 54,000         | 4,500 · 6 · 2                                                              |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Mean appearances per profile             | ≈ 188          | 54,000 / 288                                                               |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Observations per level (2-level attr.)   | 27,000         | 54,000 / 2                                                                 |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Observations per level (3-level attr.)   | 18,000         | 54,000 / 3                                                                 |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Tasks observed                           | 27,000         | 4,500 · 6                                                                  |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
+| Distinct admissible pairs seen           | ≈ 19,470 (50%) | expected coverage of 38,880 over 27,000 draws                              |
++------------------------------------------+----------------+----------------------------------------------------------------------------+
 
 Two facts follow. First, the profile space is covered densely: each of the 288 profiles appears roughly 188 times, and every attribute level is observed between 18,000 and 27,000 times, which is what identifies the AMCE. Second, the pair space is covered only partially—about half of the admissible pairs are ever seen—but this is immaterial, since the AMCE averages over the marginal distribution of each attribute, not over the joint distribution of pairs (see Causal identification). Full enumeration of the pair space is neither necessary nor feasible.
 
@@ -330,45 +290,199 @@ The slider carries a default even-split value and each task must be completed to
 
 ## Power analysis
 
-### Strategy
+This section asks a single question—is a sample of 1,500 respondents large enough to test the hypotheses?—and answers it twice, on purpose. We first apply a standard textbook formula for conjoint power, and then check it against a simulation of our actual design. The two are reported together because they play complementary roles. The formula is conservative by construction: it was derived for a different kind of outcome than ours and, as explained below, systematically asks for more respondents than we truly need. The simulation removes that conservatism and gives the realistic answer. The short version of the answer is that the design is comfortably powered for all main effects under either method, and that its ability to detect the moderation effects depends on how large those effects truly are—a point we make precise below.
 
-Power is computed analytically with the closed-form expressions of @schuessler_power_2020, implemented in the `cjpowR` package, which relate the minimum detectable AMCE to the number of profile evaluations without additional parametric assumptions. The central expression is
+### Why two methods
+
+The standard power formula for conjoint experiments [@schuessler_power_2020] was built for the usual conjoint task, where the respondent picks one of two profiles and the outcome is binary: chosen or not. A binary outcome has a fixed, and maximal, amount of variability, and the formula bakes that maximal variability into every calculation. Our outcome is not binary. Respondents move a slider to divide a fixed sum, producing a continuous share from 0 to 100. In practice these shares cluster around the middle rather than spreading across the whole range, so their variability is much lower than the binary worst case the formula assumes. Lower outcome variability means more statistical power for the same sample. The formula, blind to this, keeps charging us the worst-case variability and therefore overstates how many respondents we need. This is why we treat the formula as a conservative upper bound and use the simulation, which reproduces the real continuous outcome, to find the lower bound.
+
+### Analytic benchmark: the conservative upper bound
+
+Under the binary-outcome formula produced by @schuessler_power_2020, the number of respondents required to detect an effect of a given size follows
 
 $$N \approx \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2},$$
 
-where $N$ is the total number of profile evaluations ($N_{\text{respondents}} \times \text{tasks} \times 2$), $K$ the number of levels of the attribute of interest, and $\delta_1$ the expected AMCE on the 0–1 scale; under the conservative assumption $\delta_0 = 0.5$ the variance term reduces to $(z_{1-\alpha/2}+z_\kappa)^2 = 7.84$ at $\alpha = 0.05$ and power $0.80$. Two features of the design matter for interpreting these calculations. First, the dimensioning attributes are the three-level ones—Effort and Identity—since their effective sample size is $2/3$ of the total profiles, requiring a larger $N$ than the two-level attributes (Need, Control, Reciprocity, Attitude, Sex) for the same power. Second, the outcome is a continuous share (0–100), not the binary outcome the formula assumes; because the variance of a share concentrated roughly between 20 and 80 pp is well below the $\text{Bernoulli}(0.5)$ variance, the figures reported here are conservative and overstate the required $N$. The minimum effect of interest is set at 3 pp, the lower range of identity-type effects in the CARIN/NICER literature [@knotz_recast_2022].
+where $K$ is the number of levels of the attribute, $\delta_1$ the target effect, here 3 pp, the lower range of effects in the deservingness literature [@knotz_recast_2022; @gilgen_disentangling_2022], and the middle term equals 7.84 at the conventional $\alpha = 0.05$ and 80% power. Two features carry through the whole section. Three-level attributes (Effort, Identity) are the demanding ones, because each of their contrasts uses only two-thirds of the profiles and so needs more respondents than a two-level attribute. And interactions—including the conditional AMCEs behind the moderation hypotheses—are far more demanding than main effects: detecting how an effect changes across groups requires roughly four times the sample of the effect itself, because the estimate now depends on the joint variation of two factors rather than one [@schuessler_power_2020, p.9].
 
-### Parameters
-
-The design administers six tasks per respondent, and we also report the four-task scenario as a sensitivity check on instrument length. Two questions organize the analysis: what minimum effect the study can detect at its planned size, and what sample each target effect would require. Both are reported for six and four tasks.
-
-At the planned sample of $N = 4{,}500$, the minimum detectable effect at 80% power is well below the 3 pp minimum of interest under either task count. With six tasks the study detects effects as small as 1.2 pp on two-level attributes and 1.5 pp on the three-level attributes (Effort, Identity); with four tasks the corresponding figures are 1.5 and 1.8 pp. Reducing the number of tasks therefore leaves the design comfortably powered for the main effects, since even the most demanding attributes are detectable well below the smallest effect the substantive literature leads us to expect.
+The table gives the resulting minimum sample, by number of tasks per respondent and by type of estimand.
 
 ```{r}
-#| label: tbl-power-mde
+#| label: tbl-power-by-tasks
 #| echo: false
-tbl_power_main_2
+tbl_power_by_tasks
 ```
 
-Read in the other direction, the minimum sample required to detect a 3 pp effect at 80% power ranges from roughly 730 respondents for a two-level main effect to about 1,090 for a three-level main effect, and doubles to around 2,180 for a heterogeneity test with a binary moderator. Under four tasks these minima rise by a factor of one and a half, as fewer tasks yield proportionally fewer profile evaluations. In every case the required minimum falls well within the planned sample of 4,500, so the study is adequately powered for all confirmatory main effects and moderation tests under both task counts.
+::: {.callout-note appearance="minimal"}
+*Note:* Minimum $N$ increases for interactions relative to main effects, for both interaction types. "Attribute × moderator (N2)" corresponds to the confirmatory hypotheses (conditional AMCEs), where the moderator is a level-2 respondent characteristic measured across the whole sample and treated as binary here; it requires about four times the $N$ of the K=3 main effect. "Attribute × attribute" is a sizing reference only, not a study hypothesis; it requires about six times the $N$ of the K=3 main effect. The inflation factor comes from the $K_l K_m / 4$ term in equation (6) of @schuessler_power_2020, not from a fixed multiplier. More tasks reduce the required $N$ of respondents for every target, since the number of profile evaluations is $N_{\text{resp}} \times \text{tasks} \times 2$.
+:::
+
+Read the table as an upper bound, not as a verdict. Three things stand out. More tasks per respondent lower the required sample proportionally, since power depends on the total number of profile evaluations (respondents × tasks × 2). The jump from main effects to interactions is large: at six tasks, a three-level main effect needs about 1,090 respondents, while the same attribute interacted with a binary moderator needs about 4,360. And the attribute-by-attribute column is shown only for reference—those interactions are not hypotheses of this study, whose moderation hypotheses all involve a respondent characteristic, not two attributes. Taken at face value, this benchmark says that 1,500 respondents are more than enough for every main effect but fall short for the moderation effects. That verdict, however, rests entirely on the binary worst-case assumption. The next subsection removes it.
+
+### Simulation: the realistic answer
 
 ```{r}
-#| label: tbl-power-main
 #| echo: false
-tbl_power_main
+#| include: false
+load(here("processing", "power_declaredesign.RData"))
 ```
 
-### Reported indicators
+To find out what the design can actually detect, we simulate it. Rather than plug numbers into a formula, we generate thousands of artificial datasets that reproduce the real design—the continuous zero-sum share, six tasks, respondent-level clustering, and a moderator measured with realistic error—then run the exact model the analysis will use and count how often it detects each effect. The proportion detected is the power. Because no earlier study reports how large the moderation effect might be in this setting, we do not guess a single value: we sweep a range of true interaction sizes, from 0.5 to 3 pp per standard deviation of the moderator. The upper end of that range is anchored on @gilgen_disentangling_2022, whose class-by-merit interaction in a comparable scholarship experiment is essentially null, which is our best available signal that real interaction effects here are small.
 
-The power curves in @fig-power report the statistical power achieved across sample sizes for a range of effect sizes, shown separately for six and four tasks, with the planned sample of $N = 4{,}500$ marked. At that sample the design attains power well above conventional thresholds for all effects at or above the 3 pp minimum of interest, under both task counts. Because the analytic formula assumes a binary outcome and independent tasks, these figures are conservative for a continuous share outcome; a design-based simulation reproducing the realized design—the share outcome, six tasks per respondent, the pair restriction, and respondent-level clustering—is reported in the supplementary appendix as a more realistic check.
+The simulation does two things. For the **main effects**, it simply confirms the benchmark: power is at or near 1.00 for a 6 pp effect at 1,500 respondents under both methods, so the continuous outcome changes nothing and the design is unambiguously powered.
+
+For the **interaction**, it corrects the benchmark. Here the two methods diverge sharply, and the divergence is the whole point of running the simulation. For a 3 pp interaction at six tasks, the binary formula reports 38% power while the simulation reports essentially 100%. This is not a contradiction: the two numbers describe the same effect under different assumptions about outcome variability. The formula assumes the binary worst case; the simulation uses the real, much lower, variability of the share. The entire gap between 38% and 100% is the cost of that worst-case assumption—precisely the conservatism this subsection was meant to remove.
 
 ```{r}
-#| label: fig-power
-#| fig-cap: "Statistical power by number of respondents, six versus four tasks"
+#| label: tbl-power-sim-comparison
+#| echo: false
+
+# 10. Comparison: simulated (continuous) vs cjpow.R's analytic (binary) power
+# Local re-implementations, NOT a `source()` of cjpow.R (which does rm(list=ls())
+# and runs its own heavy report) — these mirror cjpow.R's `n_min_interaction()`
+# (itself equation 6 of Schuessler & Freitag 2020) and its algebraic inverse,
+# solving for power at a given N instead of the minimum N for a given power.
+# Compared at reliability = 1.0 (perfectly measured moderator), since the
+# binary analytic formula has no notion of moderator measurement error either
+# — this keeps the comparison apples-to-apples.
+
+# Binary/forced-choice power for a K-level MAIN effect at a given N — this is
+# exactly cjpowr_amce() from the cjpowR package, as used in cjpow.R.
+power_main_binary <- function(amce_pp, n_resp, K, tasks, alpha = 0.05) {
+  n_profiles <- n_resp * tasks * 2
+  out <- cjpowr_amce(amce = amce_pp / 100, n = n_profiles, levels = K, alpha = alpha)
+  out$power
+}
+
+# Binary/forced-choice power for an attribute x moderator INTERACTION at a
+# given N — the algebraic inverse of cjpow.R's n_min_interaction(): that
+# function solves n_profiles for a target power; here we invert it to solve
+# power for a target n_profiles, under the same conservative assumptions
+# (delta0 = 0.5, delta1 = delta2 = 0, balanced binary second factor).
+power_interaction_binary <- function(delta3_pp, n_resp, Kl, Km, tasks, alpha = 0.05,
+                                      d0 = 0.5, d1 = 0, d2 = 0) {
+  n_profiles <- n_resp * tasks * 2
+  delta3 <- delta3_pp / 100
+  p00 <- d0; p10 <- d0 + d1; p01 <- d0 + d2; p11 <- d0 + d1 + d2
+  A <- p00 * (1 - p00); B <- p10 * (1 - p10); C <- p01 * (1 - p01); D <- p11 * (1 - p11)
+  q00 <- q10 <- q01 <- q11 <- 0.25
+  z_needed <- n_profiles * delta3^2 / ((Kl * Km / 4) * (A / q00 + B / q10 + C / q01 + D / q11))
+  z_kappa  <- sqrt(z_needed) - qnorm(1 - alpha / 2)
+  pmin(pmax(pnorm(z_kappa), 0), 1)
+}
+
+# Main effect: independent of delta_interaction, so a single representative
+# slice (any delta_interaction, reliability = 1.0) is enough.
+tbl_comparison_main_df <- diagnosands_main |>
+  filter(reliability == 1.0, delta_interaction == 1.5, term == "effort_more") |>
+  select(K_tasks, sim_power_main = power) |>
+  rowwise() |>
+  mutate(
+    binary_power_main = power_main_binary(6, 1500, K = 3, tasks = K_tasks),
+    gain_main          = sim_power_main - binary_power_main
+  ) |>
+  ungroup()
+
+# Interaction: across the new delta_interaction sweep, at reliability = 1.0.
+tbl_comparison_interaction_df <- diagnosands_main |>
+  filter(reliability == 1.0, term == "effort_more:M_obs") |>
+  select(K_tasks, delta_interaction, sim_power_interaction = power) |>
+  rowwise() |>
+  mutate(
+    binary_power_interaction = power_interaction_binary(delta_interaction, 1500, Kl = 3, Km = 2, tasks = K_tasks),
+    gain_interaction          = sim_power_interaction - binary_power_interaction
+  ) |>
+  ungroup()
+
+tbl_comparison_main <- tbl_comparison_main_df |>
+  mutate(across(where(is.numeric), \(x) round(x, 3))) |>
+  rename(`N tasks` = K_tasks) |>
+  kbl(
+    caption = "Main effect (effort): continuous (simulated) vs binary/forced-choice (analytic) power, N = 1,500",
+    col.names = c("N tasks", "Main (sim)", "Main (binary)", "Gain")
+  ) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = FALSE) |>
+  footnote(
+    general = "True main effect = 6 pp (More vs Less effort), K = 3. \"Gain\" = simulated continuous power minus binary analytic power.",
+    general_title = "Note: "
+  )
+
+tbl_comparison_interaction <- tbl_comparison_interaction_df |>
+  mutate(across(where(is.numeric), \(x) round(x, 3))) |>
+  rename(`N tasks` = K_tasks, `True interaction (pp/SD)` = delta_interaction) |>
+  kbl(
+    caption = paste0(
+      "Interaction (effort x M): continuous (simulated) vs binary/forced-choice (analytic) power, ",
+      "N = 1,500, reliability = 1.0"
+    ),
+    col.names = c("N tasks", "True interaction (pp/SD)", "Interaction (sim)", "Interaction (binary)", "Gain")
+  ) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = FALSE) 
+
+tbl_comparison_interaction
+```
+
+::: {.callout-note appearance="minimal"}
+*Note:* Binary reproduces cjpow.R's forced-choice formula (Schuessler & Freitag 2020), Kl=3/Km=2. Compared at reliability = 1.0 because the binary analytic formula has no measurement-error term. Gain = simulated continuous power minus binary analytic power
+:::
+
+Because the simulation gives realistic power, we can read off the smallest interaction the design can reliably detect. At 1,500 respondents and six tasks, that floor is about 0.7 pp per standard deviation of the moderator once the moderator's measurement error is taken into account.
+
+```{r}
+#| label: tbl-power-sim-mde
+#| echo: false
+
+mde_crossover <- function(x, power, target = 0.80) {
+  ord <- order(x)
+  x <- x[ord]; power <- power[ord]
+  if (power[1] >= target) return(NA_real_)   # already powered at the smallest x swept
+  if (max(power) < target) return(NA_real_)  # never reaches target within the swept range
+  i <- which(power >= target)[1]
+  if (i == 1) return(x[1])
+  approx(x = power[c(i - 1, i)], y = x[c(i - 1, i)], xout = target)$y
+}
+# 6. Table: MDE of the interaction by K_tasks, reliability 1.0 vs 0.8 -------
+# THE key table: for each K_tasks, the smallest true effort x M interaction
+# (pp per SD of M) that N = 1,500 detects with power >= 0.80.
+mde_main_by_reliability <- diagnosands_main |>
+  filter(term == "effort_more:M_obs") |>
+  group_by(K_tasks, reliability) |>
+  summarise(mde = mde_crossover(delta_interaction, power), .groups = "drop")
+
+tbl_mde_main_df <- mde_main_by_reliability |>
+  mutate(reliability_label = paste0("rel_", reliability)) |>
+  select(K_tasks, reliability_label, mde) |>
+  pivot_wider(names_from = reliability_label, values_from = mde) |>
+  arrange(K_tasks)
+
+tbl_mde_main <- tbl_mde_main_df |>
+  mutate(across(c(rel_1, rel_0.8), \(x) if_else(is.na(x), "> 3 pp", paste0(round(x, 2), " pp")))) |>
+  rename(`N tasks` = K_tasks,
+         `MDE, reliability = 1.0 (benchmark)` = rel_1,
+         `MDE, reliability = 0.8 (realistic)`  = rel_0.8) |>
+  kbl(
+    caption = "Minimum detectable interaction (effort x M), N = 1,500, power = 0.80"
+  ) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = FALSE) 
+
+tbl_mde_main
+```
+
+::: {.callout-note appearance="minimal"}
+*Note:* SIMS, simulations per cell, interpolated between delta_interaction = 0.5, 1, 1.5, 2, 2.5, 3 pp/SD. Delta range anchored on Gilgen (2022). The MDE reported here is the smallest interaction this design is powered to detect reliability = 1.0 assumes a perfectly measured moderator (upper-bound benchmark), reliability = 0.8 reflects realistic attitudinal-scale measurement error. 
+:::
+
+What this means for the moderation hypotheses is a matter of size. The design detects interactions of moderate size with ease: an effect of 1 pp per standard deviation is caught with power near or above 0.90 at every task count, and anything larger with near-certainty. It cannot reliably detect very small interactions: an effect of 0.5 pp per standard deviation falls below the 80% threshold at 1,500 respondents.
+
+```{r}
+#| label: fig-power-sim
+#| fig-cap: "Simulated power to detect the moderation effect, by how large that effect truly is (N = 1,500, six tasks, moderator reliability 0.8). The dashed line marks 80% power."
 #| fig-cap-location: top
 #| echo: false
-g1
+g_power_interaction +
+  labs(title = NULL)
 ```
+
+This sets a clear and honest expectation. The comparable evidence suggests that the true moderation effects in this domain may be small—possibly at or below the 0.7 pp floor. We therefore treat the moderation hypotheses with corresponding caution in this first cross-sectional wave: if we find no moderation, that null is consistent with the existing literature and not a symptom of an underpowered design; if we find moderation large enough to detect, it is a substantive result. Because the detectable floor shrinks as the sample grows, a larger later wave is the natural place to test these hypotheses as fully confirmatory. The main-effect hypotheses, by contrast, are firmly powered now.
 
 ## Quality control
 

@@ -255,9 +255,9 @@ window.Quarto = {
   <li>
 <a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis"><span class="header-section-number">3.6</span> Power analysis</a>
   <ul class="collapse">
-<li><a href="#strategy-1" id="toc-strategy-1" class="nav-link" data-scroll-target="#strategy-1"><span class="header-section-number">3.6.1</span> Strategy</a></li>
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters"><span class="header-section-number">3.6.2</span> Parameters</a></li>
-  <li><a href="#reported-indicators" id="toc-reported-indicators" class="nav-link" data-scroll-target="#reported-indicators"><span class="header-section-number">3.6.3</span> Reported indicators</a></li>
+<li><a href="#why-two-methods" id="toc-why-two-methods" class="nav-link" data-scroll-target="#why-two-methods"><span class="header-section-number">3.6.1</span> Why two methods</a></li>
+  <li><a href="#analytic-benchmark-the-conservative-upper-bound" id="toc-analytic-benchmark-the-conservative-upper-bound" class="nav-link" data-scroll-target="#analytic-benchmark-the-conservative-upper-bound"><span class="header-section-number">3.6.2</span> Analytic benchmark: the conservative upper bound</a></li>
+  <li><a href="#simulation-the-realistic-answer" id="toc-simulation-the-realistic-answer" class="nav-link" data-scroll-target="#simulation-the-realistic-answer"><span class="header-section-number">3.6.3</span> Simulation: the realistic answer</a></li>
   </ul>
 </li>
   <li>
@@ -482,139 +482,73 @@ Figure&nbsp;3.1: The scholarship allocation module as presented to respondents.
 </section><section id="combinatorics" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="combinatorics">
 <span class="header-section-number">3.4.3</span> Combinatorics</h3>
 <p>The table below reports the size of the design space and the coverage the realized sample achieves. The distinction that matters is between the profile space, over which the AMCE is defined, and the pair space, which is a by-product of showing two profiles per task and plays no role in identification. The admissible-pair count reflects the restriction explained above.</p>
-<table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
-<thead><tr style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
-<th style="padding:0.5rem 0.6rem; text-align:left; width:44%;">
-Quantity
-</th>
-<th style="padding:0.5rem 0.6rem; text-align:right; width:20%;">
-Value
-</th>
-<th style="padding:0.5rem 0.6rem; text-align:left; width:36%;">
-Derivation
-</th>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 12%">
+<col style="width: 55%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: right;">Value</th>
+<th style="text-align: left;">Derivation</th>
 </tr></thead>
 <tbody>
-<tr style="border-bottom:1px solid #ddd;">
-<td style="padding:0.4rem 0.6rem;">
-Unique profiles
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-288
-</td>
-<td style="padding:0.4rem 0.6rem;">
-2·3·2·3·2·2·2 (incl.&nbsp;sex)
-</td>
+<tr class="odd">
+<td style="text-align: left;">Unique profiles</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: left;">2·3·2·3·2·2·2 (incl.&nbsp;sex)</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-<td style="padding:0.4rem 0.6rem;">
-Ordered pairs
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-82,656
-</td>
-<td style="padding:0.4rem 0.6rem;">
-288 · 287
-</td>
+<tr class="even">
+<td style="text-align: left;">Ordered pairs</td>
+<td style="text-align: right;">82,656</td>
+<td style="text-align: left;">288 · 287</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd;">
-<td style="padding:0.4rem 0.6rem;">
-Unordered pairs
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-41,328
-</td>
-<td style="padding:0.4rem 0.6rem;">
-288 · 287 / 2
-</td>
+<tr class="odd">
+<td style="text-align: left;">Unordered pairs</td>
+<td style="text-align: right;">41,328</td>
+<td style="text-align: left;">288 · 287 / 2</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-<td style="padding:0.4rem 0.6rem;">
-Pairs excluded by the restriction
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-2,448
-</td>
-<td style="padding:0.4rem 0.6rem;">
-288 · 17 / 2 (differ on 0 or 1 of the six CARIN/NICER attributes, any sex)
-</td>
+<tr class="even">
+<td style="text-align: left;">Pairs excluded by the restriction</td>
+<td style="text-align: right;">2,448</td>
+<td style="text-align: left;">288 · 17 / 2 (differ on 0 or 1 of the six CARIN/NICER attributes, any sex)</td>
 </tr>
-<tr style="border-bottom:2px solid #000;">
-<td style="padding:0.4rem 0.6rem;">
-Admissible pairs
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-38,880
-</td>
-<td style="padding:0.4rem 0.6rem;">
-41,328 − 2,448
-</td>
+<tr class="odd">
+<td style="text-align: left;">Admissible pairs</td>
+<td style="text-align: right;">38,880</td>
+<td style="text-align: left;">41,328 − 2,448</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd;">
-<td style="padding:0.4rem 0.6rem;">
-Profiles observed <em>(N = 4,500, 6 tasks)</em>
+<tr class="even">
+<td style="text-align: left;">Profiles observed <em>(N = 4,500, 6 tasks)</em>
 </td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-54,000
-</td>
-<td style="padding:0.4rem 0.6rem;">
-4,500 · 6 · 2
-</td>
+<td style="text-align: right;">54,000</td>
+<td style="text-align: left;">4,500 · 6 · 2</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-<td style="padding:0.4rem 0.6rem;">
-Mean appearances per profile
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-≈ 188
-</td>
-<td style="padding:0.4rem 0.6rem;">
-54,000 / 288
-</td>
+<tr class="odd">
+<td style="text-align: left;">Mean appearances per profile</td>
+<td style="text-align: right;">≈ 188</td>
+<td style="text-align: left;">54,000 / 288</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd;">
-<td style="padding:0.4rem 0.6rem;">
-Observations per level (2-level attr.)
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-27,000
-</td>
-<td style="padding:0.4rem 0.6rem;">
-54,000 / 2
-</td>
+<tr class="even">
+<td style="text-align: left;">Observations per level (2-level attr.)</td>
+<td style="text-align: right;">27,000</td>
+<td style="text-align: left;">54,000 / 2</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-<td style="padding:0.4rem 0.6rem;">
-Observations per level (3-level attr.)
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-18,000
-</td>
-<td style="padding:0.4rem 0.6rem;">
-54,000 / 3
-</td>
+<tr class="odd">
+<td style="text-align: left;">Observations per level (3-level attr.)</td>
+<td style="text-align: right;">18,000</td>
+<td style="text-align: left;">54,000 / 3</td>
 </tr>
-<tr style="border-bottom:1px solid #ddd;">
-<td style="padding:0.4rem 0.6rem;">
-Tasks observed
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-27,000
-</td>
-<td style="padding:0.4rem 0.6rem;">
-4,500 · 6
-</td>
+<tr class="even">
+<td style="text-align: left;">Tasks observed</td>
+<td style="text-align: right;">27,000</td>
+<td style="text-align: left;">4,500 · 6</td>
 </tr>
-<tr style="border-bottom:2px solid #000; background:#fafafa;">
-<td style="padding:0.4rem 0.6rem;">
-Distinct admissible pairs seen
-</td>
-<td style="padding:0.4rem 0.6rem; text-align:right;">
-≈ 19,470 (50%)
-</td>
-<td style="padding:0.4rem 0.6rem;">
-expected coverage of 38,880 over 27,000 draws
-</td>
+<tr class="odd">
+<td style="text-align: left;">Distinct admissible pairs seen</td>
+<td style="text-align: right;">≈ 19,470 (50%)</td>
+<td style="text-align: left;">expected coverage of 38,880 over 27,000 draws</td>
 </tr>
 </tbody>
 </table>
@@ -655,40 +589,58 @@ expected coverage of 38,880 over 27,000 draws
 <p>The slider carries a default even-split value and each task must be completed to advance, so item non-response on the outcome is not expected. Respondents failing the pre-registered quality checks (see Quality control) are excluded from the confirmatory analysis, with all results reported both including and excluding flagged respondents. Partial responses from respondents who abandon before completing all six tasks are retained for completed tasks, since the profile-level estimator does not require balanced task counts. No imputation is performed on the outcome.</p>
 </section></section><section id="power-analysis" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="power-analysis">
 <span class="header-section-number">3.6</span> Power analysis</h2>
-<section id="strategy-1" class="level3" data-number="3.6.1"><h3 data-number="3.6.1" class="anchored" data-anchor-id="strategy-1">
-<span class="header-section-number">3.6.1</span> Strategy</h3>
-<p>Power is computed analytically with the closed-form expressions of <span class="citation" data-cites="schuessler_power_2020">Schuessler &amp; Freitag (<a href="03-conjoint-desing.html#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>, implemented in the <code>cjpowR</code> package, which relate the minimum detectable AMCE to the number of profile evaluations without additional parametric assumptions. The central expression is</p>
+<p>This section asks a single question—is a sample of 1,500 respondents large enough to test the hypotheses?—and answers it twice, on purpose. We first apply a standard textbook formula for conjoint power, and then check it against a simulation of our actual design. The two are reported together because they play complementary roles. The formula is conservative by construction: it was derived for a different kind of outcome than ours and, as explained below, systematically asks for more respondents than we truly need. The simulation removes that conservatism and gives the realistic answer. The short version of the answer is that the design is comfortably powered for all main effects under either method, and that its ability to detect the moderation effects depends on how large those effects truly are—a point we make precise below.</p>
+<section id="why-two-methods" class="level3" data-number="3.6.1"><h3 data-number="3.6.1" class="anchored" data-anchor-id="why-two-methods">
+<span class="header-section-number">3.6.1</span> Why two methods</h3>
+<p>The standard power formula for conjoint experiments <span class="citation" data-cites="schuessler_power_2020">(<a href="03-conjoint-desing.html#ref-schuessler_power_2020" role="doc-biblioref">Schuessler &amp; Freitag, 2020</a>)</span> was built for the usual conjoint task, where the respondent picks one of two profiles and the outcome is binary: chosen or not. A binary outcome has a fixed, and maximal, amount of variability, and the formula bakes that maximal variability into every calculation. Our outcome is not binary. Respondents move a slider to divide a fixed sum, producing a continuous share from 0 to 100. In practice these shares cluster around the middle rather than spreading across the whole range, so their variability is much lower than the binary worst case the formula assumes. Lower outcome variability means more statistical power for the same sample. The formula, blind to this, keeps charging us the worst-case variability and therefore overstates how many respondents we need. This is why we treat the formula as a conservative upper bound and use the simulation, which reproduces the real continuous outcome, to find the lower bound.</p>
+</section><section id="analytic-benchmark-the-conservative-upper-bound" class="level3" data-number="3.6.2"><h3 data-number="3.6.2" class="anchored" data-anchor-id="analytic-benchmark-the-conservative-upper-bound">
+<span class="header-section-number">3.6.2</span> Analytic benchmark: the conservative upper bound</h3>
+<p>Under the binary-outcome formula produced by <span class="citation" data-cites="schuessler_power_2020">Schuessler &amp; Freitag (<a href="03-conjoint-desing.html#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>, the number of respondents required to detect an effect of a given size follows</p>
 <p><span class="math display">\[N \approx \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2},\]</span></p>
-<p>where <span class="math inline">\(N\)</span> is the total number of profile evaluations (<span class="math inline">\(N_{\text{respondents}} \times \text{tasks} \times 2\)</span>), <span class="math inline">\(K\)</span> the number of levels of the attribute of interest, and <span class="math inline">\(\delta_1\)</span> the expected AMCE on the 0–1 scale; under the conservative assumption <span class="math inline">\(\delta_0 = 0.5\)</span> the variance term reduces to <span class="math inline">\((z_{1-\alpha/2}+z_\kappa)^2 = 7.84\)</span> at <span class="math inline">\(\alpha = 0.05\)</span> and power <span class="math inline">\(0.80\)</span>. Two features of the design matter for interpreting these calculations. First, the dimensioning attributes are the three-level ones—Effort and Identity—since their effective sample size is <span class="math inline">\(2/3\)</span> of the total profiles, requiring a larger <span class="math inline">\(N\)</span> than the two-level attributes (Need, Control, Reciprocity, Attitude, Sex) for the same power. Second, the outcome is a continuous share (0–100), not the binary outcome the formula assumes; because the variance of a share concentrated roughly between 20 and 80 pp is well below the <span class="math inline">\(\text{Bernoulli}(0.5)\)</span> variance, the figures reported here are conservative and overstate the required <span class="math inline">\(N\)</span>. The minimum effect of interest is set at 3 pp, the lower range of identity-type effects in the CARIN/NICER literature <span class="citation" data-cites="knotz_recast_2022">(<a href="03-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>.</p>
-</section><section id="parameters" class="level3" data-number="3.6.2"><h3 data-number="3.6.2" class="anchored" data-anchor-id="parameters">
-<span class="header-section-number">3.6.2</span> Parameters</h3>
-<p>The design administers six tasks per respondent, and we also report the four-task scenario as a sensitivity check on instrument length. Two questions organize the analysis: what minimum effect the study can detect at its planned size, and what sample each target effect would require. Both are reported for six and four tasks.</p>
-<p>At the planned sample of <span class="math inline">\(N = 4{,}500\)</span>, the minimum detectable effect at 80% power is well below the 3 pp minimum of interest under either task count. With six tasks the study detects effects as small as 1.2 pp on two-level attributes and 1.5 pp on the three-level attributes (Effort, Identity); with four tasks the corresponding figures are 1.5 and 1.8 pp.&nbsp;Reducing the number of tasks therefore leaves the design comfortably powered for the main effects, since even the most demanding attributes are detectable well below the smallest effect the substantive literature leads us to expect.</p>
+<p>where <span class="math inline">\(K\)</span> is the number of levels of the attribute, <span class="math inline">\(\delta_1\)</span> the target effect, here 3 pp, the lower range of effects in the deservingness literature <span class="citation" data-cites="knotz_recast_2022 gilgen_disentangling_2022">(<a href="03-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>; <a href="03-conjoint-desing.html#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>, and the middle term equals 7.84 at the conventional <span class="math inline">\(\alpha = 0.05\)</span> and 80% power. Two features carry through the whole section. Three-level attributes (Effort, Identity) are the demanding ones, because each of their contrasts uses only two-thirds of the profiles and so needs more respondents than a two-level attribute. And interactions—including the conditional AMCEs behind the moderation hypotheses—are far more demanding than main effects: detecting how an effect changes across groups requires roughly four times the sample of the effect itself, because the estimate now depends on the joint variation of two factors rather than one <span class="citation" data-cites="schuessler_power_2020">(<a href="03-conjoint-desing.html#ref-schuessler_power_2020" role="doc-biblioref">Schuessler &amp; Freitag, 2020, p. 9</a>)</span>.</p>
+<p>The table gives the resulting minimum sample, by number of tasks per respondent and by type of estimand.</p>
 <div class="cell">
-<div id="tbl-power-mde" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-power-mde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.1: Minimum detectable effect for the main study (N = 4,500, power = 0.80, α = 0.05), 6 vs 4 tasks
-</figcaption><div aria-describedby="tbl-power-mde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="tbl-power-by-tasks" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-power-by-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Minimum N of respondents to detect a 3 pp effect (power = 0.80, α = 0.05), by number of tasks per respondent and estimand
+</figcaption><div aria-describedby="tbl-power-by-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
 <thead><tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">N tasks</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">N profiles</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">MDE, K=2 attribute</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">MDE, K=3 attribute</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Main effect, K=2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Main effect, K=3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Conditional AMCE: attribute × moderator (N2, binary)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Attribute × attribute interaction (reference)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">54,000</td>
-<td style="text-align: left;">1.2 pp</td>
-<td style="text-align: left;">1.5 pp</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1454</td>
+<td style="text-align: right;">2181</td>
+<td style="text-align: right;">8721</td>
+<td style="text-align: right;">13082</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">36,000</td>
-<td style="text-align: left;">1.5 pp</td>
-<td style="text-align: left;">1.8 pp</td>
+<td style="text-align: right;">1091</td>
+<td style="text-align: right;">1636</td>
+<td style="text-align: right;">6541</td>
+<td style="text-align: right;">9812</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">873</td>
+<td style="text-align: right;">1309</td>
+<td style="text-align: right;">5233</td>
+<td style="text-align: right;">7849</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">727</td>
+<td style="text-align: right;">1091</td>
+<td style="text-align: right;">4361</td>
+<td style="text-align: right;">6541</td>
 </tr>
 </tbody>
 </table>
@@ -697,49 +649,204 @@ Table&nbsp;3.1: Minimum detectable effect for the main study (N = 4,500, power =
 </figure>
 </div>
 </div>
-<p>Read in the other direction, the minimum sample required to detect a 3 pp effect at 80% power ranges from roughly 730 respondents for a two-level main effect to about 1,090 for a three-level main effect, and doubles to around 2,180 for a heterogeneity test with a binary moderator. Under four tasks these minima rise by a factor of one and a half, as fewer tasks yield proportionally fewer profile evaluations. In every case the required minimum falls well within the planned sample of 4,500, so the study is adequately powered for all confirmatory main effects and moderation tests under both task counts.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>Note:</em> Minimum <span class="math inline">\(N\)</span> increases for interactions relative to main effects, for both interaction types. “Attribute × moderator (N2)” corresponds to the confirmatory hypotheses (conditional AMCEs), where the moderator is a level-2 respondent characteristic measured across the whole sample and treated as binary here; it requires about four times the <span class="math inline">\(N\)</span> of the K=3 main effect. “Attribute × attribute” is a sizing reference only, not a study hypothesis; it requires about six times the <span class="math inline">\(N\)</span> of the K=3 main effect. The inflation factor comes from the <span class="math inline">\(K_l K_m / 4\)</span> term in equation (6) of <span class="citation" data-cites="schuessler_power_2020">Schuessler &amp; Freitag (<a href="03-conjoint-desing.html#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>, not from a fixed multiplier. More tasks reduce the required <span class="math inline">\(N\)</span> of respondents for every target, since the number of profile evaluations is <span class="math inline">\(N_{\text{resp}} \times \text{tasks} \times 2\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Read the table as an upper bound, not as a verdict. Three things stand out. More tasks per respondent lower the required sample proportionally, since power depends on the total number of profile evaluations (respondents × tasks × 2). The jump from main effects to interactions is large: at six tasks, a three-level main effect needs about 1,090 respondents, while the same attribute interacted with a binary moderator needs about 4,360. And the attribute-by-attribute column is shown only for reference—those interactions are not hypotheses of this study, whose moderation hypotheses all involve a respondent characteristic, not two attributes. Taken at face value, this benchmark says that 1,500 respondents are more than enough for every main effect but fall short for the moderation effects. That verdict, however, rests entirely on the binary worst-case assumption. The next subsection removes it.</p>
+</section><section id="simulation-the-realistic-answer" class="level3" data-number="3.6.3"><h3 data-number="3.6.3" class="anchored" data-anchor-id="simulation-the-realistic-answer">
+<span class="header-section-number">3.6.3</span> Simulation: the realistic answer</h3>
+<p>To find out what the design can actually detect, we simulate it. Rather than plug numbers into a formula, we generate thousands of artificial datasets that reproduce the real design—the continuous zero-sum share, six tasks, respondent-level clustering, and a moderator measured with realistic error—then run the exact model the analysis will use and count how often it detects each effect. The proportion detected is the power. Because no earlier study reports how large the moderation effect might be in this setting, we do not guess a single value: we sweep a range of true interaction sizes, from 0.5 to 3 pp per standard deviation of the moderator. The upper end of that range is anchored on <span class="citation" data-cites="gilgen_disentangling_2022">Gilgen (<a href="03-conjoint-desing.html#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span>, whose class-by-merit interaction in a comparable scholarship experiment is essentially null, which is our best available signal that real interaction effects here are small.</p>
+<p>The simulation does two things. For the <strong>main effects</strong>, it simply confirms the benchmark: power is at or near 1.00 for a 6 pp effect at 1,500 respondents under both methods, so the continuous outcome changes nothing and the design is unambiguously powered.</p>
+<p>For the <strong>interaction</strong>, it corrects the benchmark. Here the two methods diverge sharply, and the divergence is the whole point of running the simulation. For a 3 pp interaction at six tasks, the binary formula reports 38% power while the simulation reports essentially 100%. This is not a contradiction: the two numbers describe the same effect under different assumptions about outcome variability. The formula assumes the binary worst case; the simulation uses the real, much lower, variability of the share. The entire gap between 38% and 100% is the cost of that worst-case assumption—precisely the conservatism this subsection was meant to remove.</p>
 <div class="cell">
-<div id="tbl-power-main" class="cell quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-power-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.2: Minimum N for the main study by number of tasks (power = 0.80 unless noted, α = 0.05)
-</figcaption><div aria-describedby="tbl-power-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="tbl-power-sim-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-power-sim-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: Interaction (effort x M): continuous (simulated) vs binary/forced-choice (analytic) power, N = 1,500, reliability = 1.0
+</figcaption><div aria-describedby="tbl-power-sim-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
 <thead><tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Target</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Minimum AMCE</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Most demanding attribute</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Min N (6 tasks)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Min N (4 tasks)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N tasks</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">True interaction (pp/SD)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Interaction (sim)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Interaction (binary)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Gain</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Main effects, K=2</td>
-<td style="text-align: left;">3 pp</td>
-<td style="text-align: left;">Binary</td>
-<td style="text-align: right;">727</td>
-<td style="text-align: right;">1,091</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.475</td>
+<td style="text-align: right;">0.039</td>
+<td style="text-align: right;">0.436</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Main effects, K=3</td>
-<td style="text-align: left;">3 pp</td>
-<td style="text-align: left;">Effort / Identity</td>
-<td style="text-align: right;">1,091</td>
-<td style="text-align: right;">1,636</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.555</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.514</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Main effects, K=3, power = 0.90</td>
-<td style="text-align: left;">3 pp</td>
-<td style="text-align: left;">Effort / Identity</td>
-<td style="text-align: right;">1,460</td>
-<td style="text-align: right;">2,190</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.755</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.711</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Heterogeneity (binary moderator)</td>
-<td style="text-align: left;">3 pp</td>
-<td style="text-align: left;">K=3 + subgroup</td>
-<td style="text-align: right;">2,182</td>
-<td style="text-align: right;">3,272</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.745</td>
+<td style="text-align: right;">0.046</td>
+<td style="text-align: right;">0.699</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.980</td>
+<td style="text-align: right;">0.058</td>
+<td style="text-align: right;">0.922</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.995</td>
+<td style="text-align: right;">0.065</td>
+<td style="text-align: right;">0.930</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.072</td>
+<td style="text-align: right;">0.928</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.079</td>
+<td style="text-align: right;">0.921</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.084</td>
+<td style="text-align: right;">0.916</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: right;">0.901</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.113</td>
+<td style="text-align: right;">0.887</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.127</td>
+<td style="text-align: right;">0.873</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.118</td>
+<td style="text-align: right;">0.882</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.143</td>
+<td style="text-align: right;">0.857</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.169</td>
+<td style="text-align: right;">0.831</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.194</td>
+<td style="text-align: right;">0.806</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.161</td>
+<td style="text-align: right;">0.839</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.800</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.239</td>
+<td style="text-align: right;">0.761</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.277</td>
+<td style="text-align: right;">0.723</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.212</td>
+<td style="text-align: right;">0.788</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.268</td>
+<td style="text-align: right;">0.732</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.323</td>
+<td style="text-align: right;">0.677</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.376</td>
+<td style="text-align: right;">0.624</td>
 </tr>
 </tbody>
 </table>
@@ -748,21 +855,81 @@ Table&nbsp;3.2: Minimum N for the main study by number of tasks (power = 0.80 un
 </figure>
 </div>
 </div>
-</section><section id="reported-indicators" class="level3" data-number="3.6.3"><h3 data-number="3.6.3" class="anchored" data-anchor-id="reported-indicators">
-<span class="header-section-number">3.6.3</span> Reported indicators</h3>
-<p>The power curves in <a href="#fig-power" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> report the statistical power achieved across sample sizes for a range of effect sizes, shown separately for six and four tasks, with the planned sample of <span class="math inline">\(N = 4{,}500\)</span> marked. At that sample the design attains power well above conventional thresholds for all effects at or above the 3 pp minimum of interest, under both task counts. Because the analytic formula assumes a binary outcome and independent tasks, these figures are conservative for a continuous share outcome; a design-based simulation reproducing the realized design—the share outcome, six tasks per respondent, the pair restriction, and respondent-level clustering—is reported in the supplementary appendix as a more realistic check.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>Note:</em> Binary reproduces cjpow.R’s forced-choice formula (Schuessler &amp; Freitag 2020), Kl=3/Km=2. Compared at reliability = 1.0 because the binary analytic formula has no measurement-error term. Gain = simulated continuous power minus binary analytic power</p>
+</div>
+</div>
+</div>
+<p>Because the simulation gives realistic power, we can read off the smallest interaction the design can reliably detect. At 1,500 respondents and six tasks, that floor is about 0.7 pp per standard deviation of the moderator once the moderator’s measurement error is taken into account.</p>
+<div class="cell">
+<div id="tbl-power-sim-mde" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-power-sim-mde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.3: Minimum detectable interaction (effort x M), N = 1,500, power = 0.80
+</figcaption><div aria-describedby="tbl-power-sim-mde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead><tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">N tasks</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">MDE, reliability = 0.8 (realistic)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">MDE, reliability = 1.0 (benchmark)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">0.9 pp</td>
+<td style="text-align: left;">0.82 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">0.82 pp</td>
+<td style="text-align: left;">0.78 pp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">0.8 pp</td>
+<td style="text-align: left;">0.59 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">0.73 pp</td>
+<td style="text-align: left;">0.61 pp</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>Note:</em> SIMS, simulations per cell, interpolated between delta_interaction = 0.5, 1, 1.5, 2, 2.5, 3 pp/SD. Delta range anchored on Gilgen (2022). The MDE reported here is the smallest interaction this design is powered to detect reliability = 1.0 assumes a perfectly measured moderator (upper-bound benchmark), reliability = 0.8 reflects realistic attitudinal-scale measurement error.</p>
+</div>
+</div>
+</div>
+<p>What this means for the moderation hypotheses is a matter of size. The design detects interactions of moderate size with ease: an effect of 1 pp per standard deviation is caught with power near or above 0.90 at every task count, and anything larger with near-certainty. It cannot reliably detect very small interactions: an effect of 0.5 pp per standard deviation falls below the 80% threshold at 1,500 respondents.</p>
 <div class="cell fig-cap-location-top">
 <div class="cell-output-display">
-<div id="fig-power" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-cap-location="top">
-<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.2: Statistical power by number of respondents, six versus four tasks
-</figcaption><div aria-describedby="fig-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03-conjoint-desing_files/figure-html/fig-power-1.png" class="img-fluid figure-img" style="width:85.0%" data-fig-pos="H">
+<div id="fig-power-sim" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-cap-location="top">
+<figure class="quarto-float quarto-float-fig figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-power-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Simulated power to detect the moderation effect, by how large that effect truly is (N = 1,500, six tasks, moderator reliability 0.8). The dashed line marks 80% power.
+</figcaption><div aria-describedby="fig-power-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-conjoint-desing_files/figure-html/fig-power-sim-1.png" class="img-fluid figure-img" style="width:85.0%" data-fig-pos="H">
 </div>
 </figure>
 </div>
 </div>
 </div>
+<p>This sets a clear and honest expectation. The comparable evidence suggests that the true moderation effects in this domain may be small—possibly at or below the 0.7 pp floor. We therefore treat the moderation hypotheses with corresponding caution in this first cross-sectional wave: if we find no moderation, that null is consistent with the existing literature and not a symptom of an underpowered design; if we find moderation large enough to detect, it is a substantive result. Because the detectable floor shrinks as the sample grows, a larger later wave is the natural place to test these hypotheses as fully confirmatory. The main-effect hypotheses, by contrast, are firmly powered now.</p>
 </section></section><section id="quality-control" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="quality-control">
 <span class="header-section-number">3.7</span> Quality control</h2>
 <p>All checks below are pre-registered and used to flag rather than automatically exclude respondents: the confirmatory analysis is reported both with and without flagged cases (see Missing data).</p>

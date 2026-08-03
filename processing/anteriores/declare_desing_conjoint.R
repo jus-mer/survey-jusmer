@@ -15,165 +15,129 @@ if (! require("pacman")) install.packages("pacman")
 pacman::p_load(DeclareDesign,
                rdss,
                cjoint,
+               estimatr,
                tidyverse,
                here)
 set.seed(123)
 
 # 2. Conjoint desing ------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# 1. Design features
-# -----------------------------------------------------------------------------
+# ── 1. Función que define el diseño para un N dado ──────────────────
 
-N_subjects <- 800
-N_tasks    <- 5
+conjoint_design <- function(
+    N_resp,
+    K_tasks    = 6,
+    amce_need  = 0.13,   # situación financiera — efecto Gilgen (2022)
+    amce_merit = 0.06,   # rendimiento escolar
+    amce_id    = 0.03,   # identidad (nacionalidad / origen indígena)
+    sd_outcome = 18      # SD del % asignado (estimación conservadora)
+) {
 
-# -----------------------------------------------------------------------------
-# 2. Attributes and levels (10 attributes; 1 ternary, rest binary)
-# -----------------------------------------------------------------------------
+  N_profiles <- N_resp * K_tasks * 2
 
-levels_list <- list(
-  # Demographics / background
-  gender      = c("Man", "Woman"),
-  nationality = c("Chilean", "Non-Chilean"),
-  ethnicity   = c("Indigenous", "Non-Indigenous"),
-  
-  # School background
-  school_type = c("Municipal", "Subsidized private", "Private paid"),
-  score_paes      = c("350", "500", "650", "800", "950"),
-  
-  # CARIN (one attribute per component)
-  control_academic  = c("Above average", "Average"),               # Control proxy (performance)
-  identity_firstgen = c("First-generation", "Not first-generation"),# Identity
-  need_income       = c("Low-income household", "Middle/upper-income household") # Need
-)
+  # Modelo poblacional
+  modelo <- declare_model(
+    N = N_profiles,
 
-# Conjectured utility function (additive DGP; adjust magnitudes as needed): this is the estimated effect size
-conjoint_utility <- function(data) {
-  data %>% 
-    mutate(
-      U =
-        0.20  * (gender == "Woman") +
-        (-0.25) * (nationality == "Non-Chilean") +
-        0.15 * (ethnicity == "Indigenous") +
-        
-        0.30  * (need_income == "Low-income household") +
-        0.35  * (control_academic == "Above average") +
-        0.20  * (identity_firstgen == "First-generation") +
-        
-        # school_type: base = Subsidized private
-        0.30  * (school_type == "Municipal") +
-        0.25  * (school_type == "Private paid") +
-        
-        # score_paes: base = 350
-        0.10  * (score_paes == "500") +
-        0.20  * (score_paes == "650") +
-        0.30  * (score_paes == "800") +
-        0.35  * (score_paes == "950") +
-        
-        # idiosyncratic noise at profile level
-        uij
-    )
+    # Atributos K=2 (0/1 con prob uniforme)
+    sit_financiera  = rbinom(N, 1, 0.5),  # 1 = dificultad económica
+    educ_parental   = rbinom(N, 1, 0.5),  # 1 = sin educ. superior
+    nacionalidad    = rbinom(N, 1, 0.5),  # 1 = extranjero/a
+    origen_indigena = rbinom(N, 1, 0.5),  # 1 = origen indígena
+    sexo            = rbinom(N, 1, 0.5),  # 1 = mujer
+
+    # Atributos K=3 (dummy: nivel alto vs. nivel bajo)
+    rendimiento  = sample(c(-1L, 0L, 1L), N, replace = TRUE),
+    tipo_colegio = sample(c(-1L, 0L, 1L), N, replace = TRUE),
+
+    # IDs anidados
+    respondente_id = rep(seq_len(N_resp), each = K_tasks * 2),
+    tarea_id       = rep(rep(seq_len(K_tasks), each = 2), N_resp),
+
+    # Outcome potencial: share base 50 pp + efectos + ruido
+    Y_latente = 50 +
+      (amce_need  * 100) * sit_financiera +
+      (amce_merit * 100) * (rendimiento == 1L) +
+      (amce_id    * 100) * origen_indigena +
+      rnorm(N, mean = 0, sd = sd_outcome)
+  )
+
+  # Medición: clampear entre 0 y 100
+  medicion <- declare_measurement(
+    Y = pmin(pmax(Y_latente, 0), 100)
+  )
+
+  # Estimador: OLS con SE cluster por respondente
+  # Atributo focal: sit_financiera (efecto más grande, referencia principal)
+  estimador <- declare_estimator(
+    Y ~ sit_financiera + educ_parental + nacionalidad +
+        origen_indigena + sexo +
+        I(rendimiento == 1L) + I(rendimiento == -1L) +
+        I(tipo_colegio == 1L) + I(tipo_colegio == -1L),
+    model    = lm_robust,
+    clusters = respondente_id,
+    term     = "sit_financiera",
+    label    = "AMCE sit. financiera"
+  )
+
+  modelo + medicion + estimador
 }
 
-# -----------------------------------------------------------------------------
-# 3. Measurement handler for YOUR REAL TASK: allocation 0-100 (sum to 100)
-# -----------------------------------------------------------------------------
-# The task: allocate 100% between 2 profiles based on their attributes
-# We map attributes to shares via softmax:
-# share_ij = exp(scale*U_ij) / sum_j exp(scale*U_ij)
-# alloc_ij = 100 * share_ij
-#
-# scale controls how "deterministic" allocations are (higher -> more extreme 0/100).
-# For power diagnostics, start with scale = 1 and then test sensitivity.
 
-conjoint_measurement_allocation <- function(data, utility_fn, scale = 1) {
-  data2 <- utility_fn(data)
-  
-  data2 %>% 
-    group_by(subject, task) %>%
-    mutate(
-      expU  = exp(scale * U),
-      share = expU / sum(expU),
-      alloc = 100 * share
-    ) %>%
-    ungroup() %>%
-    select(-expU) # keep U, share, alloc if you want
-}
+# ── 2. Diagnosticar para un rango de N respondentes ────────────────
 
-# -----------------------------------------------------------------------------
-# 4. Model declaration (common backbone)
-# -----------------------------------------------------------------------------
+ns <- c(500, 600, 700, 1000, 1200, 1500, 2000)
 
-base_model <- declare_model(
-  subject = add_level(N = N_subjects),
-  task    = add_level(N = N_tasks, task = 1:N_tasks),
-  profile = add_level(
-    N       = 2,
-    profile = 1:2,
-    uij     = rnorm(N, sd = 1)
-  )
-)
+diagnosticos <- map_dfr(ns, function(n) {
+  d    <- conjoint_design(N_resp = n)
+  diag <- diagnose_design(d, sims = 500, bootstrap_sims = 0)
+  diag$diagnosands |>
+    mutate(N_resp = n)
+}, .progress = TRUE)
 
-# Helper: formula including all attributes
 
-f_all_alloc <- alloc ~ gender + nationality + ethnicity +
-  school_type + score_paes +
-  control_academic + identity_firstgen + need_income
+# ── 3. Gráfico: poder simulado vs N respondentes ───────────────────
 
-# -----------------------------------------------------------------------------
-# 5. Declaration: YOUR TASK (allocation 0-100) with custom measurement
-# -----------------------------------------------------------------------------
-declaration_alloc <-
-  base_model +
-  declare_inquiry(
-    handler     = conjoint_inquiries,
-    levels_list = levels_list,
-    utility_fn  = conjoint_utility
+diagnosticos |>
+  ggplot(aes(x = N_resp, y = power)) +
+  geom_line(color = "#2c3e50", linewidth = 1) +
+  geom_point(color = "#2c3e50", size = 3) +
+  geom_ribbon(
+    aes(ymin = power - 1.96 * se_power,
+        ymax = power + 1.96 * se_power),
+    alpha = 0.15, fill = "#2c3e50"
   ) +
-  declare_assignment(
-    handler     = conjoint_assignment,
-    levels_list = levels_list
-    # fully randomized: no weights, no restrictions
+  geom_hline(yintercept = 0.80, linetype = "dashed", color = "grey40") +
+  geom_hline(yintercept = 0.90, linetype = "dotted", color = "grey40") +
+  geom_vline(xintercept = 600,  color = "#e74c3c", linetype = "dashed", alpha = 0.7) +
+  geom_vline(xintercept = 1500, color = "#2980b9", linetype = "dashed", alpha = 0.7) +
+  annotate("text", x = 620,  y = 0.08, label = "Piloto\n(N=600)",
+           color = "#e74c3c", size = 3, hjust = 0) +
+  annotate("text", x = 1520, y = 0.08, label = "Estudio\n(N=1.500)",
+           color = "#2980b9", size = 3, hjust = 0) +
+  annotate("text", x = 2000, y = 0.82, label = "Poder = 0.80",
+           color = "grey40", size = 3, hjust = 1) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.1)
   ) +
-  declare_measurement(
-    handler     = conjoint_measurement_allocation,
-    utility_fn  = conjoint_utility,
-    scale       = 1
+  scale_x_continuous(breaks = ns) +
+  labs(
+    title    = "Poder estadístico simulado (DeclareDesign)",
+    subtitle = "Outcome continuo (% beca asignado) — AMCE sit. financiera = 13 pp — SD = 18 pp\n6 tareas × 2 perfiles — SE cluster por respondente",
+    x        = "N respondentes",
+    y        = "Poder estadístico",
+    caption  = "500 simulaciones por N. Banda = IC 95%.\nEstimador: OLS con SE cluster por respondente (lm_robust)."
   ) +
-  declare_estimator(
-    f_all_alloc,
-    respondent.id = "subject",
-    .method = amce
-  )
-
-sims <- 500
-bootstrap_sims <- 500
-
-diagnosis_alloc <- declaration_alloc %>%  
-  diagnose_design(future.seed = FALSE, sims = sims, bootstrap_sims = bootstrap_sims)
-
-diagnosis_alloc
+  theme_minimal(base_size = 12) +
+  theme(panel.grid.minor = element_blank())
 
 
+# ── 4. Tabla resumen de diagnósticos ───────────────────────────────
 
-# -----------------------------------------------------------------------------
-# 6. Optional: Sensitivity to determinism in allocations (scale)
-# -----------------------------------------------------------------------------
-# If you suspect respondents will allocate more extremely, test larger scales:
-scale_grid <- c(0.5, 1, 1.5, 2)
+diagnosticos |>
+  select(N_resp, power, se_power, bias, rmse) |>
+  mutate(across(where(is.numeric), \(x) round(x, 3))) |>
+  print()
 
-diag_alloc_by_scale <- map(
-  scale_grid,
-  ~ diagnose_design(
-    base_model +
-      declare_inquiry(handler = conjoint_inquiries, levels_list = levels_list, utility_fn = conjoint_utility) +
-      declare_assignment(handler = conjoint_assignment, levels_list = levels_list) +
-      declare_measurement(handler = conjoint_measurement_allocation, utility_fn = conjoint_utility, scale = .x) +
-      declare_estimator(f_all_alloc, respondent.id = "subject", .method = amce),
-    future.seed = FALSE
-  )
-)
-
-names(diag_alloc_by_scale) <- paste0("scale_", scale_grid)
-diag_alloc_by_scale
