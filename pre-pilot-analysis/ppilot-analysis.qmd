@@ -1,0 +1,1131 @@
+---
+title: Análisis Encuesta Pre-piloto JUSMER
+author: Tomás Urzúa - Asistente de investigación
+date: today
+lang: es
+format:
+  html:
+    toc: true
+    number-sections: true
+    df-print: kable
+    theme: cosmo
+    embed-resources: true
+code-fold: true
+---
+
+# Introducción
+
+Este documento presenta los análisis del pre-piloto de la *Encuesta JUSMER Justicia y Merecimiento*. El objetivo de este insumo es orientar la toma de decisiones para la construcción de la versión final de la encuesta.
+
+Para ello, el documento se estructura a partir de los siguientes ejes: Primero se presentan los antecedentes principales del pre-piloto. Luego, se exponen los resultados del análisis de los comentarios abiertos, para posteriormente presentar los resultados del análisis de los tiempos de respuesta de la encuesta, detallando por pregunta y por módulo. Seguido de esto, se presentan propuestas para la versión final de la encuesta en base a los resultados del análisis. Por último, se presentan las conclusiones y recomendaciones finales.
+
+## Antecedentes
+
+El pre-piloto de la Encuesta JUSMER se realizó en dos etapas:
+
+1) Primero se aplicó un pre-piloto con todas las preguntas que se decidieron incluir en la encuesta, además de integrar espacios de comentarios para recibir retroalimentación de los respondentes. Esta versión estuvo activa desde el 03 de julio hasta el 12 de julio del 2026 (solamente una respuesta válida se escapa de este plazo: Tijs Laenen respondió esta versión el 20 de julio).
+
+2) Posteriormente, se aplicó un segundo pre-piloto con las mismas preguntas la primera versión, pero la diferencia fue que se eliminaron las cajas de comentarios, ya que esta versión buscaba recabar información sobre los tiempos de respuesta de cada pregunta y batería temática. El segundo pre-piloto estuvo activo desde 15 de julio hasta el 20 de ese mismo mes. 
+
+Ambas versiones del pre-piloto fueron construidas con [surveydown](https://surveydown.org/), una plataforma de código abierto para la generación de encuestas, la cual se basa mayoritariamente en las lógicas de Quarto y Shinyapp. Para el despliegue de la encuesta recurrimos a dos plataformas: El primer pre-piloto se alojó en [HuggingFace](https://huggingface.co/), mientras que el segundo se alojó en [Posit Cloud](https://posit.cloud/). Esto se debió al intento de explorar plataformas que fueran más eficientes para el despliegue de la encuesta, ya que shinyapp.io presentaba problemas de lentitud y límites de almacenamiento por parte del servidor. Por último, para la recolección de datos se utilizó [Supabase](https://supabase.com/), una plataforma gratuita que permite conectar las encuestas con bases de datos alojadas en la nube, las cuales se actualizan automáticamente.
+
+# Análisis
+
+```{r}
+#| label: setup
+#| message: false
+
+pacman::p_load(dplyr, DT, here)
+
+here::i_am("pre-pilot-analysis/ppilot-analysis.qmd")
+```
+
+```{r}
+#| label: carga-comentarios
+
+resumen <- read.csv(
+  here::here("pre-pilot-analysis", "tbl/comentarios-prepiloto-resumen.csv"),
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+```
+
+## Procesamiento de datos
+
+Se unificaron los datos de ambas tablas de Supabase con información actualizada el 23/07, las cuales almacenaron información de las dos versiones de pilotaje implementadas; existen 20 casos válidos para el análisis. 
+
+::: callout-note
+Cálculos relevantes para los tiempos de respuesta:
+
+- **Tiempo total de la encuesta**: `time_end - time_start` para cada caso (marca de tiempo de término de la encuesta - marca de tiempo del inicio de la encuesta).
+- **Duración por pregunta**: Se calcula mediante el tiempo en que fue respondida la pregunta menos el checkpoint anterior a ese mismo caso
+:::
+
+Primero se cargan las bases de datos extraídas de Supabase y se unifican en una sola base de datos los casos válidos para su posterior análisis.
+
+```{r}
+#| warning: false
+#| label: union bases
+
+pacman::p_load(dplyr, DT)
+
+
+comentarios_csv <- here::here("input", "tbl/comentarios-prepiloto.csv")
+tiempos_csv     <- here::here("input", "tbl/tiempos-prepiloto.csv")
+
+union_csv       <- here::here("pre-pilot-analysis", "tbl/tiempos-prepiloto-union.csv")
+
+ids_muestra <- c(1394, 1924, 501, 1785, 1722, 1968, 374, 1878) # casos validos del primer prepiloto
+
+comentarios <- read.csv(comentarios_csv, stringsAsFactors = FALSE, check.names = FALSE,
+                         colClasses = "character", na.strings = "", encoding = "UTF-8")
+comentarios <- comentarios[comentarios$respID %in% ids_muestra, ]
+
+tiempos <- read.csv(tiempos_csv, stringsAsFactors = FALSE, check.names = FALSE,
+                     colClasses = "character", na.strings = "", encoding = "UTF-8")
+
+# comentarios-prepiloto.csv (primer pre-piloto) trae columnas adicionales (bloque de comentarios) que no existen en tiempos-prepiloto.csv (segundo pre-piloto); se conservan solo las columnas en comun para poder unir ambas bases.
+
+comentarios <- comentarios[, names(tiempos)]
+
+df_union <- rbind(tiempos, comentarios)
+
+dir.create(dirname(union_csv), showWarnings = FALSE, recursive = TRUE)
+write.csv(df_union, union_csv, row.names = FALSE, na = "")
+```
+
+Se filtran los casos válidos mediante la confirmación del consentimiento como medida de robustez y luego se calculan los parámetros de tiempo mediante el parseo de las marcas temporales
+
+```{r}
+#| warning: false
+#| label: proc
+
+df <- df_union
+
+df <- df[!is.na(df$consent_understand) & df$consent_understand == "yes", ]
+
+parse_ts <- function(x) {
+  as.POSIXct(sub(" UTC$", "", x), format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+}
+
+df$time_start <- parse_ts(df$time_start)
+df$time_end   <- parse_ts(df$time_end)
+
+qcols <- grep("^time_q_", names(df), value = TRUE)
+for (col in qcols) df[[col]] <- parse_ts(df[[col]])
+
+```
+
+Estimamos el tiempo total de la encuesta por cada respondente
+
+```{r}
+
+tiempo_caso <- data.frame(
+  session_id       = df$session_id,
+  respID           = df$respID,
+  assigned_module  = df$assigned_module,
+  time_start       = df$time_start,
+  time_end         = df$time_end,
+  tiempo_total_seg = as.numeric(difftime(df$time_end, df$time_start, units = "secs")),
+  stringsAsFactors = FALSE
+)
+tiempo_caso$tiempo_total_min <- round(tiempo_caso$tiempo_total_seg / 60, 2)
+
+```
+
+```{r}
+#| label: batterie-division
+#| 
+
+# Objetos que almacenan las preguntas de cada batería temática, para luego poder generar tablas de resumen por batería.
+
+demo_1 <- c("respondent", "sexo", "year_of_birth", "education")
+
+conjoint <- c("cbc_practice", "manip_check", "cbc_q1", "cbc_q2", "cbc_q3", "cbc_q4", "cbc_q5", "cbc_q6")
+
+mjp <- c("mj_1", "mj_2", "mj_3")
+
+mjp_new <- c("ref_1", "ref_2", "ref_3", "proy_1", "proy_2")
+
+mjp_time <- c("pres_1", "pres_2", "pres_3", "pres_4", "pres_5", "pres_6")
+
+comodifica <- c("valor_1", "valor_2", "valor_3", "valor_4", "valor_5")
+
+exp_comodifica <- c("dec_1", "dec_2", "dec_3")
+
+lucro <- c("lucro_1", "lucro_2", "lucro_3")
+
+neoliberal <- c("neolib_1", "neolib_2", "neolib_3", "neolib_4")
+
+nicera <- c("control_1", "control_2", "control_3", "actitud_1", "actitud_2", "reciproc_1", "reciproc_2", "reciproc_3", "actitud_4", "id_1", "id_2", "id_3", "nec_1", "nec_2", "nec_3", "esf_1", "esf_2", "esf_3", "esf_4", "esf_5")
+
+aditional <- c("adc_qstn", "adc_5", "adc_6", "adc_7")
+
+demo_2 <- c("gender", "income", "salud_prov", "educ_prov")
+```
+
+Se calcula el tiempo de respuesta de cada pregunta
+
+```{r}
+#| label: time-per-question
+
+
+duracion_mat <- matrix(NA_real_, nrow = nrow(df), ncol = length(qcols),
+                        dimnames = list(NULL, qcols))
+for (i in seq_len(nrow(df))) {
+  last_time <- df$time_start[i]
+  for (col in qcols) {
+    cur <- df[[col]][i]
+    if (!is.na(cur)) {
+      duracion_mat[i, col] <- as.numeric(difftime(cur, last_time, units = "secs"))
+      last_time <- cur
+    }
+  }
+}
+
+detalle_list <- lapply(qcols, function(col) {
+  data.frame(
+    session_id      = df$session_id,
+    respID          = df$respID,
+    assigned_module = df$assigned_module,
+    pregunta        = sub("^time_q_", "", col),
+    tiempo_seg       = as.numeric(difftime(df[[col]], df$time_start, units = "secs")),
+    duracion_seg     = duracion_mat[, col],
+    stringsAsFactors = FALSE
+  )
+})
+tiempo_pregunta_detalle <- do.call(rbind, detalle_list)
+tiempo_pregunta_detalle <- tiempo_pregunta_detalle[!is.na(tiempo_pregunta_detalle$tiempo_seg), ]
+
+# Desviacion estandar, por caso, de la duracion (duracion_seg) entre todas
+# las preguntas que respondio: mide que tan variable fue su ritmo de
+# respuesta pregunta a pregunta.
+sd_duracion_caso <- stats::aggregate(
+  duracion_seg ~ session_id,
+  data = tiempo_pregunta_detalle,
+  FUN = function(x) sd(x, na.rm = TRUE)
+)
+names(sd_duracion_caso)[2] <- "sd_duracion_pregunta_seg"
+tiempo_caso <- merge(tiempo_caso, sd_duracion_caso, by = "session_id", all.x = TRUE)
+tiempo_caso$sd_duracion_pregunta_seg <- round(tiempo_caso$sd_duracion_pregunta_seg, 2)
+
+```
+
+Se construye un resumen de descriptivos por pregunta (n, media, mediana, sd, min, max) 
+
+```{r}
+
+resumen_list <- lapply(qcols, function(col) {
+  pregunta <- sub("^time_q_", "", col)
+  modulos_presentes <- sort(unique(df$assigned_module[!is.na(df[[col]])]))
+  modulo_txt <- if (length(modulos_presentes) == 0) {
+    NA_character_
+  } else if (length(modulos_presentes) == length(unique(na.omit(df$assigned_module)))) {
+    "Todos"
+  } else {
+    paste(modulos_presentes, collapse = "/")
+  }
+
+  x <- tiempo_pregunta_detalle$tiempo_seg[tiempo_pregunta_detalle$pregunta == pregunta]
+  d <- tiempo_pregunta_detalle$duracion_seg[tiempo_pregunta_detalle$pregunta == pregunta]
+  data.frame(
+    pregunta = pregunta,
+    modulo   = modulo_txt,
+    n        = length(x),
+    media_seg   = round(mean(x), 2),
+    mediana_seg = round(median(x), 2),
+    sd_seg      = round(sd(x), 2),
+    min_seg     = round(min(x, Inf), 2),
+    max_seg     = round(max(x, -Inf), 2),
+    duracion_media_seg   = round(mean(d), 2),
+    duracion_mediana_seg = round(median(d), 2),
+    stringsAsFactors = FALSE
+  )
+})
+tiempo_pregunta_resumen <- do.call(rbind, resumen_list)
+tiempo_pregunta_resumen <- tiempo_pregunta_resumen[tiempo_pregunta_resumen$n > 0, ]
+
+```
+
+Se calcula una estimación del tiempo total de la encuesta si un mismo respondente tuviera que responder la seccion común + los tres módulos (A + B + C), en vez de solo el que le tocó por aleatorización. 
+
+Para cada caso se suman las duraciones (duracion_seg) de sus preguntas comúnes y, por separado, las de sus módulos asignados; luego se promedia cada módulo por separado y se suman los 4 promedios.
+
+```{r}
+
+tiempo_pregunta_detalle <- merge(
+  tiempo_pregunta_detalle,
+  tiempo_pregunta_resumen[, c("pregunta", "modulo")],
+  by = "pregunta", all.x = TRUE
+)
+
+# El caso 374 se excluye solo de esta estimacion (tabla 5) para no alterar los tiempos promedio de respuesta; sigue presente en el resto del reporte.
+detalle_estimado <- tiempo_pregunta_detalle[tiempo_pregunta_detalle$respID != "374", ]
+
+suma_por_caso <- function(seccion) {
+  sub <- detalle_estimado[detalle_estimado$modulo == seccion, ]
+  stats::aggregate(duracion_seg ~ session_id, data = sub, FUN = sum, na.rm = TRUE)
+}
+
+comun_caso   <- suma_por_caso("Todos")
+moduloA_caso <- suma_por_caso("A")
+moduloB_caso <- suma_por_caso("B")
+moduloC_caso <- suma_por_caso("C")
+
+tiempo_estimado_total <- data.frame(
+  seccion = c("Común (todos)", "Modulo A", "Modulo B", "Modulo C"),
+  n_casos = c(nrow(comun_caso), nrow(moduloA_caso), nrow(moduloB_caso), nrow(moduloC_caso)),
+  promedio_seg = round(c(
+    mean(comun_caso$duracion_seg),
+    mean(moduloA_caso$duracion_seg),
+    mean(moduloB_caso$duracion_seg),
+    mean(moduloC_caso$duracion_seg)
+  ), 2),
+  stringsAsFactors = FALSE
+)
+tiempo_estimado_total$promedio_min <- round(tiempo_estimado_total$promedio_seg / 60, 2)
+
+tiempo_estimado_total <- rbind(
+  tiempo_estimado_total,
+  data.frame(
+    seccion = "Total estimado (común + A + B + C)",
+    n_casos = NA_integer_,
+    promedio_seg = round(sum(tiempo_estimado_total$promedio_seg), 2),
+    promedio_min = round(sum(tiempo_estimado_total$promedio_seg) / 60, 2)
+  )
+)
+```
+
+Guardamos las salidas para luego llamar a cada tabla en la sección correspondiente.
+
+```{r}
+out_dir <- here::here("output/tiempos-prepiloto")
+dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
+
+write.csv(tiempo_caso, file.path(out_dir, "tiempos-caso.csv"), row.names = FALSE, na = "")
+write.csv(tiempo_pregunta_detalle, file.path(out_dir, "tiempos-pregunta-detalle.csv"), row.names = FALSE, na = "")
+write.csv(tiempo_pregunta_resumen, file.path(out_dir, "tiempos-pregunta-resumen.csv"), row.names = FALSE, na = "")
+write.csv(tiempo_estimado_total, file.path(out_dir, "tiempos-estimado-total.csv"), row.names = FALSE, na = "")
+```
+
+Aquí se cargan las tablas para el análisis de la sección 3.3, las cuales fueron construidas manualmente para visualizar de mejor manera los tiempos de respuesta de las secciones de Ranking de políticas y Participación Estado/Mercado. 
+
+```{r}
+#| label: carga-part-ranking
+#| warning: false
+
+tiempos_part <- read.csv(
+  here::here("input", "tbl/tiempos-part.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE, na.strings = ""
+)
+names(tiempos_part)[1] <- "respID"
+
+tiempo_ranking <- read.csv(
+  here::here("input", "tbl/tiempo-ranking.csv"),
+  stringsAsFactors = FALSE, check.names = FALSE, na.strings = ""
+)
+names(tiempo_ranking)[1] <- "respID"
+```
+
+## Análisis comentarios 
+
+
+```{r}
+#| label: tbl-comentarios
+#| echo: false
+
+comentario_cols <- grep("^comentario_", names(resumen), value = TRUE)
+
+resumen |>
+  filter(!is.na(n_comentarios), n_comentarios > 0) |>
+  select(variable, label, n_comentarios, all_of(comentario_cols)) |>
+  datatable(
+    rownames = FALSE,
+    options = list(pageLength = 10, scrollX = TRUE),
+    colnames = c(
+      "Variable", "Label", "N comentarios",
+      gsub("comentario_", "Comentario ", comentario_cols)
+    )
+  )
+```
+
+La @tbl-comentarios presenta la recopilación de los comentarios realizados por los respondentes en la primera versión del pre-piloto. Estos comentarios se pueden entender en dos grupos: (1) comentarios relacionados a items y (2) comentarios sobre la tarea de asignación.
+
+Respecto a los comentarios sobre items, se presentan dudas respecto a la comprensión de las preguntas y sugerencias para aclarar lo que buscan medir. Hay un comentario sobre cómo responder la pregunta de nivel educativo en caso de que el respondente fuera universitario, por lo que queda en una posición intermedia entre "educación media completa" y "educación universitaria incompleta". En la misma línea, la pregunta de ingresos también generó confusión debido a que no le quedó claro a un encuestado si se preguntaba por el ingreso total del hogar o a nivel individual. Además, se realizó una sugerencia para consultar de manera más precisa el género de las personas, incluyendo categorías que aluden a disidencias sexogenéricas.
+
+Los comentarios de la tarea de asignación apuntan principalmente al peso de los atributos que presenta el conjoint, donde se señaló que sólo un atributo llegaba a determinar la decisión de los respondentes, entendiéndose que las demás características eran prescindibles. En este marco, para un encuestado el atributo que orientó toda su decisión fue el género, mientras que para otro fue la necesidad, expresada en términos económicos. Además, se sugirió que para el atributo de necesidad se modificara el nivel de "holgura" ya que inducía a confusión. Si bien, estos comentarios sobre la tarea de asignación pueden ser fructíferos para replantear su modo de implementación (cantidad de atributos y niveles, expresión de los niveles, entre otros), el hecho de que un atributo tenga más peso que otros en la toma de decisiones es justamente lo que busca comprender el conjoint, por lo que son sugerencias que se deben considerar pero con la cautela suficiente.
+
+
+::: callout-important
+Para el análisis de comentarios se omitieron todos aquellos que provienen del Equipo JUSMER, los cuales se realizaron para comprobar el despliegue exitoso de la encuesta en las plataformas correspondientes
+:::
+
+## Análisis tiempos de respuesta 
+
+### Tiempo total por respondente
+
+```{r}
+#| label: tbl-tiempo-caso
+#| warning: false
+#| tbl-cap: Tiempo de respuesta por respondente
+
+tiempo_caso |>
+  filter(respID != "749") |>
+  select(
+    respID, assigned_module, time_start, time_end, tiempo_total_min,
+    sd_duracion_pregunta_seg
+  ) |>
+  arrange(desc(tiempo_total_min)) |>
+  datatable(
+    filter = "top",
+    rownames = FALSE,
+    options = list(pageLength = 15, scrollX = TRUE),
+    colnames = c(
+      "respID", "Módulo", "Inicio", "Fin", "Tiempo total (min)",
+      "DE duración por pregunta (s)"
+    )
+  )
+```
+
+La @tbl-tiempo-caso expone los tiempos de demora en finalizar la encuesta para cada respondente válido. Las últimas dos columnas son las más importantes: *Tiempo total (min)* muestra los minutos que utilizó el encuestado para completar la encuesta, y *DE duración por pregunta (s)* representa la dispersión en los segundos de respuesta de las personas por pregunta.
+
+El caso respID 374 tiene un tiempo total de 16.062 minutos, muy por
+sobre el resto. Esto se debe a que abrió la encuesta en un inicio, marcando el `time_start`, pero la completó con más de una semana de dilación. Sin embargo, al observar sus respuestas, estas se mantienen en los tiempos normales, comprobando el tiempo en el que respondió la primera y última pregunta (se demoró aproximadamente 15 minutos).
+
+A partir de los resultados presentados en la tabla se observa que solamente hay **3 casos de los 20 totales** que lograron responder la encuesta en el tiempo establecido inicialmente (15 minutos como máximo). Al flexibilizar el umbral de respuesta podemos considerar al caso 374, junto con los 3 que se demoraron ~16 minutos. De esta manera, quienes estuvieron en un margen de tiempo de respuesta aceptable se eleva a 7 casos. Aun así, no se alcanza un 50% de éxito en los tiempos de respuesta, incluso considerando que se aplicó una aleatorización de módulos para que la encuesta no fuese demasiado extensa. 
+
+
+### Tiempo de respuesta por batería temática {#sec-tiempos-bateria}
+
+En esta sección se presenta la duración estimada de cada pregunta del cuestionario agrupada temáticamente, para así realizar un análisis detallado de cada batería y cada pregunta. El tiempo por pregunta se calcula mediante la diferencia entre la hora registrada y la hora del checkpoint anterior, es decir, la pregunta que la precede. A partir de esto, se presentan el tiempo promedio de respuesta y la mediana del tiempo de cada pregunta. 
+
+::: callout-note
+Para establecer una comparación entre las preguntas más rápidas de responder y aquellas más demorosas, se fijó como umbral un máximo de 30 segundos, es decir, las preguntas que demoran (tanto en su promedio como en la mediana) > 30 segundos en ser respondidas, se encuentran destacadas con rojo. 
+:::
+
+Generamos la lista de baterías temáticas recurriendo a los objetos creados en el chunk `batterie-division`, y luego construimmos una función que permite visualizar los tiempos promedios y la mediana de cada pregunta de la batería respectiva.
+```{r}
+#| label: baterias-def
+#| warning: false
+
+baterias <- list(
+  "Demográficos inicio" = demo_1,
+  "Conjoint" = conjoint,
+  "Market Justice Preferences" = mjp,
+  "Market Justice Preferences Nuevos" = mjp_new,
+  "MJP Tiempo" = mjp_time,
+  "Comodificación" = comodifica,
+  "Experimento comodificación" = exp_comodifica,
+  "Lucro" = lucro,
+  "Neoliberalismo" = neoliberal,
+  "NICERA" = nicera,
+  "Adicionales" = aditional,
+  "Demográficos (bloque 2)" = demo_2
+)
+
+tabla_bateria <- function(nm) {
+  ids <- baterias[[nm]]
+  tab <- tiempo_pregunta_resumen[tiempo_pregunta_resumen$pregunta %in% ids, ]
+  tab <- tab[order(match(tab$pregunta, ids)), ]
+  tab$label <- resumen$label[match(tab$pregunta, resumen$variable)]
+
+  tab |>
+    select(pregunta, label, modulo, n, duracion_media_seg, duracion_mediana_seg) |>
+    datatable(
+      rownames = FALSE,
+      options = list(dom = "t", pageLength = nrow(tab), scrollX = TRUE),
+      colnames = c(
+        "Pregunta", "Label", "Módulo", "N",
+        "Duración media (s)", "Duración mediana (s)"
+      )
+    ) |>
+    formatStyle(
+      c("duracion_media_seg", "duracion_mediana_seg"),
+      backgroundColor = styleInterval(30, c("white", "#f79b9b"))
+    )
+}
+```
+
+#### Conjoint {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-conjoint
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Conjoint
+
+tabla_bateria("Conjoint")
+```
+
+#### Market Justice Preferences {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-mjp
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Market Justice Preferences
+
+tabla_bateria("Market Justice Preferences")
+```
+
+#### Market Justice Preferences Nuevos {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-mjp-new
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Market Justice Preferences Nuevos
+
+tabla_bateria("Market Justice Preferences Nuevos")
+```
+
+#### MJP Tiempo {.unnumbered}
+
+pres_1, pres_2 y pres_3 tienen el siguiente preámbulo: *¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?*
+
+En cambio, pres_4, pres_5 y pres_6 anuncian: *Y pensando hace 10 años atrás, ¿usted cree que el acceso a los siguientes servicios entre quienes tienes más y menores ingresos se ha vuelto…?*
+
+```{r}
+#| label: tbl-bateria-mjp-tiempo
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - MJP Tiempo
+
+tabla_bateria("MJP Tiempo")
+```
+
+#### Comodificación {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-comodifica
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Comodificación
+
+tabla_bateria("Comodificación")
+```
+
+#### Experimento comodificación {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-exp-comodifica
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Experimento comodificación
+
+tabla_bateria("Experimento comodificación")
+```
+
+#### Lucro {.unnumbered}
+
+El preámbulo de la batería de Lucro es: *Qué tan justo o injusto le parece que empresas privadas obtengan ganancias monetarias administrando…*
+
+```{r}
+#| label: tbl-bateria-lucro
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Lucro
+
+tabla_bateria("Lucro")
+```
+
+#### Neoliberalismo {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-neoliberal
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Neoliberalismo
+
+tabla_bateria("Neoliberalismo")
+```
+
+#### NICERA {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-nicera
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - NICERA
+
+tabla_bateria("NICERA")
+```
+
+#### Adicionales {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-adicional
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Adicionales
+
+tabla_bateria("Adicionales")
+```
+
+#### Demográficos inicio {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-demo1
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Demográficos inicio
+
+tabla_bateria("Demográficos inicio")
+```
+
+
+#### Demográficos (bloque 2) {.unnumbered}
+
+```{r}
+#| label: tbl-bateria-demo2
+#| warning: false
+#| tbl-cap: Tiempo de respuesta - Demográficos (bloque 2)
+
+tabla_bateria("Demográficos (bloque 2)")
+```
+
+Los resultados demuestran, en primer lugar, que todas la tareas de asignación rondan el minuto de demora, a excepción de dos: el ejemplo, que se demora en promedio más de 2 minutos, y la última tarea, que se demora 38 segundos. Para la primera excepción, esto encuentra sentido en que los respondentes deben entender a cabalidad la tarea de asignación, lo cual requiere un esfuerzo de comprensión lectora y de atención. Para la segunda excepción esto puede deberse a la costumbre con el ejercicio después de varias repeticiones, por lo que requiere menos esfuerzo cognitivo en comparación a las primeras tareas (ver @tbl-bateria-conjoint).
+
+Para la batería de Market Justice Preferences (MJP), se observa que las preguntas 1 y 2 son las que más tiempo demandan, mientras que la pregunta 3 es la más rápida de responder (ver @tbl-bateria-mjp). Con la idea de avanzar en la medición de MJP, se implementaron dos nuevas baterías: MJP Nuevos (@tbl-bateria-mjp-new) y MJP Tiempo (@tbl-bateria-mjp-tiempo). Para ambas baterías se observa un tiempo de demora debajo del umbral establecido, donde la batería que busca medir los cambios en el tiempo de MJP es la que contiene preguntas menos demorosas, donde cuatro de ellas son respondidas, en promedio, en menos de 5 segundos.
+
+La batería de Comodificación se divide en dos sub-baterías: la primera presenta preguntas en el formato habitual de encuestas, utilizando una escala Likert de 5 categorías de respuesta, mientras que la segunda son preguntas que rozan el carácter experimental, ya que se presentan escenarios ficticios donde el respondente debe tomar decisiones de acuerdo a la subvención de salud y educación para personas que no son capaces de costear estos servicios. Estas dos baterías fueron pensadas por el equipo para ampliar la medición en el campo de MJP. Ahora, en la batería de items (@tbl-bateria-comodifica) solamente la primera pregunta tiene una demora promedio > 30 segundos, mientras que las demás se mantienen dentro de los márgenes. Por otro lado, las preguntas de escenarios hipotéticos (@tbl-bateria-exp-comodifica) tienden a demorar más debido a que requieren un mayor esfuerzo cognitivo. Cabe señalar que `dec_3`aparece primero que las otras dos preguntas, por lo que tiene sentido que sea la más demorosa, mientras que después se presenta `dec_1`, la cual se mantiene apenas debajo del umbral de los 30 segundos. 
+
+La batería de Lucro (@tbl-bateria-lucro) es una implementación nueva de preguntas que surgió por parte del equipo JUSMER, mientras que la batería de Neoliberalismo (@tbl-bateria-neoliberal) es una parte de la Escala de Neoliberalismo propuesta por @girerd_how_2023, donde se seleccionó solamente una dimensión debido a su afinidad temática con esta encuesta. Ambas baterías comparten un patrón de tiempos de demora, donde la primera pregunta es la más demorosa y las demás se mantienen muy por debajo del umbral de 30 segundos.
+
+En @tbl-bateria-nicera se presenta la batería NICERA, la cual apunta a aplicar la escala CARIN junto con la escala NICER, agregando las preguntas de esfuerzo. Esta escala está compuesta por 20 preguntas, donde la totalidad de ellas son preguntas con una escala Likert de 5 categorías de respuesta. A modo general, se puede observar que, a excepción de `control_3` y `esf_5`, todas las demás preguntas se demoran al menos 15 segundos en responderse. Ahora, un cuarto (25%) del total de la batería supera el umbral de 30 segundos, lo que puede deberse a la exigencia que implica pensar activamente en los criterios de merecimiento que invocan las personas, lo que finalmente puede requerir un mayor esfuerzo cognitivo.
+
+La @tbl-bateria-adicional muestra un par de preguntas adicionales que fueron agregadas por el equipo de investigación, donde la primera pregunta es la más demorosa, mientras que las demás se mantienen por debajo del umbral, donde `adc_3` es la que más rápido se respondió, con un tiempo de demora aproximado de sólo 4 segundos. Por último, en la @tbl-bateria-demo1 y @tbl-bateria-demo2 se presentan las preguntas de caracterización general de la encuesta, donde solamente la pregunta relacionada a los ingresos (`income`) sobrepasa el umbral de 30 segundos.
+
+Para cerrar esta sección es importante aclarar que no se contabilizaron las secciones del Ranking de políticas ni Participación Estado/Mercado, debido a que la manera en que se registraron sus tiempos funciona de manera distinta al resto de las preguntas, principalmente porque son preguntas que no exigen un orden de respuesta secuencial, lo que causa que algunos respondentes se salten preguntas, y posteriormente vuelven a las que dejaron en blanco. Por ello, en la siguiente sección se detallan los tiempos estimados para estos casos.
+
+### Tiempo de respuesta para Ranking y participación Estado/Mercado
+
+```{r}
+#| warning: false
+#| label: tbl-ranking
+#| tbl-cap: Tiempos de respuesta Ranking de políticas
+
+tiempo_ranking |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempo_ranking), scrollX = TRUE),
+    colnames = c(
+      "respID", "Precedente", "Educación", "Salud", "Pensiones",
+      "Cuidado niños", "Carreteras", "Tiempo estimado (s)"
+    )
+  )
+```
+
+En la @tbl-ranking se presentan los tiempos de respuesta registrados en la base de datos original para cada política considerada en el ranking. Al no poder estimar el tiempo de respuesta con el método aplicado en las demás preguntas, el tiempo aproximado fue calculado a partir de la diferencia entre el último y el primer registro temporal. 
+
+En esta situación, los respondentes podían partir seleccionando cualquiera de las 5 alternativas. Como se explica en la metodología, los tiempos estimados de demora por pregunta fueron calculados a partir de la diferencia de tiempo entre la pregunta actual y su predecesora. Debido a la no-restricción de orden es que en algunos casos se presentan valores negativos, reflejando que la pregunta de valor negativo fue respondida antes que su predecesora.
+
+Para calcular el tiempo estimado de respuesta del ranking, se calculó la diferencia entre la última alternativa en ser respondida y la primera para cada respondente. Al promediar los tiempos de respuesta de cada encuestado, **la media de tiempo para el ranking fue de 93 segundos**.  
+
+```{r}
+#| warning: false
+#| label: tbl-part
+#| tbl-cap: Tiempos de respuesta batería de participación E/M
+
+tiempos_part |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempos_part), scrollX = TRUE),
+    colnames = c(
+      "respID", "Precedente", "Primera pregunta part", "Última pregunta part",
+      "Siguiente", "Tiempo aprox. batería (s)"
+    )
+  )
+```
+
+En la @tbl-part se presentan los tiempos aproximados de respuesta en la batería de participación Estado/Mercado. Cabe considerar que esta batería está construida a partir de sliders, los cuales estaban fijados en la categoría media (4). Puede ser que debido a esto, algunos respondentes no interactuaron en el slider, por lo que el valor de su respuesta se registró pero no así el tiempo en responder. En consecuencia, para estimar el tiempo de respuesta se recurrió a las preguntas que precedían y proseguían la batería. 
+
+Considerando los 4 casos que respondieron esta batería, **el tiempo promedio es de 39 segundos**. Si se excluye el caso con el tiempo registrado más alto (74 segundos), el tiempo promedio de la batería disminuye a 28 segundos.
+
+### Estimado de tiempo total con los tres módulos
+
+```{r}
+#| label: tbl-tiempo-estimado
+#| warning: false
+#| tbl-cap: Tiempo promedio de respuesta por módulo
+
+tiempo_estimado_total |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = 5),
+    colnames = c("Sección", "N casos", "Promedio (s)", "Promedio (min)"),
+    caption = htmltools::tags$caption(
+      style = "caption-side: bottom; text-align: left;",
+      "En la suma total de los módulos falta un caso en comparación al total ",
+      "debido a que solamente respondió el consentimiento"
+    )
+  )
+```
+
+En la @tbl-tiempo-estimado se observan los tiempos de demora en responder las secciones comúnes de la encuesta, es decir, aquellas que todos los respondentes pudieron atender, junto con los tres módulos aleatorizados. Para estimar cuánto se demoraría alguien en responder la encuesta completa si los tres módulos estuvieran disponibles (en vez de uno solo asignado al azar), se realiza lo siguiente: La suma del tiempo promedio dedicado a la sección común y de la media temporal dedicada a cada módulo (A, B y C) — calculado solo con los casos que efectivamente respondieron ese módulo.
+
+Con esto, se estima que responder la sección común más los tres módulos completos tomaría en promedio **28 minutos**.
+
+### Descriptivos por batería temática
+
+Primero generamos una tabla general que contiene los descriptivos de todas las preguntas de la encuesta, para luego desagregarla por baterías temáticas.
+```{r}
+#| warning: false
+#| label: tbl-desc
+#| tbl-cap: Descriptivos de variables pre-piloto
+#| include: false
+
+meta_cols <- c(
+  "session_id", "time_start", "time_end", "completion_code", "respID",
+  "assigned_module", "cbc_profiles", "browser", "ip_address",
+  "consent_understand", "current_page"
+)
+vars_encuesta <- setdiff(names(df_union), meta_cols)
+vars_encuesta <- vars_encuesta[!grepl("^time_q_|^time_p_", vars_encuesta)]
+
+df_desc <- df_union[df_union$consent_understand == "yes", vars_encuesta]
+
+es_numerica <- function(x) {
+  x <- x[!is.na(x)]
+  length(x) > 0 && !anyNA(suppressWarnings(as.numeric(x)))
+}
+
+moda <- function(x) {
+  x <- x[!is.na(x)]
+  if (length(x) == 0) return(NA_character_)
+  tab <- sort(table(x), decreasing = TRUE)
+  names(tab)[1]
+}
+
+tabla_desc <- do.call(rbind, lapply(vars_encuesta, function(v) {
+  x <- df_desc[[v]]
+  n_valid    <- sum(!is.na(x))
+  n_blanco   <- sum(is.na(x))
+  n_9899     <- sum(x %in% c("98", "99"), na.rm = TRUE)
+  v_label    <- resumen$label[match(v, resumen$variable)]
+
+  if (es_numerica(x)) {
+    xn <- as.numeric(x)
+    data.frame(
+      variable = v, label = v_label, tipo = "Numérica", n = n_valid,
+      n_9899 = n_9899, n_blanco = n_blanco,
+      media   = round(mean(xn, na.rm = TRUE), 2),
+      mediana = round(median(xn, na.rm = TRUE), 2),
+      sd      = round(sd(xn, na.rm = TRUE), 2),
+      min     = round(min(xn, na.rm = TRUE), 2),
+      max     = round(max(xn, na.rm = TRUE), 2),
+      n_categorias = NA_integer_,
+      moda         = NA_character_,
+      stringsAsFactors = FALSE
+    )
+  } else {
+    data.frame(
+      variable = v, label = v_label, tipo = "Categórica", n = n_valid,
+      n_9899 = n_9899, n_blanco = n_blanco,
+      media = NA_real_, mediana = NA_real_, sd = NA_real_,
+      min = NA_real_, max = NA_real_,
+      n_categorias = length(unique(x[!is.na(x)])),
+      moda         = moda(x),
+      stringsAsFactors = FALSE
+    )
+  }
+}))
+
+tabla_desc |>
+  datatable(
+    filter = "top",
+    rownames = FALSE,
+    options = list(pageLength = 25, scrollX = TRUE),
+    colnames = c(
+      "Variable", "Label", "Tipo", "N válido", "NA", "Sin responder",
+      "Media", "Mediana", "DE", "Mín", "Máx", "N categorías", "Moda"
+    )
+  ) |>
+  formatStyle(
+    "sd",
+    backgroundColor = styleInterval(1.0, c("white", "#f79b9b"))
+  )
+```
+
+Construimos una función para generar tabla de descriptivos por batería temática, usando la tabla general ya construida.
+
+```{r}
+#| label: baterias-desc-def
+#| warning: false
+
+
+
+tabla_desc_bateria <- function(nm) {
+  ids <- baterias[[nm]]
+  tab <- tabla_desc[tabla_desc$variable %in% ids, ]
+  tab <- tab[order(match(tab$variable, ids)), ]
+
+  tab |>
+    datatable(
+      rownames = FALSE,
+      options = list(dom = "t", pageLength = nrow(tab), scrollX = TRUE),
+      colnames = c(
+        "Variable", "Label", "Tipo", "N válido", "NA", "Sin responder",
+        "Media", "Mediana", "DE", "Mín", "Máx", "N categorías", "Moda"
+      )
+    ) |>
+    formatStyle(
+      "sd",
+      backgroundColor = styleInterval(1.0, c("white", "#f79b9b"))
+    )
+}
+```
+
+#### Conjoint {.unnumbered}
+
+```{r}
+#| label: tbl-desc-conjoint
+#| warning: false
+#| tbl-cap: Descriptivos - Conjoint
+
+tabla_desc_bateria("Conjoint")
+```
+
+#### Market Justice Preferences {.unnumbered}
+
+```{r}
+#| label: tbl-desc-mjp
+#| warning: false
+#| tbl-cap: Descriptivos - Market Justice Preferences
+
+tabla_desc_bateria("Market Justice Preferences")
+```
+
+#### Market Justice Preferences Nuevos {.unnumbered}
+
+```{r}
+#| label: tbl-desc-mjp-new
+#| warning: false
+#| tbl-cap: Descriptivos - Market Justice Preferences Nuevos
+
+tabla_desc_bateria("Market Justice Preferences Nuevos")
+```
+
+#### MJP Tiempo {.unnumbered}
+
+```{r}
+#| label: tbl-desc-mjp-tiempo
+#| warning: false
+#| tbl-cap: Descriptivos - MJP Tiempo
+
+tabla_desc_bateria("MJP Tiempo")
+```
+
+#### Comodificación {.unnumbered}
+
+```{r}
+#| label: tbl-desc-comodifica
+#| warning: false
+#| tbl-cap: Descriptivos - Comodificación
+
+tabla_desc_bateria("Comodificación")
+```
+
+#### Experimento comodificación {.unnumbered}
+
+```{r}
+#| label: tbl-desc-exp-comodifica
+#| warning: false
+#| tbl-cap: Descriptivos - Experimento comodificación
+
+tabla_desc_bateria("Experimento comodificación")
+```
+
+#### Lucro {.unnumbered}
+
+```{r}
+#| label: tbl-desc-lucro
+#| warning: false
+#| tbl-cap: Descriptivos - Lucro
+
+tabla_desc_bateria("Lucro")
+```
+
+#### Neoliberalismo {.unnumbered}
+
+```{r}
+#| label: tbl-desc-neoliberal
+#| warning: false
+#| tbl-cap: Descriptivos - Neoliberalismo
+
+tabla_desc_bateria("Neoliberalismo")
+```
+
+#### NICERA {.unnumbered}
+
+```{r}
+#| label: tbl-desc-nicera
+#| warning: false
+#| tbl-cap: Descriptivos - NICERA
+
+tabla_desc_bateria("NICERA")
+```
+
+#### Adicionales {.unnumbered}
+
+```{r}
+#| label: tbl-desc-adicional
+#| warning: false
+#| tbl-cap: Descriptivos - Adicionales
+
+tabla_desc_bateria("Adicionales")
+```
+
+#### Demográficos inicio {.unnumbered}
+
+```{r}
+#| label: tbl-desc-demo1
+#| warning: false
+#| tbl-cap: Descriptivos - Demográficos inicio
+
+tabla_desc_bateria("Demográficos inicio")
+```
+
+
+#### Demográficos (bloque 2) {.unnumbered}
+
+```{r}
+#| label: tbl-desc-demo2
+#| warning: false
+#| tbl-cap: Descriptivos - Demográficos (bloque 2)
+
+tabla_desc_bateria("Demográficos (bloque 2)")
+```
+
+::: callout-note
+Para observar qué preguntas obtuvieron respuestas más homogéneas, se calculó la desviación estándar (DE) de cada pregunta, y se destacaron con rojo aquellas que tienen una DE > 1.0.
+:::
+
+Si bien, se reflejan distinciones entre todas las preguntas, hay algunas preguntas que resultan destacables en la variabilidad de sus respuestas. Por ejemplo, **todas** las preguntas de la batería de comodificación presentan una desviación estándar superior a 1.0, lo que supera el umbral establecido. Esto es un antecedente a considerar para su implementación, ya que podría resultar fructífero para los eventuales análisis. 
+
+Por otro lado, la batería NICERA también presenta varias preguntas con una desviación estándar superior a 1.0, específicamente 12, lo que refleja que las respuestas de los encuestados en esta sección son las más heterogéneas. Con esto, se puede aseverar que la batería NICERA es una de las más relevantes para la versión final de la encuesta, ya que permite capturar una mayor diversidad de opiniones y percepciones entre los respondentes.
+
+
+# Propuestas para versión final de encuesta
+
+En esta sección se presentan distintas propuestas para la versión final de la encuesta, considerando los resultados del análisis de tiempos de respuesta y los objetivos del instrumento.
+
+## Integración batería meritocracia {.unnumbered}
+
+Como parte fundamental de la encuesta, se propone integrar la batería de meritocracia, la cual no fue incluida en los pre-pilotos. Sin embargo, estimamos su duración promedio en base a los datos de la encuesta EDUMERCO, instrumento donde sí se aplicó la escala de meritocracia.
+
+
+Ahora bien, EDUMERCO no registra timestamp por pregunta individual, solo el rango created/ended de la sesion completa, la cual incluye ademas de meritocracia otras baterias presentes en la base (caracterizacion y deservingness).
+
+Para aproximar el tiempo de respuesta por pregunta se calculó, para cada caso, una tasa segundos/pregunta usando el total de preguntas efectivamente respondidas por cada caso (entre las tres baterias), y luego se aplica esa tasa a las 8 preguntas del bloque de meritocracia, estimando un promedio general de tiempo de respuesta por pregunta.
+
+```{r}
+#| label: tiempos-merit
+#| warning: false
+#| tbl-cap: Tiempo de respuesta estimado - Meritocracia (EDUMERCO)
+
+load(here::here("pre-pilot-analysis", "tbl/meritocracia.RData"))
+
+merit_vars <- paste0("merit_0", 1:8)
+
+carac_vars <- grep("^carac_a", names(meritocracia), value = TRUE)
+des_vars   <- grep("^des_",    names(meritocracia), value = TRUE)
+todas_vars <- c(carac_vars, merit_vars, des_vars)
+
+merit_df <- meritocracia[, c("session_id", "created", "ended", todas_vars)]
+```
+
+Se conservan solo los casos que efectivamente respondieron el bloque de  meritocracia completo (created/ended validos y sin NA en las 8 preguntas)
+
+```{r}
+merit_df <- merit_df[
+  !is.na(merit_df$created) & !is.na(merit_df$ended) &
+    stats::complete.cases(merit_df[, merit_vars]),
+]
+
+merit_df$created <- as.POSIXct(merit_df$created, format = "%Y-%m-%d %H:%M:%S", tz = "UTC") # transformación de string a fecha/hora
+merit_df$ended   <- as.POSIXct(merit_df$ended,   format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+
+merit_df$duracion_total_seg    <- as.numeric(difftime(merit_df$ended, merit_df$created, units = "secs"))
+merit_df$n_respondidas         <- rowSums(!is.na(merit_df[, todas_vars]))
+merit_df$duracion_pregunta_seg <- merit_df$duracion_total_seg / merit_df$n_respondidas
+```
+
+Se excluyen los casos con una tasa > 300 s/pregunta (27 casos), los cuales corresponden a sesiones abandonadas y retomadas horas o dias despues (algunos casos tenían sesiones de hasta ~358 horas), que no reflejan tiempo de respuesta real y distorsionan la media.
+
+```{r}
+merit_df <- merit_df[merit_df$duracion_pregunta_seg <= 300, ]
+
+tiempo_merit_resumen <- data.frame(
+  pregunta              = merit_vars,
+  n                     = nrow(merit_df),
+  duracion_media_seg    = round(mean(merit_df$duracion_pregunta_seg), 2),
+  duracion_mediana_seg  = round(median(merit_df$duracion_pregunta_seg), 2),
+  stringsAsFactors = FALSE
+)
+```
+
+Por último estimamos visualizamos el tiempo estimado de respuesta de cada pregunta de la batería de meritocracia a partir de las decisiones tomadas, las cuales buscan reflejar la aproximación más fidedigna posible a la realidad de los tiempos de respuesta de esta batería. 
+
+```{r}
+tiempo_merit_resumen |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempo_merit_resumen), scrollX = TRUE),
+    colnames = c("Pregunta", "N", "Duración media (s)", "Duración mediana (s)")
+  ) |>
+  formatStyle(
+    c("duracion_media_seg", "duracion_mediana_seg"),
+    backgroundColor = styleInterval(30, c("white", "#f79b9b"))
+  )
+```
+
+## Alternativa 1: Versión con baterías esenciales
+
+Esta versión adquiere un carácter minimalista, ya que solamente considera mantener en la versión final de la encuesta las siguientes secciones: (1) caracterización general, (2) la tarea de asignación, (3) batería clásica de market justice, (4) batería NICERA y (5) la batería de meritocracia. 
+
+::: callout-important
+Para estimar cuánto se demoraría alguien en responder esta versión, se selecciona un subconjunto de baterías (demográficos inicio, conjoint, Market Justice Preferences, NICERA, meritocracia y demográficos de cierre) y se suma, dentro de cada una, el tiempo promedio de respuesta (`duracion_media_seg`) de sus preguntas — obteniendo así el tiempo promedio estimado para responder esa batería completa. De la misma manera se calculan los tiempos estimados de las alternativas posteriores
+:::
+
+```{r}
+#| label: tiempo-estimado-minimalista
+#| warning: false
+#| tbl-cap: Tiempo estimado de respuesta - Versión minimalista
+
+tiempo_bateria_seg <- function(nm) {
+  ids <- baterias[[nm]]
+  sum(tiempo_pregunta_resumen$duracion_media_seg[tiempo_pregunta_resumen$pregunta %in% ids])
+} # función para calcular el tiempo promedio de cada batería temática
+
+tiempo_demo1    <- tiempo_bateria_seg("Demográficos inicio")
+tiempo_conjoint <- tiempo_bateria_seg("Conjoint")
+tiempo_mjp      <- tiempo_bateria_seg("Market Justice Preferences")
+tiempo_nicera   <- tiempo_bateria_seg("NICERA")
+tiempo_demo2    <- tiempo_bateria_seg("Demográficos (bloque 2)")
+
+
+tiempo_merit <- sum(tiempo_merit_resumen$duracion_media_seg)
+
+tiempo_estimado_minimalista <- data.frame( # dataframe para organizar las baterías y sus tiempos promedio
+  bateria = c(
+    "Demográficos inicio", "Conjoint", "Market Justice Preferences",
+    "NICERA", "Meritocracia", "Demográficos (bloque 2)"
+  ),
+  tiempo_promedio_seg = c(
+    tiempo_demo1, tiempo_conjoint, tiempo_mjp, tiempo_nicera, tiempo_merit, tiempo_demo2
+  ),
+  stringsAsFactors = FALSE
+)
+tiempo_estimado_minimalista$tiempo_promedio_min <- round(tiempo_estimado_minimalista$tiempo_promedio_seg / 60, 2)
+
+tiempo_estimado_minimalista <- rbind(
+  tiempo_estimado_minimalista,
+  data.frame(
+    bateria = "Total estimado",
+    tiempo_promedio_seg = sum(tiempo_estimado_minimalista$tiempo_promedio_seg),
+    tiempo_promedio_min = round(sum(tiempo_estimado_minimalista$tiempo_promedio_seg) / 60, 2)
+  )
+)
+```
+
+```{r}
+#| label: tbl-alternativa1
+#| tbl-cap: Tiempo estimado de demora - Alternativa 1
+
+tiempo_estimado_minimalista |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempo_estimado_minimalista)),
+    colnames = c("Batería", "Tiempo promedio (s)", "Tiempo promedio (min)")
+  )
+```
+
+## Alternativa 2: Versión minimalista en dos partes
+
+Esta segunda alternativa se basa en la idea de implementar la primera ola dividida en dos partes. Así, la primera parte de la encuesta contiene: (1) caracterización general, (2) la tarea de asignación, (3) batería clásica de market justice y (4) la escala de meritocracia. La segunda parte contiene: (1) caracterización general, (2) la tarea de asignación y (3) batería NICERA. De esta manera, se busca reducir el tiempo de respuesta de la encuesta, manteniendo las secciones esenciales para los análisis posteriores.
+
+### Parte 1
+
+```{r}
+#| label: tiempo-estimado-alt2-parte1
+#| warning: false
+#| echo: false
+
+tiempo_estimado_alt2_p1 <- data.frame(
+  bateria = c(
+    "Demográficos inicio", "Demográficos (bloque 2)", "Conjoint",
+    "Market Justice Preferences", "Meritocracia"
+  ),
+  tiempo_promedio_seg = c(
+    tiempo_demo1, tiempo_demo2, tiempo_conjoint, tiempo_mjp, tiempo_merit
+  ),
+  stringsAsFactors = FALSE
+)
+tiempo_estimado_alt2_p1$tiempo_promedio_min <- round(tiempo_estimado_alt2_p1$tiempo_promedio_seg / 60, 2)
+
+tiempo_estimado_alt2_p1 <- rbind(
+  tiempo_estimado_alt2_p1,
+  data.frame(
+    bateria = "Total estimado",
+    tiempo_promedio_seg = sum(tiempo_estimado_alt2_p1$tiempo_promedio_seg),
+    tiempo_promedio_min = round(sum(tiempo_estimado_alt2_p1$tiempo_promedio_seg) / 60, 2)
+  )
+)
+```
+
+```{r}
+#| label: tbl-alternativa2-parte1
+#| tbl-cap: Tiempo estimado de demora - Alternativa 2, Parte 1
+#| echo: false
+
+tiempo_estimado_alt2_p1 |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempo_estimado_alt2_p1)),
+    colnames = c("Batería", "Tiempo promedio (s)", "Tiempo promedio (min)")
+  )
+```
+
+### Parte 2
+
+```{r}
+#| label: tiempo-estimado-alt2-parte2
+#| warning: false
+#| echo: false
+
+tiempo_estimado_alt2_p2 <- data.frame(
+  bateria = c(
+    "Demográficos inicio", "Demográficos (bloque 2)", "Conjoint", "NICERA"
+  ),
+  tiempo_promedio_seg = c(
+    tiempo_demo1, tiempo_demo2, tiempo_conjoint, tiempo_nicera
+  ),
+  stringsAsFactors = FALSE
+)
+tiempo_estimado_alt2_p2$tiempo_promedio_min <- round(tiempo_estimado_alt2_p2$tiempo_promedio_seg / 60, 2)
+
+tiempo_estimado_alt2_p2 <- rbind(
+  tiempo_estimado_alt2_p2,
+  data.frame(
+    bateria = "Total estimado",
+    tiempo_promedio_seg = sum(tiempo_estimado_alt2_p2$tiempo_promedio_seg),
+    tiempo_promedio_min = round(sum(tiempo_estimado_alt2_p2$tiempo_promedio_seg) / 60, 2)
+  )
+)
+```
+
+```{r}
+#| label: tbl-alternativa2-parte2
+#| tbl-cap: Tiempo estimado de demora - Alternativa 2, Parte 2
+#| echo: false
+
+tiempo_estimado_alt2_p2 |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(tiempo_estimado_alt2_p2)),
+    colnames = c("Batería", "Tiempo promedio (s)", "Tiempo promedio (min)")
+  )
+```
+
+
+# Conclusiones y sugerencias
+
+A partir de los resultados del análisis del pre-piloto, se pueden extraer las siguientes conclusiones y sugerencias para la versión final de la encuesta:
+
+La retroalimentación entregada por los respondentes en la primera versión del pre-piloto (la cual se visualiza en la sección 2.2) se puede sintetizar en dos conjuntos: comentarios puntuales de items y consideraciones para la tarea de asignación. En el primer caso, los respondentes entregaron comentarios sobre la adición de elementos a las preguntas, como la integración de los impuestos a la pregunta de ingresos. También se expresaron confusiones respecto a lo que apuntaban ciertas preguntas, como el nivel educacional o el mismo ingreso, entre otras. En el segundo caso, se recibieron sugerencias sobre la implementación de la tarea de asignación, especialmente haciendo alusión a que, el peso de sólo un atributo determinaba la decisión del respondente. A partir de esto, se puede concluir que la encuesta requiere, por un lado, una revisión de los ítems para mejorar la comprensión de la encuesta, y por otro, una discusión en torno a la tarea de asignación, donde si bien los comentarios son valiosos, apuntan justamente a lo que busca comprender el conjoint. 
+
+En segundo lugar, se pudo observar que los tiempos de respuesta de la encuesta en general son demasiado altos, tanto a nivel de módulos como a nivel de batería temática. Esto se refleja en que la encuesta completa, considerando los tres módulos, tiene un tiempo estimado de respuesta de 28 minutos. En este contexto, la escala NICERA es la más problemática, puesto que es la más extensa con 20 preguntas, la cual tiene un tiempo de respuesta promedio de 8 minutos. 
+
+Debido al diagnóstico de alta demora de respuesta, se propusieron dos alternativas para la versión final de la encuesta: una versión minimalista con las baterías esenciales y otra dividida en dos partes. La primera propuesta de encuesta final sirve más como un diagnóstico, ya que queda claro su inviabilidad a causa de la demora estimada (22 minutos aproximadamente). Por ello, la segunda propuesta de encuesta final es la más realista, ya que permite mantener las secciones esenciales para los análisis posteriores, reduciendo el tiempo de respuesta de la encuesta, aunque sería pertinente buscar maneras de reducir el tiempo para mantenerse en el margen de los 15 minutos, por ejemplo, acortando la batería NICERA. Esto se podría realizar excluyendo los ítems de esfuerzo, donde la escala pasaría a ser precisamente CARIN, pero con estos cambios, la encuesta basada en Conjoint + Merecimiento quedaría en un tiempo estimado de respuesta de 17.24 minutos, lo cual se acerca más al estándar de 15 minutos, pero sigue sobrepasando el tiempo recomendado.
+
+Por último, cabe destacar que los resultados descriptivos de las baterías temáticas muestran que la batería de comodificación y la batería NICERA son las que presentan mayor heterogeneidad en las respuestas, lo que sugiere que estas baterías son relevantes para la versión final de la encuesta. Ahora bien, considerando que la batería de coomdificación no es esencial para la primera ola debido a las limitaciones de tiempo, no se debe desechar, sino reconsiderar para la segunda ola del estudio. 
