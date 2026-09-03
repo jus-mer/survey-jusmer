@@ -11,11 +11,12 @@ format:
     theme: cosmo
     embed-resources: true
 code-fold: true
+bibliography: bib/jusmer.bib
 ---
 
 # Introducción
 
-Este documento presenta los análisis del pre-piloto de la *Encuesta JUSMER Justicia y Merecimiento*. El objetivo de este insumo es orientar la toma de decisiones para la construcción de la versión final de la encuesta.
+Este documento presenta los análisis del pre-piloto de la *Encuesta JUSMER Justicia y Merecimiento*, la cual se enmarca en el FONDECYT Regular N°1250518 "Justicia de mercado y Merecimiento del bienestar social" ([jus-mer.com](https://jus-mer.com/)). El objetivo de este insumo es orientar la toma de decisiones para la construcción de la versión final de la encuesta.
 
 Para ello, el documento se estructura a partir de los siguientes ejes: Primero se presentan los antecedentes principales del pre-piloto. Luego, se exponen los resultados del análisis de los comentarios abiertos, para posteriormente presentar los resultados del análisis de los tiempos de respuesta de la encuesta, detallando por pregunta y por módulo. Seguido de esto, se presentan propuestas para la versión final de la encuesta en base a los resultados del análisis. Por último, se presentan las conclusiones y recomendaciones finales.
 
@@ -23,13 +24,15 @@ Para ello, el documento se estructura a partir de los siguientes ejes: Primero s
 
 El pre-piloto de la Encuesta JUSMER se realizó en dos etapas:
 
-1) Primero se aplicó un pre-piloto con todas las preguntas que se decidieron incluir en la encuesta, además de integrar espacios de comentarios para recibir retroalimentación de los respondentes. Esta versión estuvo activa desde el 03 de julio hasta el 12 de julio del 2026 (solamente una respuesta válida se escapa de este plazo: Tijs Laenen respondió esta versión el 20 de julio).
+1) Primero se aplicó un pre-piloto con todas las preguntas que se decidieron incluir en la encuesta, además de integrar espacios de comentarios para recibir retroalimentación de los respondentes. Esta versión estuvo activa desde el 03 de julio hasta el 12 de julio del 2026 (solamente una respuesta válida se escapa de este plazo, la cual fue registrada el 20 de julio).
 
 2) Posteriormente, se aplicó un segundo pre-piloto con las mismas preguntas la primera versión, pero la diferencia fue que se eliminaron las cajas de comentarios, ya que esta versión buscaba recabar información sobre los tiempos de respuesta de cada pregunta y batería temática. El segundo pre-piloto estuvo activo desde 15 de julio hasta el 20 de ese mismo mes. 
 
-Ambas versiones del pre-piloto fueron construidas con [surveydown](https://surveydown.org/), una plataforma de código abierto para la generación de encuestas, la cual se basa mayoritariamente en las lógicas de Quarto y Shinyapp. Para el despliegue de la encuesta recurrimos a dos plataformas: El primer pre-piloto se alojó en [HuggingFace](https://huggingface.co/), mientras que el segundo se alojó en [Posit Cloud](https://posit.cloud/). Esto se debió al intento de explorar plataformas que fueran más eficientes para el despliegue de la encuesta, ya que shinyapp.io presentaba problemas de lentitud y límites de almacenamiento por parte del servidor. Por último, para la recolección de datos se utilizó [Supabase](https://supabase.com/), una plataforma gratuita que permite conectar las encuestas con bases de datos alojadas en la nube, las cuales se actualizan automáticamente.
+Ambas versiones del pre-piloto fueron construidas con [surveydown](https://surveydown.org/), una plataforma de código abierto para la generación de encuestas, la cual se basa mayoritariamente en las lógicas de Quarto y Shinyapp. Para el despliegue de la encuesta recurrimos a dos plataformas: El primer pre-piloto se alojó en [HuggingFace](https://huggingface.co/), mientras que el segundo se alojó en [Posit Cloud](https://posit.cloud/). Esto se debió al intento de explorar plataformas que fueran más eficientes para el despliegue de la encuesta, ya que shinyapp.io presentaba problemas de lentitud y límites de almacenamiento por parte del servidor. Por último, para el almacenamiento de datos se utilizó [Supabase](https://supabase.com/), una plataforma gratuita que permite conectar las encuestas con bases de datos alojadas en la nube, las cuales se actualizan automáticamente.
 
 # Análisis
+
+Cargamos los paquetes necesarios para el análisis y fijamos la ubicación del documento para facilitar la llamada de archivos externos
 
 ```{r}
 #| label: setup
@@ -111,10 +114,40 @@ parse_ts <- function(x) {
 df$time_start <- parse_ts(df$time_start)
 df$time_end   <- parse_ts(df$time_end)
 
-qcols <- grep("^time_q_", names(df), value = TRUE)
-for (col in qcols) df[[col]] <- parse_ts(df[[col]])
+verifica_1 <- df %>%
+  filter(respID == 817) # crear objeto para comprobar el for
 
+qcols <- grep("^time_q_", names(df), value = TRUE)
+for (col in qcols) df[[col]] <- parse_ts(df[[col]]) # este for convierte todas las columnas de "tiempo por pregunta" de texto a formato de fecha/hora utilizable (character a POSIXct)
+
+for (q in paste0("cbc_q", 1:6)) {
+  df[[paste0("time_q_", q)]] <- parse_ts(df[[paste0("time_p_", q, "_page")]])
+} # considera la marca temporal del cambio de página como tiempo por pregunta sólo para las preguntas del conjoint
 ```
+
+::: callout-important
+Para las preguntas del conjoint (cbc_q1 a cbc_q6), `time_q_` (tiempo en que responde una pregunta) tiene vacíos reales no atribuibles a preguntas no respondidas (la respuesta y `time_p_..._page`, que marca el tiempo del cambio de página sí están presentes), por lo que se reemplaza por el timestamp de cambio de página que es la medida confiable para estas preguntas (cada tarea del conjoint se aloja en una página por separado). Los items se registran sin problemas.
+:::
+
+
+Comprobamos que el bucle que vuelve manipulable la hora (**for**) funcione correctamente 
+
+```{r}
+class(verifica_1$time_q_mj_1)
+```
+
+```{r}
+qcols <- grep("^time_q_", names(verifica_1), value = TRUE)
+for (col in qcols) verifica_1[[col]] <- parse_ts(verifica_1[[col]])
+
+for (q in paste0("cbc_q", 1:6)) {
+  verifica_1[[paste0("time_q_", q)]] <- parse_ts(verifica_1[[paste0("time_p_", q, "_page")]])
+} # replica en verifica_1 el mismo ajuste aplicado a df para las preguntas del conjoint
+
+class(verifica_1$time_q_mj_1)
+```
+
+El cambio se aplica exitosamente
 
 Estimamos el tiempo total de la encuesta por cada respondente
 
@@ -177,11 +210,11 @@ for (i in seq_len(nrow(df))) {
   for (col in qcols) {
     cur <- df[[col]][i]
     if (!is.na(cur)) {
-      duracion_mat[i, col] <- as.numeric(difftime(cur, last_time, units = "secs"))
+      duracion_mat[i, col] <- as.numeric(difftime(cur, last_time, units = "secs")) # se calcula la diferencia entre un checkpoint (marca temporal de la pregunta) y el checkpoint anterior
       last_time <- cur
     }
   }
-}
+} # este for calcula cuánto tiempo tardó cada respondente en cada pregunta
 
 detalle_list <- lapply(qcols, function(col) {
   data.frame(
@@ -210,6 +243,43 @@ tiempo_caso <- merge(tiempo_caso, sd_duracion_caso, by = "session_id", all.x = T
 tiempo_caso$sd_duracion_pregunta_seg <- round(tiempo_caso$sd_duracion_pregunta_seg, 2)
 
 ```
+
+Verificamos la aplicación correcta del bucle recalculando manualmente las duraciones para un solo caso (`verifica_1` contiene sólo el caso 817) y comparando el resultado contra la fila generada por el bucle
+
+```{r}
+#| label: verifica-time-per-question
+
+verifica_1[qcols] <- lapply(verifica_1[qcols], parse_ts)
+
+last_time <- verifica_1$time_start
+verif_tbl <- data.frame(
+  pregunta            = character(),
+  checkpoint_anterior = as.POSIXct(character()),
+  tiempo_pregunta     = as.POSIXct(character()),
+  duracion_seg        = numeric(),
+  stringsAsFactors    = FALSE
+)
+
+for (col in qcols) {
+  cur <- verifica_1[[col]][1]
+  if (!is.na(cur)) {
+    verif_tbl <- rbind(verif_tbl, data.frame(
+      pregunta            = sub("^time_q_", "", col),
+      checkpoint_anterior = last_time,
+      tiempo_pregunta     = cur,
+      duracion_seg        = as.numeric(difftime(cur, last_time, units = "secs"))
+    ))
+    last_time <- cur
+  }
+} # se aplica el for a la base verifica_1
+
+i_verifica <- which(df$respID == verifica_1$respID[1])
+verif_tbl$duracion_mat_original <- unname(duracion_mat[i_verifica, paste0("time_q_", verif_tbl$pregunta)])
+
+verif_tbl
+```
+
+A partir de la tabla, podemos observar que el bucle logra contabilizar exitosamente los segundos entre una pregunta y su sucesora.
 
 Se construye un resumen de descriptivos por pregunta (n, media, mediana, sd, min, max) 
 
@@ -259,7 +329,7 @@ tiempo_pregunta_detalle <- merge(
   by = "pregunta", all.x = TRUE
 )
 
-# El caso 374 se excluye solo de esta estimacion (tabla 5) para no alterar los tiempos promedio de respuesta; sigue presente en el resto del reporte.
+# El caso 374 se excluye en la Tabla Tiempo de respuesta por respondente (tabla 2) para no alterar los tiempos promedio de respuesta; sigue presente en el resto del reporte.
 detalle_estimado <- tiempo_pregunta_detalle[tiempo_pregunta_detalle$respID != "374", ]
 
 suma_por_caso <- function(seccion) {
@@ -415,7 +485,7 @@ baterias <- list(
   "Market Justice Preferences Nuevos" = mjp_new,
   "MJP Tiempo" = mjp_time,
   "Comodificación" = comodifica,
-  "Experimento comodificación" = exp_comodifica,
+  "Escenario comodificación" = exp_comodifica,
   "Lucro" = lucro,
   "Neoliberalismo" = neoliberal,
   "NICERA" = nicera,
@@ -500,14 +570,14 @@ tabla_bateria("MJP Tiempo")
 tabla_bateria("Comodificación")
 ```
 
-#### Experimento comodificación {.unnumbered}
+#### Escenario comodificación {.unnumbered}
 
 ```{r}
 #| label: tbl-bateria-exp-comodifica
 #| warning: false
-#| tbl-cap: Tiempo de respuesta - Experimento comodificación
+#| tbl-cap: Tiempo de respuesta - Escenario comodificación
 
-tabla_bateria("Experimento comodificación")
+tabla_bateria("Escenario comodificación")
 ```
 
 #### Lucro {.unnumbered}
@@ -573,7 +643,7 @@ tabla_bateria("Demográficos inicio")
 tabla_bateria("Demográficos (bloque 2)")
 ```
 
-Los resultados demuestran, en primer lugar, que todas la tareas de asignación rondan el minuto de demora, a excepción de dos: el ejemplo, que se demora en promedio más de 2 minutos, y la última tarea, que se demora 38 segundos. Para la primera excepción, esto encuentra sentido en que los respondentes deben entender a cabalidad la tarea de asignación, lo cual requiere un esfuerzo de comprensión lectora y de atención. Para la segunda excepción esto puede deberse a la costumbre con el ejercicio después de varias repeticiones, por lo que requiere menos esfuerzo cognitivo en comparación a las primeras tareas (ver @tbl-bateria-conjoint).
+Los resultados demuestran, en primer lugar, que todas la tareas de asignación rondan los 40 segundos de demora, a excepción de dos: el ejemplo, que se demora en promedio más de 2 minutos, y la tarea 1 que promedia 16 segundos. Para la primera excepción, esto encuentra sentido en que los respondentes deben entender a cabalidad la tarea de asignación, lo cual requiere un esfuerzo de comprensión lectora y de atención. Para la segunda excepción esto puede deberse a la rápida asociación del ejercicio con su ejemplo. Por lo demás, las otras tareas del conjoint se encuentran dentro de rangos temporales similares, con una mediana de 20-30 segundos de demora por tarea (ver @tbl-bateria-conjoint).
 
 Para la batería de Market Justice Preferences (MJP), se observa que las preguntas 1 y 2 son las que más tiempo demandan, mientras que la pregunta 3 es la más rápida de responder (ver @tbl-bateria-mjp). Con la idea de avanzar en la medición de MJP, se implementaron dos nuevas baterías: MJP Nuevos (@tbl-bateria-mjp-new) y MJP Tiempo (@tbl-bateria-mjp-tiempo). Para ambas baterías se observa un tiempo de demora debajo del umbral establecido, donde la batería que busca medir los cambios en el tiempo de MJP es la que contiene preguntas menos demorosas, donde cuatro de ellas son respondidas, en promedio, en menos de 5 segundos.
 
@@ -815,14 +885,14 @@ tabla_desc_bateria("MJP Tiempo")
 tabla_desc_bateria("Comodificación")
 ```
 
-#### Experimento comodificación {.unnumbered}
+#### Escenario comodificación {.unnumbered}
 
 ```{r}
 #| label: tbl-desc-exp-comodifica
 #| warning: false
-#| tbl-cap: Descriptivos - Experimento comodificación
+#| tbl-cap: Descriptivos - Escenario comodificación
 
-tabla_desc_bateria("Experimento comodificación")
+tabla_desc_bateria("Escenario comodificación")
 ```
 
 #### Lucro {.unnumbered}
