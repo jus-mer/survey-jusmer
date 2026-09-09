@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>b-power-analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="03b-power-analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="03b-power-analysis_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="03b-power-analysis_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="03b-power-analysis_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="03b-power-analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="03b-power-analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="03b-power-analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="03b-power-analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="03b-power-analysis_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="03b-power-analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="03b-power-analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="03b-power-analysis_files/libs/bootstrap/bootstrap-ff9aa43704ca81ffb7e50d960cdd53aa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="03b-power-analysis_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="03b-power-analysis_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="justify.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-power" id="toc-sec-power" class="nav-link active" data-scroll-target="#sec-power"><span class="header-section-number">1</span> Power analysis for the distributive conjoint</a>
+  <ul class="collapse">
+  <li><a href="#scope" id="toc-scope" class="nav-link" data-scroll-target="#scope"><span class="header-section-number">1.1</span> Scope</a></li>
+  <li><a href="#what-drives-power-in-a-conjoint" id="toc-what-drives-power-in-a-conjoint" class="nav-link" data-scroll-target="#what-drives-power-in-a-conjoint"><span class="header-section-number">1.2</span> What drives power in a conjoint</a>
+  <ul class="collapse">
+  <li><a href="#which-effect-size-and-why-3-pp" id="toc-which-effect-size-and-why-3-pp" class="nav-link" data-scroll-target="#which-effect-size-and-why-3-pp"><span class="header-section-number">1.2.1</span> Which effect size, and why 3 pp</a></li>
+  </ul></li>
+  <li><a href="#main-effects" id="toc-main-effects" class="nav-link" data-scroll-target="#main-effects"><span class="header-section-number">1.3</span> Main effects</a>
+  <ul class="collapse">
+  <li><a href="#power-at-the-studys-sample-size" id="toc-power-at-the-studys-sample-size" class="nav-link" data-scroll-target="#power-at-the-studys-sample-size"><span class="header-section-number">1.3.1</span> Power at the study’s sample size</a></li>
+  <li><a href="#how-many-tasks" id="toc-how-many-tasks" class="nav-link" data-scroll-target="#how-many-tasks"><span class="header-section-number">1.3.2</span> How many tasks?</a></li>
+  <li><a href="#minimum-detectable-effect" id="toc-minimum-detectable-effect" class="nav-link" data-scroll-target="#minimum-detectable-effect"><span class="header-section-number">1.3.3</span> Minimum detectable effect</a></li>
+  </ul></li>
+  <li><a href="#interactions-and-heterogeneity" id="toc-interactions-and-heterogeneity" class="nav-link" data-scroll-target="#interactions-and-heterogeneity"><span class="header-section-number">1.4</span> Interactions and heterogeneity</a>
+  <ul class="collapse">
+  <li><a href="#sensitivity-to-the-moderators-distribution" id="toc-sensitivity-to-the-moderators-distribution" class="nav-link" data-scroll-target="#sensitivity-to-the-moderators-distribution"><span class="header-section-number">1.4.1</span> Sensitivity to the moderator’s distribution</a></li>
+  </ul></li>
+  <li><a href="#type-m-error" id="toc-type-m-error" class="nav-link" data-scroll-target="#type-m-error"><span class="header-section-number">1.5</span> Type M error</a></li>
+  <li><a href="#sec-deff" id="toc-sec-deff" class="nav-link" data-scroll-target="#sec-deff"><span class="header-section-number">1.6</span> Design check: D-efficiency</a>
+  <ul class="collapse">
+  <li><a href="#what-is-being-measured" id="toc-what-is-being-measured" class="nav-link" data-scroll-target="#what-is-being-measured"><span class="header-section-number">1.6.1</span> What is being measured</a></li>
+  <li><a href="#reading-the-result" id="toc-reading-the-result" class="nav-link" data-scroll-target="#reading-the-result"><span class="header-section-number">1.6.2</span> Reading the result</a></li>
+  <li><a href="#verification-with-algdesign" id="toc-verification-with-algdesign" class="nav-link" data-scroll-target="#verification-with-algdesign"><span class="header-section-number">1.6.3</span> Verification with <code>AlgDesign</code></a></li>
+  <li><a href="#cross-check-with-idefix-and-why-the-two-disagree" id="toc-cross-check-with-idefix-and-why-the-two-disagree" class="nav-link" data-scroll-target="#cross-check-with-idefix-and-why-the-two-disagree"><span class="header-section-number">1.6.4</span> Cross-check with <code>idefix</code>, and why the two disagree</a></li>
+  <li><a href="#which-criterion-applies" id="toc-which-criterion-applies" class="nav-link" data-scroll-target="#which-criterion-applies"><span class="header-section-number">1.6.5</span> Which criterion applies</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">1.7</span> Summary</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="sec-power" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Power analysis for the distributive conjoint</h1>
+<section id="scope" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="scope"><span class="header-section-number">1.1</span> Scope</h2>
+<p>This document asks one question—<strong>is a sample of 1,500 respondents large enough to test the hypotheses of the distributive conjoint?</strong>—and answers it using the analytic approach of <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>, implemented in their <code>cjpowR</code> package. It is the companion piece to the conjoint design chapter, which specifies the attributes, the randomization and the estimators; here we take that design as given and ask only what it can detect.</p>
+<p>The document proceeds in five steps. It opens with the three properties of a conjoint that govern power—why the number of attributes is irrelevant, why what counts is profile evaluations rather than respondents, and how the target effect size was chosen—since each of them is needed to read the numbers that follow. It then evaluates the <strong>main effects</strong>: the power the planned sample delivers, how that changes if tasks per respondent are cut, and the smallest effect the design can resolve. The third step turns to <strong>interactions and heterogeneity</strong>, where the requirements are several times larger, and measures how sensitive they are to the distribution of the moderator. A fourth, shorter step reports the <strong>Type M error</strong>, which asks not whether effects would be detected but whether the ones declared significant would be inflated. The document closes with a <strong>design check</strong> that sets sample size aside and asks a different question—how efficiently the randomization itself extracts information from each observation—verified against two established packages, followed by a summary table of what is and is not covered at the planned sample.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>How to read every number in this document
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All figures below are <strong>conservative upper bounds</strong>, not point estimates. Three assumptions drive that, and they do not all push the same way.</p>
+<ol type="1">
+<li><strong>Binary outcome (violated, in our favour).</strong> The formula was derived for forced-choice conjoints, where the outcome is a binary pick and its variance is therefore Bernoulli. Our outcome is a continuous share of a fixed fund. A binary outcome carries the <em>maximum</em> variance a bounded 0–100 variable with mean 50 can have; any realistic spread of allocated shares is lower, and lower outcome variance means more power at the same sample size. The formula charges us the worst case regardless.</li>
+<li><strong>Balanced moderator (assumed, against us if false).</strong> The interaction rows assume the moderator splits 50/50. <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> are explicit that conditional AMCEs require the covariate’s real marginal distribution; <a href="#tbl-mod-split" class="quarto-xref">Table&nbsp;5</a> quantifies the cost of getting this wrong.</li>
+<li><strong>Dichotomised moderator (a different estimand).</strong> The interaction rows treat the moderator as binary, whereas the confirmatory hypotheses interact the attribute with a <em>standardised continuous</em> moderator. Dichotomising discards information, so this too is conservative.</li>
+</ol>
+<p>The formulae themselves were verified against equations (4) and (6) of <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> and against <code>cjpowR</code> directly; they agree to within 0.25%, always on the conservative side.</p>
+</div>
+</div>
+</section>
+<section id="what-drives-power-in-a-conjoint" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="what-drives-power-in-a-conjoint"><span class="header-section-number">1.2</span> What drives power in a conjoint</h2>
+<p>Three facts from <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> shape everything that follows, and the first two are counter-intuitive.</p>
+<p><strong>The number of attributes does not matter.</strong> Because attributes are randomised independently, each AMCE is a simple comparison of means that averages over all the others. Adding attributes does not dilute power. What matters is the number of <em>levels</em> of the attribute being tested: with <span class="math inline">\(K\)</span> levels, each level’s mean is estimated from roughly <span class="math inline">\(N/K\)</span> profiles, so more levels means larger standard errors. Studies should therefore be powered for the attribute with the most levels, not merely the one with the smallest expected effect.</p>
+<p><strong>What counts is profile evaluations, not respondents.</strong> The effective sample size is <span class="math inline">\(N_{\text{resp}} \times \text{tasks} \times 2\)</span>. Six tasks per respondent yield 18,000 profile evaluations from 1,500 people. This is why the number of tasks trades off directly against the number of respondents.</p>
+<p><strong>Effect sizes here are in percentage points of the allocated share.</strong> A 3 pp AMCE moves an applicant from 50% to 53% of the fund—about CLP 60,000 of the CLP 2,000,000 at stake. This is <em>not</em> the same scale as the published binary AMCEs <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> survey, which measure changes in choice probability, so their benchmark distribution (median ≈ 5 pp) orients but does not translate directly.</p>
+<section id="which-effect-size-and-why-3-pp" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="which-effect-size-and-why-3-pp"><span class="header-section-number">1.2.1</span> Which effect size, and why 3 pp</h3>
+<p>This document sizes everything for a <strong>3 pp</strong> effect. That is not a placeholder: it is the binding case of this design. Of the two attributes with three levels, the assumed true effects are Effort at 6 pp and Identity at 3 pp, so Identity—most levels, smallest expected effect—is what the design must clear.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Target</th>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: center;">Levels</th>
+<th style="text-align: center;">Assumed effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">This document</td>
+<td style="text-align: left;"><strong>Identity</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Simulation study</td>
+<td style="text-align: left;"><strong>Effort</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">6 pp</td>
+</tr>
+</tbody>
+</table>
+<p>The simulation in <code>processing/power_declaredesign.R</code> sizes for Effort instead, because Effort is the attribute the moderation hypotheses interact with the moderator. The two documents therefore answer different questions and <strong>their tables are not directly comparable</strong>: this one asks what the most demanding attribute requires, the simulation asks what power we have for the hypothesis we will actually test. Neither figure is wrong, and neither should be changed to match the other.</p>
+<p>The choice of 3 pp follows the paper’s own advice on effect sizes. <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> survey 258 AMCEs from 15 highly cited conjoints and find a median near 5 pp, but explicitly caution against sizing from that distribution: different research questions are not comparable, and publication bias inflates it. They recommend subject-specific priors instead, which is what the effect vector here does—it is anchored on <span class="citation" data-cites="gilgen_disentangling_2022">Gilgen (<a href="#ref-gilgen_disentangling_2022" role="doc-biblioref">2022</a>)</span>, a comparable scholarship-allocation experiment. The same section warns that Cohen’s <span class="math inline">\(d\)</span> misleads in this setting: a “small” <span class="math inline">\(d = 0.2\)</span> corresponds to a 10 pp AMCE, which fewer than a quarter of published estimates exceed.</p>
+</section>
+</section>
+<section id="main-effects" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="main-effects"><span class="header-section-number">1.3</span> Main effects</h2>
+<section id="power-at-the-studys-sample-size" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="power-at-the-studys-sample-size"><span class="header-section-number">1.3.1</span> Power at the study’s sample size</h3>
+<p>Under equation (4) of <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>, the minimum effective sample size to detect an AMCE <span class="math inline">\(\delta_1\)</span> is</p>
+<p><span class="math display">\[N = \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2} \left( \frac{(\delta_0 + \delta_1)(1 - (\delta_0 + \delta_1))}{0.5} + \frac{\delta_0(1 - \delta_0)}{0.5} \right),\]</span></p>
+<p>where <span class="math inline">\(\delta_0\)</span> is set to 0.5, the value that maximises the variance and so yields the conservative bound. <a href="#tbl-point" class="quarto-xref">Table&nbsp;1</a> evaluates this at the study’s 18,000 profile evaluations.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-point" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Attribute family</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Levels</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Profiles</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Power at 3 pp</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Type M</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Type S</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">K = 2 (Need, Control, Reciprocity, Attitude, Sex)</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">18,000</td>
+<td style="text-align: center;">98.1%</td>
+<td style="text-align: center;">1.012</td>
+<td style="text-align: center;">1.1e-09</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">K = 3 (Effort, Identity)</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">18,000</td>
+<td style="text-align: center;">90.8%</td>
+<td style="text-align: center;">1.057</td>
+<td style="text-align: center;">8.5e-08</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0;"><span style="font-style: italic;">Note: </span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0;"><sup></sup> Type M is the exaggeration ratio: how much a statistically significant estimate overstates the true effect. Type S is the probability that a significant estimate has the wrong sign. Both are negligible here, which is what adequate power looks like.</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tfoot>
+
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Power to detect a 3 pp AMCE at the study’s sample size, by attribute family
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Both families clear the conventional 0.80 threshold with margin: 98.1% for two-level attributes and 90.8% for the two three-level attributes. Turning the formula around, detecting a 3 pp effect on a three-level attribute at 80% power requires about <strong>1,090 respondents</strong>, so the planned 1,500 leaves roughly a third of the sample as headroom.</p>
+<p>The Type M and Type S columns are worth a moment. An underpowered study is dangerous not only because it misses real effects, but because the effects it does declare significant are inflated—the point <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> import from the Type S/M literature. A Type M ratio near 1 means no such inflation. <a href="#fig-typem" class="quarto-xref">Figure&nbsp;4</a> shows how quickly that guarantee erodes at smaller samples.</p>
+</section>
+<section id="how-many-tasks" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="how-many-tasks"><span class="header-section-number">1.3.2</span> How many tasks?</h3>
+<p>Because power depends on profile evaluations rather than respondents, the number of tasks per respondent and the number of respondents are substitutes. <a href="#fig-power-tasks" class="quarto-xref">Figure&nbsp;1</a> traces this directly.</p>
+<div class="cell fig-cap-location-bottom">
+<div class="cell-output-display">
+<div id="fig-power-tasks" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-cap-location="bottom">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-power-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03b-power-analysis_files/figure-html/fig-power-tasks-1.png" class="img-fluid figure-img" style="width:100.0%" data-fig-pos="H">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-power-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Statistical power by number of respondents, for three effect sizes and two attribute types, at 3 to 6 tasks per respondent
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>At six tasks the design clears 80% power for a 3 pp effect on either attribute type well before 1,500 respondents. Cutting to four tasks shifts every curve right but does not breach the threshold at the planned sample; only at three tasks does the three-level, 2 pp combination become uncomfortable.</p>
+</section>
+<section id="minimum-detectable-effect" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="minimum-detectable-effect"><span class="header-section-number">1.3.3</span> Minimum detectable effect</h3>
+<p>The complementary view fixes power at 0.80 and asks what effect size the design can resolve.</p>
+<div class="cell fig-cap-location-bottom">
+<div class="cell-output-display">
+<div id="fig-mde" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-cap-location="bottom">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03b-power-analysis_files/figure-html/fig-mde-1.png" class="img-fluid figure-img" style="width:85.0%" data-fig-pos="H">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Minimum detectable effect by number of respondents, at six tasks per respondent
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-mde-tasks" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-mde-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">N tasks</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N profiles</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">MDE, K=2 attribute</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">MDE, K=3 attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">18,000</td>
+<td style="text-align: left;">2.1 pp</td>
+<td style="text-align: left;">2.6 pp</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">12,000</td>
+<td style="text-align: left;">2.6 pp</td>
+<td style="text-align: left;">3.1 pp</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-mde-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Minimum detectable effect at the study’s sample size (N = 1,500, power = 0.80, alpha = 0.05), six versus four tasks
+</figcaption>
+</figure>
+</div>
+</div>
+<p>At the planned sample the design resolves effects of about <strong>2.1 pp</strong> on two-level attributes and <strong>2.6 pp</strong> on three-level ones. Dropping to four tasks costs roughly half a percentage point of sensitivity, taking the three-level figure to 3.1 pp—still at the 3 pp target, but without margin.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-main-nmin" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-main-nmin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Target</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Minimum AMCE</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Most demanding attribute</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min N (6 tasks)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min N (4 tasks)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Main effects, K=2</td>
+<td style="text-align: left;">3 pp</td>
+<td style="text-align: left;">Binary</td>
+<td style="text-align: right;">727</td>
+<td style="text-align: right;">1,091</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Main effects, K=3</td>
+<td style="text-align: left;">3 pp</td>
+<td style="text-align: left;">Effort / Identity</td>
+<td style="text-align: right;">1,091</td>
+<td style="text-align: right;">1,636</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Main effects, K=3, power = 0.90</td>
+<td style="text-align: left;">3 pp</td>
+<td style="text-align: left;">Effort / Identity</td>
+<td style="text-align: right;">1,460</td>
+<td style="text-align: right;">2,190</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-main-nmin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Minimum N for main effects by number of tasks (power = 0.80 unless noted, alpha = 0.05)
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="interactions-and-heterogeneity" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="interactions-and-heterogeneity"><span class="header-section-number">1.4</span> Interactions and heterogeneity</h2>
+<p>According to <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>: “It is known that testing for interaction effects often requires much larger sample sizes than testing for average effects” <span class="citation" data-cites="schuessler_power_2020">(<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020, 8</a>)</span>.</p>
+<p>This is where the design is genuinely constrained. Equation (6) of <span class="citation" data-cites="schuessler_power_2020">Schuessler and Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span> gives the minimum sample for an interaction coefficient <span class="math inline">\(\delta_3\)</span>:</p>
+<p><span class="math display">\[n = \frac{K_l K_m}{4} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_3^2} \left( \frac{A}{p_{00}} + \frac{B}{p_{10}} + \frac{C}{p_{01}} + \frac{D}{p_{11}} \right),\]</span></p>
+<p>where <span class="math inline">\(A\)</span> through <span class="math inline">\(D\)</span> are cumulative response probabilities and <span class="math inline">\(p_{00} \dots p_{11}\)</span> the joint treatment probabilities of the two interacting elements. The inflation relative to a main effect comes from the <span class="math inline">\(K_l K_m / 4\)</span> term—it is <em>not</em> a fixed multiplier, and in particular it is not the factor of two that a naive shortcut would suggest.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-by-tasks" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-by-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">N tasks</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Main effect, K=2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Main effect, K=3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Heterogeneity: attribute × moderator (N2, binary 50/50)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Attribute × attribute interaction (reference)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1454</td>
+<td style="text-align: right;">2181</td>
+<td style="text-align: right;">8714</td>
+<td style="text-align: right;">13070</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1091</td>
+<td style="text-align: right;">1636</td>
+<td style="text-align: right;">6535</td>
+<td style="text-align: right;">9803</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">873</td>
+<td style="text-align: right;">1309</td>
+<td style="text-align: right;">5228</td>
+<td style="text-align: right;">7842</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">727</td>
+<td style="text-align: right;">1091</td>
+<td style="text-align: right;">4357</td>
+<td style="text-align: right;">6535</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-by-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Minimum N of respondents to detect a 3 pp effect (power = 0.80, alpha = 0.05), by number of tasks and estimand. K=3 rows are Identity, the binding attribute. Upper bound: assumes a binary outcome, which this design does not have
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell fig-cap-location-bottom">
+<div class="cell-output-display">
+<div id="fig-min-n" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-cap-location="bottom">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-min-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03b-power-analysis_files/figure-html/fig-min-n-1.png" class="img-fluid figure-img" style="width:85.0%" data-fig-pos="H">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-min-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Minimum N of respondents by number of tasks, main effects versus interactions
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>At six tasks, a three-level main effect needs about 1,091 respondents while the same attribute interacted with a binary moderator needs about 4,357—a factor of 4. Taken at face value, the planned sample is ample for every main effect and short for every moderation effect.</p>
+<p>Two qualifications matter before that is read as a verdict. First, the attribute-by-attribute column is a sizing reference only: no hypothesis of this study interacts two attributes, since all moderation hypotheses involve a respondent characteristic. Second, and more importantly, the whole table inherits the binary-outcome assumption, which is precisely the assumption our continuous fixed-sum outcome violates in our favour. The simulation study exists to remove it.</p>
+<section id="sensitivity-to-the-moderators-distribution" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="sensitivity-to-the-moderators-distribution"><span class="header-section-number">1.4.1</span> Sensitivity to the moderator’s distribution</h3>
+<p>The interaction rows assume a moderator that splits evenly. That assumption is doing real work, and it is the one most likely to fail in practice.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-mod-split" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-mod-split-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Moderator split</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min N (6 tasks)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">vs balanced</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">50/50</td>
+<td style="text-align: right;">4,357</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">40/60</td>
+<td style="text-align: right;">4,539</td>
+<td style="text-align: left;">+4%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">30/70</td>
+<td style="text-align: right;">5,189</td>
+<td style="text-align: left;">+19%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">20/80</td>
+<td style="text-align: right;">6,811</td>
+<td style="text-align: left;">+56%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-mod-split-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Sensitivity of the heterogeneity requirement to the moderator’s marginal distribution (Kl = 3, Km = 2, 3 pp, 6 tasks, power = 0.80, alpha = 0.05)
+</figcaption>
+</figure>
+</div>
+</div>
+<p>A 30/70 split raises the requirement by about a fifth; a 20/80 split by more than half. Once the realised distribution of each moderator is known, these numbers should be recomputed with the observed marginals rather than the balanced default—<code>n_min_interaction()</code> accepts the joint probabilities directly for this purpose.</p>
+</section>
+</section>
+<section id="type-m-error" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="type-m-error"><span class="header-section-number">1.5</span> Type M error</h2>
+<p>A final diagnostic, and the reason power analysis matters even when a result is “significant”.</p>
+<div class="cell fig-cap-location-bottom">
+<div class="cell-output-display">
+<div id="fig-typem" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H" data-cap-location="bottom">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-typem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03b-power-analysis_files/figure-html/fig-typem-1.png" class="img-fluid figure-img" style="width:85.0%" data-fig-pos="H">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-typem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Type M error (exaggeration ratio) by number of respondents, three-level attributes
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The exaggeration ratio is the factor by which a statistically significant estimate overstates the true effect. At the planned sample it sits essentially at 1 for every effect size considered, meaning estimates that clear significance are not systematically inflated. Below roughly 500 respondents the ratio climbs steeply for small true effects: a study that size would not merely miss real 2 pp effects, it would report the ones it caught as two or three times larger than they are. This is the concrete cost of underpowering, and the reason the moderation analyses are framed as exploratory unless the simulation shows otherwise.</p>
+</section>
+<section id="sec-deff" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="sec-deff"><span class="header-section-number">1.6</span> Design check: D-efficiency</h2>
+<p>Everything up to this point concerns <em>sample size</em>. This section asks a different question about the same design: given the randomization actually implemented, how much information does each observation carry relative to the best possible design? The answer bears directly on a practical question—whether the factorial space could be reduced—so it is worth settling explicitly.</p>
+<section id="what-is-being-measured" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="what-is-being-measured"><span class="header-section-number">1.6.1</span> What is being measured</h3>
+<p>Each applicant profile is one cell of a factorial with 288 combinations: two levels each for Need, Control, Reciprocity, Attitude and Sex, three each for Effort and Identity. D-efficiency compares the information matrix of the design we actually field against that of the balanced, orthogonal ideal—the full factorial, each cell once:</p>
+<p><span class="math display">\[D_{\text{rel}} = \left( \frac{\det(\mathbf{M}_{\text{realized}})}{\det(\mathbf{M}_{\text{ideal}})} \right)^{1/p}, \qquad \mathbf{M} = \frac{\mathbf{X}'\mathbf{X}}{n},\]</span></p>
+<p>with effects coding and <span class="math inline">\(p\)</span> the number of parameters. A value of 1.000 means the realized design extracts as much information per observation as the optimal design can; there is no headroom above it.</p>
+<p>The design matrix is reconstructed from the randomizer as implemented (<code>build_default_conjoint_design()</code> in <code>surveys/pre-piloto/sin_comentarios/app.R</code>), including the restriction that the two profiles in a task differ on at least two of the six CARIN/NICER attributes. Sex is drawn separately, since it is signalled through the applicant’s first name and does not enter that check.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-deff" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-deff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Parameters</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Identifiable in the 288-cell factorial</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">D-efficiency</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Without pair restriction</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Obs. per parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Main effects</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">0.9998</td>
+<td style="text-align: left;">0.9998</td>
+<td style="text-align: right;">1,800</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All two-way interactions</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">0.9988</td>
+<td style="text-align: left;">0.9990</td>
+<td style="text-align: right;">409</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-deff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: D-efficiency of the realized design at N = 1,500 (18,000 profile evaluations), relative to the balanced-orthogonal 288-cell factorial
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="reading-the-result" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="reading-the-result"><span class="header-section-number">1.6.2</span> Reading the result</h3>
+<p>The realized design sits at <strong>0.9998</strong> of the optimum for the main-effects model and <strong>0.9988</strong> for a model saturated with every two-way interaction. This is what theory predicts: complete independent randomization delivers orthogonality in expectation, and at 18,000 profile evaluations the realization has converged onto it. The largest absolute correlation between indicators of different attributes is 0.018.</p>
+<p>The pair restriction is free. It operates on the <em>joint</em> distribution of the two profiles within a task and leaves each attribute’s marginal distribution untouched, so it costs nothing in efficiency—the two rightmost columns of <a href="#tbl-deff" class="quarto-xref">Table&nbsp;6</a> are identical to three decimals. It buys cognitive realism at no statistical price.</p>
+</section>
+<section id="verification-with-algdesign" class="level3" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="verification-with-algdesign"><span class="header-section-number">1.6.3</span> Verification with <code>AlgDesign</code></h3>
+<p>The calculation above is ours, so it should be checked against an established implementation. <code>AlgDesign</code> <span class="citation" data-cites="wheeler_algdesign_2022">(<a href="#ref-wheeler_algdesign_2022" role="doc-biblioref">Wheeler 2025</a>)</span> is the natural choice, because it implements optimal design for <em>linear</em> models: its D criterion is <span class="math inline">\(|Z'Z/n|^{1/k}\)</span>, which is both the quantity computed above and the one implied by this study’s estimator. It requires no assumed parameter values, since linear D-efficiency does not depend on the coefficients.</p>
+<p>Running <code>eval.design()</code> on the realized design and dividing by the same quantity for the full factorial gives <strong>0.9998</strong>, against 0.9998 from the hand calculation—agreement to four decimal places. A second check asks whether the balanced factorial is itself D-optimal: <code>optFederov()</code> searches the 288-cell candidate set for anything better and returns a design with a D criterion 1.0000 times the factorial’s, i.e.&nbsp;it cannot be improved. The reference used above is therefore the right one.</p>
+</section>
+<section id="cross-check-with-idefix-and-why-the-two-disagree" class="level3" data-number="1.6.4">
+<h3 data-number="1.6.4" class="anchored" data-anchor-id="cross-check-with-idefix-and-why-the-two-disagree"><span class="header-section-number">1.6.4</span> Cross-check with <code>idefix</code>, and why the two disagree</h3>
+<p>A second package, <code>idefix</code> <span class="citation" data-cites="traets_generating_2020">(<a href="#ref-traets_generating_2020" role="doc-biblioref">Traets, Sanchez, and Vandebroek 2020</a>)</span>, returns a very different number. The exercise turns out to be more informative than a confirmation: understanding the disagreement settles the design question more firmly than agreement would have.</p>
+<p><code>idefix</code> evaluates designs for <em>discrete choice experiments</em> under a multinomial logit model. For a two-alternative task with null priors, its information matrix reduces to</p>
+<p><span class="math display">\[\mathcal{I} \;\propto\; \sum_{\text{tasks}} (\mathbf{x}_1 - \mathbf{x}_2)(\mathbf{x}_1 - \mathbf{x}_2)',\]</span></p>
+<p>so all information lives in the <em>contrast</em> between the two profiles. An attribute taking the same level in both profiles—“level overlap”—contributes nothing to that task. <a href="#tbl-idefix" class="quarto-xref">Table&nbsp;7</a> compares our randomized design against the D-optimal design <code>idefix</code> constructs with the modified Fedorov algorithm, at 72 choice sets.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-idefix" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-idefix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Design</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">DB-error</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Orthogonality</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Overlapping attributes per task</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">D-efficiency vs optimal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Randomized (as fielded)</td>
+<td style="text-align: left;">0.036</td>
+<td style="text-align: left;">0.878</td>
+<td style="text-align: left;">3.014</td>
+<td style="text-align: left;">0.567</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D-optimal (idefix Modfed)</td>
+<td style="text-align: left;">0.020</td>
+<td style="text-align: left;">0.932</td>
+<td style="text-align: left;">0.000</td>
+<td style="text-align: left;">1.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-idefix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7: idefix evaluation under a multinomial logit model with null priors: randomized design versus the D-optimal design from Modfed, at 72 choice sets
+</figcaption>
+</figure>
+</div>
+</div>
+<p>By this criterion the fielded design scores <strong>0.567</strong>, not the 1.000 of <a href="#tbl-deff" class="quarto-xref">Table&nbsp;6</a>. The reason is visible in the overlap column: because each profile is drawn independently, an attribute happens to match across the two profiles with probability 1/2 (binary) or 1/3 (three-level), giving 3.0 overlapping attributes per task on average. A D-optimal choice design drives that to zero by forcing the alternatives to differ everywhere.</p>
+</section>
+<section id="which-criterion-applies" class="level3" data-number="1.6.5">
+<h3 data-number="1.6.5" class="anchored" data-anchor-id="which-criterion-applies"><span class="header-section-number">1.6.5</span> Which criterion applies</h3>
+<p>The two numbers are not a contradiction; they answer the question for two different estimators, and the design does not decide between them—the analysis plan does. Our estimator is a <em>profile-level</em> linear model of the allocated share with respondent fixed effects, not a conditional model on the within-task contrast. Under it, the competing profile’s attributes land in the error term, where randomization keeps them orthogonal to the regressor, so overlap costs almost nothing.</p>
+<p><a href="#tbl-criteria" class="quarto-xref">Table&nbsp;8</a> states the three positions side by side. The spread across rows is not disagreement about arithmetic: the two linear implementations agree to four decimals because they compute the same criterion, and <code>idefix</code> differs because it computes a different one.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-criteria" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-criteria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Approach</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Criterion</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Model assumed</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Priors required</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">D-efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Hand calculation</td>
+<td style="text-align: left;">Linear: |Z'Z/n|^(1/k)</td>
+<td style="text-align: left;">Profile-level linear</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">0.9998</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AlgDesign `eval.design`</td>
+<td style="text-align: left;">Linear: |Z'Z/n|^(1/k)</td>
+<td style="text-align: left;">Profile-level linear</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">0.9998</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">idefix `EvaluateDesign`</td>
+<td style="text-align: left;">MNL: contrast information</td>
+<td style="text-align: left;">Forced choice (conditional logit)</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">0.5672</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-criteria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8: The same design judged by three D-efficiency criteria
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Rather than argue the point analytically, <a href="#tbl-estimator" class="quarto-xref">Table&nbsp;9</a> settles it by simulating the real outcome—continuous, fixed-sum—and refitting the AMCE of Effort under both designs and both estimators. Standard errors are on a common AMCE scale, and relative D-efficiency is their squared ratio, which is the sample-size equivalent.</p>
+<div class="cell" data-tbl-cap-location="bottom">
+<div id="tbl-estimator" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="bottom">
+<figure class="quarto-float quarto-float-tbl figure">
+<div aria-describedby="tbl-estimator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed do-not-create-environment cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Estimator</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">SE, as fielded</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">SE, minimum overlap</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Relative D-efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Profile-level linear model (analysis plan)</td>
+<td style="text-align: left;">0.889</td>
+<td style="text-align: left;">0.886</td>
+<td style="text-align: left;">0.991</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Contrast model (what idefix assumes)</td>
+<td style="text-align: left;">0.866</td>
+<td style="text-align: left;">0.721</td>
+<td style="text-align: left;">0.692</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-tbl" id="tbl-estimator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9: Cost of level overlap, by estimator: standard error of the Effort AMCE under the design as fielded versus a minimum-overlap design (simulated, 400 respondents, 6 tasks)
+</figcaption>
+</figure>
+</div>
+</div>
+<p>The result is clear for the question at hand. Under the profile-level estimator this study will use, moving to a minimum-overlap design buys a relative efficiency of 0.99—nothing worth having. Under the contrast estimator it buys 0.69, close to what <code>idefix</code> reports. <code>AlgDesign</code> is the pertinent tool here and <code>idefix</code> is not, because the estimator is linear and profile-level, not a conditional logit on the within-task contrast.</p>
+<p>One honest qualification, visible in the same table. The two estimators are nearly equivalent on the design as fielded (0.889 against 0.866), but the <em>combination</em> of a minimum-overlap design with the contrast estimator reaches 0.721—about 19% smaller than the design and estimator actually chosen. That gain was available at the design stage and is not recoverable now: forcing minimum overlap is a property of how pairs are generated, not of how they are analysed. It is worth recording for a future wave, and it does not change any conclusion about the present one, where the relevant comparison is 0.99.</p>
+<p><code>idefix</code> is therefore reported here as a design diagnostic and as the answer to a question a reader may reasonably raise—“would a choice-based D-optimal design have been better?”—rather than as a correction to <a href="#tbl-deff" class="quarto-xref">Table&nbsp;6</a>. Its verdict would bind if the outcome were a forced choice, or if the analysis moved to a conditional logit or a within-task difference model. Neither is the case, and this is one more consequence of the fact that this is a <em>distributive</em> conjoint rather than a choice-based one.</p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">1.7</span> Summary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 35%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Estimand</th>
+<th style="text-align: center;">Requirement (6 tasks)</th>
+<th style="text-align: center;">Covered at N = 1,500?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Main effect, K = 2</td>
+<td style="text-align: center;">727</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Main effect, K = 3 (binding)</td>
+<td style="text-align: center;">1,091</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Heterogeneity, attribute × moderator</td>
+<td style="text-align: center;">4,357</td>
+<td style="text-align: center;">No, under the binary bound</td>
+</tr>
+</tbody>
+</table>
+<p>The design is well powered for all confirmatory main effects, with an MDE of 2.6 pp on the binding attribute and enough margin to absorb a reduction to four tasks if fieldwork requires it. For the moderation hypotheses the analytic bound is not met, but that bound assumes an outcome this study does not have. Whether the moderation hypotheses are adequately powered is therefore a question this document cannot settle on its own; it is settled, as far as it can be, by the simulation of the real continuous outcome reported alongside it.</p>
+<p>Separately, the design is efficient as well as large enough. Under the profile-level estimator the analysis plan specifies, it sits at 0.9998 of the balanced-orthogonal optimum (<a href="#sec-deff" class="quarto-xref">Section&nbsp;1.6</a>), leaving nothing for a D-optimal alternative to recover. A choice-based criterion such as <code>idefix</code>’s rates the same design at 0.57, but that criterion presumes a forced-choice outcome and a contrast estimator, neither of which applies here—<a href="#tbl-estimator" class="quarto-xref">Table&nbsp;9</a> shows the overlap it penalises costs this study nothing.</p>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-gilgen_disentangling_2022" class="csl-entry" role="listitem">
+Gilgen, Sandra. 2022. <em>Disentangling <span>Justice</span>: <span>Needs</span>, <span>Equality</span> or <span>Merit</span>? <span>On</span> the <span>Situation-Dependency</span> of <span>Distributive Justice</span></em>. 1. Auflage. Gesellschaftsanalyse 2. Baden-Baden: Nomos Verlagsgesellschaft mbH &amp; Co. KG. <a href="https://doi.org/10.5771/9783748926955">https://doi.org/10.5771/9783748926955</a>.
+</div>
+<div id="ref-schuessler_power_2020" class="csl-entry" role="listitem">
+Schuessler, Julian, and Markus Freitag. 2020. <span>“Power <span>Analysis</span> for <span>Conjoint Experiments</span>.”</span> SocArXiv. <a href="https://doi.org/10.31235/osf.io/9yuhp">https://doi.org/10.31235/osf.io/9yuhp</a>.
+</div>
+<div id="ref-traets_generating_2020" class="csl-entry" role="listitem">
+Traets, Frits, Daniel Gil Sanchez, and Martina Vandebroek. 2020. <span>“Generating <span>Optimal</span> <span>Designs</span> for <span>Discrete</span> <span>Choice</span> <span>Experiments</span> in <span>R</span>: <span>The</span> Idefix <span>Package</span>.”</span> <em>Journal of Statistical Software</em> 96 (3): 1–41. <a href="https://doi.org/10.18637/jss.v096.i03">https://doi.org/10.18637/jss.v096.i03</a>.
+</div>
+<div id="ref-wheeler_algdesign_2022" class="csl-entry" role="listitem">
+Wheeler, Bob. 2025. <em><span>AlgDesign</span>: <span>Algorithmic</span> <span>Experimental</span> <span>Design</span></em>. <a href="https://CRAN.R-project.org/package=AlgDesign">https://CRAN.R-project.org/package=AlgDesign</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

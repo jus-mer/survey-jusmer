@@ -1,0 +1,346 @@
+---
+format:
+  html:
+    toc: true
+    number-sections: true
+    css: justify.css
+editor: source
+bibliography: ../input/bib/jusmer.bib
+---
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo=FALSE,
+                      warning = FALSE,
+                      message = FALSE,
+                      cache = TRUE,
+                      out.width = '85%',
+                      fig.pos= "H")
+options(scipen=999)
+options(kableExtra.auto_format = FALSE)
+options(knitr.kable.NA = '')
+options(knitr.graphics.error = FALSE)
+Sys.setlocale("LC_ALL", "ES_ES.UTF-8")
+table_format = if (knitr::is_html_output()) {
+   "html"
+ } else if (knitr::is_latex_output()) {
+   "latex"
+ }
+
+```
+
+```{r processing}
+#| include: false
+#| cache.extra: tools::md5sum("../processing/analisis-poder-v2.R")
+
+# ALL computation happens here, in processing/analisis-poder-v2.R. That script
+# prints nothing; it returns the tables, figures and data frames this document
+# renders below, so that processing and presentation stay separate.
+
+library(here)
+here::i_am("documentation/03b-power-analysis.qmd")
+
+source(file = here("processing/analisis-poder-v2.R"))
+
+library(kableExtra)
+
+# Values quoted inline in the prose, pulled from the objects above so that the
+# text can never drift from the tables.
+pw_k2   <- scales::percent(tbl_point_df$`Power at 3 pp`[1], accuracy = 0.1)
+pw_k3   <- scales::percent(tbl_point_df$`Power at 3 pp`[2], accuracy = 0.1)
+nmin_k3 <- ceiling(point_nmin_k3$n / 12)
+mde_k3_6 <- round(mde_at(n_study, 3, tasks = 6), 1)
+mde_k3_4 <- round(mde_at(n_study, 3, tasks = 4), 1)
+mde_k2_6 <- round(mde_at(n_study, 2, tasks = 6), 1)
+# Select by name, not position: the heterogeneity column is the 4th, and an
+# index here silently picked up the main-effect column instead.
+het_col   <- grep("^Heterogeneity", names(tbl_by_tasks_df), value = TRUE)
+at_6      <- tbl_by_tasks_df$tasks == 6
+n_het_6   <- tbl_by_tasks_df[[het_col]][at_6]
+n_main_6  <- tbl_by_tasks_df$`Main effect, K=3`[at_6]
+n_k2_6    <- tbl_by_tasks_df$`Main effect, K=2`[at_6]
+het_ratio <- round(n_het_6 / n_main_6, 1)
+stopifnot(length(n_het_6) == 1, n_het_6 > n_main_6)
+```
+
+# Power analysis for the distributive conjoint {#sec-power}
+
+## Scope
+
+This document asks one question—**is a sample of `r format(n_study, big.mark=",")` respondents large enough to test the hypotheses of the distributive conjoint?**—and answers it using the analytic approach of @schuessler_power_2020, implemented in their `cjpowR` package. It is the companion piece to the conjoint design chapter, which specifies the attributes, the randomization and the estimators; here we take that design as given and ask only what it can detect.
+
+The document proceeds in five steps. It opens with the three properties of a conjoint that govern power—why the number of attributes is irrelevant, why what counts is profile evaluations rather than respondents, and how the target effect size was chosen—since each of them is needed to read the numbers that follow. It then evaluates the **main effects**: the power the planned sample delivers, how that changes if tasks per respondent are cut, and the smallest effect the design can resolve. The third step turns to **interactions and heterogeneity**, where the requirements are several times larger, and measures how sensitive they are to the distribution of the moderator. A fourth, shorter step reports the **Type M error**, which asks not whether effects would be detected but whether the ones declared significant would be inflated. The document closes with a **design check** that sets sample size aside and asks a different question—how efficiently the randomization itself extracts information from each observation—verified against two established packages, followed by a summary table of what is and is not covered at the planned sample.
+
+
+::: callout-important
+## How to read every number in this document
+
+All figures below are **conservative upper bounds**, not point estimates. Three assumptions drive that, and they do not all push the same way.
+
+1.  **Binary outcome (violated, in our favour).** The formula was derived for forced-choice conjoints, where the outcome is a binary pick and its variance is therefore Bernoulli. Our outcome is a continuous share of a fixed fund. A binary outcome carries the *maximum* variance a bounded 0–100 variable with mean 50 can have; any realistic spread of allocated shares is lower, and lower outcome variance means more power at the same sample size. The formula charges us the worst case regardless.
+2.  **Balanced moderator (assumed, against us if false).** The interaction rows assume the moderator splits 50/50. @schuessler_power_2020 are explicit that conditional AMCEs require the covariate's real marginal distribution; @tbl-mod-split quantifies the cost of getting this wrong.
+3.  **Dichotomised moderator (a different estimand).** The interaction rows treat the moderator as binary, whereas the confirmatory hypotheses interact the attribute with a *standardised continuous* moderator. Dichotomising discards information, so this too is conservative.
+
+The formulae themselves were verified against equations (4) and (6) of @schuessler_power_2020 and against `cjpowR` directly; they agree to within 0.25%, always on the conservative side.
+:::
+
+## What drives power in a conjoint
+
+Three facts from @schuessler_power_2020 shape everything that follows, and the first two are counter-intuitive.
+
+**The number of attributes does not matter.** Because attributes are randomised independently, each AMCE is a simple comparison of means that averages over all the others. Adding attributes does not dilute power. What matters is the number of *levels* of the attribute being tested: with $K$ levels, each level's mean is estimated from roughly $N/K$ profiles, so more levels means larger standard errors. Studies should therefore be powered for the attribute with the most levels, not merely the one with the smallest expected effect.
+
+**What counts is profile evaluations, not respondents.** The effective sample size is $N_{\text{resp}} \times \text{tasks} \times 2$. Six tasks per respondent yield `r format(n_efectivo_study, big.mark=",")` profile evaluations from `r format(n_study, big.mark=",")` people. This is why the number of tasks trades off directly against the number of respondents.
+
+**Effect sizes here are in percentage points of the allocated share.** A 3 pp AMCE moves an applicant from 50% to 53% of the fund—about CLP 60,000 of the CLP 2,000,000 at stake. This is *not* the same scale as the published binary AMCEs @schuessler_power_2020 survey, which measure changes in choice probability, so their benchmark distribution (median ≈ 5 pp) orients but does not translate directly.
+
+### Which effect size, and why 3 pp
+
+This document sizes everything for a **3 pp** effect. That is not a placeholder: it is the binding case of this design. Of the two attributes with three levels, the assumed true effects are Effort at 6 pp and Identity at 3 pp, so Identity—most levels, smallest expected effect—is what the design must clear.
+
+| Target           | Attribute    | Levels | Assumed effect |
+|:-----------------|:-------------|:------:|:--------------:|
+| This document    | **Identity** |   3    |      3 pp      |
+| Simulation study | **Effort**   |   3    |      6 pp      |
+
+The simulation in `processing/power_declaredesign.R` sizes for Effort instead, because Effort is the attribute the moderation hypotheses interact with the moderator. The two documents therefore answer different questions and **their tables are not directly comparable**: this one asks what the most demanding attribute requires, the simulation asks what power we have for the hypothesis we will actually test. Neither figure is wrong, and neither should be changed to match the other.
+
+The choice of 3 pp follows the paper's own advice on effect sizes. @schuessler_power_2020 survey 258 AMCEs from 15 highly cited conjoints and find a median near 5 pp, but explicitly caution against sizing from that distribution: different research questions are not comparable, and publication bias inflates it. They recommend subject-specific priors instead, which is what the effect vector here does—it is anchored on @gilgen_disentangling_2022, a comparable scholarship-allocation experiment. The same section warns that Cohen's $d$ misleads in this setting: a "small" $d = 0.2$ corresponds to a 10 pp AMCE, which fewer than a quarter of published estimates exceed.
+
+## Main effects
+
+### Power at the study's sample size
+
+Under equation (4) of @schuessler_power_2020, the minimum effective sample size to detect an AMCE $\delta_1$ is
+
+$$N = \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2} \left( \frac{(\delta_0 + \delta_1)(1 - (\delta_0 + \delta_1))}{0.5} + \frac{\delta_0(1 - \delta_0)}{0.5} \right),$$
+
+where $\delta_0$ is set to 0.5, the value that maximises the variance and so yields the conservative bound. @tbl-point evaluates this at the study's `r format(n_efectivo_study, big.mark=",")` profile evaluations.
+
+```{r}
+#| label: tbl-point
+#| tbl-cap: "Power to detect a 3 pp AMCE at the study's sample size, by attribute family"
+#| tbl-cap-location: bottom
+
+tbl_point_df |>
+  mutate(
+    `Power at 3 pp` = scales::percent(`Power at 3 pp`, accuracy = 0.1),
+    `Type M`        = round(`Type M`, 3),
+    `Type S`        = format(`Type S`, digits = 2, scientific = TRUE)
+  ) |>
+  kbl(format = table_format, align = "lcccccc",
+      format.args = list(big.mark = ",")) |>
+  kable_styling(bootstrap_options = c("striped", "condensed"), full_width = FALSE) |>
+  footnote(
+    general = paste0(
+      "Type M is the exaggeration ratio: how much a statistically significant ",
+      "estimate overstates the true effect. Type S is the probability that a ",
+      "significant estimate has the wrong sign. Both are negligible here, which ",
+      "is what adequate power looks like."
+    ),
+    general_title = "Note: "
+  )
+```
+
+Both families clear the conventional 0.80 threshold with margin: `r pw_k2` for two-level attributes and `r pw_k3` for the two three-level attributes. Turning the formula around, detecting a 3 pp effect on a three-level attribute at 80% power requires about **`r format(nmin_k3, big.mark=",")` respondents**, so the planned `r format(n_study, big.mark=",")` leaves roughly a third of the sample as headroom.
+
+The Type M and Type S columns are worth a moment. An underpowered study is dangerous not only because it misses real effects, but because the effects it does declare significant are inflated—the point @schuessler_power_2020 import from the Type S/M literature. A Type M ratio near 1 means no such inflation. @fig-typem shows how quickly that guarantee erodes at smaller samples.
+
+### How many tasks?
+
+Because power depends on profile evaluations rather than respondents, the number of tasks per respondent and the number of respondents are substitutes. @fig-power-tasks traces this directly.
+
+```{r}
+#| label: fig-power-tasks
+#| fig-cap: "Statistical power by number of respondents, for three effect sizes and two attribute types, at 3 to 6 tasks per respondent"
+#| fig-width: 9
+#| fig-height: 7
+#| out-width: "100%"
+#| fig-cap-location: bottom
+
+g1
+```
+
+At six tasks the design clears 80% power for a 3 pp effect on either attribute type well before `r format(n_study, big.mark=",")` respondents. Cutting to four tasks shifts every curve right but does not breach the threshold at the planned sample; only at three tasks does the three-level, 2 pp combination become uncomfortable.
+
+### Minimum detectable effect
+
+The complementary view fixes power at 0.80 and asks what effect size the design can resolve.
+
+```{r}
+#| label: fig-mde
+#| fig-cap: "Minimum detectable effect by number of respondents, at six tasks per respondent"
+#| fig-cap-location: bottom
+
+g2
+```
+
+```{r}
+#| label: tbl-mde-tasks
+#| tbl-cap: "Minimum detectable effect at the study's sample size (N = 1,500, power = 0.80, alpha = 0.05), six versus four tasks"
+#| tbl-cap-location: bottom
+
+tbl_power_main_2
+```
+
+At the planned sample the design resolves effects of about **`r mde_k2_6` pp** on two-level attributes and **`r mde_k3_6` pp** on three-level ones. Dropping to four tasks costs roughly half a percentage point of sensitivity, taking the three-level figure to `r mde_k3_4` pp—still at the 3 pp target, but without margin.
+```{r}
+#| label: tbl-main-nmin
+#| tbl-cap: "Minimum N for main effects by number of tasks (power = 0.80 unless noted, alpha = 0.05)"
+#| tbl-cap-location: bottom
+
+tbl_power_main
+```
+
+## Interactions and heterogeneity
+
+According to @schuessler_power_2020: "It is known that testing for interaction effects often requires much larger sample sizes than testing for average effects" [-@schuessler_power_2020, pp. 8]. 
+
+This is where the design is genuinely constrained. Equation (6) of @schuessler_power_2020 gives the minimum sample for an interaction coefficient $\delta_3$:
+
+$$n = \frac{K_l K_m}{4} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_3^2} \left( \frac{A}{p_{00}} + \frac{B}{p_{10}} + \frac{C}{p_{01}} + \frac{D}{p_{11}} \right),$$
+
+where $A$ through $D$ are cumulative response probabilities and $p_{00} \dots p_{11}$ the joint treatment probabilities of the two interacting elements. The inflation relative to a main effect comes from the $K_l K_m / 4$ term—it is *not* a fixed multiplier, and in particular it is not the factor of two that a naive shortcut would suggest.
+
+```{r}
+#| label: tbl-by-tasks
+#| tbl-cap: "Minimum N of respondents to detect a 3 pp effect (power = 0.80, alpha = 0.05), by number of tasks and estimand. K=3 rows are Identity, the binding attribute. Upper bound: assumes a binary outcome, which this design does not have"
+#| tbl-cap-location: bottom
+
+tbl_power_by_tasks
+```
+
+```{r}
+#| label: fig-min-n
+#| fig-cap: "Minimum N of respondents by number of tasks, main effects versus interactions"
+#| fig-cap-location: bottom
+
+g_min_n_by_tasks
+```
+
+At six tasks, a three-level main effect needs about `r format(n_main_6, big.mark=",")` respondents while the same attribute interacted with a binary moderator needs about `r format(n_het_6, big.mark=",")`—a factor of `r het_ratio`. Taken at face value, the planned sample is ample for every main effect and short for every moderation effect.
+
+Two qualifications matter before that is read as a verdict. First, the attribute-by-attribute column is a sizing reference only: no hypothesis of this study interacts two attributes, since all moderation hypotheses involve a respondent characteristic. Second, and more importantly, the whole table inherits the binary-outcome assumption, which is precisely the assumption our continuous fixed-sum outcome violates in our favour. The simulation study exists to remove it.
+
+### Sensitivity to the moderator's distribution
+
+The interaction rows assume a moderator that splits evenly. That assumption is doing real work, and it is the one most likely to fail in practice.
+
+```{r}
+#| label: tbl-mod-split
+#| tbl-cap: "Sensitivity of the heterogeneity requirement to the moderator's marginal distribution (Kl = 3, Km = 2, 3 pp, 6 tasks, power = 0.80, alpha = 0.05)"
+#| tbl-cap-location: bottom
+
+tbl_mod_split
+```
+
+A 30/70 split raises the requirement by about a fifth; a 20/80 split by more than half. Once the realised distribution of each moderator is known, these numbers should be recomputed with the observed marginals rather than the balanced default—`n_min_interaction()` accepts the joint probabilities directly for this purpose.
+
+## Type M error
+
+A final diagnostic, and the reason power analysis matters even when a result is "significant".
+
+```{r}
+#| label: fig-typem
+#| fig-cap: "Type M error (exaggeration ratio) by number of respondents, three-level attributes"
+#| fig-cap-location: bottom
+
+g3
+```
+
+The exaggeration ratio is the factor by which a statistically significant estimate overstates the true effect. At the planned sample it sits essentially at 1 for every effect size considered, meaning estimates that clear significance are not systematically inflated. Below roughly 500 respondents the ratio climbs steeply for small true effects: a study that size would not merely miss real 2 pp effects, it would report the ones it caught as two or three times larger than they are. This is the concrete cost of underpowering, and the reason the moderation analyses are framed as exploratory unless the simulation shows otherwise.
+
+## Design check: D-efficiency {#sec-deff}
+
+Everything up to this point concerns *sample size*. This section asks a different question about the same design: given the randomization actually implemented, how much information does each observation carry relative to the best possible design? The answer bears directly on a practical question—whether the factorial space could be reduced—so it is worth settling explicitly.
+
+### What is being measured
+
+Each applicant profile is one cell of a factorial with `r conj_n_cells` combinations: two levels each for Need, Control, Reciprocity, Attitude and Sex, three each for Effort and Identity. D-efficiency compares the information matrix of the design we actually field against that of the balanced, orthogonal ideal—the full factorial, each cell once:
+
+$$D_{\text{rel}} = \left( \frac{\det(\mathbf{M}_{\text{realized}})}{\det(\mathbf{M}_{\text{ideal}})} \right)^{1/p}, \qquad \mathbf{M} = \frac{\mathbf{X}'\mathbf{X}}{n},$$
+
+with effects coding and $p$ the number of parameters. A value of 1.000 means the realized design extracts as much information per observation as the optimal design can; there is no headroom above it.
+
+The design matrix is reconstructed from the randomizer as implemented (`build_default_conjoint_design()` in `surveys/pre-piloto/sin_comentarios/app.R`), including the restriction that the two profiles in a task differ on at least two of the six CARIN/NICER attributes. Sex is drawn separately, since it is signalled through the applicant's first name and does not enter that check.
+
+```{r}
+#| label: tbl-deff
+#| tbl-cap: "D-efficiency of the realized design at N = 1,500 (18,000 profile evaluations), relative to the balanced-orthogonal 288-cell factorial"
+#| tbl-cap-location: bottom
+
+tbl_deff
+```
+
+### Reading the result
+
+The realized design sits at **`r sprintf("%.4f", conj_deff_df[["D-eff (design)"]][1])`** of the optimum for the main-effects model and **`r sprintf("%.4f", conj_deff_df[["D-eff (design)"]][2])`** for a model saturated with every two-way interaction. This is what theory predicts: complete independent randomization delivers orthogonality in expectation, and at `r format(n_study*12, big.mark=",")` profile evaluations the realization has converged onto it. The largest absolute correlation between indicators of different attributes is `r sprintf("%.3f", conj_max_cor)`.
+
+The pair restriction is free. It operates on the *joint* distribution of the two profiles within a task and leaves each attribute's marginal distribution untouched, so it costs nothing in efficiency—the two rightmost columns of @tbl-deff are identical to three decimals. It buys cognitive realism at no statistical price.
+
+### Verification with `AlgDesign`
+
+The calculation above is ours, so it should be checked against an established implementation. `AlgDesign` [@wheeler_algdesign_2022] is the natural choice, because it implements optimal design for *linear* models: its D criterion is $|Z'Z/n|^{1/k}$, which is both the quantity computed above and the one implied by this study's estimator. It requires no assumed parameter values, since linear D-efficiency does not depend on the coefficients.
+
+Running `eval.design()` on the realized design and dividing by the same quantity for the full factorial gives **`r sprintf("%.4f", alg_realized_deff)`**, against `r sprintf("%.4f", conj_deff_df[["D-eff (design)"]][1])` from the hand calculation—agreement to four decimal places. A second check asks whether the balanced factorial is itself D-optimal: `optFederov()` searches the `r conj_n_cells`-cell candidate set for anything better and returns a design with a D criterion `r sprintf("%.4f", alg_opt_ratio)` times the factorial's, i.e. it cannot be improved. The reference used above is therefore the right one.
+
+### Cross-check with `idefix`, and why the two disagree
+
+A second package, `idefix` [@traets_generating_2020], returns a very different number. The exercise turns out to be more informative than a confirmation: understanding the disagreement settles the design question more firmly than agreement would have.
+
+`idefix` evaluates designs for *discrete choice experiments* under a multinomial logit model. For a two-alternative task with null priors, its information matrix reduces to
+
+$$\mathcal{I} \;\propto\; \sum_{\text{tasks}} (\mathbf{x}_1 - \mathbf{x}_2)(\mathbf{x}_1 - \mathbf{x}_2)',$$
+
+so all information lives in the *contrast* between the two profiles. An attribute taking the same level in both profiles—"level overlap"—contributes nothing to that task. @tbl-idefix compares our randomized design against the D-optimal design `idefix` constructs with the modified Fedorov algorithm, at `r idefix_n_sets` choice sets.
+
+```{r}
+#| label: tbl-idefix
+#| tbl-cap: "idefix evaluation under a multinomial logit model with null priors: randomized design versus the D-optimal design from Modfed, at 72 choice sets"
+#| tbl-cap-location: bottom
+
+tbl_idefix
+```
+
+By this criterion the fielded design scores **`r sprintf("%.3f", idefix_deff)`**, not the `r sprintf("%.3f", conj_deff_df[["D-eff (design)"]][1])` of @tbl-deff. The reason is visible in the overlap column: because each profile is drawn independently, an attribute happens to match across the two profiles with probability 1/2 (binary) or 1/3 (three-level), giving `r sprintf("%.1f", idefix_overlap)` overlapping attributes per task on average. A D-optimal choice design drives that to zero by forcing the alternatives to differ everywhere.
+
+### Which criterion applies
+
+The two numbers are not a contradiction; they answer the question for two different estimators, and the design does not decide between them—the analysis plan does. Our estimator is a *profile-level* linear model of the allocated share with respondent fixed effects, not a conditional model on the within-task contrast. Under it, the competing profile's attributes land in the error term, where randomization keeps them orthogonal to the regressor, so overlap costs almost nothing.
+
+@tbl-criteria states the three positions side by side. The spread across rows is not disagreement about arithmetic: the two linear implementations agree to four decimals because they compute the same criterion, and `idefix` differs because it computes a different one.
+
+```{r}
+#| label: tbl-criteria
+#| tbl-cap: "The same design judged by three D-efficiency criteria"
+#| tbl-cap-location: bottom
+
+tbl_criteria
+```
+
+Rather than argue the point analytically, @tbl-estimator settles it by simulating the real outcome—continuous, fixed-sum—and refitting the AMCE of Effort under both designs and both estimators. Standard errors are on a common AMCE scale, and relative D-efficiency is their squared ratio, which is the sample-size equivalent.
+
+```{r}
+#| label: tbl-estimator
+#| tbl-cap: "Cost of level overlap, by estimator: standard error of the Effort AMCE under the design as fielded versus a minimum-overlap design (simulated, 400 respondents, 6 tasks)"
+#| tbl-cap-location: bottom
+
+tbl_estimator
+```
+
+The result is clear for the question at hand. Under the profile-level estimator this study will use, moving to a minimum-overlap design buys a relative efficiency of `r sprintf("%.2f", sim_estimator_df[["Relative D-efficiency"]][1])`—nothing worth having. Under the contrast estimator it buys `r sprintf("%.2f", sim_estimator_df[["Relative D-efficiency"]][2])`, close to what `idefix` reports. `AlgDesign` is the pertinent tool here and `idefix` is not, because the estimator is linear and profile-level, not a conditional logit on the within-task contrast.
+
+One honest qualification, visible in the same table. The two estimators are nearly equivalent on the design as fielded (`r sprintf("%.3f", sim_estimator_df[["SE, as fielded"]][1])` against `r sprintf("%.3f", sim_estimator_df[["SE, as fielded"]][2])`), but the *combination* of a minimum-overlap design with the contrast estimator reaches `r sprintf("%.3f", sim_estimator_df[["SE, minimum overlap"]][2])`—about `r sprintf("%.0f", 100*(1 - sim_estimator_df[["SE, minimum overlap"]][2]/sim_estimator_df[["SE, as fielded"]][1]))`% smaller than the design and estimator actually chosen. That gain was available at the design stage and is not recoverable now: forcing minimum overlap is a property of how pairs are generated, not of how they are analysed. It is worth recording for a future wave, and it does not change any conclusion about the present one, where the relevant comparison is `r sprintf("%.2f", sim_estimator_df[["Relative D-efficiency"]][1])`.
+
+`idefix` is therefore reported here as a design diagnostic and as the answer to a question a reader may reasonably raise—"would a choice-based D-optimal design have been better?"—rather than as a correction to @tbl-deff. Its verdict would bind if the outcome were a forced choice, or if the analysis moved to a conditional logit or a within-task difference model. Neither is the case, and this is one more consequence of the fact that this is a *distributive* conjoint rather than a choice-based one.
+
+## Summary
+
+| Estimand | Requirement (6 tasks) | Covered at N = `r format(n_study, big.mark=",")`? |
+|:--------------------|:------------------------:|:------------------------:|
+| Main effect, K = 2 | `r format(n_k2_6, big.mark=",")` | Yes |
+| Main effect, K = 3 (binding) | `r format(n_main_6, big.mark=",")` | Yes |
+| Heterogeneity, attribute × moderator | `r format(n_het_6, big.mark=",")` | No, under the binary bound |
+
+The design is well powered for all confirmatory main effects, with an MDE of `r mde_k3_6` pp on the binding attribute and enough margin to absorb a reduction to four tasks if fieldwork requires it. For the moderation hypotheses the analytic bound is not met, but that bound assumes an outcome this study does not have. Whether the moderation hypotheses are adequately powered is therefore a question this document cannot settle on its own; it is settled, as far as it can be, by the simulation of the real continuous outcome reported alongside it.
+
+Separately, the design is efficient as well as large enough. Under the profile-level estimator the analysis plan specifies, it sits at `r sprintf("%.4f", conj_deff_df[["D-eff (design)"]][1])` of the balanced-orthogonal optimum (@sec-deff), leaving nothing for a D-optimal alternative to recover. A choice-based criterion such as `idefix`'s rates the same design at `r sprintf("%.2f", idefix_deff)`, but that criterion presumes a forced-choice outcome and a contrast estimator, neither of which applies here—@tbl-estimator shows the overlap it penalises costs this study nothing.
