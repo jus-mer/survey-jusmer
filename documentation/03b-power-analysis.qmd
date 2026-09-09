@@ -4,6 +4,12 @@ format:
     toc: true
     number-sections: true
     css: justify.css
+    # Self-contained output: CSS, JS and figures are inlined into the .html.
+    # This document is not listed in _quarto.yml, so it renders here rather than
+    # into documentation/docs/, and .gitignore excludes `*_files/` everywhere
+    # except under docs/. Without this the companion asset folder is never
+    # committed and the published page loads unstyled, with broken images.
+    embed-resources: true
 editor: source
 bibliography: ../input/bib/jusmer.bib
 ---
@@ -62,7 +68,7 @@ het_ratio <- round(n_het_6 / n_main_6, 1)
 stopifnot(length(n_het_6) == 1, n_het_6 > n_main_6)
 ```
 
-# Power analysis for the distributive conjoint {#sec-power}
+# Power analysis re-estimation for conjoint {#sec-power}
 
 ## Scope
 
