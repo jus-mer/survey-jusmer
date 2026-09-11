@@ -3,10 +3,73 @@ format:
   html:
     toc: true
     css: justify.css
+bibliography: ../input/bib/jusmer.bib
 ---
 
 # Questionnaire design B: Items {#sec-items}
 
+This chapter describes the second component of the survey instrument, complementing the conjoint design presented in the previous chapter. It first outlines the overall structure of the questionnaire. Then details the three batteries of items applied—market justice preferences, the meritocracy scale, and the deservingness (CARIN/NICER) scale—describing their conceptual origin, wording, and measurement specifications.
+
 ## Questionnaire Structure and Content
 
+The questionnaire is structured around two main sections. First, a matching task is administered, in which respondents are presented with two profiles of people with different characteristics and, based on those characteristics, must allocate a sum of money to finance their college education. This section of the survey is explained in greater detail in the [previous chapter](https://jus-mer.github.io/survey-jusmer/documentation/docs/03-conjoint-desing.html). The second part of the measurement instrument is based on items regarding public opinion, perceptions, and/or preferences related to the market, merit, and deservingness, which are presented as multiple-choice questions. The following section provides a more in-depth look at the item scales that were used, their origin, and measurement specifications.
+
 ## Measurement Scales and Sources of Survey Items
+
+The first wave of the survey contains the following sets of questions: Market Justice Preferences (1), Meritocracy Scale (2), and Deservingness (CARIN/NICER) Scale (3).
+
+### Market justice preferences
+
+The “Market Justice Preferences” scale consists of three questions, which aim to determine the extent to which people consider it fair for access to and the quality of social services—such as education, health care, and pensions—to depend on market criteria. These questions originally come from the [International Social Survey Program](https://www.gesis.org/en/issp/data-and-documentation/social-inequality) (1999) and are included in the social inequality module. In this context, the scale first appeared in the 1999 version of the ISSP and has been included in all subsequent versions (2009 and 2019).
+
+The question is phrased as follows: *Is it fair that in Chile, high-income individuals have access to better ___ than those with lower incomes?* The blank refers to the respective social service addressed by the scale.
+
+The question is measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
+
+### Meritocracy scale
+
+The meritocracy scale is based on a conceptual framework designed by @castillo_multidimensional_2023, which presents a multidimensional model for measuring meritocratic beliefs. This model distinguishes, first, between perceptions and preferences, where the former refers to the way people view the world, while the latter refers to how the world should function. Second, the model distinguishes between meritocratic and privilege-based perceptions and preferences; meritocratic factors relate to effort and talent, while the privilege factor considers inherited conditions such as family wealth and connections. This instrument was first implemented in a survey conducted between 2019 and 2020 as part of the [FONDECYT Regular project “The Moral Economy of Meritocracy and Redistributive Preferences”](https://jc-castillo.com/proyectos/posts/fondecyt-economiamoral/). Subsequently, this set of questions has been used in surveys targeting student and adult populations.
+
+To better illustrate the items that make up the scale, the following table is provided (see @tbl-meritscale):
+
+```{r}
+#| label: tbl-meritscale
+#| tbl-cap: "Meritocracy scale items"
+#| echo: false
+#| message: false
+#| warning: false
+library(here)
+merit_scale <- read.csv(here::here("..", "input", "tbl", "merit-scale.csv"))
+knitr::kable(merit_scale, col.names = c("Dimensions", "Factor", "Item english", "Item spanish"))
+```
+
+Each item on the scale is measured using a four-point agreement-disagreement scale, where (1) indicates “strongly disagree” and (4) indicates “strongly agree.” It is worth noting that this scale does not include any intermediate categories.
+
+### Deservingness scale
+
+The merit scale is based on the conceptual and empirically validated proposal by @meuleman_welfare_2020, which allows for an empirical study of the normative criteria that citizens apply to determine who is eligible for social protection. The framework is built upon the operationalization of five central concepts:
+
+- Control: Refers to the perception of personal responsibility in the face of a situation of need.
+
+- Attitude: Assesses the beneficiary’s disposition toward society and their gratitude for the assistance received.
+
+- Reciprocity: Considers the beneficiary’s past or future contribution to the system, which implies an expectation of a return for the assistance people receive.
+
+- Identity: Assesses the moral boundaries of the community regarding its willingness to benefit another.
+
+- Need: Focuses on the urgency and severity of the beneficiary’s situation. In this case, need is distinguished from control because it refers to conditions that are beyond an individual’s control.
+
+In addition, this survey includes the “effort” dimension based on the proposal by @knotz_recast_2022, who defines effort as the beneficiary’s active and present agency aimed at overcoming their situation of vulnerability or contributing in some way to society at the time they receive support. Based on these two models for measuring deservingness, this survey includes the following items (see @tbl-deservescale):
+
+```{r}
+#| label: tbl-deservescale
+#| tbl-cap: "Deservingness scale items"
+#| echo: false
+#| message: false
+#| warning: false
+library(here)
+deserve_scale <- read.csv(here::here("..", "input", "tbl", "deservingness-scale.csv"))
+knitr::kable(deserve_scale, col.names = c("Model", "Dimension", "Item english", "Item spanish"))
+```
+
+The items are measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
