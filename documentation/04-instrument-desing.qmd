@@ -3,7 +3,6 @@ format:
   html:
     toc: true
     css: justify.css
-bibliography: ../input/bib/jusmer.bib
 ---
 
 # Questionnaire design B: Items {#sec-items}
@@ -22,7 +21,7 @@ The first wave of the survey contains the following sets of questions: Market Ju
 
 The “Market Justice Preferences” scale consists of three questions, which aim to determine the extent to which people consider it fair for access to and the quality of social services—such as education, health care, and pensions—to depend on market criteria. These questions originally come from the [International Social Survey Program](https://www.gesis.org/en/issp/data-and-documentation/social-inequality) (1999) and are included in the social inequality module. In this context, the scale first appeared in the 1999 version of the ISSP and has been included in all subsequent versions (2009 and 2019).
 
-The question is phrased as follows: *Is it fair that in Chile, high-income individuals have access to better ___ than those with lower incomes?* The blank refers to the respective social service addressed by the scale.
+The question is phrased as follows: *Is it fair that in Chile, high-income individuals have access to better \_\_\_ than those with lower incomes?* The blank refers to the respective social service addressed by the scale.
 
 The question is measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
 
@@ -49,15 +48,15 @@ Each item on the scale is measured using a four-point agreement-disagreement sca
 
 The merit scale is based on the conceptual and empirically validated proposal by @meuleman_welfare_2020, which allows for an empirical study of the normative criteria that citizens apply to determine who is eligible for social protection. The framework is built upon the operationalization of five central concepts:
 
-- Control: Refers to the perception of personal responsibility in the face of a situation of need.
+-   Control: Refers to the perception of personal responsibility in the face of a situation of need.
 
-- Attitude: Assesses the beneficiary’s disposition toward society and their gratitude for the assistance received.
+-   Attitude: Assesses the beneficiary’s disposition toward society and their gratitude for the assistance received.
 
-- Reciprocity: Considers the beneficiary’s past or future contribution to the system, which implies an expectation of a return for the assistance people receive.
+-   Reciprocity: Considers the beneficiary’s past or future contribution to the system, which implies an expectation of a return for the assistance people receive.
 
-- Identity: Assesses the moral boundaries of the community regarding its willingness to benefit another.
+-   Identity: Assesses the moral boundaries of the community regarding its willingness to benefit another.
 
-- Need: Focuses on the urgency and severity of the beneficiary’s situation. In this case, need is distinguished from control because it refers to conditions that are beyond an individual’s control.
+-   Need: Focuses on the urgency and severity of the beneficiary’s situation. In this case, need is distinguished from control because it refers to conditions that are beyond an individual’s control.
 
 In addition, this survey includes the “effort” dimension based on the proposal by @knotz_recast_2022, who defines effort as the beneficiary’s active and present agency aimed at overcoming their situation of vulnerability or contributing in some way to society at the time they receive support. Based on these two models for measuring deservingness, this survey includes the following items (see @tbl-deservescale):
 
