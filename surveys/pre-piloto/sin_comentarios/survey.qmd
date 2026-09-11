@@ -507,7 +507,7 @@ setInterval(function() {
 # Pre-Piloto Encuesta justicia y merecimiento
 </center>
 
-Esta es la encuesta del proyecto FONDECYT "Justicia de Mercado y Merecimiento del Bienestar Social - [JUSMER](https://jusmer.com/)". Su objetivo es entender mejor las opiniones de las personas sobre la justicia y el merecimiento en el contexto de la desigualdad social.
+Esta es la encuesta del proyecto FONDECYT "Justicia de Mercado y Merecimiento del Bienestar Social - [JUSMER](https://jus-mer.com/)". Su objetivo es entender mejor las opiniones de las personas sobre la justicia y el merecimiento en el contexto de la desigualdad social.
 
 Estamos pre-testeando una sección de la encuesta y nos gustaría mucho que pudiera responderla y nos hiciera comentarios, no debería tomar más de 10 minutos. Sus respuestas serán completamente anónimas y se utilizarán únicamente con fines de investigación.
 
