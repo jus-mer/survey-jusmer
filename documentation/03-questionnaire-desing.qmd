@@ -1,0 +1,160 @@
+---
+title: "Questionnaire design"
+format:
+  html:
+    toc: true
+    css: justify.css
+---
+
+\[This section considers initially the questionnaire applied during the pilot study, and which could be modified in the actual implementation of the survey\]
+
+The questionnaire has four sections:
+
+1.  Informed consent
+2.  Distributive-Conjoint experiment
+3.  Attitudinal items
+4.  Socio-economic characterization
+
+Some characterization questions where introduced after the informed consent to monitor the quotas as well as to avoid jumping in quickly in the conjoint task, in order to give time to get used to the platform and the sense of the survey.
+
+## Informed consent and ethics certification (@tomasurzuam)
+
+## Distributive Conjoint-Survey experiment
+
+This section describes the core element of the survey: the design and implementation of the distributive conjoint module. This module is based on a distributive design, which is a type of survey experiment that allows researchers to study how people allocate scarce resources among competing claimants. In this case, the scarce resource is a fixed scholarship fund, and the competing claimants are two applicants with different attributes. The design allows researchers to examine how respondents make trade-offs between different attributes of the applicants, such as their academic performance, financial need, and personal characteristics. In this case, the attributes of the applicants are operationalized based on the CARIN and recast NICER frameworks, which are widely used in the welfare deservingness literature. The design also allows researchers to test hypotheses about how different attributes of the applicants affect respondents' allocation decisions, and how these decisions are influenced by respondents' own characteristics and beliefs.
+
+The design adapts the Distributional Survey Experiment of @gilgen_disentangling_2022 to a conjoint format [@hainmueller_causal_2014], combining the tabular presentation and complete, independent randomization of a conjoint experiment with the fixed-sum allocation task characteristic of distributive designs. The applicant attributes operationalize deservingness criteria drawn from the welfare deservingness literature, specifically the CARIN and recast NICER frameworks [@oorschot_who_2000; @meuleman_welfare_2020; @knotz_recast_2022]; the theoretical rationale for each attribute, the derivation of the hypotheses, and the analysis plan are documented separately in the [Pre Analysis Plan](https://jus-mer.github.io/survey-jusmer/surveys/conjoint-test/design/conjoint-preplan.html).
+
+This section is organized in the following subsections:
+
+1.  Task design and randomization
+2.  Analysis considerations
+3.  Power analysis
+
+### Task design and randomization
+
+The study uses a **paired-profile distributive conjoint**, a design that fuses the randomization logic of conjoint survey experiments with the allocative logic of distributive justice experiments. As in a standard conjoint, each task presents two profiles whose attributes are independently randomized, and the analysis recovers the effect of each attribute and level on the outcome. What departs from the standard conjoint is the response: rather than choosing one profile over the other, the respondent distributes a fixed resource between them, allocating a percentage of the total to each. The design therefore functions as an *allocator*—it asks how a scarce good should be divided between two independent claimants—and reveals the weight respondents place on each attribute through the share they are willing to grant.
+
+**Attributes and levels {#sec-attributes}**
+
+The profiles are defined by seven attributes, which operationalize six deservingness criteria (need, identity, control, effort, reciprocity, and attitude), and one additional attribute (sex of the applicant). Two of the deservingness criteria are operationalized with three levels, while the remaining four are operationalized with two levels.
+
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Attribute       | Criterion                     | Profile label                                              | Levels                                                                                                          |
++:================+:==============================+:===========================================================+:================================================================================================================+
+| **Need**        | Need (CARIN/NICER)            | Makes ends meet with *(Su hogar llega a fin de mes con:)*  | 1 Comfort *(Holgura)*\                                                                                          |
+|                 |                               |                                                            | 2 Hardship *(Dificultad)*                                                                                       |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Identity**    | Identity (CARIN/NICER)        | Country of birth *(País de nacimiento:)*                   | 1 Chile\                                                                                                        |
+|                 |                               |                                                            | 2 Peru *(Perú)*\                                                                                                |
+|                 |                               |                                                            | 3 Venezuela                                                                                                     |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Control**     | Control (CARIN/NICER)         | Needs the scholarship because *(Requiere la beca porque:)* | 1 Did not apply to other scholarships in time *(No alcanzó a postular a tiempo a otras becas)*\                 |
+|                 |                               |                                                            | 2 Applied to other scholarships but received no funding *(Postuló a otras becas pero no obtuvo financiamiento)* |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Effort**      | Effort (NICER)                | Studies *(Estudia:)*                                       | 1 Less than their peers *(Menos que sus compañeros)*\                                                           |
+|                 |                               |                                                            | 2 The same as their peers *(Igual que sus compañeros)*\                                                         |
+|                 |                               |                                                            | 3 More than their peers *(Más que sus compañeros)*                                                              |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Reciprocity** | Reciprocity (CARIN/NICER)     | Outside their studies *(Fuera de sus estudios:)*           | 1 Has not done volunteer work *(No ha hecho voluntariado)*\                                                     |
+|                 |                               |                                                            | 2 Has done volunteer work *(Ha hecho voluntariado)*                                                             |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Attitude**    | Attitude (CARIN)              | Sees the scholarship as *(Ve la beca como:)*               | 1 Something they deserve *(Algo que se merece)*\                                                                |
+|                 |                               |                                                            | 2 Help they are grateful for *(Una ayuda que agradece)*                                                         |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Sex**         | Ascriptive (signaled by name) | First name (no explicit row)                               | 1 Male name\                                                                                                    |
+|                 |                               |                                                            | 2 Female name                                                                                                   |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+
+<p style="font-size:0.8rem; color:#555; margin-top:0.8rem;">
+
+The resulting profiles are presented in a tabular format, with each attribute and its corresponding level displayed in a separate row. The table is designed to be visually clear and easy to read, allowing respondents to quickly compare the two profiles and make their allocation decisions. Besides, the allocation task is performed with a slider that allows respondents to allocate a percentage of the total scholarship fund to each profile, with the constraint that the total allocation must equal 100%. The slider is designed to be intuitive and user-friendly, allowing respondents to easily adjust their allocations and see the resulting changes in real-time.
+
+```{=html}
+<iframe src="images/survey.html" width="100%" height="800" frameborder="0" style="border: none; background: #ffffff; opacity: 1; filter: none; mix-blend-mode: normal;"></iframe>
+```
+
+-\> link to pre-pilot survey (allows translation in chrome): <https://jus-mer-pre-piloto-v1.hf.space/>
+
+### Tasks allocation and randomization
+
+Considering the number of attributes and levels, the total number of possible profiles is (2x3x2x3x2x2x2) = 288. The total number of possible profile pairs is (288x287)/2 = 41,328. The survey design randomly selects a subset of these pairs to present to respondents, ensuring that each respondent sees a unique combination of profiles.
+
+### Analysis considerations
+
+
+### Power analysis
+
+a. Traditional conjoint
+
+b. D-efficient (@tomasurzuam)
+
+## Attitudinal items @tomasurzuam
+
+This section describes the second component of the survey instrument, complementing the conjoint design presented in the previous section. It first outlines the overall structure of the questionnaire. Then details the three batteries of items applied—market justice preferences, the meritocracy scale, and the deservingness (CARIN/NICER) scale—describing their conceptual origin, wording, and measurement specifications.
+
+### Questionnaire Structure and Content
+
+The questionnaire is structured around two main sections. First, a matching task is administered, in which respondents are presented with two profiles of people with different characteristics and, based on those characteristics, must allocate a sum of money to finance their college education. This section of the survey is explained in greater detail in the [previous chapter](https://jus-mer.github.io/survey-jusmer/documentation/docs/03-conjoint-desing.html). The second part of the measurement instrument is based on items regarding public opinion, perceptions, and/or preferences related to the market, merit, and deservingness, which are presented as multiple-choice questions. The following section provides a more in-depth look at the item scales that were used, their origin, and measurement specifications.
+
+### Measurement Scales and Sources of Survey Items
+
+The first wave of the survey contains the following sets of questions: Market Justice Preferences (1), Meritocracy Scale (2), and Deservingness (CARIN/NICER) Scale (3).
+
+#### Market justice preferences
+
+The “Market Justice Preferences” scale consists of three questions, which aim to determine the extent to which people consider it fair for access to and the quality of social services—such as education, health care, and pensions—to depend on market criteria. These questions originally come from the [International Social Survey Program](https://www.gesis.org/en/issp/data-and-documentation/social-inequality) (1999) and are included in the social inequality module. In this context, the scale first appeared in the 1999 version of the ISSP and has been included in all subsequent versions (2009 and 2019).
+
+The question is phrased as follows: *Is it fair that in Chile, high-income individuals have access to better \_\_\_ than those with lower incomes?* The blank refers to the respective social service addressed by the scale.
+
+The question is measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
+
+#### Meritocracy scale
+
+The meritocracy scale is based on a conceptual framework designed by @castillo_multidimensional_2023, which presents a multidimensional model for measuring meritocratic beliefs. This model distinguishes, first, between perceptions and preferences, where the former refers to the way people view the world, while the latter refers to how the world should function. Second, the model distinguishes between meritocratic and privilege-based perceptions and preferences; meritocratic factors relate to effort and talent, while the privilege factor considers inherited conditions such as family wealth and connections. This instrument was first implemented in a survey conducted between 2019 and 2020 as part of the [FONDECYT Regular project “The Moral Economy of Meritocracy and Redistributive Preferences”](https://jc-castillo.com/proyectos/posts/fondecyt-economiamoral/). Subsequently, this set of questions has been used in surveys targeting student and adult populations.
+
+To better illustrate the items that make up the scale, the following table is provided (see @tbl-meritscale):
+
+```{r}
+#| label: tbl-meritscale
+#| tbl-cap: "Meritocracy scale items"
+#| echo: false
+#| message: false
+#| warning: false
+library(here)
+merit_scale <- read.csv(here::here("..", "input", "tbl", "merit-scale.csv"))
+knitr::kable(merit_scale, col.names = c("Dimensions", "Factor", "Item english", "Item spanish"))
+```
+
+Each item on the scale is measured using a four-point agreement-disagreement scale, where (1) indicates “strongly disagree” and (4) indicates “strongly agree.” It is worth noting that this scale does not include any intermediate categories.
+
+#### Deservingness scale
+
+The merit scale is based on the conceptual and empirically validated proposal by @meuleman_welfare_2020, which allows for an empirical study of the normative criteria that citizens apply to determine who is eligible for social protection. The framework is built upon the operationalization of five central concepts:
+
+-   Control: Refers to the perception of personal responsibility in the face of a situation of need.
+
+-   Attitude: Assesses the beneficiary’s disposition toward society and their gratitude for the assistance received.
+
+-   Reciprocity: Considers the beneficiary’s past or future contribution to the system, which implies an expectation of a return for the assistance people receive.
+
+-   Identity: Assesses the moral boundaries of the community regarding its willingness to benefit another.
+
+-   Need: Focuses on the urgency and severity of the beneficiary’s situation. In this case, need is distinguished from control because it refers to conditions that are beyond an individual’s control.
+
+In addition, this survey includes the “effort” dimension based on the proposal by @knotz_recast_2022, who defines effort as the beneficiary’s active and present agency aimed at overcoming their situation of vulnerability or contributing in some way to society at the time they receive support. Based on these two models for measuring deservingness, this survey includes the following items (see @tbl-deservescale):
+
+```{r}
+#| label: tbl-deservescale
+#| tbl-cap: "Deservingness scale items"
+#| echo: false
+#| message: false
+#| warning: false
+library(here)
+deserve_scale <- read.csv(here::here("..", "input", "tbl", "deservingness-scale.csv"))
+knitr::kable(deserve_scale, col.names = c("Model", "Dimension", "Item english", "Item spanish"))
+```
+
+The items are measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
+
+## Socio-economic characterization (@tomasurzuam)

@@ -57,62 +57,34 @@ This distributive logic follows the Distributional Survey Experiment of @gilgen_
 
 These are the criteria, attributes, and levels used to build each applicant profile. Levels are numbered so that higher numbers correspond to the more deserving level, with level 1 as the reference category. Identity is the exception: its numbering places the reference category (Chilean-born) first and is not a deservingness ordering.
 
-<table style="width:100%; border-collapse:collapse; font-size:0.85rem; line-height:1.5;">
-  <thead>
-    <tr style="border-top:2px solid #000; border-bottom:1px solid #000; background:#f5f5f5;">
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:12%;">Attribute</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:14%;">Criterion</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:20%;">Profile label</th>
-      <th style="padding:0.5rem 0.6rem; text-align:left; width:34%;">Levels</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Need</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Need (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Makes ends meet with <em>(Su hogar llega a fin de mes con:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Comfort <em>(Holgura)</em><br>2 Hardship <em>(Dificultad)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Identity</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Identity (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Country of birth <em>(País de nacimiento:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Chile<br>2 Peru <em>(Perú)</em><br>3 Venezuela</td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Control</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Control (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Needs the scholarship because <em>(Requiere la beca porque:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Did not apply to other scholarships in time <em>(No alcanzó a postular a tiempo a otras becas)</em><br>2 Applied to other scholarships but received no funding <em>(Postuló a otras becas pero no obtuvo financiamiento)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Effort</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Effort (NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Studies <em>(Estudia:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Less than their peers <em>(Menos que sus compañeros)</em><br>2 The same as their peers <em>(Igual que sus compañeros)</em><br>3 More than their peers <em>(Más que sus compañeros)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Reciprocity</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Reciprocity (CARIN/NICER)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Outside their studies <em>(Fuera de sus estudios:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Has not done volunteer work <em>(No ha hecho voluntariado)</em><br>2 Has done volunteer work <em>(Ha hecho voluntariado)</em></td>
-    </tr>
-    <tr style="border-bottom:1px solid #ddd; background:#fafafa;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Attitude</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Attitude (CARIN)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Sees the scholarship as <em>(Ve la beca como:)</em></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Something they deserve <em>(Algo que se merece)</em><br>2 Help they are grateful for <em>(Una ayuda que agradece)</em></td>
-    </tr>
-    <tr style="border-bottom:2px solid #000;">
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;"><strong>Sex</strong></td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">Ascriptive (signaled by name)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">First name (no explicit row)</td>
-      <td style="padding:0.5rem 0.6rem; vertical-align:top;">1 Male name<br>2 Female name</td>
-    </tr>
-  </tbody>
-</table>
-<p style="font-size:0.8rem; color:#555; margin-top:0.8rem;">
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| Attribute       | Criterion                     | Profile label                                              | Levels                                                                                                          |
++:================+:==============================+:===========================================================+:================================================================================================================+
+| **Need**        | Need (CARIN/NICER)            | Makes ends meet with *(Su hogar llega a fin de mes con:)*  | 1 Comfort *(Holgura)*\                                                                                          |
+|                 |                               |                                                            | 2 Hardship *(Dificultad)*                                                                                       |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Identity**    | Identity (CARIN/NICER)        | Country of birth *(País de nacimiento:)*                   | 1 Chile\                                                                                                        |
+|                 |                               |                                                            | 2 Peru *(Perú)*\                                                                                                |
+|                 |                               |                                                            | 3 Venezuela                                                                                                     |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Control**     | Control (CARIN/NICER)         | Needs the scholarship because *(Requiere la beca porque:)* | 1 Did not apply to other scholarships in time *(No alcanzó a postular a tiempo a otras becas)*\                 |
+|                 |                               |                                                            | 2 Applied to other scholarships but received no funding *(Postuló a otras becas pero no obtuvo financiamiento)* |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Effort**      | Effort (NICER)                | Studies *(Estudia:)*                                       | 1 Less than their peers *(Menos que sus compañeros)*\                                                           |
+|                 |                               |                                                            | 2 The same as their peers *(Igual que sus compañeros)*\                                                         |
+|                 |                               |                                                            | 3 More than their peers *(Más que sus compañeros)*                                                              |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Reciprocity** | Reciprocity (CARIN/NICER)     | Outside their studies *(Fuera de sus estudios:)*           | 1 Has not done volunteer work *(No ha hecho voluntariado)*\                                                     |
+|                 |                               |                                                            | 2 Has done volunteer work *(Ha hecho voluntariado)*                                                             |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Attitude**    | Attitude (CARIN)              | Sees the scholarship as *(Ve la beca como:)*               | 1 Something they deserve *(Algo que se merece)*\                                                                |
+|                 |                               |                                                            | 2 Help they are grateful for *(Una ayuda que agradece)*                                                         |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
+| **Sex**         | Ascriptive (signaled by name) | First name (no explicit row)                               | 1 Male name\                                                                                                    |
+|                 |                               |                                                            | 2 Female name                                                                                                   |
++-----------------+-------------------------------+------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
 
+<p style="font-size:0.8rem; color:#555; margin-top:0.8rem;">
 
 ### Scenario
 
@@ -468,7 +440,7 @@ tbl_mde_main
 ```
 
 ::: {.callout-note appearance="minimal"}
-*Note:* SIMS, simulations per cell, interpolated between delta_interaction = 0.5, 1, 1.5, 2, 2.5, 3 pp/SD. Delta range anchored on Gilgen (2022). The MDE reported here is the smallest interaction this design is powered to detect reliability = 1.0 assumes a perfectly measured moderator (upper-bound benchmark), reliability = 0.8 reflects realistic attitudinal-scale measurement error. 
+*Note:* SIMS, simulations per cell, interpolated between delta_interaction = 0.5, 1, 1.5, 2, 2.5, 3 pp/SD. Delta range anchored on Gilgen (2022). The MDE reported here is the smallest interaction this design is powered to detect reliability = 1.0 assumes a perfectly measured moderator (upper-bound benchmark), reliability = 0.8 reflects realistic attitudinal-scale measurement error.
 :::
 
 What this means for the moderation hypotheses is a matter of size. The design detects interactions of moderate size with ease: an effect of 1 pp per standard deviation is caught with power near or above 0.90 at every task count, and anything larger with near-certainty. It cannot reliably detect very small interactions: an effect of 0.5 pp per standard deviation falls below the 80% threshold at 1,500 respondents.

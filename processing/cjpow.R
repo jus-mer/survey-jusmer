@@ -13,7 +13,8 @@ rm(list = ls())
 #if (!require(devtools)) install.packages("devtools")
 #devtools::install_github("m-freitag/cjpowR")
 
-library(cjpowR)
+library(cjpowR) # NOT IN CRAN; devtools::install_github("m-freitag/cjpowR")
+
 library(tidyverse)
 
 set.seed(123)
