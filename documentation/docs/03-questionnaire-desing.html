@@ -17,6 +17,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -82,7 +117,32 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><link rel="stylesheet" href="justify.css">
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="justify.css">
 </head>
 <body class="nav-sidebar docked quarto-light">
 
@@ -188,6 +248,9 @@ div.csl-indent {
   <ul class="collapse">
 <li><a href="#task-design-and-randomization" id="toc-task-design-and-randomization" class="nav-link" data-scroll-target="#task-design-and-randomization"><span class="header-section-number">3.2.1</span> Task design and randomization</a></li>
   <li><a href="#tasks-allocation-and-randomization" id="toc-tasks-allocation-and-randomization" class="nav-link" data-scroll-target="#tasks-allocation-and-randomization"><span class="header-section-number">3.2.2</span> Tasks allocation and randomization</a></li>
+  <li><a href="#power-analysis-and-sample-size" id="toc-power-analysis-and-sample-size" class="nav-link" data-scroll-target="#power-analysis-and-sample-size"><span class="header-section-number">3.2.3</span> Power analysis and sample size</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation"><span class="header-section-number">3.2.4</span> Implementation</a></li>
+  <li><a href="#analysis-considerations" id="toc-analysis-considerations" class="nav-link" data-scroll-target="#analysis-considerations"><span class="header-section-number">3.2.5</span> Analysis considerations</a></li>
   </ul>
 </li>
   <li>
@@ -329,7 +392,38 @@ div.csl-indent {
 <p>-&gt; link to pre-pilot survey (allows translation in chrome): <a href="https://jus-mer-pre-piloto-v1.hf.space/" class="uri">https://jus-mer-pre-piloto-v1.hf.space/</a></p>
 </section><section id="tasks-allocation-and-randomization" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="tasks-allocation-and-randomization">
 <span class="header-section-number">3.2.2</span> Tasks allocation and randomization</h3>
-<p>Considering the number of attributes and levels, the total number of possible profiles is (2x3x2x3x2x2x2) = 288. The total number of possible profile pairs is (288x287)/2 = 41,328. The survey design randomly selects a subset of these pairs to present to respondents, ensuring that each respondent sees a unique combination of profiles.</p>
+<p>Considering the number of attributes and levels, the total number of possible profiles is (2x3x2x3x2x2x2) = 288. The total number of possible (non redundant) profile pairs is p<em>(p-1)/2 = (288</em>287)/2 = 41,328. The survey design randomly selects a subset of these pairs to present to respondents, ensuring that each respondent sees a unique combination of profiles.</p>
+<p>The experiment uses complete and independent randomization of attribute levels, the reference case in Hainmueller et al. <span class="citation" data-cites="hainmueller_causal_2014">(<a href="#ref-hainmueller_causal_2014" role="doc-biblioref">2014</a>)</span> and the default for most applied conjoint designs <span class="citation" data-cites="bansak_conjoint_2021">(<a href="#ref-bansak_conjoint_2021" role="doc-biblioref">Bansak et al., 2021</a>)</span>. For each profile <span class="math inline">\((j)\)</span>, every attribute is drawn independently of the others and of the competing profile, with uniform probability within its attribute (<span class="math inline">\(1/2\)</span> for the four two-level attributes, <span class="math inline">\(1/3\)</span> for Effort and Identity). No attribute is conditioned on another and no level is reweighted, so the joint distribution of profiles is the product of the attribute marginals <span class="citation" data-cites="hainmueller_causal_2014">(<a href="#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. Randomization occurs at the profile level and is performed anew for each respondent and task, rather than as a fixed block assigned in advance. Under this scheme the assignment of each attribute is by construction independent of the potential outcomes, which is the condition that identifies the AMCEs <span class="citation" data-cites="hainmueller_causal_2014">(<a href="#ref-hainmueller_causal_2014" role="doc-biblioref">Hainmueller et al., 2014</a>)</span>. The randomization is implemented in the survey platform using a custom script that generates the profiles and their corresponding levels on the fly, ensuring that each respondent sees a unique set of profiles.</p>
+<p>A direct consequence of independent randomization is orthogonality: across the sample, the level of any one attribute is statistically independent of the level of every other, so the estimated effect of one attribute cannot be biased by the distribution of another. Exact zero correlation holds only in expectation, so it is worth stating what “independent” means at a finite sample. With 54,000 profiles the sampling standard error of a correlation between any two attribute indicators is approximately <span class="math inline">\(1/\sqrt{54{,}000} \approx 0.004\)</span>, so inter-attribute correlations should fall within roughly <span class="math inline">\(\pm 0.013\)</span> of zero (three standard errors) purely by sampling variation. A simulation of the design under the realized sample size confirms this directly: across the full attribute set the largest observed within-profile correlation is <span class="math inline">\(0.011\)</span>, within the expected band and stable across repeated seeds (see <span class="quarto-unresolved-ref">?sec-random-check</span>). Departures of this magnitude are sampling noise, not structural dependence, and bias no AMCE.</p>
+</section><section id="power-analysis-and-sample-size" class="level3" data-number="3.2.3"><h3 data-number="3.2.3" class="anchored" data-anchor-id="power-analysis-and-sample-size">
+<span class="header-section-number">3.2.3</span> Power analysis and sample size</h3>
+<p>Under the binary-outcome formula produced by <span class="citation" data-cites="schuessler_power_2020">Schuessler &amp; Freitag (<a href="#ref-schuessler_power_2020" role="doc-biblioref">2020</a>)</span>, the number of respondents required to detect an effect of a given size follows</p>
+<p><span class="math display">\[N \approx \frac{K}{2} \cdot \frac{(z_{1-\alpha/2} + z_{\kappa})^2}{\delta_1^2},\]</span></p>
+<p>where <span class="math inline">\(K\)</span> is the number of levels of the attribute, <span class="math inline">\(\delta_1\)</span> the target effect, here 3pp (percentage points), the lower range of effects in the deservingness literature <span class="citation" data-cites="knotz_recast_2022 gilgen_disentangling_2022">(<a href="#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>; <a href="#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>, and the middle term equals 7.84 at the conventional <span class="math inline">\(\alpha = 0.05\)</span> and 80% power. Three-level attributes (Effort, Identity) are the demanding ones, because each of their contrasts uses only two-thirds of the profiles and so needs more respondents than a two-level attribute.</p>
+<p>In the extant literature there are different proposal for determining the number of respondents, which usually include specific R packages and interactive tools (as cjpowR, cbcTools …). in the appendix we provide a detailed comparison of alternatives for power analysis. For the final calculation we used the <strong>cjpowR</strong> package, which is a recent R package that provides functions for calculating the power of conjoint experiments based on the AMCE (in this case, 3pp or 0.03), attributes, and levels.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cjpowR</span><span class="op">)</span> <span class="co"># to install: devtools::install_github("m-freitag/cjpowR")</span></span>
+<span><span class="va">n_eff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cjpowR/man/cjpowr_amce.html">cjpowr_amce</a></span><span class="op">(</span>amce <span class="op">=</span> <span class="fl">0.03</span>, power <span class="op">=</span> <span class="fl">0.80</span>, levels <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="va">n</span></span>
+<span><span class="va">n_profiles_per_task</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">n_tasks</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
+<span><span class="va">n_respondents</span> <span class="op">&lt;-</span> <span class="va">n_eff</span> <span class="op">/</span> <span class="op">(</span><span class="va">n_profiles_per_task</span> <span class="op">*</span> <span class="va">n_tasks</span><span class="op">)</span> </span>
+<span><span class="va">n_respondents</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1306.969</code></pre>
+</div>
+</div>
+<p>With this approach the minimun required sample size is <strong>1,307</strong> respondents.</p>
+<p>A different approach is to use a D-efficient design, which is a type of experimental design that maximizes the amount of information that can be obtained from a given number of respondents. D-efficient designs are often used in conjoint experiments to reduce the number of profiles that need to be presented to respondents while still allowing for the estimation of the main effects and interactions of interest. Using this approach, we can reduce the number of respondents needed to achieve the same level of statistical power. <span class="citation" data-cites="tomasurzuam">(acá sigue <a href="#ref-tomasurzuam" role="doc-biblioref"><strong>tomasurzuam?</strong></a>)</span></p>
+</section><section id="implementation" class="level3" data-number="3.2.4"><h3 data-number="3.2.4" class="anchored" data-anchor-id="implementation">
+<span class="header-section-number">3.2.4</span> Implementation</h3>
+<ul>
+<li>selection of the non-redundant pairs of profiles</li>
+<li>restrictions: the design imposes a single restriction, applied to the pair of profiles within a task rather than to individual attributes: the two profiles must differ on at least two of the six CARIN/NICER attributes (need, identity, control, effort, reciprocity, attitude). When a pair is generated, the six substantive attributes are drawn independently and the pair is retained only if it differs on two or more of them, otherwise it is redrawn. Sex is assigned afterward through the applicant’s first name and does not enter the check, so the two profiles may share the same sex or not. The purpose is cognitive: a pair that is identical or differs on only one substantive attribute presents two near-indistinguishable applicants, yielding a task that carries little information about trade-offs.</li>
+<li>randomization of attributes order</li>
+<li>attention check</li>
+<li>inter reliability check</li>
+</ul></section><section id="analysis-considerations" class="level3" data-number="3.2.5"><h3 data-number="3.2.5" class="anchored" data-anchor-id="analysis-considerations">
+<span class="header-section-number">3.2.5</span> Analysis considerations</h3>
 </section></section><section id="attitudinal-items-tomasurzuam" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="attitudinal-items-tomasurzuam">
 <span class="header-section-number">3.3</span> Attitudinal items <span class="citation" data-cites="tomasurzuam">(<a href="#ref-tomasurzuam" role="doc-biblioref"><strong>tomasurzuam?</strong></a>)</span>
 </h2>
@@ -589,6 +683,9 @@ Table&nbsp;3.2: Deservingness scale items
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-bansak_conjoint_2021" class="csl-entry" role="listitem">
+Bansak, K., Hainmueller, J., Hopkins, D. J., &amp; Yamamoto, T. (2021). Conjoint <span>Survey Experiments</span>. In J. Druckman &amp; D. P. Green (Eds.), <em>Advances in <span>Experimental Political Science</span></em> (1st ed., pp. 19–41). Cambridge University Press. <a href="https://doi.org/10.1017/9781108777919.004">https://doi.org/10.1017/9781108777919.004</a>
+</div>
 <div id="ref-castillo_multidimensional_2023" class="csl-entry" role="listitem">
 Castillo, J. C., Iturra, J., Maldonado, L., Atria, J., &amp; Meneses, F. (2023). A <span>Multidimensional Approach</span> for <span>Measuring Meritocratic Beliefs</span>: <span>Advantages</span>, <span>Limitations</span> and <span>Alternatives</span> to the <span>ISSP Social Inequality Survey</span>. <em>International Journal of Sociology</em>, <em>53</em>(6), 448–472. <a href="https://doi.org/10.1080/00207659.2023.2274712">https://doi.org/10.1080/00207659.2023.2274712</a>
 </div>
@@ -606,6 +703,9 @@ Meuleman, B., Roosma, F., &amp; Abts, K. (2020). Welfare deservingness opinions 
 </div>
 <div id="ref-oorschot_who_2000" class="csl-entry" role="listitem">
 Oorschot, W. V. (2000). Who should get what, and why? <span>On</span> deservingness criteria and the conditionality of solidarity among the public. <em>Policy &amp; Politics</em>, <em>28</em>(1), 33–48. <a href="https://doi.org/10.1332/0305573002500811">https://doi.org/10.1332/0305573002500811</a>
+</div>
+<div id="ref-schuessler_power_2020" class="csl-entry" role="listitem">
+Schuessler, J., &amp; Freitag, M. (2020). Power <span>Analysis</span> for <span>Conjoint Experiments</span>. SocArXiv. <a href="https://doi.org/10.31235/osf.io/9yuhp">https://doi.org/10.31235/osf.io/9yuhp</a>
 </div>
 </div>
 </section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
