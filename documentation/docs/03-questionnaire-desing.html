@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>3&nbsp; Questionnaire design – JUSMER Survey Methodological Manual</title>
 <style>
@@ -85,14 +85,15 @@ div.csl-indent {
 <link href="./02-survey-desing.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e5a9f322d38a522820c6d9d97a759b08.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-4184f017e24898c52ba8423bde4bbb91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -128,7 +129,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -160,7 +161,9 @@ window.Quarto = {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">JUSMER Survey Methodological Manual</a> 
         <div class="sidebar-tools-main">
@@ -389,7 +392,7 @@ window.Quarto = {
 </p>
 <p>The resulting profiles are presented in a tabular format, with each attribute and its corresponding level displayed in a separate row. The table is designed to be visually clear and easy to read, allowing respondents to quickly compare the two profiles and make their allocation decisions. Besides, the allocation task is performed with a slider that allows respondents to allocate a percentage of the total scholarship fund to each profile, with the constraint that the total allocation must equal 100%. The slider is designed to be intuitive and user-friendly, allowing respondents to easily adjust their allocations and see the resulting changes in real-time.</p>
 <iframe src="images/survey.html" width="100%" height="800" frameborder="0" style="border: none; background: #ffffff; opacity: 1; filter: none; mix-blend-mode: normal;"></iframe>
-<p>-&gt; link to pre-pilot survey (allows translation in chrome): <a href="https://jus-mer-pre-piloto-v1.hf.space/" class="uri">https://jus-mer-pre-piloto-v1.hf.space/</a></p>
+<p>-&gt; link to pre-pilot survey (allows translation in chrome): <a href="https://jus-mer-pre-piloto-v2.share.connect.posit.cloud" class="uri">https://jus-mer-pre-piloto-v2.share.connect.posit.cloud</a></p>
 </section><section id="tasks-allocation-and-randomization" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="tasks-allocation-and-randomization">
 <span class="header-section-number">3.2.2</span> Tasks allocation and randomization</h3>
 <p>Considering the number of attributes and levels, the total number of possible profiles is (2x3x2x3x2x2x2) = 288. The total number of possible (non redundant) profile pairs is p<em>(p-1)/2 = (288</em>287)/2 = 41,328. The survey design randomly selects a subset of these pairs to present to respondents, ensuring that each respondent sees a unique combination of profiles.</p>
@@ -402,18 +405,374 @@ window.Quarto = {
 <p>where <span class="math inline">\(K\)</span> is the number of levels of the attribute, <span class="math inline">\(\delta_1\)</span> the target effect, here 3pp (percentage points), the lower range of effects in the deservingness literature <span class="citation" data-cites="knotz_recast_2022 gilgen_disentangling_2022">(<a href="#ref-gilgen_disentangling_2022" role="doc-biblioref">Gilgen, 2022</a>; <a href="#ref-knotz_recast_2022" role="doc-biblioref">Knotz et al., 2022</a>)</span>, and the middle term equals 7.84 at the conventional <span class="math inline">\(\alpha = 0.05\)</span> and 80% power. Three-level attributes (Effort, Identity) are the demanding ones, because each of their contrasts uses only two-thirds of the profiles and so needs more respondents than a two-level attribute.</p>
 <p>In the extant literature there are different proposal for determining the number of respondents, which usually include specific R packages and interactive tools (as cjpowR, cbcTools …). in the appendix we provide a detailed comparison of alternatives for power analysis. For the final calculation we used the <strong>cjpowR</strong> package, which is a recent R package that provides functions for calculating the power of conjoint experiments based on the AMCE (in this case, 3pp or 0.03), attributes, and levels.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cjpowR</span><span class="op">)</span> <span class="co"># to install: devtools::install_github("m-freitag/cjpowR")</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">cjpowR</span><span class="op">)</span> <span class="co"># to install: devtools::install_github("m-freitag/cjpowR")</span></span>
 <span><span class="va">n_eff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cjpowR/man/cjpowr_amce.html">cjpowr_amce</a></span><span class="op">(</span>amce <span class="op">=</span> <span class="fl">0.03</span>, power <span class="op">=</span> <span class="fl">0.80</span>, levels <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="va">n</span></span>
 <span><span class="va">n_profiles_per_task</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">n_tasks</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span><span class="va">n_respondents</span> <span class="op">&lt;-</span> <span class="va">n_eff</span> <span class="op">/</span> <span class="op">(</span><span class="va">n_profiles_per_task</span> <span class="op">*</span> <span class="va">n_tasks</span><span class="op">)</span> </span>
-<span><span class="va">n_respondents</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">n_respondents</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1306.969</code></pre>
 </div>
 </div>
 <p>With this approach the minimun required sample size is <strong>1,307</strong> respondents.</p>
-<p>A different approach is to use a D-efficient design, which is a type of experimental design that maximizes the amount of information that can be obtained from a given number of respondents. D-efficient designs are often used in conjoint experiments to reduce the number of profiles that need to be presented to respondents while still allowing for the estimation of the main effects and interactions of interest. Using this approach, we can reduce the number of respondents needed to achieve the same level of statistical power. <span class="citation" data-cites="tomasurzuam">(acá sigue <a href="#ref-tomasurzuam" role="doc-biblioref"><strong>tomasurzuam?</strong></a>)</span></p>
+<p>A different approach is to use a D-efficient design, which is a type of experimental design that maximizes the amount of information that can be obtained from a given number of respondents. D-efficient designs are often used in conjoint experiments to reduce the number of profiles that need to be presented to respondents while still allowing for the estimation of the main effects and interactions of interest. Using this approach, we can reduce the number of respondents needed to achieve the same level of statistical power.</p>
+<p>As an exploratory check, we compare a D-optimal selection of profiles against the profiles that complete randomization would draw at the same sample size, restricted to main effects only (the estimand of interest here). At the profile level, using <code><a href="https://rdrr.io/pkg/AlgDesign/man/Federov.html">AlgDesign::optFederov</a></code> (Fedorov algorithm, D-criterion) over the full 288-profile candidate set and the main-effects model <code>~ Need + Identity + Control + Effort + Reciprocity + Attitude + Sex</code>, we compute the D-efficiency of the optimal design against a benchmark of profiles drawn at random (200 repetitions per grid point) across a grid of sample sizes from 40 to 288 profiles.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jvbraun/AlgDesign">AlgDesign</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">20260922</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Candidate set: every possible profile (the full 2x3x2x3x2x2x2 = 288 factorial),</span></span>
+<span><span class="co"># one row per profile, one column per attribute. This is the pool optFederov()</span></span>
+<span><span class="co"># will search over -- it cannot propose a profile that isn't in this list.</span></span>
+<span><span class="va">candidates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AlgDesign/man/genFact.html">gen.factorial</a></span><span class="op">(</span></span>
+<span>  levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  varNames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Need"</span>, <span class="st">"Identity"</span>, <span class="st">"Control"</span>, <span class="st">"Effort"</span>, <span class="st">"Reciprocity"</span>, <span class="st">"Attitude"</span>, <span class="st">"Sex"</span><span class="op">)</span>,</span>
+<span>  factors <span class="op">=</span> <span class="st">"all"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Model to optimize for: main effects only, no interactions (matches the</span></span>
+<span><span class="co"># confirmatory estimator in the Pre-Analysis Plan). model.matrix() turns the</span></span>
+<span><span class="co"># 7 factor columns into the dummy-coded design matrix X; p is its number of</span></span>
+<span><span class="co"># columns (parameters), needed to normalize the D-criterion below.</span></span>
+<span><span class="va">formula_main</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="va">Need</span> <span class="op">+</span> <span class="va">Identity</span> <span class="op">+</span> <span class="va">Control</span> <span class="op">+</span> <span class="va">Effort</span> <span class="op">+</span> <span class="va">Reciprocity</span> <span class="op">+</span> <span class="va">Attitude</span> <span class="op">+</span> <span class="va">Sex</span></span>
+<span><span class="va">X_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">formula_main</span>, data <span class="op">=</span> <span class="va">candidates</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">X_full</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sample sizes to evaluate, from 40 profiles up to the full 288.</span></span>
+<span><span class="va">n_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">288</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fl">288</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">10</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="va">n_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n_grid</span>, <span class="fl">288</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Number of random draws averaged per grid point, so the "complete</span></span>
+<span><span class="co"># randomization" benchmark isn't just one noisy draw.</span></span>
+<span><span class="va">n_random_reps</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span></span>
+<span><span class="co"># For each candidate sample size N, compute two things and return them as a</span></span>
+<span><span class="co"># one-row data frame (lapply + bind_rows stacks these into one table):</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">n_grid</span>, <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># (a) The D-optimal design of N profiles: optFederov searches the 288-row</span></span>
+<span>  <span class="co">#     candidate set for the N-row subset (with replacement allowed) that</span></span>
+<span>  <span class="co">#     maximizes det(X'X), i.e. is best for estimating the 7 main effects.</span></span>
+<span>  <span class="co">#     nRepeats = 30 restarts the search from different random starting</span></span>
+<span>  <span class="co">#     designs to avoid a local optimum.</span></span>
+<span>  <span class="va">fed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AlgDesign/man/Federov.html">optFederov</a></span><span class="op">(</span></span>
+<span>    frml <span class="op">=</span> <span class="va">formula_main</span>, data <span class="op">=</span> <span class="va">candidates</span>, nTrials <span class="op">=</span> <span class="va">n</span>,</span>
+<span>    criterion <span class="op">=</span> <span class="st">"D"</span>, nRepeats <span class="op">=</span> <span class="fl">30</span>, approximate <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="va">Xopt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">formula_main</span>, data <span class="op">=</span> <span class="va">fed</span><span class="op">$</span><span class="va">design</span><span class="op">)</span></span>
+<span>  <span class="co"># D-efficiency, scaled per observation: det(X'X)^(1/p) / n. This puts</span></span>
+<span>  <span class="co"># designs of different N on a comparable footing -- it is the quantity</span></span>
+<span>  <span class="co"># that (for a fixed target precision) trades off directly against N.</span></span>
+<span>  <span class="va">d_opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">Xopt</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">Xopt</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">p</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
+<span></span>
+<span>  <span class="co"># (b) The same quantity for N profiles drawn completely at random (with</span></span>
+<span>  <span class="co">#     replacement, exactly as the survey's own randomization would do),</span></span>
+<span>  <span class="co">#     repeated 200 times so we report its expected value rather than one</span></span>
+<span>  <span class="co">#     lucky/unlucky draw.</span></span>
+<span>  <span class="va">rand_deffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n_random_reps</span>, <span class="op">{</span></span>
+<span>    <span class="va">idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">candidates</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="va">Xr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">formula_main</span>, data <span class="op">=</span> <span class="va">candidates</span><span class="op">[</span><span class="va">idx</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">detXtX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">Xr</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">Xr</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">detXtX</span><span class="op">)</span> <span class="op">||</span> <span class="va">detXtX</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="cn">NA_real_</span> <span class="kw">else</span> <span class="va">detXtX</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">p</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>N <span class="op">=</span> <span class="va">n</span>, D_optimal <span class="op">=</span> <span class="va">d_opt</span>, D_random <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rand_deffs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># How much efficiency complete randomization is leaving on the table at</span></span>
+<span>  <span class="co"># each N, in percentage terms.</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gain_pct <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="op">(</span><span class="va">D_optimal</span> <span class="op">/</span> <span class="va">D_random</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot both efficiency curves against N to see how quickly random catches up</span></span>
+<span><span class="co"># to the optimal design.</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">results</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">N</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">D_optimal</span>, color <span class="op">=</span> <span class="st">"D-optimal"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">D_random</span>, color <span class="op">=</span> <span class="st">"Complete randomization"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of profiles"</span>, y <span class="op">=</span> <span class="st">"D-efficiency (scaled)"</span>, color <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-deff-grid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-deff-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-questionnaire-desing_files/figure-html/fig-deff-grid-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deff-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: D-efficiency (main effects) of a D-optimal profile selection vs.&nbsp;complete randomization, across sample sizes
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Walking through what the chunk does: it first builds the <em>candidate set</em> — every one of the 288 possible profiles — since <code><a href="https://rdrr.io/pkg/AlgDesign/man/Federov.html">optFederov()</a></code> can only pick from profiles that exist in this list. It then fixes the <em>model</em> to optimize for, main effects only (<code>formula_main</code>), because efficiency is only meaningful relative to a specific set of parameters. For each sample size in the grid (40 to 288), it runs the Fedorov search to find the best N-profile subset for that model (<code>fed</code>, restarted 30 times to avoid local optima), and computes its per-observation D-efficiency (<code>d_opt</code>). It then computes the same statistic for N profiles drawn completely at random, repeated 200 times so the benchmark reflects the <em>expected</em> efficiency of randomization rather than one draw. Stacking one row per grid point (<code>bind_rows</code>) and adding the percentage gap (<code>gain_pct</code>) gives the <code>results</code> table plotted above.</p>
+<p>Across the grid, the D-criterion of the optimal design is essentially flat (0.258–0.2586) regardless of sample size, because with only seven main effects to estimate, the algorithm saturates the available information with very few distinct profiles. Complete randomization converges toward that optimum quickly: the efficiency gap is 13% at N = 40 profiles, falls to 4.9% by N = 100, and is only 1.7% at the full 288-profile factorial. This is consistent with the argument made in the <a href="https://jus-mer.github.io/survey-jusmer/surveys/conjoint-test/design/conjoint-preplan.html">Pre-Analysis Plan</a>: given the small factorial space (288 profiles) and an estimand restricted to main effects, complete randomization is already close to D-optimal, and a formal D-efficient design offers, at most, a modest efficiency gain concentrated at small sample sizes — not a reduction large enough to justify replacing complete randomization, which also has the advantage of preserving marginal-based AMCE identification without fixing the profile set in advance.</p>
+<p><strong>Back-of-envelope consequence for sample size.</strong> Because <span class="math inline">\(\text{Var}(\hat\beta) \propto \sigma^2(X'X)^{-1}\)</span>, the per-observation D-efficiency computed above trades off directly against N for a fixed target precision: to match the information of the randomized design at size <span class="math inline">\(N_{\text{random}}\)</span>, the D-optimal design only needs <span class="math inline">\(N_{\text{D-optimal}} \approx N_{\text{random}} / \text{ratio}\)</span>, where <code>ratio</code> is <code>D_optimal / D_random</code> at the relevant N. Applying this to the 1,307 respondents required above:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">envelope</span> <span class="op">&lt;-</span> <span class="va">results</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">N</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">100</span>, <span class="fl">288</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    ratio <span class="op">=</span> <span class="va">D_optimal</span> <span class="op">/</span> <span class="va">D_random</span>,</span>
+<span>    respondents_random <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_respondents</span><span class="op">)</span>,</span>
+<span>    respondents_D_optimal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_respondents</span> <span class="op">/</span> <span class="va">ratio</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">N</span>, <span class="va">ratio</span>, <span class="va">respondents_random</span>, <span class="va">respondents_D_optimal</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
+<span>  <span class="va">envelope</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Profile pool (N)"</span>, <span class="st">"Efficiency ratio"</span>, <span class="st">"Respondents (randomization)"</span>, <span class="st">"Respondents (D-optimal, implied)"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-deff-envelope" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-deff-envelope-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Back-of-envelope respondents implied by the D-efficiency gain, at selected profile-pool sizes
+</figcaption><div aria-describedby="tbl-deff-envelope-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 29%">
+<col style="width: 34%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">Profile pool (N)</th>
+<th style="text-align: right;">Efficiency ratio</th>
+<th style="text-align: right;">Respondents (randomization)</th>
+<th style="text-align: right;">Respondents (D-optimal, implied)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1.130</td>
+<td style="text-align: right;">1307</td>
+<td style="text-align: right;">1157</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">1.049</td>
+<td style="text-align: right;">1307</td>
+<td style="text-align: right;">1246</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">1.017</td>
+<td style="text-align: right;">1307</td>
+<td style="text-align: right;">1286</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The implied saving tracks the efficiency gap directly: on the order of 11% fewer respondents in the most favorable case (a small, 40-profile pool), shrinking to 2% at the full 288-profile factorial — a few hundred respondents at most, not a change of order of magnitude. Two caveats apply. First, this is an approximation: the 1,307 baseline comes from <code>cjpowR</code>’s closed-form AMCE power formula <span class="citation" data-cites="schuessler_power_2020">(<a href="#ref-schuessler_power_2020" role="doc-biblioref">Schuessler &amp; Freitag, 2020</a>)</span>, derived under different assumptions (a Bernoulli-type outcome variance) than the linear-model D-efficiency computed here, so the two are not measuring precision on identical terms — the ratio is a reasonable order-of-magnitude translation, not an exact one. Second, it ignores the respondent fixed effects and cluster-robust standard errors used in the actual estimator (see Analysis considerations), which <span class="math inline">\((X'X)^{-1}\)</span> alone does not capture. A precise answer would require a Monte Carlo power simulation — fitting the actual respondent-fixed-effects model with clustered SEs to data simulated under each design, across a grid of N — which in turn needs the outcome’s residual variance and intra-respondent correlation. Neither is known yet; calibrating them is one of the stated purposes of the pilot, so a fully rigorous version of this exercise is deferred until pilot data are available.</p>
+<p><strong>Pair-level check</strong></p>
+<p>The exercise above optimizes the <em>profile</em> pool, but the unit actually shown to respondents is a <em>task</em>: a pair of two profiles, subject to the restriction that they differ on at least two of the six CARIN/NICER attributes (see Implementation). Because the analysis model has no task-level term — each profile enters the regression as its own row, with only a respondent fixed effect — the information matrix <span class="math inline">\(X'X\)</span> of the full dataset is just the sum of the two profiles’ individual contributions, regardless of which task paired them. In principle this means pairing does not, by itself, change D-efficiency; what can change it is the <em>restriction</em>, since it rules out some profile combinations and so shrinks the pool the design can be built from. <code><a href="https://rdrr.io/pkg/AlgDesign/man/Federov.html">AlgDesign::optFederov</a></code> does not support this kind of restricted, two-row-per-task candidate set directly, so it is implemented here as a direct pair-level Fedorov-type exchange search: the candidate set is every admissible pair of profiles, and the algorithm swaps one task at a time for a better one whenever doing so raises <span class="math inline">\(\det(X'X)\)</span> of the full stacked design.</p>
+<p>To enumerate the admissible pairs themselves — needed for the survey implementation, not just for the efficiency check — each attribute is now given its actual survey levels and labels, rather than the generic <code>1</code>, <code>2</code>, <code>3</code> codes used above: Need = dificultad (1) / holgura (2); Identity = chile (1) / venezuela (2) / peru (3); Control = aplico (1) / no aplico (2); Effort = mas (1) / igual (2) / menos (3); Reciprocity = hizo (1) / no hizo (2); Attitude = agradece (1) / merece (2); Sex = mujer (1) / hombre (2). This is a relabeling of the same seven factors, so it does not change the D-efficiency figures below (D-efficiency is invariant to which level is coded as the reference category); what it adds is a labeled candidate set from which the admissible pairs can be listed directly.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jvbraun/AlgDesign">AlgDesign</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">20260922</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Candidate profiles, with each attribute's actual survey levels and labels</span></span>
+<span><span class="co"># (rather than generic 1/2/3 codes) so the admissible pairs below are</span></span>
+<span><span class="co"># directly readable/usable for implementation.</span></span>
+<span><span class="va">need_levels</span>        <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"dificultad"</span>, <span class="st">"holgura"</span><span class="op">)</span>        <span class="co"># 1, 2</span></span>
+<span><span class="va">identity_levels</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"chile"</span>, <span class="st">"venezuela"</span>, <span class="st">"peru"</span><span class="op">)</span>    <span class="co"># 1, 2, 3</span></span>
+<span><span class="va">control_levels</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"aplico"</span>, <span class="st">"no_aplico"</span><span class="op">)</span>            <span class="co"># 1, 2</span></span>
+<span><span class="va">effort_levels</span>      <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mas"</span>, <span class="st">"igual"</span>, <span class="st">"menos"</span><span class="op">)</span>          <span class="co"># 1, 2, 3</span></span>
+<span><span class="va">reciprocity_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hizo"</span>, <span class="st">"no_hizo"</span><span class="op">)</span>                <span class="co"># 1, 2</span></span>
+<span><span class="va">attitude_levels</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"agradece"</span>, <span class="st">"merece"</span><span class="op">)</span>             <span class="co"># 1, 2</span></span>
+<span><span class="va">sex_levels</span>          <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mujer"</span>, <span class="st">"hombre"</span><span class="op">)</span>                <span class="co"># 1, 2</span></span>
+<span></span>
+<span><span class="va">candidates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span></span>
+<span>  Need        <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">need_levels</span>, levels <span class="op">=</span> <span class="va">need_levels</span><span class="op">)</span>,</span>
+<span>  Identity    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">identity_levels</span>, levels <span class="op">=</span> <span class="va">identity_levels</span><span class="op">)</span>,</span>
+<span>  Control     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">control_levels</span>, levels <span class="op">=</span> <span class="va">control_levels</span><span class="op">)</span>,</span>
+<span>  Effort      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">effort_levels</span>, levels <span class="op">=</span> <span class="va">effort_levels</span><span class="op">)</span>,</span>
+<span>  Reciprocity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">reciprocity_levels</span>, levels <span class="op">=</span> <span class="va">reciprocity_levels</span><span class="op">)</span>,</span>
+<span>  Attitude    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">attitude_levels</span>, levels <span class="op">=</span> <span class="va">attitude_levels</span><span class="op">)</span>,</span>
+<span>  Sex         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">sex_levels</span>, levels <span class="op">=</span> <span class="va">sex_levels</span><span class="op">)</span>,</span>
+<span>  KEEP.OUT.ATTRS <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">formula_main</span> <span class="op">&lt;-</span> <span class="op">~</span> <span class="va">Need</span> <span class="op">+</span> <span class="va">Identity</span> <span class="op">+</span> <span class="va">Control</span> <span class="op">+</span> <span class="va">Effort</span> <span class="op">+</span> <span class="va">Reciprocity</span> <span class="op">+</span> <span class="va">Attitude</span> <span class="op">+</span> <span class="va">Sex</span></span>
+<span><span class="va">X_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">formula_main</span>, data <span class="op">=</span> <span class="va">candidates</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">X_full</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Admissibility matrix: TRUE for profile pairs (i, j) that differ on &gt;= 2 of</span></span>
+<span><span class="co"># the 6 substantive (CARIN/NICER) attributes -- Sex is excluded, as in the</span></span>
+<span><span class="co"># actual survey check. admissible_idx lists every admissible pair once.</span></span>
+<span><span class="va">subst_attrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Need"</span>, <span class="st">"Identity"</span>, <span class="st">"Control"</span>, <span class="st">"Effort"</span>, <span class="st">"Reciprocity"</span>, <span class="st">"Attitude"</span><span class="op">)</span></span>
+<span><span class="va">diff_count</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">candidates</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">candidates</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">a</span> <span class="kw">in</span> <span class="va">subst_attrs</span><span class="op">)</span> <span class="va">diff_count</span> <span class="op">&lt;-</span> <span class="va">diff_count</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">candidates</span><span class="op">[[</span><span class="va">a</span><span class="op">]</span><span class="op">]</span>, <span class="va">candidates</span><span class="op">[[</span><span class="va">a</span><span class="op">]</span><span class="op">]</span>, FUN <span class="op">=</span> <span class="st">"!="</span><span class="op">)</span></span>
+<span><span class="va">admissible_mat</span> <span class="op">&lt;-</span> <span class="va">diff_count</span> <span class="op">&gt;=</span> <span class="fl">2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">admissible_mat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span>
+<span><span class="va">admissible_idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">admissible_mat</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html">upper.tri</a></span><span class="op">(</span><span class="va">admissible_mat</span><span class="op">)</span>, arr.ind <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">n_adm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">admissible_idx</span><span class="op">)</span></span>
+<span><span class="va">pct_admissible</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="op">*</span> <span class="va">n_adm</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">candidates</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Materialize every admissible pair as a labeled data frame -- one row per</span></span>
+<span><span class="co"># pair, attributes of profile A and profile B side by side -- and write it</span></span>
+<span><span class="co"># out for use in the survey implementation.</span></span>
+<span><span class="va">profileA</span> <span class="op">&lt;-</span> <span class="va">candidates</span><span class="op">[</span><span class="va">admissible_idx</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">profileA</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">profileA</span><span class="op">)</span>, <span class="st">"_A"</span><span class="op">)</span></span>
+<span><span class="va">profileB</span> <span class="op">&lt;-</span> <span class="va">candidates</span><span class="op">[</span><span class="va">admissible_idx</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">profileB</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">profileB</span><span class="op">)</span>, <span class="st">"_B"</span><span class="op">)</span></span>
+<span><span class="va">admissible_pairs_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span>pair_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_adm</span><span class="op">)</span>, <span class="va">profileA</span>, <span class="va">profileB</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">admissible_pairs_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span><span class="va">out_dir</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">".."</span>, <span class="st">"output"</span>, <span class="st">"conjoint-design"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="va">out_dir</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">admissible_pairs_df</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">out_dir</span>, <span class="st">"admissible_pairs.csv"</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># D-optimal search over n_tasks admissible pairs: starts from a random</span></span>
+<span><span class="co"># selection, then repeatedly tries replacing one task at a time with a</span></span>
+<span><span class="co"># random admissible candidate, keeping the swap only if it raises det(X'X)</span></span>
+<span><span class="co"># of the whole stacked (2*n_tasks-row) design. Restarted n_restarts times</span></span>
+<span><span class="co"># to avoid a local optimum, as optFederov's nRepeats does at the profile level.</span></span>
+<span><span class="va">doptimal_pairs</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n_tasks</span>, <span class="va">n_restarts</span> <span class="op">=</span> <span class="fl">5</span>, <span class="va">n_sweep</span> <span class="op">=</span> <span class="fl">3</span>, <span class="va">n_try</span> <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">best_det</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="cn">Inf</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">restart</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_restarts</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">n_adm</span>, <span class="va">n_tasks</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="va">pairs</span> <span class="op">&lt;-</span> <span class="va">admissible_idx</span><span class="op">[</span><span class="va">sel</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>    <span class="va">contribs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="va">n_tasks</span><span class="op">)</span></span>
+<span>    <span class="va">XtX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p</span>, <span class="va">p</span><span class="op">)</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">k</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_tasks</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">xi</span> <span class="op">&lt;-</span> <span class="va">X_full</span><span class="op">[</span><span class="va">pairs</span><span class="op">[</span><span class="va">k</span>, <span class="fl">1</span><span class="op">]</span>, <span class="op">]</span>; <span class="va">xj</span> <span class="op">&lt;-</span> <span class="va">X_full</span><span class="op">[</span><span class="va">pairs</span><span class="op">[</span><span class="va">k</span>, <span class="fl">2</span><span class="op">]</span>, <span class="op">]</span></span>
+<span>      <span class="va">contribs</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">xi</span>, <span class="va">xi</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">xj</span>, <span class="va">xj</span><span class="op">)</span></span>
+<span>      <span class="va">XtX</span> <span class="op">&lt;-</span> <span class="va">XtX</span> <span class="op">+</span> <span class="va">contribs</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">cur_det</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">XtX</span><span class="op">)</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">sweep</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_sweep</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw">for</span> <span class="op">(</span><span class="va">k</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_tasks</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="va">XtX_wo_k</span> <span class="op">&lt;-</span> <span class="va">XtX</span> <span class="op">-</span> <span class="va">contribs</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span></span>
+<span>        <span class="va">cand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">n_adm</span>, <span class="va">n_try</span><span class="op">)</span></span>
+<span>        <span class="va">best_local_det</span> <span class="op">&lt;-</span> <span class="va">cur_det</span>; <span class="va">best_local_c</span> <span class="op">&lt;-</span> <span class="va">contribs</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span></span>
+<span>        <span class="kw">for</span> <span class="op">(</span><span class="va">cidx</span> <span class="kw">in</span> <span class="va">cand</span><span class="op">)</span> <span class="op">{</span></span>
+<span>          <span class="va">ci</span> <span class="op">&lt;-</span> <span class="va">admissible_idx</span><span class="op">[</span><span class="va">cidx</span>, <span class="fl">1</span><span class="op">]</span>; <span class="va">cj</span> <span class="op">&lt;-</span> <span class="va">admissible_idx</span><span class="op">[</span><span class="va">cidx</span>, <span class="fl">2</span><span class="op">]</span></span>
+<span>          <span class="va">xci</span> <span class="op">&lt;-</span> <span class="va">X_full</span><span class="op">[</span><span class="va">ci</span>, <span class="op">]</span>; <span class="va">xcj</span> <span class="op">&lt;-</span> <span class="va">X_full</span><span class="op">[</span><span class="va">cj</span>, <span class="op">]</span></span>
+<span>          <span class="va">ck2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">xci</span>, <span class="va">xci</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">xcj</span>, <span class="va">xcj</span><span class="op">)</span></span>
+<span>          <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">XtX_wo_k</span> <span class="op">+</span> <span class="va">ck2</span><span class="op">)</span></span>
+<span>          <span class="kw">if</span> <span class="op">(</span><span class="va">d</span> <span class="op">&gt;</span> <span class="va">best_local_det</span><span class="op">)</span> <span class="op">{</span> <span class="va">best_local_det</span> <span class="op">&lt;-</span> <span class="va">d</span>; <span class="va">best_local_c</span> <span class="op">&lt;-</span> <span class="va">ck2</span> <span class="op">}</span></span>
+<span>        <span class="op">}</span></span>
+<span>        <span class="kw">if</span> <span class="op">(</span><span class="va">best_local_det</span> <span class="op">&gt;</span> <span class="va">cur_det</span><span class="op">)</span> <span class="op">{</span></span>
+<span>          <span class="va">XtX</span> <span class="op">&lt;-</span> <span class="va">XtX_wo_k</span> <span class="op">+</span> <span class="va">best_local_c</span></span>
+<span>          <span class="va">contribs</span><span class="op">[[</span><span class="va">k</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">best_local_c</span></span>
+<span>          <span class="va">cur_det</span> <span class="op">&lt;-</span> <span class="va">best_local_det</span></span>
+<span>        <span class="op">}</span></span>
+<span>      <span class="op">}</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">cur_det</span> <span class="op">&gt;</span> <span class="va">best_det</span><span class="op">)</span> <span class="va">best_det</span> <span class="op">&lt;-</span> <span class="va">cur_det</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">best_det</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Grid of task counts from 20 to 144 (i.e. 40 to 288 profile evaluations,</span></span>
+<span><span class="co"># matching the profile-level grid one-for-one at 2 profiles per task).</span></span>
+<span><span class="va">n_task_grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">144</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="fl">144</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">n_random_reps</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span></span>
+<span><span class="va">results_pair</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">n_task_grid</span>, <span class="kw">function</span><span class="op">(</span><span class="va">nt</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">d_opt</span> <span class="op">&lt;-</span> <span class="fu">doptimal_pairs</span><span class="op">(</span><span class="va">nt</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">p</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">nt</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Benchmark: n_random_reps sets of nt tasks drawn the way the survey</span></span>
+<span>  <span class="co"># actually randomizes them -- profiles drawn independently and the pair</span></span>
+<span>  <span class="co"># kept only if admissible, i.e. a uniform draw from admissible_idx.</span></span>
+<span>  <span class="va">rand_deffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n_random_reps</span>, <span class="op">{</span></span>
+<span>    <span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">n_adm</span>, <span class="va">nt</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="va">pr</span> <span class="op">&lt;-</span> <span class="va">admissible_idx</span><span class="op">[</span><span class="va">sel</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>    <span class="va">XtX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">p</span>, <span class="va">p</span><span class="op">)</span></span>
+<span>    <span class="kw">for</span> <span class="op">(</span><span class="va">k</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">nt</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">xi</span> <span class="op">&lt;-</span> <span class="va">X_full</span><span class="op">[</span><span class="va">pr</span><span class="op">[</span><span class="va">k</span>, <span class="fl">1</span><span class="op">]</span>, <span class="op">]</span>; <span class="va">xj</span> <span class="op">&lt;-</span> <span class="va">X_full</span><span class="op">[</span><span class="va">pr</span><span class="op">[</span><span class="va">k</span>, <span class="fl">2</span><span class="op">]</span>, <span class="op">]</span></span>
+<span>      <span class="va">XtX</span> <span class="op">&lt;-</span> <span class="va">XtX</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">xi</span>, <span class="va">xi</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="va">xj</span>, <span class="va">xj</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">detXtX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/det.html">det</a></span><span class="op">(</span><span class="va">XtX</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">detXtX</span><span class="op">)</span> <span class="op">||</span> <span class="va">detXtX</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="cn">NA_real_</span> <span class="kw">else</span> <span class="va">detXtX</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">p</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">nt</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>N_tasks <span class="op">=</span> <span class="va">nt</span>, D_optimal <span class="op">=</span> <span class="va">d_opt</span>, D_random <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rand_deffs</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gain_pct <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="op">(</span><span class="va">D_optimal</span> <span class="op">/</span> <span class="va">D_random</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">results_pair</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">N_tasks</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">D_optimal</span>, color <span class="op">=</span> <span class="st">"D-optimal"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">D_random</span>, color <span class="op">=</span> <span class="st">"Complete randomization"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of tasks (pairs)"</span>, y <span class="op">=</span> <span class="st">"D-efficiency (scaled)"</span>, color <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-deff-pair-grid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-deff-pair-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-questionnaire-desing_files/figure-html/fig-deff-pair-grid-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deff-pair-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: D-efficiency (main effects) of a D-optimal task selection vs.&nbsp;complete randomization under the pairing restriction, across sample sizes
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Of the 41,328 possible profile pairs, 38,880 (94.1%) satisfy the restriction, so it rules out only a small corner of the pairing space. Consistent with that, the pair-level curves land almost on top of the profile-level ones: the optimal design is again essentially flat (0.2568–0.2586), and complete randomization under the restriction closes the gap from 12.5% at N = 20 tasks (40 profile evaluations) to 1.5% at N = 144 tasks — practically identical to the unlabeled profile-level run, confirming that the relabeling changes nothing about the design’s statistical properties.</p>
+<p>The full candidate list of admissible pairs — 38,880 rows, one per admissible pair, with both profiles’ attribute levels spelled out — is written to <code>output/conjoint-design/admissible_pairs.csv</code> for use in the survey implementation. A preview:</p>
+<p>The back-of-envelope translation to respondents (at 5 tasks per respondent, as above) gives the same order of saving as the profile-level check:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">envelope_pair</span> <span class="op">&lt;-</span> <span class="va">results_pair</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">N_tasks</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span>, <span class="fl">144</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    ratio <span class="op">=</span> <span class="va">D_optimal</span> <span class="op">/</span> <span class="va">D_random</span>,</span>
+<span>    respondents_random <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_respondents</span><span class="op">)</span>,</span>
+<span>    respondents_D_optimal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n_respondents</span> <span class="op">/</span> <span class="va">ratio</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">N_tasks</span>, <span class="va">ratio</span>, <span class="va">respondents_random</span>, <span class="va">respondents_D_optimal</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
+<span>  <span class="va">envelope_pair</span>, digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Task pool (N)"</span>, <span class="st">"Efficiency ratio"</span>, <span class="st">"Respondents (randomization)"</span>, <span class="st">"Respondents (D-optimal, implied)"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="tbl-deff-pair-envelope" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-deff-pair-envelope-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: Back-of-envelope respondents implied by the pair-level D-efficiency gain, at selected task-pool sizes
+</figcaption><div aria-describedby="tbl-deff-pair-envelope-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 30%">
+<col style="width: 35%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: right;">Task pool (N)</th>
+<th style="text-align: right;">Efficiency ratio</th>
+<th style="text-align: right;">Respondents (randomization)</th>
+<th style="text-align: right;">Respondents (D-optimal, implied)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1.125</td>
+<td style="text-align: right;">1307</td>
+<td style="text-align: right;">1162</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">1.045</td>
+<td style="text-align: right;">1307</td>
+<td style="text-align: right;">1251</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">1.015</td>
+<td style="text-align: right;">1307</td>
+<td style="text-align: right;">1287</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The conclusion is the same as at the profile level, now confirmed under the actual pairing restriction: the restriction itself costs almost nothing in achievable D-efficiency (94% of pairs remain usable), and the ceiling on what a D-efficient task design could save over complete randomization stays in the same modest range, at most on the order of 11% fewer respondents. The same two caveats noted above still apply — the <code>cjpowR</code> baseline is not measured on identical terms, and this ignores respondent fixed effects and clustering — so this remains an exploratory bound, not a substitute for a simulation-based power calculation once pilot data are available.</p>
 </section><section id="implementation" class="level3" data-number="3.2.4"><h3 data-number="3.2.4" class="anchored" data-anchor-id="implementation">
 <span class="header-section-number">3.2.4</span> Implementation</h3>
 <ul>
@@ -442,11 +801,11 @@ window.Quarto = {
 </section><section id="meritocracy-scale" class="level4" data-number="3.3.2.2"><h4 data-number="3.3.2.2" class="anchored" data-anchor-id="meritocracy-scale">
 <span class="header-section-number">3.3.2.2</span> Meritocracy scale</h4>
 <p>The meritocracy scale is based on a conceptual framework designed by <span class="citation" data-cites="castillo_multidimensional_2023">Castillo et al. (<a href="#ref-castillo_multidimensional_2023" role="doc-biblioref">2023</a>)</span>, which presents a multidimensional model for measuring meritocratic beliefs. This model distinguishes, first, between perceptions and preferences, where the former refers to the way people view the world, while the latter refers to how the world should function. Second, the model distinguishes between meritocratic and privilege-based perceptions and preferences; meritocratic factors relate to effort and talent, while the privilege factor considers inherited conditions such as family wealth and connections. This instrument was first implemented in a survey conducted between 2019 and 2020 as part of the <a href="https://jc-castillo.com/proyectos/posts/fondecyt-economiamoral/">FONDECYT Regular project “The Moral Economy of Meritocracy and Redistributive Preferences”</a>. Subsequently, this set of questions has been used in surveys targeting student and adult populations.</p>
-<p>To better illustrate the items that make up the scale, the following table is provided (see <a href="#tbl-meritscale" class="quarto-xref">Table&nbsp;<span>3.1</span></a>):</p>
+<p>To better illustrate the items that make up the scale, the following table is provided (see <a href="#tbl-meritscale" class="quarto-xref">Table&nbsp;<span>3.3</span></a>):</p>
 <div class="cell">
 <div id="tbl-meritscale" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-meritscale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.1: Meritocracy scale items
+Table&nbsp;3.3: Meritocracy scale items
 </figcaption><div aria-describedby="tbl-meritscale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
@@ -529,11 +888,11 @@ Table&nbsp;3.1: Meritocracy scale items
 <li><p>Identity: Assesses the moral boundaries of the community regarding its willingness to benefit another.</p></li>
 <li><p>Need: Focuses on the urgency and severity of the beneficiary’s situation. In this case, need is distinguished from control because it refers to conditions that are beyond an individual’s control.</p></li>
 </ul>
-<p>In addition, this survey includes the “effort” dimension based on the proposal by <span class="citation" data-cites="knotz_recast_2022">Knotz et al. (<a href="#ref-knotz_recast_2022" role="doc-biblioref">2022</a>)</span>, who defines effort as the beneficiary’s active and present agency aimed at overcoming their situation of vulnerability or contributing in some way to society at the time they receive support. Based on these two models for measuring deservingness, this survey includes the following items (see <a href="#tbl-deservescale" class="quarto-xref">Table&nbsp;<span>3.2</span></a>):</p>
+<p>In addition, this survey includes the “effort” dimension based on the proposal by <span class="citation" data-cites="knotz_recast_2022">Knotz et al. (<a href="#ref-knotz_recast_2022" role="doc-biblioref">2022</a>)</span>, who defines effort as the beneficiary’s active and present agency aimed at overcoming their situation of vulnerability or contributing in some way to society at the time they receive support. Based on these two models for measuring deservingness, this survey includes the following items (see <a href="#tbl-deservescale" class="quarto-xref">Table&nbsp;<span>3.4</span></a>):</p>
 <div class="cell">
 <div id="tbl-deservescale" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-deservescale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;3.2: Deservingness scale items
+Table&nbsp;3.4: Deservingness scale items
 </figcaption><div aria-describedby="tbl-deservescale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
@@ -759,13 +1118,14 @@ Schuessler, J., &amp; Freitag, M. (2020). Power <span>Analysis</span> for <span>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
