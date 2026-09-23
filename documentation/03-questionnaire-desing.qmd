@@ -17,7 +17,9 @@ The questionnaire has four sections:
 
 Some characterization questions where introduced after the informed consent to monitor the quotas as well as to avoid jumping in quickly in the conjoint task, in order to give time to get used to the platform and the sense of the survey.
 
-## Informed consent and ethics certification (@tomasurzuam)
+The questionnaire is structured around two main sections. First, a matching task is administered, in which respondents are presented with two profiles of people with different characteristics and, based on those characteristics, must allocate a sum of money to finance their college education. This section of the survey is explained in greater detail in the [previous chapter](https://jus-mer.github.io/survey-jusmer/documentation/docs/03-conjoint-desing.html). The second part of the measurement instrument is based on items regarding public opinion, perceptions, and/or preferences related to the market, merit, and deservingness, which are presented as multiple-choice questions. The following section provides a more in-depth look at the item scales that were used, their origin, and measurement specifications.
+
+## Informed consent and ethics certification
 
 ## Distributive Conjoint-Survey experiment
 
@@ -408,27 +410,32 @@ The conclusion is the same as at the profile level, now confirmed under the actu
 
 
 
-## Attitudinal items @tomasurzuam
+## Attitudinal items 
 
-This section describes the second component of the survey instrument, complementing the conjoint design presented in the previous section. It first outlines the overall structure of the questionnaire. Then details the three batteries of items applied—market justice preferences, the meritocracy scale, and the deservingness (CARIN/NICER) scale—describing their conceptual origin, wording, and measurement specifications.
+This section describes the second component of the survey instrument, complementing the conjoint design presented in the previous section. It first outlines the overall structure of the questionnaire. Then details the batteries of items applied on the pre-pilot survey, describing their conceptual origin, wording, and measurement specifications.
 
-### Questionnaire Structure and Content
 
-The questionnaire is structured around two main sections. First, a matching task is administered, in which respondents are presented with two profiles of people with different characteristics and, based on those characteristics, must allocate a sum of money to finance their college education. This section of the survey is explained in greater detail in the [previous chapter](https://jus-mer.github.io/survey-jusmer/documentation/docs/03-conjoint-desing.html). The second part of the measurement instrument is based on items regarding public opinion, perceptions, and/or preferences related to the market, merit, and deservingness, which are presented as multiple-choice questions. The following section provides a more in-depth look at the item scales that were used, their origin, and measurement specifications.
+### Market justice preferences
 
-### Measurement Scales and Sources of Survey Items
+The “Market Justice Preferences” scale is divided into two parts: the classic items and the new items. The classic scale consists of three questions, which aim to determine the extent to which people consider it fair for access to and the quality of social services—such as education, health care, and pensions—to depend on market criteria. These questions originally come from the [International Social Survey Program](https://www.gesis.org/en/issp/data-and-documentation/social-inequality) (1999) and are included in the social inequality module. In this context, the scale first appeared in the 1999 version of the ISSP and has been included in all subsequent versions (2009 and 2019). In addition, the new questions were formulated by the research team with the aim of expanding the measurement of Market Justice Preferences where, in some questions, the topics of childcare and roads were included; therefore, they were only included in the pre-pilot phase of this survey.
 
-The first wave of the survey contains the following sets of questions: Market Justice Preferences (1), Meritocracy Scale (2), and Deservingness (CARIN/NICER) Scale (3).
+Both the classic items and the new items can be seen in @tbl-mjpscale: 
 
-#### Market justice preferences
+```{r}
+#| label: tbl-mjpscale
+#| tbl-cap: "Market Justice Preferences items"
+#| echo: false
+#| message: false
+#| warning: false
+library(here)
+mjp_scale <- read.csv(here::here("..", "input", "tbl", "mjp-scale.csv"))
+mjp_scale <- cbind("N" = seq_len(nrow(mjp_scale)), mjp_scale)
+knitr::kable(mjp_scale, col.names = c("N", "Model", "Phrasing english", "Item english", "Phrasing spanish", "Item spanish"))
+```
 
-The “Market Justice Preferences” scale consists of three questions, which aim to determine the extent to which people consider it fair for access to and the quality of social services—such as education, health care, and pensions—to depend on market criteria. These questions originally come from the [International Social Survey Program](https://www.gesis.org/en/issp/data-and-documentation/social-inequality) (1999) and are included in the social inequality module. In this context, the scale first appeared in the 1999 version of the ISSP and has been included in all subsequent versions (2009 and 2019).
+The classic items (1-3) are measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo). On the other hand, most of the new items (4-35) are also measured on a five-point Likert scale, but the wording of the response categories varies for some items. To conclude, each of the last three items asks about the five new dimensions of Market Justice Preferences, but using a slider with “State” and “Market” at its two ends.
 
-The question is phrased as follows: *Is it fair that in Chile, high-income individuals have access to better \_\_\_ than those with lower incomes?* The blank refers to the respective social service addressed by the scale.
-
-The question is measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
-
-#### Meritocracy scale
+### Meritocracy scale
 
 The meritocracy scale is based on a conceptual framework designed by @castillo_multidimensional_2023, which presents a multidimensional model for measuring meritocratic beliefs. This model distinguishes, first, between perceptions and preferences, where the former refers to the way people view the world, while the latter refers to how the world should function. Second, the model distinguishes between meritocratic and privilege-based perceptions and preferences; meritocratic factors relate to effort and talent, while the privilege factor considers inherited conditions such as family wealth and connections. This instrument was first implemented in a survey conducted between 2019 and 2020 as part of the [FONDECYT Regular project “The Moral Economy of Meritocracy and Redistributive Preferences”](https://jc-castillo.com/proyectos/posts/fondecyt-economiamoral/). Subsequently, this set of questions has been used in surveys targeting student and adult populations.
 
@@ -440,14 +447,14 @@ To better illustrate the items that make up the scale, the following table is pr
 #| echo: false
 #| message: false
 #| warning: false
-library(here)
+
 merit_scale <- read.csv(here::here("..", "input", "tbl", "merit-scale.csv"))
 knitr::kable(merit_scale, col.names = c("Dimensions", "Factor", "Item english", "Item spanish"))
 ```
 
 Each item on the scale is measured using a four-point agreement-disagreement scale, where (1) indicates “strongly disagree” and (4) indicates “strongly agree.” It is worth noting that this scale does not include any intermediate categories.
 
-#### Deservingness scale
+### Deservingness scale
 
 The merit scale is based on the conceptual and empirically validated proposal by @meuleman_welfare_2020, which allows for an empirical study of the normative criteria that citizens apply to determine who is eligible for social protection. The framework is built upon the operationalization of five central concepts:
 
@@ -469,11 +476,62 @@ In addition, this survey includes the “effort” dimension based on the propos
 #| echo: false
 #| message: false
 #| warning: false
-library(here)
+
 deserve_scale <- read.csv(here::here("..", "input", "tbl", "deservingness-scale.csv"))
 knitr::kable(deserve_scale, col.names = c("Model", "Dimension", "Item english", "Item spanish"))
 ```
 
 The items are measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
 
-## Socio-economic characterization (@tomasurzuam)
+### Socio-economic characterization 
+
+The demographic questions included in the survey are the standard ones used in questionnaires to gather demographic and socioeconomic information about respondents. One innovation in the profiling questionnaire is the last two questions in the @tbl-charac section, which are designed to identify respondents’ background regarding the social services they receive, which aligns with a “market justice” type of profiling.
+
+Each question has a set of answer categories related to the topic. For instance, The question regarding the device used to complete the survey offers only the categories “cell phone,” “tablet,” and “computer,” since it is an online survey. On the other hand,“Income” contains 10 answer categories, ranging from “Up to $344,999” to “$3,100,000 or more” per month.
+
+```{r}
+#| label: tbl-charac
+#| tbl-cap: "Characterization items"
+#| echo: false
+#| message: false
+#| warning: false
+
+charac_scale <- read.csv(here::here("..", "input", "tbl", "charac-items.csv"))
+knitr::kable(charac_scale, col.names = c("Model", "Item english", "Item spanish"))
+```
+
+### Neoliberalism scale
+
+The following questions were taken from the Anti-Neoliberal Attitudes Scale proposed by @grzanka_measuring_2020 in their paper titled “Measuring Neoliberalism: Development and Initial Validation of a Scale of Anti-Neoliberal Attitudes”. In the study, this scale was tested, and its metric consistency was verified for use. The team analyzed the scale and decided to include in the pre-pilot only those items that were thematically relevant to the survey, selecting just 4 items out of a total of 6 that make up one of the scale’s factors (see @tbl-neo).
+
+```{r}
+#| label: tbl-neo
+#| tbl-cap: "Neoliberalism items"
+#| echo: false
+#| message: false
+#| warning: false
+
+neo_scale <- read.csv(here::here("..", "input", "tbl", "neoliberalism-scale.csv"))
+knitr::kable(neo_scale, col.names = c("Model", "Item english", "Item spanish"))
+```
+
+The four items are measured using a Likert scale ranging from “disagree” to “agree,” where (1) is “strongly disagree” (muy en desacuerdo) and (5) is “strongly agree” (muy de acuerdo).
+
+### Additional deservingness items
+
+This final scale was created by the project team with the goal of capturing people's perceptions regarding their personal financial concerns. Since these questions were proposed specifically for this questionnaire, they have not been included in previous surveys. The questions can be viewed at @tbl-add
+
+```{r}
+#| label: tbl-add
+#| tbl-cap: "Additional deservingness items"
+#| echo: false
+#| message: false
+#| warning: false
+
+add_scale <- read.csv(here::here("..", "input", "tbl", "add-items.csv"))
+knitr::kable(add_scale, col.names = c("Model", "Phrasing english", "Item english", "Phrasing spanish", "Item spanish"))
+```
+
+The first question includes the following response categories: (1) We don't have enough, we have major problems; (2) We barely make ends meet by cutting back on expenses; (3) We have just enough and can treat ourselves to a few things without any major problems; (4) We have plenty, we can even save some money.
+
+The other three questions are measured using a five-point Likert scale, where (1) means “never” and (5) means “often.”
