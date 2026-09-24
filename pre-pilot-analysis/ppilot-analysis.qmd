@@ -482,11 +482,11 @@ baterias <- list(
   "Demográficos inicio" = demo_1,
   "Conjoint" = conjoint,
   "Market Justice Preferences" = mjp,
-  "Market Justice Preferences Nuevos" = mjp_new,
-  "MJP Tiempo" = mjp_time,
-  "Comodificación" = comodifica,
-  "Escenario comodificación" = exp_comodifica,
-  "Lucro" = lucro,
+  "Market Justice Reflexive" = mjp_new,
+  "Market Justice en el tiempo" = mjp_time,
+  "Comodificación de servicios" = comodifica,
+  "Escenarios de subvención" = exp_comodifica,
+  "Lucro en servicios" = lucro,
   "Neoliberalismo" = neoliberal,
   "NICERA" = nicera,
   "Adicionales" = aditional,
@@ -536,17 +536,17 @@ tabla_bateria("Conjoint")
 tabla_bateria("Market Justice Preferences")
 ```
 
-#### Market Justice Preferences Nuevos {.unnumbered}
+#### Market Justice Reflexive {.unnumbered}
 
 ```{r}
 #| label: tbl-bateria-mjp-new
 #| warning: false
-#| tbl-cap: Tiempo de respuesta - Market Justice Preferences Nuevos
+#| tbl-cap: Tiempo de respuesta - Market Justice Reflexive
 
-tabla_bateria("Market Justice Preferences Nuevos")
+tabla_bateria("Market Justice Reflexive")
 ```
 
-#### MJP Tiempo {.unnumbered}
+#### Market Justice en el tiempo {.unnumbered}
 
 pres_1, pres_2 y pres_3 tienen el siguiente preámbulo: *¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?*
 
@@ -555,41 +555,41 @@ En cambio, pres_4, pres_5 y pres_6 anuncian: *Y pensando hace 10 años atrás, �
 ```{r}
 #| label: tbl-bateria-mjp-tiempo
 #| warning: false
-#| tbl-cap: Tiempo de respuesta - MJP Tiempo
+#| tbl-cap: Tiempo de respuesta - Market Justice en el tiempo
 
-tabla_bateria("MJP Tiempo")
+tabla_bateria("Market Justice en el tiempo")
 ```
 
-#### Comodificación {.unnumbered}
+#### Comodificación de servicios {.unnumbered}
 
 ```{r}
 #| label: tbl-bateria-comodifica
 #| warning: false
-#| tbl-cap: Tiempo de respuesta - Comodificación
+#| tbl-cap: Tiempo de respuesta - Comodificación de servicios
 
-tabla_bateria("Comodificación")
+tabla_bateria("Comodificación de servicios")
 ```
 
-#### Escenario comodificación {.unnumbered}
+#### Escenarios de subvención {.unnumbered}
 
 ```{r}
 #| label: tbl-bateria-exp-comodifica
 #| warning: false
-#| tbl-cap: Tiempo de respuesta - Escenario comodificación
+#| tbl-cap: Tiempo de respuesta - Escenarios de subvención
 
-tabla_bateria("Escenario comodificación")
+tabla_bateria("Escenarios de subvención")
 ```
 
-#### Lucro {.unnumbered}
+#### Lucro en servicios {.unnumbered}
 
-El preámbulo de la batería de Lucro es: *Qué tan justo o injusto le parece que empresas privadas obtengan ganancias monetarias administrando…*
+El preámbulo de la batería de Lucro en servicios es: *Qué tan justo o injusto le parece que empresas privadas obtengan ganancias monetarias administrando…*
 
 ```{r}
 #| label: tbl-bateria-lucro
 #| warning: false
-#| tbl-cap: Tiempo de respuesta - Lucro
+#| tbl-cap: Tiempo de respuesta - Lucro en servicios
 
-tabla_bateria("Lucro")
+tabla_bateria("Lucro en servicios")
 ```
 
 #### Neoliberalismo {.unnumbered}
@@ -645,11 +645,11 @@ tabla_bateria("Demográficos (bloque 2)")
 
 Los resultados demuestran, en primer lugar, que todas la tareas de asignación rondan los 40 segundos de demora, a excepción de dos: el ejemplo, que se demora en promedio más de 2 minutos, y la tarea 1 que promedia 16 segundos. Para la primera excepción, esto encuentra sentido en que los respondentes deben entender a cabalidad la tarea de asignación, lo cual requiere un esfuerzo de comprensión lectora y de atención. Para la segunda excepción esto puede deberse a la rápida asociación del ejercicio con su ejemplo. Por lo demás, las otras tareas del conjoint se encuentran dentro de rangos temporales similares, con una mediana de 20-30 segundos de demora por tarea (ver @tbl-bateria-conjoint).
 
-Para la batería de Market Justice Preferences (MJP), se observa que las preguntas 1 y 2 son las que más tiempo demandan, mientras que la pregunta 3 es la más rápida de responder (ver @tbl-bateria-mjp). Con la idea de avanzar en la medición de MJP, se implementaron dos nuevas baterías: MJP Nuevos (@tbl-bateria-mjp-new) y MJP Tiempo (@tbl-bateria-mjp-tiempo). Para ambas baterías se observa un tiempo de demora debajo del umbral establecido, donde la batería que busca medir los cambios en el tiempo de MJP es la que contiene preguntas menos demorosas, donde cuatro de ellas son respondidas, en promedio, en menos de 5 segundos.
+Para la batería de Market Justice Preferences (MJP), se observa que las preguntas 1 y 2 son las que más tiempo demandan, mientras que la pregunta 3 es la más rápida de responder (ver @tbl-bateria-mjp). Con la idea de avanzar en la medición de MJP, se implementaron dos nuevas baterías: Market Justice Reflexive (@tbl-bateria-mjp-new) y Market Justice en el tiempo (@tbl-bateria-mjp-tiempo). Para ambas baterías se observa un tiempo de demora debajo del umbral establecido, donde la batería que busca medir los cambios en el tiempo de MJP es la que contiene preguntas menos demorosas, donde cuatro de ellas son respondidas, en promedio, en menos de 5 segundos.
 
-La batería de Comodificación se divide en dos sub-baterías: la primera presenta preguntas en el formato habitual de encuestas, utilizando una escala Likert de 5 categorías de respuesta, mientras que la segunda son preguntas que rozan el carácter experimental, ya que se presentan escenarios ficticios donde el respondente debe tomar decisiones de acuerdo a la subvención de salud y educación para personas que no son capaces de costear estos servicios. Estas dos baterías fueron pensadas por el equipo para ampliar la medición en el campo de MJP. Ahora, en la batería de items (@tbl-bateria-comodifica) solamente la primera pregunta tiene una demora promedio > 30 segundos, mientras que las demás se mantienen dentro de los márgenes. Por otro lado, las preguntas de escenarios hipotéticos (@tbl-bateria-exp-comodifica) tienden a demorar más debido a que requieren un mayor esfuerzo cognitivo. Cabe señalar que `dec_3`aparece primero que las otras dos preguntas, por lo que tiene sentido que sea la más demorosa, mientras que después se presenta `dec_1`, la cual se mantiene apenas debajo del umbral de los 30 segundos. 
+La batería de Comodificación de servicios se divide en dos sub-baterías: la primera presenta preguntas en el formato habitual de encuestas, utilizando una escala Likert de 5 categorías de respuesta, mientras que la segunda son preguntas que rozan el carácter experimental, ya que se presentan escenarios ficticios donde el respondente debe tomar decisiones de acuerdo a la subvención de salud y educación para personas que no son capaces de costear estos servicios. Estas dos baterías fueron pensadas por el equipo para ampliar la medición en el campo de MJP. Ahora, en la batería de items (@tbl-bateria-comodifica) solamente la primera pregunta tiene una demora promedio > 30 segundos, mientras que las demás se mantienen dentro de los márgenes. Por otro lado, las preguntas de escenarios hipotéticos (@tbl-bateria-exp-comodifica) tienden a demorar más debido a que requieren un mayor esfuerzo cognitivo. Cabe señalar que `dec_3`aparece primero que las otras dos preguntas, por lo que tiene sentido que sea la más demorosa, mientras que después se presenta `dec_1`, la cual se mantiene apenas debajo del umbral de los 30 segundos.
 
-La batería de Lucro (@tbl-bateria-lucro) es una implementación nueva de preguntas que surgió por parte del equipo JUSMER, mientras que la batería de Neoliberalismo (@tbl-bateria-neoliberal) es una parte de la Escala de Neoliberalismo propuesta por @girerd_how_2023, donde se seleccionó solamente una dimensión debido a su afinidad temática con esta encuesta. Ambas baterías comparten un patrón de tiempos de demora, donde la primera pregunta es la más demorosa y las demás se mantienen muy por debajo del umbral de 30 segundos.
+La batería de Lucro en servicios (@tbl-bateria-lucro) es una implementación nueva de preguntas que surgió por parte del equipo JUSMER, mientras que la batería de Neoliberalismo (@tbl-bateria-neoliberal) es una parte de la Escala de Neoliberalismo propuesta por @girerd_how_2023, donde se seleccionó solamente una dimensión debido a su afinidad temática con esta encuesta. Ambas baterías comparten un patrón de tiempos de demora, donde la primera pregunta es la más demorosa y las demás se mantienen muy por debajo del umbral de 30 segundos.
 
 En @tbl-bateria-nicera se presenta la batería NICERA, la cual apunta a aplicar la escala CARIN junto con la escala NICER, agregando las preguntas de esfuerzo. Esta escala está compuesta por 20 preguntas, donde la totalidad de ellas son preguntas con una escala Likert de 5 categorías de respuesta. A modo general, se puede observar que, a excepción de `control_3` y `esf_5`, todas las demás preguntas se demoran al menos 15 segundos en responderse. Ahora, un cuarto (25%) del total de la batería supera el umbral de 30 segundos, lo que puede deberse a la exigencia que implica pensar activamente en los criterios de merecimiento que invocan las personas, lo que finalmente puede requerir un mayor esfuerzo cognitivo.
 
@@ -855,54 +855,54 @@ tabla_desc_bateria("Conjoint")
 tabla_desc_bateria("Market Justice Preferences")
 ```
 
-#### Market Justice Preferences Nuevos {.unnumbered}
+#### Market Justice Reflexive {.unnumbered}
 
 ```{r}
 #| label: tbl-desc-mjp-new
 #| warning: false
-#| tbl-cap: Descriptivos - Market Justice Preferences Nuevos
+#| tbl-cap: Descriptivos - Market Justice Reflexive
 
-tabla_desc_bateria("Market Justice Preferences Nuevos")
+tabla_desc_bateria("Market Justice Reflexive")
 ```
 
-#### MJP Tiempo {.unnumbered}
+#### Market Justice en el tiempo {.unnumbered}
 
 ```{r}
 #| label: tbl-desc-mjp-tiempo
 #| warning: false
-#| tbl-cap: Descriptivos - MJP Tiempo
+#| tbl-cap: Descriptivos - Market Justice en el tiempo
 
-tabla_desc_bateria("MJP Tiempo")
+tabla_desc_bateria("Market Justice en el tiempo")
 ```
 
-#### Comodificación {.unnumbered}
+#### Comodificación de servicios {.unnumbered}
 
 ```{r}
 #| label: tbl-desc-comodifica
 #| warning: false
-#| tbl-cap: Descriptivos - Comodificación
+#| tbl-cap: Descriptivos - Comodificación de servicios
 
-tabla_desc_bateria("Comodificación")
+tabla_desc_bateria("Comodificación de servicios")
 ```
 
-#### Escenario comodificación {.unnumbered}
+#### Escenarios de subvención {.unnumbered}
 
 ```{r}
 #| label: tbl-desc-exp-comodifica
 #| warning: false
-#| tbl-cap: Descriptivos - Escenario comodificación
+#| tbl-cap: Descriptivos - Escenarios de subvención
 
-tabla_desc_bateria("Escenario comodificación")
+tabla_desc_bateria("Escenarios de subvención")
 ```
 
-#### Lucro {.unnumbered}
+#### Lucro en servicios {.unnumbered}
 
 ```{r}
 #| label: tbl-desc-lucro
 #| warning: false
-#| tbl-cap: Descriptivos - Lucro
+#| tbl-cap: Descriptivos - Lucro en servicios
 
-tabla_desc_bateria("Lucro")
+tabla_desc_bateria("Lucro en servicios")
 ```
 
 #### Neoliberalismo {.unnumbered}
@@ -1037,6 +1037,123 @@ tiempo_merit_resumen |>
     c("duracion_media_seg", "duracion_mediana_seg"),
     backgroundColor = styleInterval(30, c("white", "#f79b9b"))
   )
+```
+
+## Panorama general de los tiempos de respuesta
+
+Para tener una visión general y comparable entre baterías temáticas, se calcula, para cada una, la suma de la duración mediana (`duracion_mediana_seg`) de sus preguntas, obteniendo así el tiempo total estimado para responder cada batería completa, lo cual se expresa en minutos. Se incluye además la batería de meritocracia, estimada previamente a partir de los datos de EDUMERCO (`tiempo_merit_resumen`). 
+
+Para leer la @tbl-panorama-bateria es pertinente aclarar que está dividida en dos apartados: en la primera parte de la tabla se presentan todas las baterías compuestas por ítems medidos con escalas Likert; en la segunda parte de la tabla (diferenciada con el nombre **módulos**) se muestran todas las secciones de la encuesta que se responden mediante sliders.
+
+```{r}
+#| label: ranking y slider df
+#| include: false
+
+
+ranking_frame <- c(n_items = 5, duracion_mediana_total = 85)
+
+sliders_frame <- c(n_items = 15, duracion_mediana_total = 31)
+```
+
+```{r}
+#| label: tbl-panorama-bateria
+#| warning: false
+#| tbl-cap: Panorama general de los tiempos de respuesta por batería temática
+
+panorama_bateria <- do.call(rbind, lapply(names(baterias), function(nm) {
+  ids <- baterias[[nm]]
+  tab <- tiempo_pregunta_resumen[tiempo_pregunta_resumen$pregunta %in% ids, ]
+  data.frame(
+    bateria                = nm,
+    n_items                = length(ids),
+    duracion_mediana_total = round(sum(tab$duracion_mediana_seg), 2),
+    stringsAsFactors = FALSE
+  )
+})) # se suma la duración mediana de las preguntas de cada batería temática, junto con su cantidad de ítems
+
+panorama_bateria <- rbind(
+  panorama_bateria,
+  data.frame(
+    bateria                = "Meritocracia",
+    n_items                = length(merit_vars),
+    duracion_mediana_total = round(sum(tiempo_merit_resumen$duracion_mediana_seg), 2),
+    stringsAsFactors = FALSE
+  )
+) # se agrega la batería de meritocracia (estimada a partir de EDUMERCO) al panorama general
+
+panorama_bateria$duracion_mediana_total <- round(panorama_bateria$duracion_mediana_total / 60, 2) # conversión de segundos a minutos
+
+panorama_bateria <- rbind(
+  panorama_bateria,
+  data.frame(
+    bateria                = "Ranking de políticas",
+    n_items                = unname(ranking_frame["n_items"]),
+    duracion_mediana_total = round(unname(ranking_frame["duracion_mediana_total"]) / 60, 2),
+    stringsAsFactors = FALSE
+  ),
+  data.frame(
+    bateria                = "Participación Estado/Mercado",
+    n_items                = unname(sliders_frame["n_items"]),
+    duracion_mediana_total = round(unname(sliders_frame["duracion_mediana_total"]) / 60, 2),
+    stringsAsFactors = FALSE
+  )
+) # se agregan las baterías de ranking y sliders (estimadas por separado en el chunk "ranking y slider df")
+
+seccion_1 <- c(
+  "Demográficos inicio", "Market Justice Preferences", "Market Justice Reflexive",
+  "Market Justice en el tiempo", "Comodificación de servicios", "Lucro en servicios",
+  "Neoliberalismo", "NICERA", "Adicionales", "Demográficos (bloque 2)", "Meritocracia"
+) # baterías del cuerpo principal de la encuesta
+
+seccion_2 <- c(
+  "Conjoint", "Escenarios de subvención", "Ranking de políticas", "Participación Estado/Mercado"
+) # baterías correspondientes a módulos aparte (conjoint, escenarios y tareas interactivas)
+
+panorama_seccion_1 <- panorama_bateria[match(seccion_1, panorama_bateria$bateria), ]
+panorama_seccion_2 <- panorama_bateria[match(seccion_2, panorama_bateria$bateria), ]
+
+subtotal_1 <- data.frame(
+  bateria                = "Subtotal",
+  n_items                = sum(panorama_seccion_1$n_items),
+  duracion_mediana_total = round(sum(panorama_seccion_1$duracion_mediana_total), 2),
+  stringsAsFactors = FALSE
+) # subtotal de ítems y duración mediana de la primera sección
+
+fila_total <- data.frame(
+  bateria                = "Total",
+  n_items                = sum(panorama_seccion_1$n_items, panorama_seccion_2$n_items),
+  duracion_mediana_total = round(sum(panorama_seccion_1$duracion_mediana_total, panorama_seccion_2$duracion_mediana_total), 2),
+  stringsAsFactors = FALSE
+) # total general, sumando ambas secciones
+
+fila_modulos <- data.frame(
+  bateria                = "Módulos",
+  n_items                = "N° de ítems",
+  duracion_mediana_total = "Duración mediana total (min)",
+  stringsAsFactors = FALSE
+) # fila separadora que marca el inicio de la segunda sección (módulos aparte)
+
+panorama_bateria <- rbind(
+  panorama_seccion_1,
+  subtotal_1,
+  fila_modulos,
+  panorama_seccion_2,
+  fila_total
+) # tabla final: sección 1, subtotal, separador de módulos, sección 2 y total general
+
+panorama_bateria |>
+  datatable(
+    rownames = FALSE,
+    options = list(dom = "t", pageLength = nrow(panorama_bateria)),
+    colnames = c(
+      "Batería temática", "N° de ítems", "Duración mediana total (min)"
+    )
+  ) |>
+  formatStyle(
+    "bateria",
+    target = "row",
+    fontWeight = styleEqual("Módulos", "bold")
+  ) # se resalta la fila "Módulos", ya que solo replica los encabezados para marcar el inicio de la segunda sección
 ```
 
 ## Alternativa 1: Versión con baterías esenciales
