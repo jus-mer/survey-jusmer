@@ -1,0 +1,4 @@
+_survey/
+.env
+rsconnect/
+preview_data.csv
