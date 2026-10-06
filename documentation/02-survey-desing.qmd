@@ -88,14 +88,14 @@ The provider (Netquest) has flagged a feasibility constraint on panelists with b
 
 ## Stage 1: Cross-sectional Design {#sec-crosssec}
 
-Stage 1 is a self-standing cross-sectional study and the first field of the project. Its sample size is set by the minimum power requirements of the conjoint module rather than by domain precision (documented in the experimental-design chapter), and it applies the sociodemographic quotas of @sec-quotas. Because it is a single measurement, it carries no inter-wave attrition and no longitudinal weight; inference relies on the cross-sectional weight alone (@sec-weighting). 
+Stage 1 is a self-standing cross-sectional study and the first field of the project. Its sample size is set by the minimum power requirements of the conjoint module rather than by domain precision (documented in the experimental-design chapter), and it applies the sociodemographic quotas of @sec-quotas. Because it is a single measurement, it carries no inter-wave attrition and no longitudinal weight; inference relies on the cross-sectional weight alone (@sec-weighting).
 
 Stage 1 may open with a soft launch: a first tranche of 500 effective cases, after which the field halts for a data-quality and quota-pacing review.
 
 ::: callout-note
 ## To confirm — Stage 1 validation
 
--   Soft launch: [yes, 500 effective cases with a review pause].
+-   Soft launch: \[yes, 500 effective cases with a review pause\].
 -   Focus of the review: conjoint module behavior, deservingness and meritocracy scales, redirection links, response times, and skip/filter logic.
 :::
 
@@ -131,7 +131,7 @@ Wave-1 validation. If Stage 2 proceeds, Wave 1 may itself open with a validation
 ::: callout-note
 ## To confirm — Stage 2 Wave-1 validation
 
--   Form: [technical pilot / soft launch — specify which].
+-   Form: \[technical pilot / soft launch — specify which\].
 -   If soft launch: a first tranche of 500 effective cases, a pause of 1–2 weeks for data-quality and quota-pacing review, and resumption on written go/no-go approval by the team.
 -   Focus: the conjoint module.
 :::
@@ -186,9 +186,9 @@ so the loss relative to the nominal $N$ is explicit (@sec-errors). The model, au
 ::: callout-note
 ## To confirm — weighting specification
 
--   Wave-1 covariate set $z_i$, fixed in advance: sex, age, education, access device, total response time [add/remove any].
--   Raking convergence criterion and weight-trimming threshold: [values].
--   Calibration variables beyond sex × age × education: [e.g., macrozone, if a reliable benchmark is adopted].
+-   Wave-1 covariate set $z_i$, fixed in advance: sex, age, education, access device, total response time \[add/remove any\].
+-   Raking convergence criterion and weight-trimming threshold: \[values\].
+-   Calibration variables beyond sex × age × education: \[e.g., macrozone, if a reliable benchmark is adopted\].
 :::
 
 ## Precision, Uncertainty, and Non-sampling Errors {#sec-errors}

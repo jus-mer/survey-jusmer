@@ -1,0 +1,94 @@
+---
+theme-settings:
+  theme: default
+  barposition: top
+
+survey-settings:
+  show-previous: true
+  use-cookies: false
+  auto-scroll: false
+  rate-survey: false
+  system-language: es
+  highlight-unanswered: true
+  highlight-color: blue
+  capture-metadata: true
+  all-required: false
+  required:
+    - zs_q1
+    - zs_q2
+    - zs_q3
+
+system-messages:
+  previous: Anterior
+  next: Siguiente
+  exit: Finalizar encuesta
+---
+
+```{r}
+library(surveydown)
+library(htmltools)
+source("code/zero_sum_widget.R")
+```
+
+--- zs_practice_page
+
+# Módulo E: Logros y factores de éxito
+
+Las siguientes preguntas se refieren a distintos aspectos que pueden ser importantes para tener éxito en la vida, como los siguientes:
+
+- **Esfuerzo**: la dedicación y empeño que una persona pone en sus actividades.  
+- **Talento**: las habilidades y capacidades que una persona tiene para realizar ciertas actividades.
+- **Familia** de origen: el entorno familiar y social en el que una persona crece y se desarrolla.
+- **Contactos**: las relaciones y redes sociales que una persona tiene, que pueden ayudarle a conseguir oportunidades.
+
+Pensando en los logros en la vida, ¿qué tan importantes son estos factores? Al respecto, le pedimos que indique la importancia de cada uno de ellos. Para esto, arrastre los **tres divisores amarillos** para repartir 100% entre las cuatro categorías.
+
+Cada segmento representa cuánto pesa esa categoría; el total siempre suma 100%.
+
+**Ejemplo:** ¿Qué tan importante es cada factor para tener éxito en la vida?
+
+```{r}
+zero_sum_widget("zs_practice")
+
+sd_nav(page_next = "zs_page", label_next = "Siguiente")
+```
+
+--- zs_page
+
+# Preguntas
+
+**1.** Para **mis logros** en la vida, ¿qué tan importantes han sido los siguientes aspectos?
+
+```{r}
+zero_sum_widget("zs_q1")
+```
+
+**2.** Pensando en **personas cercanas a Ud.**, ¿qué dirían sobre Ud. respecto a qué factores han sido importantes para lo que Ud. ha logrado?
+
+```{r}
+zero_sum_widget("zs_q2")
+```
+
+**3.** Y, ¿qué piensa Ud. sobre **la mayoría de las personas**? ¿Qué es más importante en sus logros?
+
+```{r}
+zero_sum_widget("zs_q3")
+
+sd_question(
+  type  = "textarea",
+  id    = "zs_comment",
+  label = "Comentarios"
+)
+
+sd_nav(page_next = "end_normal", label_previous = "Anterior", label_next = "Siguiente")
+```
+
+--- end_normal
+
+# Fin de la Encuesta
+
+¡Gracias por su participación! Su código de finalización es: **`r sd_output('completion_code', type = 'value')`**
+
+```{r}
+sd_close()
+```
