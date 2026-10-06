@@ -7,8 +7,27 @@ format:
 
 # Survey implementation {#imp-instrument}
 
+This section is divided in two parts: the first part describes the survey programming and technical integration, while the second part focuses on fieldwork, quality control, and fieldwork performance indicators.
 
-## Survey Programming and Technical Integration
+## Survey Programming and technical aspects
+
+- Survey:
+  - Surveydown
+  - Conjoint:
+    - Randomization attributes
+    - names constraint randomization
+    - intra respondent reliability
+  - Questionnaire:
+    - Randomization
+- Deployment:
+  - Posit Cloud
+  - waiter
+- Data:
+  - Supabase
+  - Server: 
+    - On October 6, 2026, the server hosting the survey was switched to Supabase's Ohio data center to improve the survey's loading speed
+  - data connection
+  - conjoint attributes registration
 
 ## Fieldwork
 

@@ -43,7 +43,7 @@ format:
       - jusmer.scss
     code-link: true
 
-editor: visual
+editor: source
 lang: en
 
 bibliography: "../input/bib/jusmer.bib"
