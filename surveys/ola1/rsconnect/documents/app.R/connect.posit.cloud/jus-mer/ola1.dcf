@@ -5,7 +5,7 @@ account: jus-mer
 server: connect.posit.cloud
 envVars: SD_HOST, SD_PORT, SD_DBNAME, SD_USER, SD_TABLE, SD_PASSWORD
 hostUrl: https://api.connect.posit.cloud/v1
-appId: 019f6772-6c05-4512-b3df-ee334461ecf1
+appId: 01a1136c-df1f-c125-dbbc-30faed92627b
 bundleId:
-url: https://connect.posit.cloud/jus-mer/content/019f6772-6c05-4512-b3df-ee334461ecf1
+url: https://connect.posit.cloud/jus-mer/content/01a1136c-df1f-c125-dbbc-30faed92627b
 version: 1

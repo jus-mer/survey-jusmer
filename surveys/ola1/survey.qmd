@@ -171,26 +171,11 @@ source("code/slider_widget.R")
   color: #0b3d1a !important;
 }
 
-/* Name row (first tbody row) in option colors */
-.cell-output-display table.table.table-condensed > tbody > tr:first-child > td:nth-child(2),
-.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd):first-child > td:nth-child(2),
-.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even):first-child > td:nth-child(2) {
-  color: #28a745 !important;
-  font-weight: 800 !important;
-}
-
 .cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(3),
 .cell-output-display table.table.table-condensed > thead > tr > th:nth-child(3) {
   background-color: #d9ecff !important;
   box-shadow: inset 0 0 0 9999px #d9ecff !important;
   color: #001f4d !important;
-}
-
-.cell-output-display table.table.table-condensed > tbody > tr:first-child > td:nth-child(3),
-.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd):first-child > td:nth-child(3),
-.cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even):first-child > td:nth-child(3) {
-  color: #007bff !important;
-  font-weight: 800 !important;
 }
 
 .cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd) > td:nth-child(2),
@@ -416,19 +401,6 @@ function forceAllocationTextOpacity() {
     el.style.setProperty('font-weight', '800', 'important');
     el.style.setProperty('opacity', '1', 'important');
     el.style.setProperty('filter', 'none', 'important');
-  });
-
-  // Color the name row (first tbody row) in each conjoint table
-  document.querySelectorAll('table.table-condensed tbody tr:first-child').forEach(function(row) {
-    var cells = row.querySelectorAll('td');
-    if (cells[1]) {
-      cells[1].style.setProperty('color', '#28a745', 'important');
-      cells[1].style.setProperty('font-weight', '800', 'important');
-    }
-    if (cells[2]) {
-      cells[2].style.setProperty('color', '#007bff', 'important');
-      cells[2].style.setProperty('font-weight', '800', 'important');
-    }
   });
 
   document.querySelectorAll('[id^="container-cbc_"]').forEach(function(el) {

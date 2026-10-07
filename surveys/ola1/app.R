@@ -500,6 +500,7 @@ make_cbc_table <- function(df, attr_order = NULL, fixed_names = NULL, slider_id 
     )
 
     attr_labels <- c(
+      nombre      = "Postulante:",
       need        = "Su hogar llega a fin de mes con:",
       identity    = "País de nacimiento:",
       control     = "Requiere la beca porque:",
@@ -507,6 +508,8 @@ make_cbc_table <- function(df, attr_order = NULL, fixed_names = NULL, slider_id 
       reciprocity = "Fuera de sus estudios:",
       attitude    = "Ve la beca como:"
     )
+    # The name row ("nombre", which signals the applicant's sex) is ordered
+    # like any other attribute; without an explicit order it goes first
     ordered <- if (!is.null(attr_order)) attr_order else names(attr_labels)
 
     alts <- df |>
@@ -518,10 +521,8 @@ make_cbc_table <- function(df, attr_order = NULL, fixed_names = NULL, slider_id 
           TRUE ~ nombre
         )
       ) |>
-      select(
-        `Postulante:` = nombre_formatted,
-        !!!setNames(rlang::syms(ordered), attr_labels[ordered])
-      )
+      mutate(nombre = nombre_formatted) |>
+      select(!!!setNames(rlang::syms(ordered), attr_labels[ordered]))
   } else {
     # Backward-compatible rendering for the original apple template
     alts <- df |>
@@ -664,18 +665,19 @@ server <- function(input, output, session) {
     )
 
   # Random attribute order fixed for this respondent across the practice task
-  # and all 6 questions
-  attr_order <- sample(c("need", "identity", "control", "effort", "reciprocity", "attitude"))
+  # and all 6 questions. The name row ("nombre", which signals the
+  # applicant's sex) is shuffled together with the six attributes, so it can
+  # land in any of the 7 rows.
+  attr_order <- sample(c("nombre", "need", "identity", "control", "effort", "reciprocity", "attitude"))
 
   # Persist the display order so attribute-order effects (Hainmueller et al.
-  # 2014, sec. 5.3.4) can be diagnosed later. Stored as a 6-character NICERA
-  # code (Need, Identity, Control, Effort, Reciprocity, Attitude) - the first
-  # letters are unique across the six attributes, so e.g. "EANIRC" means the
-  # respondent saw effort first and control last. The order is not otherwise
-  # recoverable: cbc_profiles always serializes attributes in a fixed
-  # canonical order regardless of what was displayed. Sex is not included -
-  # it is signaled in the profile header and always occupies the first row.
-  attr_code <- c(need = "N", identity = "I", control = "C",
+  # 2014, sec. 5.3.4) can be diagnosed later. Stored as a 7-character code
+  # (Postulante/name, Need, Identity, Control, Effort, Reciprocity, Attitude) -
+  # the letters are unique across the seven rows, so e.g. "EANPIRC" means the
+  # respondent saw effort first, the name fourth and control last. The order
+  # is not otherwise recoverable: cbc_profiles always serializes attributes in
+  # a fixed canonical order regardless of what was displayed.
+  attr_code <- c(nombre = "P", need = "N", identity = "I", control = "C",
                  effort = "E", reciprocity = "R", attitude = "A")
   sd_store_value(paste(attr_code[attr_order], collapse = ""), "cbc_attr_order")
   
