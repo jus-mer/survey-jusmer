@@ -178,6 +178,15 @@ source("code/slider_widget.R")
   color: #001f4d !important;
 }
 
+/* Vertical lines separating the conjoint table columns (attribute labels |
+   Postulante A | Postulante B) */
+.cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(2),
+.cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(3),
+.cell-output-display table.table.table-condensed > thead > tr > th:nth-child(2),
+.cell-output-display table.table.table-condensed > thead > tr > th:nth-child(3) {
+  border-left: 2px solid #868e96 !important;
+}
+
 .cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(odd) > td:nth-child(2),
 .cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:nth-of-type(even) > td:nth-child(2),
 .cell-output-display table.table-striped.table-hover.table-condensed > tbody > tr:hover > td:nth-child(2) {
@@ -329,44 +338,6 @@ function tightenConjointTableSliderGap() {
   });
 }
 
-function styleConjointProfiles() {
-  // Find all kable tables in the survey
-  document.querySelectorAll('table.table-striped.table-hover.table-condensed').forEach(function(table) {
-    // Look for "Postulante:" row or "Profile:" row
-    var rows = table.querySelectorAll('tbody tr');
-    rows.forEach(function(row, idx) {
-      var cells = row.querySelectorAll('td');
-      if (cells.length >= 3) {
-        // Check if first cell contains "Postulante:" or "Profile:"
-        var firstCellText = cells[0].textContent.trim();
-        if (firstCellText === 'Postulante:' || firstCellText === 'Profile:') {
-          // Get the names from cells 1 and 2
-          var name1 = cells[1].textContent.trim();
-          var name2 = cells[2].textContent.trim();
-          
-          // Store names in the global object for sliders to access
-          if (!window.cbc_names) window.cbc_names = {};
-          window.cbc_names[table.closest('.cell-output-display')?.nextElementSibling?.querySelector('[id^="cbc_"]')?.id] = [name1, name2];
-          
-          // Style the name cells with bold and color
-          var nameCell = cells[1];
-          nameCell.style.fontWeight = '700';
-          nameCell.style.color = '#28a745';
-          
-          // Check if there's a third cell for the second profile
-          var nameCell2 = cells[2];
-          if (nameCell2) {
-            nameCell2.style.fontWeight = '700';
-            nameCell2.style.color = '#007bff';
-          }
-        }
-      }
-    });
-  });
-}
-
-
-
 function forceAllocationTextOpacity() {
   document.querySelectorAll('[id$="_opt1"], [id$="_opt2"], [id$="_opt1_pct"], [id$="_opt2_pct"]').forEach(function(el) {
     if (el.id.endsWith('_opt1') || el.id.endsWith('_opt1_pct')) {
@@ -422,17 +393,14 @@ document.addEventListener('DOMContentLoaded', function() {
   tightenConjointTableSliderGap();
   forceAllocationTextOpacity();
   stripRecalculatingClass();
-  styleConjointProfiles();
   setTimeout(localizeSurveyNavButtons, 100);
   setTimeout(tightenConjointTableSliderGap, 100);
   setTimeout(forceAllocationTextOpacity, 100);
   setTimeout(stripRecalculatingClass, 100);
-  setTimeout(styleConjointProfiles, 100);
   setTimeout(localizeSurveyNavButtons, 400);
   setTimeout(tightenConjointTableSliderGap, 400);
   setTimeout(forceAllocationTextOpacity, 400);
   setTimeout(stripRecalculatingClass, 400);
-  setTimeout(styleConjointProfiles, 400);
 });
 
 document.addEventListener('click', function() {
@@ -440,12 +408,10 @@ document.addEventListener('click', function() {
   setTimeout(tightenConjointTableSliderGap, 0);
   setTimeout(forceAllocationTextOpacity, 0);
   setTimeout(stripRecalculatingClass, 0);
-  setTimeout(styleConjointProfiles, 0);
   setTimeout(localizeSurveyNavButtons, 120);
   setTimeout(tightenConjointTableSliderGap, 120);
   setTimeout(forceAllocationTextOpacity, 120);
   setTimeout(stripRecalculatingClass, 120);
-  setTimeout(styleConjointProfiles, 120);
 });
 
 document.addEventListener('input', function() {
@@ -491,9 +457,8 @@ relacionados con la justicia de mercado y criterios de merecimiento. También se
 pedirá información sobre usted y su hogar, como por ejemplo su edad, género y nivel de
 educación, entre otros. Usted recibirá un cuestionario en línea que podrá responder
 desde el lugar que usted estime conveniente. En caso de aceptar participar, usted será
-invitado nuevamente a contestar un cuestionario similar en dos ocasiones más, una vez
-el próximo año y otra el año subsiguiente. En total, estimamos que cada encuesta tomará
-aproximadamente 20 minutos.
+invitado nuevamente a contestar un cuestionario similar en dos ocasiones más durante el 
+próximo año. En total, estimamos que cada encuesta tomará aproximadamente 20 minutos.
 
 **Riesgos**: No existe ningún riesgo asociado a su participación en este estudio.
 
@@ -576,17 +541,6 @@ A continuación se presentan una serie de preguntas para conocer información so
 
 sd_question(
   type   = 'mc',
-  id     = 'respondent',
-  label  = "¿Desde qué dispositivo responde esta encuesta?",
-  option = c(
-    "Celular" = "celular",
-    "Computador" = "pc",
-    "Tablet" = "tablet"
-  )
-)
-
-sd_question(
-  type   = 'mc',
   id     = 'sexo',
   label  = "¿Cuál es su sexo?",
   option = c(
@@ -642,9 +596,7 @@ sd_nav(
 
 # Módulo Tarea de asignación de becas
 
-A continuación, pasaremos a una sección diferente. Le presentaremos una serie de situaciones en las que le pediremos que evalúe información sobre dos postulantes y tome una decisión de asignación de recursos entre ellos.
-
-Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice con la tarea.
+Esta sección corresponde a una serie de tareas de asignación de una beca de estudios:
 
 ::: {.callout-note}
 ## La situación:
@@ -658,7 +610,7 @@ Antes de comenzar, le mostramos un ejemplo de práctica para que se familiarice 
 ::: {.callout-tip}
 ## Su tarea:
 
-- En cada par, Ud. debe repartir la beca asignando a cada postulante un porcentaje del monto total de la beca ($ 2.000.000), considerando las características de cada uno que se presentarán en una tabla. 
+- En cada par, Ud. debe repartir la beca asignando a cada postulante un porcentaje del monto total de la beca ($ 2.000.000), considerando las características de cada uno que se presentarán en una tabla. Algunas de estas características pueden ser diferentes entre los postulantes, mientras que otras pueden ser las mismas.
 - Dado que el monto disponible para distribuir entre cada par es fijo, otorgar más dinero a un postulante implica otorgar menos al otro.  
 
 **No hay respuestas correctas ni incorrectas; solo nos interesa su opinión.**
@@ -670,8 +622,9 @@ Mueva el control deslizante (círculo amarillo ![](images/circulo_amarillo.svg){
 
 
 ```{r}
-# Tabla generada en app.R (output$cbc_practice_table): los nombres se sortean
-# por participante y la tarea 6 repite estos mismos perfiles con los lados invertidos
+# Tabla generada en app.R (output$cbc_practice_table): los perfiles se sortean
+# por participante y la tarea 6 repite estos mismos perfiles con los lados
+# invertidos
 sd_output("cbc_practice_table")
 
 shiny::p(
@@ -686,7 +639,7 @@ htmltools::HTML("<br>")
 
 ```
 
-Ahora que ha practicado con una pregunta de ejemplo, vamos a mostrarle 6 pares de postulantes con distintas características, entre quienes deberá distribuir el monto de la beca.
+A continuación, vamos a mostrarle 6 pares de postulantes distintos para realizar la misma tarea de asignación de becas.
 
 ```{r}
 
@@ -708,7 +661,7 @@ sd_nav(
 sd_question(
   type = "mc",
   id = "manip_check",
-  label = "Antes de comenzar, ¿en qué consistirá su tarea en esta sección?",
+  label = "Antes de continuar, ¿en qué consistirá su tarea en esta sección?",
   option = c(
     "Repartir un monto de beca entre dos postulantes" = "reparto",
     "Elegir a un único postulante y descartar al otro" = "eleccion",

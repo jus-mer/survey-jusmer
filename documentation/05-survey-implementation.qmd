@@ -18,7 +18,7 @@ This section is divided in two parts: the first part describes the survey progra
     - names constraint randomization
     - intra respondent reliability
   - Questionnaire:
-    - Randomization
+    - Randomization 
 - Deployment:
   - Posit Cloud
   - waiter

@@ -78,38 +78,6 @@ ui <- tagList(
   sd_ui_no_font_awesome(),
   tags$head(
     tags$script(HTML("
-      function applyCBCNamesToDom() {
-        if (!window.cbc_names) return;
-        Object.keys(window.cbc_names).forEach(function(id) {
-          var names = window.cbc_names[id];
-          if (!Array.isArray(names) || names.length < 2) return;
-          var n1 = document.getElementById(id + '_name1');
-          var n2 = document.getElementById(id + '_name2');
-          if (n1) n1.textContent = names[0];
-          if (n2) n2.textContent = names[1];
-        });
-      }
-
-      Shiny.addCustomMessageHandler('setCBCNames', function(msg) {
-        window.cbc_names = window.cbc_names || {};
-        window.cbc_names[msg.id] = msg.names;
-        applyCBCNamesToDom();
-      });
-
-      // Keep names synced when pages are rendered lazily or after navigation
-      setInterval(applyCBCNamesToDom, 300);
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', applyCBCNamesToDom);
-      } else {
-        applyCBCNamesToDom();
-      }
-
-      document.addEventListener('click', function() {
-        setTimeout(applyCBCNamesToDom, 0);
-        setTimeout(applyCBCNamesToDom, 120);
-      });
-
       function parsePctValue(x) {
         if (x === null || x === undefined) return null;
         var n = parseInt(String(x).replace('%', '').trim(), 10);
@@ -450,57 +418,34 @@ ui <- tagList(
 
 # Helper functions ------------------------------------------------------------
 
-male_names <- c("Mateo", "Lucas", "Benjamin", "Nicolas", "Daniel", "Santiago", "Tomas", "Joaquin")
-female_names <- c("Sofia", "Valentina", "Isidora", "Martina", "Camila", "Florencia", "Catalina", "Antonia")
-
-# Fixed profiles of the practice task (cbc_practice-page), the same for every
-# respondent. Task 6 shows them again with their sides swapped (see server).
-practice_profiles <- data.frame(
-  altID       = 1:2,
-  need        = c("Dificultad", "Holgura"),
-  identity    = c("Chile", "Chile"),
-  control     = c("Postuló a otras becas pero no obtuvo financiamiento", "No alcanzó a postular a tiempo a otras becas"),
-  effort      = c("Más que sus compañeros", "Igual que sus compañeros"),
-  reciprocity = c("Ha hecho voluntariado", "No ha hecho voluntariado"),
-  attitude    = c("Una ayuda que agradece", "Una ayuda que agradece"),
-  stringsAsFactors = FALSE
+# Column headers of the conjoint tables, in the colors of the slider boxes
+# (altID 1 = left/green, altID 2 = right/blue)
+alt_headers <- c(
+  "<span style='color: #28a745 !important; font-weight: 800;'>Postulante A</span>",
+  "<span style='color: #007bff !important; font-weight: 800;'>Postulante B</span>"
 )
 
-make_cbc_table <- function(df, attr_order = NULL, fixed_names = NULL, slider_id = NULL) {
-  # Each profile independently draws a male or female name with p = 0.5,
-  # unless the caller fixes them (practice task and its repetition in task 6).
+make_cbc_table <- function(df, attr_order = NULL) {
   alt_ids <- sort(unique(df$altID))
-  assigned <- if (!is.null(fixed_names)) fixed_names else sapply(alt_ids, function(i) {
-    pool <- if (runif(1) < 0.5) male_names else female_names
-    sample(pool, 1)
-  })
-  name_map <- stats::setNames(assigned, as.character(alt_ids))
 
-  has_custom_cols <- all(c("need", "identity", "control", "effort", "reciprocity", "attitude") %in% names(df))
+  has_custom_cols <- all(c("sex", "need", "identity", "control", "effort", "reciprocity", "attitude") %in% names(df))
 
   attrs_by_alt <- NULL
 
   if (has_custom_cols) {
-    if (is.null(slider_id)) slider_id <- paste0("cbc_q", unique(df$qID)[1])
-    names_vec <- unname(name_map[as.character(alt_ids)])
-
-    # Snapshot of what's actually shown to the respondent for this task
-    # (attributes + assigned name per alternative), keyed by altID. Needed to
-    # store the presented profiles alongside the slider answer, since the
-    # design is randomized per-session and can't be reconstructed afterwards.
-    attr_cols <- c("need", "identity", "control", "effort", "reciprocity", "attitude")
+    # Snapshot of what's actually shown to the respondent for this task,
+    # keyed by altID. Needed to store the presented profiles alongside the
+    # slider answer, since the design is randomized per-session and can't be
+    # reconstructed afterwards.
+    attr_cols <- c("sex", "need", "identity", "control", "effort", "reciprocity", "attitude")
     df_by_alt <- df[match(alt_ids, df$altID), ]
     attrs_by_alt <- stats::setNames(
-      lapply(seq_along(alt_ids), function(i) {
-        vals <- as.list(df_by_alt[i, attr_cols])
-        vals$nombre <- unname(name_map[as.character(alt_ids[i])])
-        vals
-      }),
+      lapply(seq_along(alt_ids), function(i) as.list(df_by_alt[i, attr_cols])),
       as.character(alt_ids)
     )
 
     attr_labels <- c(
-      nombre      = "Postulante:",
+      sex         = "Sexo:",
       need        = "Su hogar llega a fin de mes con:",
       identity    = "País de nacimiento:",
       control     = "Requiere la beca porque:",
@@ -508,31 +453,20 @@ make_cbc_table <- function(df, attr_order = NULL, fixed_names = NULL, slider_id 
       reciprocity = "Fuera de sus estudios:",
       attitude    = "Ve la beca como:"
     )
-    # The name row ("nombre", which signals the applicant's sex) is ordered
-    # like any other attribute; without an explicit order it goes first
     ordered <- if (!is.null(attr_order)) attr_order else names(attr_labels)
 
     alts <- df |>
-      mutate(
-        nombre = name_map[as.character(altID)],
-        nombre_formatted = dplyr::case_when(
-          altID == 1 ~ sprintf("<span style='color: #28a745 !important; font-weight: 800;'>%s</span>", nombre),
-          altID == 2 ~ sprintf("<span style='color: #007bff !important; font-weight: 800;'>%s</span>", nombre),
-          TRUE ~ nombre
-        )
-      ) |>
-      mutate(nombre = nombre_formatted) |>
+      arrange(altID) |>
       select(!!!setNames(rlang::syms(ordered), attr_labels[ordered]))
   } else {
     # Backward-compatible rendering for the original apple template
     alts <- df |>
+      arrange(altID) |>
       mutate(
-        nombre = name_map[as.character(altID)],
         price = paste(scales::dollar(price), "/ lb"),
         image = paste0('<img src="', image, '" width=100>')
       ) |>
       select(
-        `Profile:` = nombre,
         ` ` = image,
         `Price:` = price,
         `Type:` = type,
@@ -542,7 +476,11 @@ make_cbc_table <- function(df, attr_order = NULL, fixed_names = NULL, slider_id 
 
   row.names(alts) <- NULL # Drop row names
 
-  table <- kbl(t(alts), escape = FALSE) |>
+  # One column per applicant, headed "Postulante A" / "Postulante B"
+  profiles <- t(alts)
+  colnames(profiles) <- alt_headers[seq_len(ncol(profiles))]
+
+  table <- kbl(profiles, escape = FALSE) |>
     kable_styling(
       bootstrap_options = c("striped", "hover", "condensed"),
       full_width = FALSE,
@@ -553,14 +491,16 @@ make_cbc_table <- function(df, attr_order = NULL, fixed_names = NULL, slider_id 
 
   list(
     render = function() { shiny::HTML(as.character(table)) },
-    slider_id = if (has_custom_cols) slider_id else NULL,
-    names = if (has_custom_cols) names_vec else NULL,
     attrs = attrs_by_alt
   )
 }
 
 build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2) {
   niveles <- list(
+    sex = c(
+      "Hombre",
+      "Mujer"
+    ),
     need = c(
       "Dificultad",
       "Holgura"
@@ -589,12 +529,15 @@ build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2
     )
   )
 
-  # Generate a pair of profiles that differ in at least min_diff attributes
+  # Generate a pair of profiles that differ in at least min_diff of the six
+  # substantive attributes. Sex is drawn independently (p = 0.5) like the
+  # rest but does not count toward min_diff.
+  substantive <- setdiff(names(niveles), "sex")
   generate_pair <- function() {
     repeat {
       alt1 <- sapply(niveles, function(lvls) sample(lvls, 1))
       alt2 <- sapply(niveles, function(lvls) sample(lvls, 1))
-      if (sum(alt1 != alt2) >= min_diff) return(list(alt1 = alt1, alt2 = alt2))
+      if (sum(alt1[substantive] != alt2[substantive]) >= min_diff) return(list(alt1 = alt1, alt2 = alt2))
     }
   }
 
@@ -606,6 +549,7 @@ build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2
       qID         = q,
       altID       = 1:2,
       obsID       = q,
+      sex         = c(pair$alt1[["sex"]],         pair$alt2[["sex"]]),
       need        = c(pair$alt1[["need"]],        pair$alt2[["need"]]),
       identity    = c(pair$alt1[["identity"]],    pair$alt2[["identity"]]),
       control     = c(pair$alt1[["control"]],     pair$alt2[["control"]]),
@@ -619,7 +563,7 @@ build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2
   result <- do.call(rbind, rows)
   result$profileID <- seq_len(nrow(result))
   result[, c("profileID", "respID", "qID", "altID", "obsID",
-             "need", "identity", "control", "effort", "reciprocity", "attitude")]
+             "sex", "need", "identity", "control", "effort", "reciprocity", "attitude")]
 }
 
 # Server setup ----------------------------------------------------------------
@@ -653,31 +597,31 @@ server <- function(input, output, session) {
   }
 
   # Repeated task for measuring intra-respondent reliability (Clayton,
-  # Horiuchi, Kaufman, King & Komisarchik 2026): task 6 shows the practice
-  # task's two profiles again with their sides swapped (altID 1 <-> 2), so a
-  # consistent answer reflects the profiles rather than the side of the screen.
+  # Horiuchi, Kaufman, King & Komisarchik 2026): the practice task shows this
+  # respondent's task-6 profiles (randomized like every other task, so the
+  # practice task differs across respondents), and task 6 shows the same two
+  # profiles again with their sides swapped (altID 1 <-> 2), so a consistent
+  # answer reflects the profiles rather than the side of the screen.
+  practice_df <- df |>
+    filter(qID == 6) |>
+    mutate(qID = 0L, obsID = 0L)
   df <- df |>
-    filter(qID != 6) |>
-    bind_rows(
-      practice_profiles |>
-        mutate(respID = respondentID, qID = 6L, obsID = 6L, altID = 3L - altID) |>
-        arrange(altID)
-    )
+    mutate(altID = ifelse(qID == 6, 3L - altID, altID)) |>
+    arrange(qID, altID)
 
   # Random attribute order fixed for this respondent across the practice task
-  # and all 6 questions. The name row ("nombre", which signals the
-  # applicant's sex) is shuffled together with the six attributes, so it can
-  # land in any of the 7 rows.
-  attr_order <- sample(c("nombre", "need", "identity", "control", "effort", "reciprocity", "attitude"))
+  # and all 6 questions. Sex is shuffled together with the other six
+  # attributes, so it can land in any of the 7 rows.
+  attr_order <- sample(c("sex", "need", "identity", "control", "effort", "reciprocity", "attitude"))
 
   # Persist the display order so attribute-order effects (Hainmueller et al.
   # 2014, sec. 5.3.4) can be diagnosed later. Stored as a 7-character code
-  # (Postulante/name, Need, Identity, Control, Effort, Reciprocity, Attitude) -
-  # the letters are unique across the seven rows, so e.g. "EANPIRC" means the
-  # respondent saw effort first, the name fourth and control last. The order
-  # is not otherwise recoverable: cbc_profiles always serializes attributes in
+  # (Sex, Need, Identity, Control, Effort, Reciprocity, Attitude) - the
+  # letters are unique across the seven rows, so e.g. "EANSIRC" means the
+  # respondent saw effort first, sex fourth and control last. The order is
+  # not otherwise recoverable: cbc_profiles always serializes attributes in
   # a fixed canonical order regardless of what was displayed.
-  attr_code <- c(nombre = "P", need = "N", identity = "I", control = "C",
+  attr_code <- c(sex = "S", need = "N", identity = "I", control = "C",
                  effort = "E", reciprocity = "R", attitude = "A")
   sd_store_value(paste(attr_code[attr_order], collapse = ""), "cbc_attr_order")
   
@@ -699,24 +643,13 @@ server <- function(input, output, session) {
   version_guardada <- session$userData$deferred_values$version_encuesta
   if (!is.null(version_guardada)) version_encuesta <- version_guardada
 
-  # Practice task: rendered here (not in survey.qmd) so its names are drawn
-  # per respondent and task 6 can reuse them. As before, one male and one
-  # female name in random order.
-  practice_names <- sample(c(sample(male_names, 1), sample(female_names, 1)))
-  practice_table <- make_cbc_table(practice_profiles |> mutate(qID = 0L),
-                                   attr_order = attr_order,
-                                   fixed_names = practice_names,
-                                   slider_id = "cbc_practice")
+  # Practice task: rendered here (not in survey.qmd) because its profiles are
+  # drawn per respondent (see above).
+  practice_table <- make_cbc_table(practice_df, attr_order = attr_order)
   output$cbc_practice_table <- practice_table$render
 
-  # Create the options for each choice question (using the helper function above).
-  # Task 6 is the practice task repeated with its sides swapped (see above), so
-  # it also reuses the practice names, swapped - drawing new ones could change
-  # a profile's name or even its gender, and it would no longer be the same
-  # two profiles.
-  tables <- lapply(1:5, function(q) make_cbc_table(df |> filter(qID == q), attr_order = attr_order))
-  tables[[6]] <- make_cbc_table(df |> filter(qID == 6), attr_order = attr_order,
-                                fixed_names = rev(practice_names))
+  # Create the options for each choice question (using the helper function above)
+  tables <- lapply(1:6, function(q) make_cbc_table(df |> filter(qID == q), attr_order = attr_order))
   for (q in 1:6) {
     local({
       tbl <- tables[[q]]
@@ -724,7 +657,7 @@ server <- function(input, output, session) {
     })
   }
 
-  # Persist the attributes and name shown for each alternative in every cbc
+  # Persist the attributes shown for each alternative in every cbc
   # task, so the slider allocation can later be analyzed against what was
   # actually presented. The design is randomized per-session (see
   # build_default_conjoint_design() above), so without this the profiles
@@ -736,7 +669,7 @@ server <- function(input, output, session) {
   # a real remote DB, was slow enough to make the app appear to hang. One
   # per task (6 calls) was still measurably slower than before this feature
   # existed, so all 6 tasks are bundled into one JSON value instead. The
-  # practice task is included too (key "practice"): its names are drawn per
+  # practice task is included too (key "practice"): its profiles are drawn per
   # respondent, and task 6 repeats it.
   all_tables <- c(list(practice = practice_table),
                   stats::setNames(tables, paste0("q", 1:6)))
@@ -750,18 +683,6 @@ server <- function(input, output, session) {
     profiles_str <- as.character(profiles_json)
     sd_store_value(profiles_str, "cbc_profiles", auto_assign = FALSE)
   }
-
-  # Send candidate names to JS via custom message after Shiny connects
-  observe({
-    for (tbl in all_tables) {
-      if (!is.null(tbl$slider_id)) {
-        session$sendCustomMessage("setCBCNames", list(
-          id = tbl$slider_id,
-          names = as.list(tbl$names)
-        ))
-      }
-    }
-  })
 
   # Ancla una regla de sd_skip_if() a una página: surveydown solo evalúa cada
   # regla en las páginas que contienen alguna pregunta citada como
