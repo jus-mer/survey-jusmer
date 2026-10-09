@@ -1,6 +1,6 @@
-"seccion","n_casos","promedio_seg","promedio_min"
-"Común (todos)",20,560,9.33
-"Modulo A",8,403.5,6.72
-"Modulo B",5,281.6,4.69
-"Modulo C",6,506.33,8.44
-"Total estimado (común + A + B + C)",,1751.43,29.19
+"seccion","n_casos","mediana_seg","mediana_min"
+"Común (todos)",20,558.5,9.31
+"Modulo A",8,393.5,6.56
+"Modulo B",5,196,3.27
+"Modulo C",6,472.5,7.88
+"Total estimado (común + A + B + C)",,1620.5,27.01

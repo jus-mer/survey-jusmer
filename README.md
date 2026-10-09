@@ -48,5 +48,6 @@ The repository follows the logic of the [IPO protocol](https://github.com/juanca
 ### Files:
 
 - [Pre-pilot survey](https://jus-mer-pre-piloto-v1.hf.space/)
+- [Pre-pilot analysis](https://jus-mer.github.io/survey-jusmer/pre-pilot-analysis/ppilot-analysis.html)
 - [Methodological Manual](https://jus-mer.github.io/survey-jusmer/documentation/docs/index.html)
 
