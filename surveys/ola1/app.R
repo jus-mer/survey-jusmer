@@ -627,39 +627,44 @@ make_cbc_table <- function(df, attr_order = NULL) {
   )
 }
 
-build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2) {
-  niveles <- list(
-    sex = c(
-      "Hombre",
-      "Mujer"
-    ),
-    need = c(
-      "Dificultad",
-      "Holgura"
-    ),
-    identity = c(
-      "Chile",
-      "Venezuela",
-      "Perú"
-    ),
-    control = c(
-      "Postuló a otras becas pero no obtuvo financiamiento",
-      "No alcanzó a postular a tiempo a otras becas"
-    ),
-    effort = c(
-      "Más que sus compañeros",
-      "Igual que sus compañeros",
-      "Menos que sus compañeros"
-    ),
-    reciprocity = c(
-      "Ha hecho voluntariado",
-      "No ha hecho voluntariado"
-    ),
-    attitude = c(
-      "Una ayuda que agradece",
-      "Algo que se merece"
-    )
+# Levels of each conjoint attribute. A level's position in its vector is its
+# number in cbc_attr_order_levels (e.g. identity: 1 = Chile, 2 = Venezuela,
+# 3 = Perú), so don't reorder them without updating the documentation.
+cbc_levels <- list(
+  sex = c(
+    "Hombre",
+    "Mujer"
+  ),
+  need = c(
+    "Dificultad",
+    "Holgura"
+  ),
+  identity = c(
+    "Chile",
+    "Venezuela",
+    "Perú"
+  ),
+  control = c(
+    "Postuló a otras becas pero no obtuvo financiamiento",
+    "No alcanzó a postular a tiempo a otras becas"
+  ),
+  effort = c(
+    "Más que sus compañeros",
+    "Igual que sus compañeros",
+    "Menos que sus compañeros"
+  ),
+  reciprocity = c(
+    "Ha hecho voluntariado",
+    "No ha hecho voluntariado"
+  ),
+  attitude = c(
+    "Una ayuda que agradece",
+    "Algo que se merece"
   )
+)
+
+build_default_conjoint_design <- function(resp_id, n_questions = 6, min_diff = 2) {
+  niveles <- cbc_levels
 
   # Generate a pair of profiles that differ in at least min_diff of the six
   # substantive attributes. Sex is drawn independently (p = 0.5) like the
@@ -814,6 +819,23 @@ server <- function(input, output, session) {
     profiles_str <- as.character(profiles_json)
     sd_store_value(profiles_str, "cbc_profiles", auto_assign = FALSE)
   }
+
+  # Compact code of every profile shown (practice task + 6 tasks, profiles A
+  # and B = 14 codes), stored in one string as cbc_attr_order_levels, e.g.
+  # "practice_A:I2E3N1S2C1R2A1|practice_B:...|q1_A:...|...|q6_B:...". Each
+  # code lists the attributes in the order they were displayed (same letters
+  # as cbc_attr_order), each followed by its level number in cbc_levels.
+  profile_codes <- unlist(lapply(names(all_tables), function(task) {
+    attrs <- all_tables[[task]]$attrs
+    vapply(names(attrs), function(alt) {
+      levels_shown <- vapply(attr_order, function(a) {
+        match(attrs[[alt]][[a]], cbc_levels[[a]])
+      }, integer(1))
+      paste0(task, "_", LETTERS[as.integer(alt)], ":",
+             paste0(attr_code[attr_order], levels_shown, collapse = ""))
+    }, character(1))
+  }))
+  sd_store_value(paste(profile_codes, collapse = "|"), "cbc_attr_order_levels")
 
   # Ancla una regla de sd_skip_if() a una página: surveydown solo evalúa cada
   # regla en las páginas que contienen alguna pregunta citada como

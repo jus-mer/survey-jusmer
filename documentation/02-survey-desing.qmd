@@ -60,6 +60,20 @@ Quotas are **simple (marginal) quotas**: independent marginal control on each va
 library(kableExtra)
 library(here)
 cuotas <- readxl::read_excel(here::here("cuotas.xlsx"))
+# Equivalent n for a sample of 4,500 cases: each category's census share
+# within its variable, rounded by largest remainder so that every variable
+# adds up to exactly 4,500 (plain rounding can leave it at 4,499 or 4,501)
+n_sample <- 4500
+cuotas <- cuotas |>
+  dplyr::group_by(Variable) |>
+  dplyr::mutate(
+    exact = N / sum(N) * n_sample,
+    n_4500 = floor(exact) +
+      (rank(-(exact - floor(exact)), ties.method = "first") <= n_sample - sum(floor(exact)))
+  ) |>
+  dplyr::ungroup() |>
+  dplyr::select(-exact) |>
+  dplyr::rename(`n (sample of 4,500)` = n_4500)
 knitr::kable(cuotas) |>   # replace knitr::kable() with your jable() wrapper
   kableExtra::footnote(
     general_title = "",

@@ -9,12 +9,25 @@ format:
 
 This section is divided in two parts: the first part describes the survey programming and technical integration, while the second part focuses on fieldwork, quality control, and fieldwork performance indicators.
 
-## Survey Programming and technical aspects
+## Survey Programming and technical aspects
 
 - Survey:
   - Surveydown
   - Conjoint:
     - Randomization attributes
+
+      | Attribute   | Letter | Levels |
+      |-------------|:------:|--------|
+      | Sex         | S | 1. Hombre<br>2. Mujer |
+      | Need        | N | 1. Dificultad<br>2. Holgura |
+      | Identity    | I | 1. Chile<br>2. Venezuela<br>3. Perú |
+      | Control     | C | 1. Postuló a otras becas pero no obtuvo financiamiento<br>2. No alcanzó a postular a tiempo a otras becas |
+      | Effort      | E | 1. Más que sus compañeros<br>2. Igual que sus compañeros<br>3. Menos que sus compañeros |
+      | Reciprocity | R | 1. Ha hecho voluntariado<br>2. No ha hecho voluntariado |
+      | Attitude    | A | 1. Una ayuda que agradece<br>2. Algo que se merece |
+
+      - `cbc_attr_order`: order in which the 7 attribute rows were displayed to the respondent (fixed across all their tasks), one letter per attribute, e.g. `RAIESNC`.
+      - `cbc_attr_order_levels`: every profile shown (practice task and tasks 1–6, applicants A and B: 14 profiles), separated by `|`. Each profile lists its attributes in display order, each letter followed by its level number, e.g. `q1_A:R2A1I3E2S1N2C2` (task 1, applicant A: did not volunteer, sees the scholarship as help they are grateful for, born in Peru, studies as much as classmates, man, household makes ends meet comfortably, did not apply in time to other scholarships).
     - names constraint randomization
     - intra respondent reliability
   - Questionnaire:
@@ -29,8 +42,8 @@ This section is divided in two parts: the first part describes the survey progra
   - data connection
   - conjoint attributes registration
 
-## Fieldwork
+## Fieldwork
 
-## Quality Control
+## Quality Control
 
-## Fieldwork Performance Indicators
+## Fieldwork Performance Indicators
