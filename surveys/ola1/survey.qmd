@@ -47,48 +47,12 @@ survey-settings:
     - ref_3
     - proy_1
     - proy_2
-    - pgasto_1
-    - pgasto_2
-    - pgasto_3
-    - rank_1
-    - rank_2
-    - rank_3
-    - pres_1
-    - pres_2
-    - pres_3
-    - pres_4
-    - pres_5
-    - pres_6
-    - valor_1
-    - valor_2
-    - valor_3
-    - valor_4
-    - valor_5
     - dec_3
     - dec_1
     - dec_2
     - lucro_1
     - lucro_2
     - lucro_3
-    - cargo_1
-    - cargo_2
-    - cargo_3
-    - cargo_4
-    - cargo_5
-    - efic_1
-    - efic_2
-    - efic_3
-    - efic_4
-    - efic_5
-    - part_1
-    - part_2
-    - part_3
-    - part_4
-    - part_5
-    - neolib_1
-    - neolib_2
-    - neolib_3
-    - neolib_4
     - control_1
     - control_2
     - control_3
@@ -123,6 +87,8 @@ survey-settings:
     - merit_8
     - gender
     - income
+    - estatus_subjetivo
+    - posicion_politica
     - salud_prov
     - educ_prov
   set-mode: database
@@ -1003,235 +969,10 @@ sd_question(
   )
 )
 
-sd_nav(page_next = "percgasto",
-  label_next = "Siguiente")
-```
-
---- percgasto
-
-A continuación, se mencionan algunos ámbitos de la actividad gubernamental. Por favor, señale cuánto cree usted que el gobierno gasta en cada uno de ellos.
-
-¿Cuánto cree usted que gasta el gobierno en…
-
-```{r}
-escala_percepcion_gasto <- c(
-  'Mucho'                 = '5',
-  'Bastante'              = '4',
-  'Algo'                  = '3',
-  'Poco'                  = '2',
-  'Muy poco'              = '1',
-  'No sé'                 = '98',
-  'Prefiero no responder' = '99'
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'pgasto_1',
-  label = "Educación",
-  option = escala_percepcion_gasto
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'pgasto_2',
-  label = "Salud",
-  option = escala_percepcion_gasto
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'pgasto_3',
-  label = "Pensiones",
-  option = escala_percepcion_gasto
-)
-
-sd_nav(page_next = "actgov",
-  label_next = "Siguiente")
-```
-
---- actgov
-
-Por favor, señale si le gustaría que se aumentara o se redujera el gasto público en cada uno de ellos. Tenga en cuenta que «más» o «mucho más» podría implicar un alza de impuestos.
-
-En qué medida le gustaría que hubiera más o menos gasto público en…
-
-```{r}
-sd_question(
-  type  = 'mc',
-  id    = 'rank_1',
-  label = "Educación",
-  option = c(
-    'Mucho más gasto'    = '5',
-    'Más gasto' = '4',
-    'Ni más ni menos de lo que se gasta actualmente'   = '3',
-    'Menos gasto' = '2',
-    'Mucho menos gasto' = '1',
-    'No sé' = '98',
-    'Prefiero no responder' = '99'
-  )
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'rank_2',
-  label = "Salud",
-  option = c(
-    'Mucho más gasto'    = '5',
-    'Más gasto' = '4',
-    'Ni más ni menos de lo que se gasta actualmente'     = '3',
-    'Menos gasto' = '2',
-    'Mucho menos gasto' = '1',
-    'No sé' = '98',
-    'Prefiero no responder' = '99'
-  )
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'rank_3',
-  label = "Pensiones",
-  option = c(
-    'Mucho más gasto'    = '5',
-    'Más gasto' = '4',
-    'Ni más ni menos de lo que se gasta actualmente'    = '3',
-    'Menos gasto' = '2',
-    'Mucho menos gasto' = '1',
-    'No sé' = '98',
-    'Prefiero no responder' = '99'
-  )
-)
-
-
-sd_nav(page_next = "marketizacion",
-  label_next = "Siguiente")
-```
-
---- marketizacion
-
-En Chile, el acceso a servicios como la atención en salud, la educación y las pensiones puede variar según la situación económica de las personas. A continuación, queremos saber su percepción sobre la situación en el país.
-
-<br>
-
-¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
-
-```{r}
-escala_justo <- c(
-  'Muy desigual' = '5',
-  'Desigual' = '4',
-  'Ni igual ni desigual' = '3',
-  'Poco desigual' = '2',
-  'Nada desigual' = '1',
-  'No sé' = '98',
-  'Prefiero no responder' = '99'
-)
-
-escala_justo_injusto <- c(
-  'Mucho más desigual' = '5',
-  'Más desigual' = '4',
-  'Ni igual ni desigual' = '3',
-  'Menos desigual' = '2',
-  'Mucho menos desigual' = '1',
-  'No sé' = '98',
-  'Prefiero no responder' = '99'
-)
-```
-
-```{r}
-sd_question(
-  type  = 'mc',
-  id    = 'pres_1',
-  label = "El acceso a la atención en salud es desigual en Chile",
-  option = escala_justo
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'pres_2',
-  label = "El acceso a la educación es desigual en Chile",
-  option = escala_justo
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'pres_3',
-  label = "Las pensiones son desiguales en Chile",
-  option = escala_justo
-)
-```
-
-<br>
-
-Y pensando hace 10 años atrás, ¿usted cree que el acceso a los siguientes servicios entre quienes tienes más y menores ingresos se ha vuelto…?
-
-```{r}
-sd_question(
-  type  = 'mc',
-  id    = 'pres_4',
-  label = "Salud",
-  option = escala_justo_injusto
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'pres_5',
-  label = "Educación",
-  option = escala_justo_injusto
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'pres_6',
-  label = "Pensiones",
-  option = escala_justo_injusto
-)
-
-sd_nav(page_next = "valor",
-  label_next = "Siguiente")
-```
-
---- valor
-
-¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
-
-```{r}
-sd_question(
-  type  = 'mc',
-  id    = 'valor_1',
-  label = "Está bien que los hospitales públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'valor_2',
-  label = "Está bien que los liceos públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'valor_3',
-  label = "La calidad del sistema de salud debería ser igual para todos aunque esto signifique que mi familila no pueda pagar por mejores servicios ",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'valor_4',
-  label = "La educación debería ser de igual calidad para todos aunque eso me impida pagar por una mejor para mi familia",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'valor_5',
-  label = "Las pensiones deberían ser más igualitarias, aunque eso signifique que yo reciba una pensión similar a quienes aportaron menos que yo ",
-  option = escala_acuerdo_nsnr
-)
-
 sd_nav(page_next = "decomodifica",
   label_next = "Siguiente")
 ```
+
 
 --- decomodifica
 
@@ -1266,6 +1007,8 @@ sd_question(
   ),
   selected = '0'
 )
+
+slider_nr("dec_3")
 ```
 
 ### Educación
@@ -1292,6 +1035,8 @@ sd_question(
   ),
   selected = '0'
 )
+
+slider_nr("dec_1")
 ```
 
 ```{r}
@@ -1319,6 +1064,8 @@ sd_question(
   ),
   selected = '0'
 )
+
+slider_nr("dec_2")
 
 sd_nav(page_next = "lucro",
   label_next = "Siguiente")
@@ -1378,213 +1125,10 @@ sd_question(
   )
 )
 
-sd_nav(page_next = "participa",
-  label_next = "Siguiente")
-```
-
---- participa
-
-En Chile, algunos ámbitos de prestaciones y beneficios sociales están más a cargo del estado, mientras que otros más a cargo de los privados.
-
-<br>
-
-```{r}
-# NOTA: se cambia el rótulo de los extremos del slider de "Estado"/"Privados"
-# a "Solo el Estado"/"Solo privados" en las tres baterías, según documento de
-# contenido (nota de diseño: equiparar el fraseo de forma simétrica). Se
-# elimina la batería de "responsabilidad" (resp_1 a resp_5) y se reordenan
-# las baterías: cargo, eficiencia, participación deseada.
-
-escala_estado_privados <- c(
-  "Estado" = "1",
-  " "        = "2",
-  "  "       = "3", # espacio único
-  "Ambos por igual"  = "4",
-  "   "      = "5",
-  "    "     = "6",  # doble espacio único
-  "Privados" = "7"
-)
-```
-
-**En Chile, ¿quién cree usted que participa más en la provisión de los siguientes servicios?**
-
-```{r}
-sd_question(
-  type   = 'slider',
-  id     = 'cargo_1',
-  label  = "Salud",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'cargo_2',
-  label  = "Educación",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'cargo_3',
-  label  = "Pensiones",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'cargo_4',
-  label  = "Salas cuna",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'cargo_5',
-  label  = "Carreteras",
-  option = escala_estado_privados,
-  selected = '4'
-)
-```
-
-<br>
-
-**¿Quién cree que es más eficiente en la provisión de los siguientes servicios?**
-
-```{r}
-sd_question(
-  type   = 'slider',
-  id     = 'efic_1',
-  label  = "Salud",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'efic_2',
-  label  = "Educación",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'efic_3',
-  label  = "Pensiones",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'efic_4',
-  label  = "Salas cuna",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'efic_5',
-  label  = "Carreteras",
-  option = escala_estado_privados,
-  selected = '4'
-)
-```
-
-<br>
-
-**Considerando la realidad chilena, ¿quién cree que debería participar más en la provisión de los siguientes servicios?**
-
-```{r}
-sd_question(
-  type   = 'slider',
-  id     = 'part_1',
-  label  = "Salud",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'part_2',
-  label  = "Educación",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'part_3',
-  label  = "Pensiones",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'part_4',
-  label  = "Salas cuna",
-  option = escala_estado_privados,
-  selected = '4'
-)
-
-sd_question(
-  type   = 'slider',
-  id     = 'part_5',
-  label  = "Carreteras",
-  option = escala_estado_privados,
-  selected = '4'
-)
-```
-
-<br>
-
-```{r}
-sd_nav(page_next = "neoliberal",
-  label_next = "Siguiente")
-```
-
---- neoliberal
-
-¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
-
-```{r}
-sd_question(
-  type  = 'mc',
-  id    = 'neolib_1',
-  label = "El Gobierno debería proporcionar a toda la población servicios básicos como la asistencia sanitaria y la asistencia jurídica de forma gratuita",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'neolib_2',
-  label = "Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería hacerlo",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'neolib_3',
-  label = "La sociedad debería proporcionar recursos y servicios gratuitos a las personas que no pueden permitírselos",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'neolib_4',
-  label = "Las personas con ingresos más elevados deberían pagar más impuestos que las que tienen ingresos más bajos",
-  option = escala_acuerdo_nsnr
-)
-
 sd_nav(page_next = "deserve-1",
   label_next = "Siguiente")
 ```
+
 
 --- deserve-1
 
@@ -1944,7 +1488,7 @@ sd_nav(page_next = "id-final",
 
 --- id-final
 
-A continuación se presentan algunas preguntas sociodemográficas adicionales:
+Para finalizar, se presentan algunas preguntas sociodemográficas adicionales:
 
 ::: {style="width:500px; margin: 0 auto;"}
 
@@ -1990,7 +1534,7 @@ sd_question(
 
 sd_question(
   type   = 'slider',
-  id     = 'income',
+  id     = 'estatus_subjetivo',
   label  = "En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad. Usando la escala presentada, donde 0 es el nivel más bajo y 10 el nivel más alto,  ¿Dónde se ubicaría usted en la sociedad chilena?",
   option = c(
     "0" = "0",
@@ -2008,10 +1552,11 @@ sd_question(
   selected = '0'
 )
 
+slider_nr("estatus_subjetivo")
 
 sd_question(
   type   = 'slider',
-  id     = 'income',
+  id     = 'posicion_politica',
   label  = "Cambiando de tema, tradicionalmente en nuestro país la gente define las posiciones políticas como más cercanas a la izquierda, al centro o a la derecha. Usando una escala de 0 a 10, donde 0 es ser de 'izquierda', 5 es ser de 'centro' y 10 es ser de 'derecha', ¿Dónde se ubicaría usted en esta escala?",
   option = c(
     "Izquierda" = "0",
@@ -2028,6 +1573,8 @@ sd_question(
   ),
   selected = '0'
 )
+
+slider_nr("posicion_politica")
 
 sd_question(
   type   = 'mc',

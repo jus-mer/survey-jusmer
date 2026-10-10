@@ -1,3 +1,29 @@
+# "Prefiero no responder" box for the slider question <id>, placed right below
+# it (saved as <id>_nr: "99" if checked, empty otherwise). Checking it greys
+# out the slider; touching the slider unchecks it. "Siguiente" stays disabled
+# until every visible slider with this box is touched or has it checked (see
+# updateSliderNextButton() in app.R). Wrapped in <id>_nr_block so it can be
+# hidden together with its slider (dec_2).
+slider_nr <- function(id) {
+  shiny::div(
+    id = paste0(id, "_nr_block"),
+    shiny::div(
+      class = "slider-nr",
+      style = "display: flex; justify-content: center; margin-top: 10px;",
+      sd_question(
+        type   = "mc_multiple",
+        id     = paste0(id, "_nr"),
+        label  = "",
+        option = c("Prefiero no responder" = "99")
+      )
+    ),
+    shiny::p(
+      id = paste0(id, "_hint"), class = "slider-next-hint",
+      "Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar."
+    )
+  )
+}
+
 # Helper function to render the allocation slider widget.
 # id: the surveydown question id (e.g. "cbc_q1", "cbc_practice")
 # The boxes are labelled "Postulante A" (left) and "Postulante B" (right), like
@@ -47,24 +73,7 @@ allocation_slider <- function(id, total_budget = 2000000) {
       )
     ),
 
-    # "Prefiero no responder" (saved as <id>_nr: "99" if checked, empty
-    # otherwise). Checking it greys out the slider; moving the slider unchecks
-    # it. "Siguiente" stays disabled until the slider is touched or this is
-    # checked (see updateCbcNextButton() in app.R).
-    shiny::div(
-      class = "cbc-nr",
-      style = "display: flex; justify-content: center; margin-top: 10px;",
-      sd_question(
-        type   = "mc_multiple",
-        id     = paste0(id, "_nr"),
-        label  = "",
-        option = c("Prefiero no responder" = "99")
-      )
-    ),
-    shiny::p(
-      id = paste0(id, "_hint"), class = "cbc-next-hint",
-      "Mueva el control deslizante o marque «Prefiero no responder» para continuar."
-    ),
+    slider_nr(id),
 
     # Slider CSS
     shiny::tags$style(HTML(paste0(

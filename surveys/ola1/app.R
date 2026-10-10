@@ -165,77 +165,82 @@ ui <- tagList(
         setTimeout(applyCBCAllocationToDom, 120);
       });
 
-      // Conjoint pages (cbc_practice, cbc_q1..cbc_q6): 'Siguiente' stays
-      // disabled until the respondent touches the slider (a click on the
-      // handle counts, so a 50/50 split can be kept) or checks 'Prefiero no
-      // responder' (<id>_nr). Checking it greys out the slider; touching the
-      // slider unchecks it.
-      window.cbcTouched = window.cbcTouched || {};
+      // Sliders with a 'Prefiero no responder' box (<id>_nr: the conjoint's
+      // cbc_* sliders, dec_1..dec_3, estatus_subjetivo, posicion_politica):
+      // 'Siguiente' stays disabled until the respondent touches every visible
+      // one (a click on the handle counts, so the initial value can be kept)
+      // or checks its 'Prefiero no responder'. Checking it greys out the
+      // slider; touching the slider unchecks it.
+      window.sliderTouched = window.sliderTouched || {};
 
-      function cbcNrBox(id) {
+      function sliderNrBox(id) {
         return document.querySelector('input[name=\"' + id + '_nr\"]');
       }
 
-      function cbcIsAnswered(id) {
-        var nr = cbcNrBox(id);
+      function sliderIsAnswered(id) {
+        var nr = sliderNrBox(id);
         // A non-empty _hist means the slider was moved before (restored when
         // going back or resuming the survey)
         var hist = document.getElementById(id + '_hist');
-        return !!window.cbcTouched[id] || (nr && nr.checked) ||
+        return !!window.sliderTouched[id] || (nr && nr.checked) ||
           (hist && hist.value !== '');
       }
 
-      function cbcTouchSlider(id) {
-        window.cbcTouched[id] = true;
-        var nr = cbcNrBox(id);
+      function sliderTouch(id) {
+        window.sliderTouched[id] = true;
+        var nr = sliderNrBox(id);
         if (nr && nr.checked) {
           nr.checked = false;
           $(nr).trigger('change');
         }
-        updateCbcNextButton();
+        updateSliderNextButton();
       }
 
       // Capture phase: ion.rangeSlider calls stopPropagation() on mousedown
       // over the handle/track, so a bubbling listener would never see it
-      function cbcSliderFromEvent(e) {
+      function sliderFromEvent(e) {
         if (!e.target.closest) return null;
         var irs = e.target.closest('.irs');
-        var container = irs && irs.closest('[id^=\"container-cbc_\"]');
-        return container ? container.id.replace('container-', '') : null;
+        var container = irs && irs.closest('.question-container');
+        var id = container && container.getAttribute('data-question-id');
+        return id && sliderNrBox(id) ? id : null;
       }
       ['mousedown', 'touchstart'].forEach(function(type) {
         document.addEventListener(type, function(e) {
-          var id = cbcSliderFromEvent(e);
-          if (id) cbcTouchSlider(id);
+          var id = sliderFromEvent(e);
+          if (id) sliderTouch(id);
         }, true);
       });
       document.addEventListener('keydown', function(e) {
-        var id = cbcSliderFromEvent(e);
-        if (id && e.keyCode >= 37 && e.keyCode <= 40) cbcTouchSlider(id);
+        var id = sliderFromEvent(e);
+        if (id && e.keyCode >= 37 && e.keyCode <= 40) sliderTouch(id);
       }, true);
-      $(document).on('change', 'input[type=\"checkbox\"][name^=\"cbc_\"][name$=\"_nr\"]', function() {
-        updateCbcNextButton();
+      $(document).on('change', 'input[type=\"checkbox\"][name$=\"_nr\"]', function() {
+        updateSliderNextButton();
       });
 
-      function updateCbcNextButton() {
-        var sliders = document.querySelectorAll('input.js-range-slider[id^=\"cbc_\"]');
-        if (sliders.length === 0) return;  // not a conjoint page
+      function updateSliderNextButton() {
+        var sliders = Array.from(document.querySelectorAll('input.js-range-slider'))
+          .filter(function(s) { return !!sliderNrBox(s.id); });
+        if (sliders.length === 0) return;  // no slider with 'Prefiero no responder'
         var allAnswered = true;
         sliders.forEach(function(s) {
-          var answered = cbcIsAnswered(s.id);
-          var nr = cbcNrBox(s.id);
+          var answered = sliderIsAnswered(s.id);
+          var nr = sliderNrBox(s.id);
           var container = document.getElementById('container-' + s.id);
-          if (container) container.classList.toggle('cbc-nr-active', !!(nr && nr.checked));
+          if (container) container.classList.toggle('slider-nr-active', !!(nr && nr.checked));
           var hint = document.getElementById(s.id + '_hint');
           if (hint) hint.style.display = answered ? 'none' : '';
-          if (!answered) allAnswered = false;
+          // Hidden sliders (dec_2 while it does not apply) don't block
+          var visible = container && container.offsetParent !== null;
+          if (visible && !answered) allAnswered = false;
         });
         document.querySelectorAll('.sd-nav-next').forEach(function(btn) {
           btn.disabled = !allAnswered;
         });
       }
 
-      setInterval(updateCbcNextButton, 200);
+      setInterval(updateSliderNextButton, 200);
     ")),
     tags$style(HTML("
       /* Flatly theme renders body text at 17px (root font-size); bump it +3px.
@@ -342,8 +347,10 @@ ui <- tagList(
       .irs-single, .irs-min, .irs-max {
         display: none !important;
       }
-      /* dec_2 hidden until dec_1 is interacted with */
-      .question-container[data-question-id='dec_2'] {
+      /* dec_2 (and its 'Prefiero no responder' box) hidden until dec_1 is
+         answered with a value other than 0 */
+      .question-container[data-question-id='dec_2'],
+      #dec_2_nr_block {
         display: none;
       }
       /* *_hist (dec_1_hist, cbc_q1_hist..cbc_q6_hist) only store their
@@ -379,25 +386,37 @@ ui <- tagList(
       .transicion-slide .sd-nav-next {
         float: none !important;
       }
-      /* Conjoint 'Prefiero no responder' (see updateCbcNextButton()):
+      /* Sliders' 'Prefiero no responder' (see updateSliderNextButton()):
          greyed-out slider while checked, grey 'Siguiente' until answered */
-      .cbc-nr-active .irs {
+      .slider-nr-active .irs {
         opacity: 0.35;
         filter: grayscale(1);
       }
-      .cbc-nr .question-container,
-      .cbc-nr .form-group {
+      .slider-nr .question-container,
+      .slider-nr .form-group {
         width: 100% !important;
       }
-      .cbc-nr .shiny-options-group {
+      /* Plain checkbox under its slider, not a separate question card (no
+         card background/border or unanswered highlight, no empty label) */
+      .slider-nr .form-group.shiny-input-container {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+      .slider-nr .control-label:empty {
+        display: none;
+      }
+      .slider-nr .shiny-options-group {
         display: flex;
         justify-content: center;
       }
-      .cbc-nr .checkbox label {
+      .slider-nr .checkbox label {
         font-size: 17px;
         color: #6c757d;
       }
-      .cbc-next-hint {
+      .slider-next-hint {
         text-align: center;
         font-size: 15px;
         color: #6c757d;
@@ -415,45 +434,6 @@ ui <- tagList(
          substantive scale above them with extra spacing. */
       .shiny-options-group .radio:has(input[value='98']) {
         margin-top: 18px !important;
-      }
-      /* Estado-vs-privados sliders (cargo_/efic_/part_): show a label only
-         at both extremes and the midpoint. The 4 unlabeled stops in
-         between (js-grid-text-1/2/4/5) stay fully selectable as
-         intermediate points - they don't get a label, but their tick
-         mark is kept visible as an orientation point for respondents.
-         Sub-ticks (.small) and the tick at the 3 labeled stops are
-         hidden, so only the 4 unlabeled stops show a mark. */
-      .question-container[data-question-id^='cargo_'] .irs-grid-pol.small,
-      .question-container[data-question-id^='efic_'] .irs-grid-pol.small,
-      .question-container[data-question-id^='part_'] .irs-grid-pol.small,
-      .question-container[data-question-id^='cargo_'] .irs-grid-pol:has(+ .js-grid-text-0),
-      .question-container[data-question-id^='cargo_'] .irs-grid-pol:has(+ .js-grid-text-3),
-      .question-container[data-question-id^='cargo_'] .irs-grid-pol:has(+ .js-grid-text-6),
-      .question-container[data-question-id^='efic_'] .irs-grid-pol:has(+ .js-grid-text-0),
-      .question-container[data-question-id^='efic_'] .irs-grid-pol:has(+ .js-grid-text-3),
-      .question-container[data-question-id^='efic_'] .irs-grid-pol:has(+ .js-grid-text-6),
-      .question-container[data-question-id^='part_'] .irs-grid-pol:has(+ .js-grid-text-0),
-      .question-container[data-question-id^='part_'] .irs-grid-pol:has(+ .js-grid-text-3),
-      .question-container[data-question-id^='part_'] .irs-grid-pol:has(+ .js-grid-text-6),
-      .question-container[data-question-id^='cargo_'] .js-grid-text-1,
-      .question-container[data-question-id^='cargo_'] .js-grid-text-2,
-      .question-container[data-question-id^='cargo_'] .js-grid-text-4,
-      .question-container[data-question-id^='cargo_'] .js-grid-text-5,
-      .question-container[data-question-id^='efic_'] .js-grid-text-1,
-      .question-container[data-question-id^='efic_'] .js-grid-text-2,
-      .question-container[data-question-id^='efic_'] .js-grid-text-4,
-      .question-container[data-question-id^='efic_'] .js-grid-text-5,
-      .question-container[data-question-id^='part_'] .js-grid-text-1,
-      .question-container[data-question-id^='part_'] .js-grid-text-2,
-      .question-container[data-question-id^='part_'] .js-grid-text-4,
-      .question-container[data-question-id^='part_'] .js-grid-text-5 {
-        display: none !important;
-      }
-      .question-container[data-question-id^='cargo_'] .irs-grid-text,
-      .question-container[data-question-id^='efic_'] .irs-grid-text,
-      .question-container[data-question-id^='part_'] .irs-grid-text {
-        font-size: 11px !important;
-        line-height: 11px !important;
       }
       /* dec_1/dec_2/dec_3 sliders: bump the grid labels (numbers/percentages)
          +3px over the ionRangeSlider default (9px) so they're easier to read. */
@@ -925,15 +905,21 @@ server <- function(input, output, session) {
   })
 
   # dec_2 only applies if dec_1's answer is not 0 (i.e. some students would
-  # be admitted for free, so paying extra to support them is a real choice).
-  observeEvent(input$dec_1, {
-    show_dec2 <- !is.null(input$dec_1) && input$dec_1 != 0
+  # be admitted for free, so paying extra to support them is a real choice)
+  # and dec_1 was answered (not 'Prefiero no responder'). Its 'Prefiero no
+  # responder' box (dec_2_nr_block) is shown and hidden together with it.
+  observe({
+    show_dec2 <- !is.null(input$dec_1) && input$dec_1 != 0 &&
+      !("99" %in% input$dec_1_nr)
     runjs(sprintf(
-      "var el = document.querySelector(\".question-container[data-question-id='dec_2']\");
-       if (el) el.style.display = '%s';",
+      "var display = '%s';
+       var el = document.querySelector(\".question-container[data-question-id='dec_2']\");
+       if (el) el.style.display = display;
+       var nr = document.getElementById('dec_2_nr_block');
+       if (nr) nr.style.display = display;",
       if (show_dec2) "block" else "none"
     ))
-  }, ignoreNULL = TRUE)
+  })
 
   # Keep a slider's full trajectory, not just the final answer, to see how the
   # answer changes: every position the slider rested on for >= 0.5 s is

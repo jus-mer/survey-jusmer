@@ -4642,7 +4642,8 @@ setInterval(function() {
 </div>
 </div>
 </div>
-<div class="cbc-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="cbc_practice_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
 <div id="container-cbc_practice_nr" data-question-id="cbc_practice_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;cbc_practice_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;cbc_practice_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="cbc_practice_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="cbc_practice_nr-label">
 <label class="control-label" id="cbc_practice_nr-label" for="cbc_practice_nr"></label>
@@ -4658,7 +4659,8 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="cbc_practice_hint" class="cbc-next-hint">Mueva el control deslizante o marque «Prefiero no responder» para continuar.</p>
+<p id="cbc_practice_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
 <style>#container-cbc_practice { margin-bottom: 2px !important; }#container-cbc_practice .form-group { margin-bottom: 2px !important; }#container-cbc_practice .irs { margin-top: 0 !important; margin-bottom: 10px !important; height: 26px !important; }#container-cbc_practice .irs-grid, #container-cbc_practice .irs-grid-text, #container-cbc_practice .irs-min, #container-cbc_practice .irs-max, #container-cbc_practice .irs-single { display: none !important; }#cbc_practice .irs-bar { background: #adb5bd !important; height: 10px !important; }#cbc_practice .irs-bar-edge { background: #adb5bd !important; }#cbc_practice .irs-line { background: #adb5bd !important; background-color: #adb5bd !important; background-image: none !important; border-color: #adb5bd !important; }#cbc_practice_name1 { color: #28a745 !important; font-weight: 800 !important; }#cbc_practice_name2 { color: #007bff !important; font-weight: 800 !important; }@media (max-width: 576px) {#container-cbc_practice { margin-bottom: 0 !important; }#container-cbc_practice .irs { margin-top: 0 !important; margin-bottom: 8px !important; height: 22px !important; }#cbc_practice_opt1, #cbc_practice_opt2 { font-size: 1.1rem !important; }#cbc_practice_opt1_pct, #cbc_practice_opt2_pct { font-size: 0.95rem !important; }}</style>
 <script>(function() {  const sliderId = 'cbc_practice';  const totalBudget = 2e+06;    function getRawValue() {    const sliderEl = document.getElementById(sliderId);    if (!sliderEl) return totalBudget / 2;    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };    const v = parse(sliderEl.value);    if (v !== null) return Math.max(0, Math.min(totalBudget, v));    const d = parse(sliderEl.getAttribute('data-from'));    if (d !== null) return Math.max(0, Math.min(totalBudget, d));    return totalBudget / 2;  }    function updateAllocation() {    const rawVal = getRawValue();    const opt2 = rawVal;    const opt1 = totalBudget - rawVal;    const pct1 = Math.round(opt1 / totalBudget * 100);    const pct2 = 100 - pct1;    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');    const opt1El = document.getElementById('cbc_practice_opt1');    const opt2El = document.getElementById('cbc_practice_opt2');    const pct1El = document.getElementById('cbc_practice_opt1_pct');    const pct2El = document.getElementById('cbc_practice_opt2_pct');    const shade1El = document.getElementById('cbc_practice_shade1');    const shade2El = document.getElementById('cbc_practice_shade2');    if (opt1El) opt1El.textContent = fmt(opt1);    if (opt2El) opt2El.textContent = fmt(opt2);    if (pct1El) pct1El.textContent = pct1 + '%';    if (pct2El) pct2El.textContent = pct2 + '%';    if (shade1El) shade1El.style.height = pct1 + '%';    if (shade2El) shade2El.style.height = pct2 + '%';  }    function init() {    updateAllocation();  }    init();  setTimeout(init, 50);  setTimeout(init, 300);  setTimeout(init, 900);  if (document.readyState === 'loading') {    document.addEventListener('DOMContentLoaded', init);  }  window.addEventListener('load', init);    setInterval(init, 500);    function bindListeners() {    const sliderEl = document.getElementById(sliderId);    if (sliderEl && !sliderEl.dataset.allocBound) {      sliderEl.addEventListener('change', updateAllocation);      sliderEl.addEventListener('input', updateAllocation);      sliderEl.dataset.allocBound = '1';    }  }  bindListeners();  setInterval(bindListeners, 1000);})();</script>
 </div>
@@ -4809,7 +4811,8 @@ setInterval(function() {
 </div>
 </div>
 </div>
-<div class="cbc-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="cbc_q1_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
 <div id="container-cbc_q1_nr" data-question-id="cbc_q1_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;cbc_q1_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;cbc_q1_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="cbc_q1_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="cbc_q1_nr-label">
 <label class="control-label" id="cbc_q1_nr-label" for="cbc_q1_nr"></label>
@@ -4825,7 +4828,8 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="cbc_q1_hint" class="cbc-next-hint">Mueva el control deslizante o marque «Prefiero no responder» para continuar.</p>
+<p id="cbc_q1_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
 <style>#container-cbc_q1 { margin-bottom: 2px !important; }#container-cbc_q1 .form-group { margin-bottom: 2px !important; }#container-cbc_q1 .irs { margin-top: 0 !important; margin-bottom: 10px !important; height: 26px !important; }#container-cbc_q1 .irs-grid, #container-cbc_q1 .irs-grid-text, #container-cbc_q1 .irs-min, #container-cbc_q1 .irs-max, #container-cbc_q1 .irs-single { display: none !important; }#cbc_q1 .irs-bar { background: #adb5bd !important; height: 10px !important; }#cbc_q1 .irs-bar-edge { background: #adb5bd !important; }#cbc_q1 .irs-line { background: #adb5bd !important; background-color: #adb5bd !important; background-image: none !important; border-color: #adb5bd !important; }#cbc_q1_name1 { color: #28a745 !important; font-weight: 800 !important; }#cbc_q1_name2 { color: #007bff !important; font-weight: 800 !important; }@media (max-width: 576px) {#container-cbc_q1 { margin-bottom: 0 !important; }#container-cbc_q1 .irs { margin-top: 0 !important; margin-bottom: 8px !important; height: 22px !important; }#cbc_q1_opt1, #cbc_q1_opt2 { font-size: 1.1rem !important; }#cbc_q1_opt1_pct, #cbc_q1_opt2_pct { font-size: 0.95rem !important; }}</style>
 <script>(function() {  const sliderId = 'cbc_q1';  const totalBudget = 2e+06;    function getRawValue() {    const sliderEl = document.getElementById(sliderId);    if (!sliderEl) return totalBudget / 2;    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };    const v = parse(sliderEl.value);    if (v !== null) return Math.max(0, Math.min(totalBudget, v));    const d = parse(sliderEl.getAttribute('data-from'));    if (d !== null) return Math.max(0, Math.min(totalBudget, d));    return totalBudget / 2;  }    function updateAllocation() {    const rawVal = getRawValue();    const opt2 = rawVal;    const opt1 = totalBudget - rawVal;    const pct1 = Math.round(opt1 / totalBudget * 100);    const pct2 = 100 - pct1;    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');    const opt1El = document.getElementById('cbc_q1_opt1');    const opt2El = document.getElementById('cbc_q1_opt2');    const pct1El = document.getElementById('cbc_q1_opt1_pct');    const pct2El = document.getElementById('cbc_q1_opt2_pct');    const shade1El = document.getElementById('cbc_q1_shade1');    const shade2El = document.getElementById('cbc_q1_shade2');    if (opt1El) opt1El.textContent = fmt(opt1);    if (opt2El) opt2El.textContent = fmt(opt2);    if (pct1El) pct1El.textContent = pct1 + '%';    if (pct2El) pct2El.textContent = pct2 + '%';    if (shade1El) shade1El.style.height = pct1 + '%';    if (shade2El) shade2El.style.height = pct2 + '%';  }    function init() {    updateAllocation();  }    init();  setTimeout(init, 50);  setTimeout(init, 300);  setTimeout(init, 900);  if (document.readyState === 'loading') {    document.addEventListener('DOMContentLoaded', init);  }  window.addEventListener('load', init);    setInterval(init, 500);    function bindListeners() {    const sliderEl = document.getElementById(sliderId);    if (sliderEl && !sliderEl.dataset.allocBound) {      sliderEl.addEventListener('change', updateAllocation);      sliderEl.addEventListener('input', updateAllocation);      sliderEl.dataset.allocBound = '1';    }  }  bindListeners();  setInterval(bindListeners, 1000);})();</script>
 </div>
@@ -4938,7 +4942,8 @@ setInterval(function() {
 </div>
 </div>
 </div>
-<div class="cbc-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="cbc_q2_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
 <div id="container-cbc_q2_nr" data-question-id="cbc_q2_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;cbc_q2_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;cbc_q2_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="cbc_q2_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="cbc_q2_nr-label">
 <label class="control-label" id="cbc_q2_nr-label" for="cbc_q2_nr"></label>
@@ -4954,7 +4959,8 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="cbc_q2_hint" class="cbc-next-hint">Mueva el control deslizante o marque «Prefiero no responder» para continuar.</p>
+<p id="cbc_q2_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
 <style>#container-cbc_q2 { margin-bottom: 2px !important; }#container-cbc_q2 .form-group { margin-bottom: 2px !important; }#container-cbc_q2 .irs { margin-top: 0 !important; margin-bottom: 10px !important; height: 26px !important; }#container-cbc_q2 .irs-grid, #container-cbc_q2 .irs-grid-text, #container-cbc_q2 .irs-min, #container-cbc_q2 .irs-max, #container-cbc_q2 .irs-single { display: none !important; }#cbc_q2 .irs-bar { background: #adb5bd !important; height: 10px !important; }#cbc_q2 .irs-bar-edge { background: #adb5bd !important; }#cbc_q2 .irs-line { background: #adb5bd !important; background-color: #adb5bd !important; background-image: none !important; border-color: #adb5bd !important; }#cbc_q2_name1 { color: #28a745 !important; font-weight: 800 !important; }#cbc_q2_name2 { color: #007bff !important; font-weight: 800 !important; }@media (max-width: 576px) {#container-cbc_q2 { margin-bottom: 0 !important; }#container-cbc_q2 .irs { margin-top: 0 !important; margin-bottom: 8px !important; height: 22px !important; }#cbc_q2_opt1, #cbc_q2_opt2 { font-size: 1.1rem !important; }#cbc_q2_opt1_pct, #cbc_q2_opt2_pct { font-size: 0.95rem !important; }}</style>
 <script>(function() {  const sliderId = 'cbc_q2';  const totalBudget = 2e+06;    function getRawValue() {    const sliderEl = document.getElementById(sliderId);    if (!sliderEl) return totalBudget / 2;    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };    const v = parse(sliderEl.value);    if (v !== null) return Math.max(0, Math.min(totalBudget, v));    const d = parse(sliderEl.getAttribute('data-from'));    if (d !== null) return Math.max(0, Math.min(totalBudget, d));    return totalBudget / 2;  }    function updateAllocation() {    const rawVal = getRawValue();    const opt2 = rawVal;    const opt1 = totalBudget - rawVal;    const pct1 = Math.round(opt1 / totalBudget * 100);    const pct2 = 100 - pct1;    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');    const opt1El = document.getElementById('cbc_q2_opt1');    const opt2El = document.getElementById('cbc_q2_opt2');    const pct1El = document.getElementById('cbc_q2_opt1_pct');    const pct2El = document.getElementById('cbc_q2_opt2_pct');    const shade1El = document.getElementById('cbc_q2_shade1');    const shade2El = document.getElementById('cbc_q2_shade2');    if (opt1El) opt1El.textContent = fmt(opt1);    if (opt2El) opt2El.textContent = fmt(opt2);    if (pct1El) pct1El.textContent = pct1 + '%';    if (pct2El) pct2El.textContent = pct2 + '%';    if (shade1El) shade1El.style.height = pct1 + '%';    if (shade2El) shade2El.style.height = pct2 + '%';  }    function init() {    updateAllocation();  }    init();  setTimeout(init, 50);  setTimeout(init, 300);  setTimeout(init, 900);  if (document.readyState === 'loading') {    document.addEventListener('DOMContentLoaded', init);  }  window.addEventListener('load', init);    setInterval(init, 500);    function bindListeners() {    const sliderEl = document.getElementById(sliderId);    if (sliderEl && !sliderEl.dataset.allocBound) {      sliderEl.addEventListener('change', updateAllocation);      sliderEl.addEventListener('input', updateAllocation);      sliderEl.dataset.allocBound = '1';    }  }  bindListeners();  setInterval(bindListeners, 1000);})();</script>
 </div>
@@ -5067,7 +5073,8 @@ setInterval(function() {
 </div>
 </div>
 </div>
-<div class="cbc-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="cbc_q3_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
 <div id="container-cbc_q3_nr" data-question-id="cbc_q3_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;cbc_q3_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;cbc_q3_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="cbc_q3_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="cbc_q3_nr-label">
 <label class="control-label" id="cbc_q3_nr-label" for="cbc_q3_nr"></label>
@@ -5083,7 +5090,8 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="cbc_q3_hint" class="cbc-next-hint">Mueva el control deslizante o marque «Prefiero no responder» para continuar.</p>
+<p id="cbc_q3_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
 <style>#container-cbc_q3 { margin-bottom: 2px !important; }#container-cbc_q3 .form-group { margin-bottom: 2px !important; }#container-cbc_q3 .irs { margin-top: 0 !important; margin-bottom: 10px !important; height: 26px !important; }#container-cbc_q3 .irs-grid, #container-cbc_q3 .irs-grid-text, #container-cbc_q3 .irs-min, #container-cbc_q3 .irs-max, #container-cbc_q3 .irs-single { display: none !important; }#cbc_q3 .irs-bar { background: #adb5bd !important; height: 10px !important; }#cbc_q3 .irs-bar-edge { background: #adb5bd !important; }#cbc_q3 .irs-line { background: #adb5bd !important; background-color: #adb5bd !important; background-image: none !important; border-color: #adb5bd !important; }#cbc_q3_name1 { color: #28a745 !important; font-weight: 800 !important; }#cbc_q3_name2 { color: #007bff !important; font-weight: 800 !important; }@media (max-width: 576px) {#container-cbc_q3 { margin-bottom: 0 !important; }#container-cbc_q3 .irs { margin-top: 0 !important; margin-bottom: 8px !important; height: 22px !important; }#cbc_q3_opt1, #cbc_q3_opt2 { font-size: 1.1rem !important; }#cbc_q3_opt1_pct, #cbc_q3_opt2_pct { font-size: 0.95rem !important; }}</style>
 <script>(function() {  const sliderId = 'cbc_q3';  const totalBudget = 2e+06;    function getRawValue() {    const sliderEl = document.getElementById(sliderId);    if (!sliderEl) return totalBudget / 2;    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };    const v = parse(sliderEl.value);    if (v !== null) return Math.max(0, Math.min(totalBudget, v));    const d = parse(sliderEl.getAttribute('data-from'));    if (d !== null) return Math.max(0, Math.min(totalBudget, d));    return totalBudget / 2;  }    function updateAllocation() {    const rawVal = getRawValue();    const opt2 = rawVal;    const opt1 = totalBudget - rawVal;    const pct1 = Math.round(opt1 / totalBudget * 100);    const pct2 = 100 - pct1;    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');    const opt1El = document.getElementById('cbc_q3_opt1');    const opt2El = document.getElementById('cbc_q3_opt2');    const pct1El = document.getElementById('cbc_q3_opt1_pct');    const pct2El = document.getElementById('cbc_q3_opt2_pct');    const shade1El = document.getElementById('cbc_q3_shade1');    const shade2El = document.getElementById('cbc_q3_shade2');    if (opt1El) opt1El.textContent = fmt(opt1);    if (opt2El) opt2El.textContent = fmt(opt2);    if (pct1El) pct1El.textContent = pct1 + '%';    if (pct2El) pct2El.textContent = pct2 + '%';    if (shade1El) shade1El.style.height = pct1 + '%';    if (shade2El) shade2El.style.height = pct2 + '%';  }    function init() {    updateAllocation();  }    init();  setTimeout(init, 50);  setTimeout(init, 300);  setTimeout(init, 900);  if (document.readyState === 'loading') {    document.addEventListener('DOMContentLoaded', init);  }  window.addEventListener('load', init);    setInterval(init, 500);    function bindListeners() {    const sliderEl = document.getElementById(sliderId);    if (sliderEl && !sliderEl.dataset.allocBound) {      sliderEl.addEventListener('change', updateAllocation);      sliderEl.addEventListener('input', updateAllocation);      sliderEl.dataset.allocBound = '1';    }  }  bindListeners();  setInterval(bindListeners, 1000);})();</script>
 </div>
@@ -5196,7 +5204,8 @@ setInterval(function() {
 </div>
 </div>
 </div>
-<div class="cbc-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="cbc_q4_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
 <div id="container-cbc_q4_nr" data-question-id="cbc_q4_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;cbc_q4_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;cbc_q4_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="cbc_q4_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="cbc_q4_nr-label">
 <label class="control-label" id="cbc_q4_nr-label" for="cbc_q4_nr"></label>
@@ -5212,7 +5221,8 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="cbc_q4_hint" class="cbc-next-hint">Mueva el control deslizante o marque «Prefiero no responder» para continuar.</p>
+<p id="cbc_q4_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
 <style>#container-cbc_q4 { margin-bottom: 2px !important; }#container-cbc_q4 .form-group { margin-bottom: 2px !important; }#container-cbc_q4 .irs { margin-top: 0 !important; margin-bottom: 10px !important; height: 26px !important; }#container-cbc_q4 .irs-grid, #container-cbc_q4 .irs-grid-text, #container-cbc_q4 .irs-min, #container-cbc_q4 .irs-max, #container-cbc_q4 .irs-single { display: none !important; }#cbc_q4 .irs-bar { background: #adb5bd !important; height: 10px !important; }#cbc_q4 .irs-bar-edge { background: #adb5bd !important; }#cbc_q4 .irs-line { background: #adb5bd !important; background-color: #adb5bd !important; background-image: none !important; border-color: #adb5bd !important; }#cbc_q4_name1 { color: #28a745 !important; font-weight: 800 !important; }#cbc_q4_name2 { color: #007bff !important; font-weight: 800 !important; }@media (max-width: 576px) {#container-cbc_q4 { margin-bottom: 0 !important; }#container-cbc_q4 .irs { margin-top: 0 !important; margin-bottom: 8px !important; height: 22px !important; }#cbc_q4_opt1, #cbc_q4_opt2 { font-size: 1.1rem !important; }#cbc_q4_opt1_pct, #cbc_q4_opt2_pct { font-size: 0.95rem !important; }}</style>
 <script>(function() {  const sliderId = 'cbc_q4';  const totalBudget = 2e+06;    function getRawValue() {    const sliderEl = document.getElementById(sliderId);    if (!sliderEl) return totalBudget / 2;    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };    const v = parse(sliderEl.value);    if (v !== null) return Math.max(0, Math.min(totalBudget, v));    const d = parse(sliderEl.getAttribute('data-from'));    if (d !== null) return Math.max(0, Math.min(totalBudget, d));    return totalBudget / 2;  }    function updateAllocation() {    const rawVal = getRawValue();    const opt2 = rawVal;    const opt1 = totalBudget - rawVal;    const pct1 = Math.round(opt1 / totalBudget * 100);    const pct2 = 100 - pct1;    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');    const opt1El = document.getElementById('cbc_q4_opt1');    const opt2El = document.getElementById('cbc_q4_opt2');    const pct1El = document.getElementById('cbc_q4_opt1_pct');    const pct2El = document.getElementById('cbc_q4_opt2_pct');    const shade1El = document.getElementById('cbc_q4_shade1');    const shade2El = document.getElementById('cbc_q4_shade2');    if (opt1El) opt1El.textContent = fmt(opt1);    if (opt2El) opt2El.textContent = fmt(opt2);    if (pct1El) pct1El.textContent = pct1 + '%';    if (pct2El) pct2El.textContent = pct2 + '%';    if (shade1El) shade1El.style.height = pct1 + '%';    if (shade2El) shade2El.style.height = pct2 + '%';  }    function init() {    updateAllocation();  }    init();  setTimeout(init, 50);  setTimeout(init, 300);  setTimeout(init, 900);  if (document.readyState === 'loading') {    document.addEventListener('DOMContentLoaded', init);  }  window.addEventListener('load', init);    setInterval(init, 500);    function bindListeners() {    const sliderEl = document.getElementById(sliderId);    if (sliderEl && !sliderEl.dataset.allocBound) {      sliderEl.addEventListener('change', updateAllocation);      sliderEl.addEventListener('input', updateAllocation);      sliderEl.dataset.allocBound = '1';    }  }  bindListeners();  setInterval(bindListeners, 1000);})();</script>
 </div>
@@ -5325,7 +5335,8 @@ setInterval(function() {
 </div>
 </div>
 </div>
-<div class="cbc-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="cbc_q5_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
 <div id="container-cbc_q5_nr" data-question-id="cbc_q5_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;cbc_q5_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;cbc_q5_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="cbc_q5_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="cbc_q5_nr-label">
 <label class="control-label" id="cbc_q5_nr-label" for="cbc_q5_nr"></label>
@@ -5341,7 +5352,8 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="cbc_q5_hint" class="cbc-next-hint">Mueva el control deslizante o marque «Prefiero no responder» para continuar.</p>
+<p id="cbc_q5_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
 <style>#container-cbc_q5 { margin-bottom: 2px !important; }#container-cbc_q5 .form-group { margin-bottom: 2px !important; }#container-cbc_q5 .irs { margin-top: 0 !important; margin-bottom: 10px !important; height: 26px !important; }#container-cbc_q5 .irs-grid, #container-cbc_q5 .irs-grid-text, #container-cbc_q5 .irs-min, #container-cbc_q5 .irs-max, #container-cbc_q5 .irs-single { display: none !important; }#cbc_q5 .irs-bar { background: #adb5bd !important; height: 10px !important; }#cbc_q5 .irs-bar-edge { background: #adb5bd !important; }#cbc_q5 .irs-line { background: #adb5bd !important; background-color: #adb5bd !important; background-image: none !important; border-color: #adb5bd !important; }#cbc_q5_name1 { color: #28a745 !important; font-weight: 800 !important; }#cbc_q5_name2 { color: #007bff !important; font-weight: 800 !important; }@media (max-width: 576px) {#container-cbc_q5 { margin-bottom: 0 !important; }#container-cbc_q5 .irs { margin-top: 0 !important; margin-bottom: 8px !important; height: 22px !important; }#cbc_q5_opt1, #cbc_q5_opt2 { font-size: 1.1rem !important; }#cbc_q5_opt1_pct, #cbc_q5_opt2_pct { font-size: 0.95rem !important; }}</style>
 <script>(function() {  const sliderId = 'cbc_q5';  const totalBudget = 2e+06;    function getRawValue() {    const sliderEl = document.getElementById(sliderId);    if (!sliderEl) return totalBudget / 2;    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };    const v = parse(sliderEl.value);    if (v !== null) return Math.max(0, Math.min(totalBudget, v));    const d = parse(sliderEl.getAttribute('data-from'));    if (d !== null) return Math.max(0, Math.min(totalBudget, d));    return totalBudget / 2;  }    function updateAllocation() {    const rawVal = getRawValue();    const opt2 = rawVal;    const opt1 = totalBudget - rawVal;    const pct1 = Math.round(opt1 / totalBudget * 100);    const pct2 = 100 - pct1;    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');    const opt1El = document.getElementById('cbc_q5_opt1');    const opt2El = document.getElementById('cbc_q5_opt2');    const pct1El = document.getElementById('cbc_q5_opt1_pct');    const pct2El = document.getElementById('cbc_q5_opt2_pct');    const shade1El = document.getElementById('cbc_q5_shade1');    const shade2El = document.getElementById('cbc_q5_shade2');    if (opt1El) opt1El.textContent = fmt(opt1);    if (opt2El) opt2El.textContent = fmt(opt2);    if (pct1El) pct1El.textContent = pct1 + '%';    if (pct2El) pct2El.textContent = pct2 + '%';    if (shade1El) shade1El.style.height = pct1 + '%';    if (shade2El) shade2El.style.height = pct2 + '%';  }    function init() {    updateAllocation();  }    init();  setTimeout(init, 50);  setTimeout(init, 300);  setTimeout(init, 900);  if (document.readyState === 'loading') {    document.addEventListener('DOMContentLoaded', init);  }  window.addEventListener('load', init);    setInterval(init, 500);    function bindListeners() {    const sliderEl = document.getElementById(sliderId);    if (sliderEl && !sliderEl.dataset.allocBound) {      sliderEl.addEventListener('change', updateAllocation);      sliderEl.addEventListener('input', updateAllocation);      sliderEl.dataset.allocBound = '1';    }  }  bindListeners();  setInterval(bindListeners, 1000);})();</script>
 </div>
@@ -5454,7 +5466,8 @@ setInterval(function() {
 </div>
 </div>
 </div>
-<div class="cbc-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="cbc_q6_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
 <div id="container-cbc_q6_nr" data-question-id="cbc_q6_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;cbc_q6_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;cbc_q6_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="cbc_q6_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="cbc_q6_nr-label">
 <label class="control-label" id="cbc_q6_nr-label" for="cbc_q6_nr"></label>
@@ -5470,7 +5483,8 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="cbc_q6_hint" class="cbc-next-hint">Mueva el control deslizante o marque «Prefiero no responder» para continuar.</p>
+<p id="cbc_q6_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
 <style>#container-cbc_q6 { margin-bottom: 2px !important; }#container-cbc_q6 .form-group { margin-bottom: 2px !important; }#container-cbc_q6 .irs { margin-top: 0 !important; margin-bottom: 10px !important; height: 26px !important; }#container-cbc_q6 .irs-grid, #container-cbc_q6 .irs-grid-text, #container-cbc_q6 .irs-min, #container-cbc_q6 .irs-max, #container-cbc_q6 .irs-single { display: none !important; }#cbc_q6 .irs-bar { background: #adb5bd !important; height: 10px !important; }#cbc_q6 .irs-bar-edge { background: #adb5bd !important; }#cbc_q6 .irs-line { background: #adb5bd !important; background-color: #adb5bd !important; background-image: none !important; border-color: #adb5bd !important; }#cbc_q6_name1 { color: #28a745 !important; font-weight: 800 !important; }#cbc_q6_name2 { color: #007bff !important; font-weight: 800 !important; }@media (max-width: 576px) {#container-cbc_q6 { margin-bottom: 0 !important; }#container-cbc_q6 .irs { margin-top: 0 !important; margin-bottom: 8px !important; height: 22px !important; }#cbc_q6_opt1, #cbc_q6_opt2 { font-size: 1.1rem !important; }#cbc_q6_opt1_pct, #cbc_q6_opt2_pct { font-size: 0.95rem !important; }}</style>
 <script>(function() {  const sliderId = 'cbc_q6';  const totalBudget = 2e+06;    function getRawValue() {    const sliderEl = document.getElementById(sliderId);    if (!sliderEl) return totalBudget / 2;    const parse = (x) => { const n = parseInt(String(x).replace(/[^0-9]/g, ''), 10); return Number.isFinite(n) ? n : null; };    const v = parse(sliderEl.value);    if (v !== null) return Math.max(0, Math.min(totalBudget, v));    const d = parse(sliderEl.getAttribute('data-from'));    if (d !== null) return Math.max(0, Math.min(totalBudget, d));    return totalBudget / 2;  }    function updateAllocation() {    const rawVal = getRawValue();    const opt2 = rawVal;    const opt1 = totalBudget - rawVal;    const pct1 = Math.round(opt1 / totalBudget * 100);    const pct2 = 100 - pct1;    const fmt = (x) => '$' + Math.round(x).toLocaleString('es-ES');    const opt1El = document.getElementById('cbc_q6_opt1');    const opt2El = document.getElementById('cbc_q6_opt2');    const pct1El = document.getElementById('cbc_q6_opt1_pct');    const pct2El = document.getElementById('cbc_q6_opt2_pct');    const shade1El = document.getElementById('cbc_q6_shade1');    const shade2El = document.getElementById('cbc_q6_shade2');    if (opt1El) opt1El.textContent = fmt(opt1);    if (opt2El) opt2El.textContent = fmt(opt2);    if (pct1El) pct1El.textContent = pct1 + '%';    if (pct2El) pct2El.textContent = pct2 + '%';    if (shade1El) shade1El.style.height = pct1 + '%';    if (shade2El) shade2El.style.height = pct2 + '%';  }    function init() {    updateAllocation();  }    init();  setTimeout(init, 50);  setTimeout(init, 300);  setTimeout(init, 900);  if (document.readyState === 'loading') {    document.addEventListener('DOMContentLoaded', init);  }  window.addEventListener('load', init);    setInterval(init, 500);    function bindListeners() {    const sliderEl = document.getElementById(sliderId);    if (sliderEl && !sliderEl.dataset.allocBound) {      sliderEl.addEventListener('change', updateAllocation);      sliderEl.addEventListener('input', updateAllocation);      sliderEl.dataset.allocBound = '1';    }  }  bindListeners();  setInterval(bindListeners, 1000);})();</script>
 </div>
@@ -6185,967 +6199,6 @@ setInterval(function() {
 </div>
 <div class="cell-output-display">
 <div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="percgasto" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
-<button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
-<button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
-<div style="clear: both;"></div>
-</div>
-</div>
-</div>
-</div>
-<div id="percgasto" class="sd_page">
-<p>A continuación, se mencionan algunos ámbitos de la actividad gubernamental. Por favor, señale cuánto cree usted que el gobierno gasta en cada uno de ellos.</p>
-<p>¿Cuánto cree usted que gasta el gobierno en…</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-pgasto_1" data-question-id="pgasto_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pgasto_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pgasto_1_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pgasto_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pgasto_1-label">
-<label class="control-label" id="pgasto_1-label" for="pgasto_1"><p>Educación</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_1" value="5">
-<span>Mucho</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_1" value="4">
-<span>Bastante</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_1" value="3">
-<span>Algo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_1" value="2">
-<span>Poco</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_1" value="1">
-<span>Muy poco</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_1" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_1" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-pgasto_2" data-question-id="pgasto_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pgasto_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pgasto_2_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pgasto_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pgasto_2-label">
-<label class="control-label" id="pgasto_2-label" for="pgasto_2"><p>Salud</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_2" value="5">
-<span>Mucho</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_2" value="4">
-<span>Bastante</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_2" value="3">
-<span>Algo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_2" value="2">
-<span>Poco</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_2" value="1">
-<span>Muy poco</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_2" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_2" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-pgasto_3" data-question-id="pgasto_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pgasto_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pgasto_3_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pgasto_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pgasto_3-label">
-<label class="control-label" id="pgasto_3-label" for="pgasto_3"><p>Pensiones</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_3" value="5">
-<span>Mucho</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_3" value="4">
-<span>Bastante</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_3" value="3">
-<span>Algo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_3" value="2">
-<span>Poco</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_3" value="1">
-<span>Muy poco</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_3" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pgasto_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="actgov" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
-<button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
-<button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
-<div style="clear: both;"></div>
-</div>
-</div>
-</div>
-</div>
-<div id="actgov" class="sd_page">
-<p>Por favor, señale si le gustaría que se aumentara o se redujera el gasto público en cada uno de ellos. Tenga en cuenta que «más» o «mucho más» podría implicar un alza de impuestos.</p>
-<p>En qué medida le gustaría que hubiera más o menos gasto público en…</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-rank_1" data-question-id="rank_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;rank_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;rank_1_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="rank_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="rank_1-label">
-<label class="control-label" id="rank_1-label" for="rank_1"><p>Educación</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="rank_1" value="5">
-<span>Mucho más gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_1" value="4">
-<span>Más gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_1" value="3">
-<span>Ni más ni menos de lo que se gasta actualmente</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_1" value="2">
-<span>Menos gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_1" value="1">
-<span>Mucho menos gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_1" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_1" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-rank_2" data-question-id="rank_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;rank_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;rank_2_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="rank_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="rank_2-label">
-<label class="control-label" id="rank_2-label" for="rank_2"><p>Salud</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="rank_2" value="5">
-<span>Mucho más gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_2" value="4">
-<span>Más gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_2" value="3">
-<span>Ni más ni menos de lo que se gasta actualmente</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_2" value="2">
-<span>Menos gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_2" value="1">
-<span>Mucho menos gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_2" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_2" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-rank_3" data-question-id="rank_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;rank_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;rank_3_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="rank_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="rank_3-label">
-<label class="control-label" id="rank_3-label" for="rank_3"><p>Pensiones</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="rank_3" value="5">
-<span>Mucho más gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_3" value="4">
-<span>Más gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_3" value="3">
-<span>Ni más ni menos de lo que se gasta actualmente</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_3" value="2">
-<span>Menos gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_3" value="1">
-<span>Mucho menos gasto</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_3" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="rank_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="marketizacion" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
-<button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
-<button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
-<div style="clear: both;"></div>
-</div>
-</div>
-</div>
-</div>
-<div id="marketizacion" class="sd_page">
-<p>En Chile, el acceso a servicios como la atención en salud, la educación y las pensiones puede variar según la situación económica de las personas. A continuación, queremos saber su percepción sobre la situación en el país.</p>
-<p><br></p>
-<p>¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-pres_1" data-question-id="pres_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pres_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pres_1_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pres_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pres_1-label">
-<label class="control-label" id="pres_1-label" for="pres_1"><p>El acceso a la atención en salud es desigual en Chile</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pres_1" value="5">
-<span>Muy desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_1" value="4">
-<span>Desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_1" value="3">
-<span>Ni igual ni desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_1" value="2">
-<span>Poco desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_1" value="1">
-<span>Nada desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_1" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_1" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-pres_2" data-question-id="pres_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pres_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pres_2_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pres_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pres_2-label">
-<label class="control-label" id="pres_2-label" for="pres_2"><p>El acceso a la educación es desigual en Chile</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pres_2" value="5">
-<span>Muy desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_2" value="4">
-<span>Desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_2" value="3">
-<span>Ni igual ni desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_2" value="2">
-<span>Poco desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_2" value="1">
-<span>Nada desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_2" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_2" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-pres_3" data-question-id="pres_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pres_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pres_3_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pres_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pres_3-label">
-<label class="control-label" id="pres_3-label" for="pres_3"><p>Las pensiones son desiguales en Chile</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pres_3" value="5">
-<span>Muy desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_3" value="4">
-<span>Desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_3" value="3">
-<span>Ni igual ni desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_3" value="2">
-<span>Poco desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_3" value="1">
-<span>Nada desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_3" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-</div>
-<p><br></p>
-<p>Y pensando hace 10 años atrás, ¿usted cree que el acceso a los siguientes servicios entre quienes tienes más y menores ingresos se ha vuelto…?</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-pres_4" data-question-id="pres_4" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pres_4_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pres_4_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pres_4" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pres_4-label">
-<label class="control-label" id="pres_4-label" for="pres_4"><p>Salud</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pres_4" value="5">
-<span>Mucho más desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_4" value="4">
-<span>Más desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_4" value="3">
-<span>Ni igual ni desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_4" value="2">
-<span>Menos desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_4" value="1">
-<span>Mucho menos desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_4" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_4" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-pres_5" data-question-id="pres_5" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pres_5_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pres_5_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pres_5" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pres_5-label">
-<label class="control-label" id="pres_5-label" for="pres_5"><p>Educación</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pres_5" value="5">
-<span>Mucho más desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_5" value="4">
-<span>Más desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_5" value="3">
-<span>Ni igual ni desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_5" value="2">
-<span>Menos desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_5" value="1">
-<span>Mucho menos desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_5" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_5" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-pres_6" data-question-id="pres_6" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;pres_6_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;pres_6_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="pres_6" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="pres_6-label">
-<label class="control-label" id="pres_6-label" for="pres_6"><p>Pensiones</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="pres_6" value="5">
-<span>Mucho más desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_6" value="4">
-<span>Más desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_6" value="3">
-<span>Ni igual ni desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_6" value="2">
-<span>Menos desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_6" value="1">
-<span>Mucho menos desigual</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_6" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="pres_6" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="valor" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
-<button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
-<button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
-<div style="clear: both;"></div>
-</div>
-</div>
-</div>
-</div>
-<div id="valor" class="sd_page">
-<p>¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-valor_1" data-question-id="valor_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;valor_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;valor_1_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="valor_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="valor_1-label">
-<label class="control-label" id="valor_1-label" for="valor_1"><p>Está bien que los hospitales públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="valor_1" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_1" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_1" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_1" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_1" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_1" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_1" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-valor_2" data-question-id="valor_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;valor_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;valor_2_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="valor_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="valor_2-label">
-<label class="control-label" id="valor_2-label" for="valor_2"><p>Está bien que los liceos públicos sean administrados por privados si ellos son capaces de brindar un mejor servicio</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="valor_2" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_2" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_2" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_2" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_2" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_2" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_2" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-valor_3" data-question-id="valor_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;valor_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;valor_3_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="valor_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="valor_3-label">
-<label class="control-label" id="valor_3-label" for="valor_3"><p>La calidad del sistema de salud debería ser igual para todos aunque esto signifique que mi familila no pueda pagar por mejores servicios</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="valor_3" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_3" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_3" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_3" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_3" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_3" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-valor_4" data-question-id="valor_4" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;valor_4_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;valor_4_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="valor_4" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="valor_4-label">
-<label class="control-label" id="valor_4-label" for="valor_4"><p>La educación debería ser de igual calidad para todos aunque eso me impida pagar por una mejor para mi familia</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="valor_4" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_4" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_4" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_4" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_4" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_4" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_4" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-valor_5" data-question-id="valor_5" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;valor_5_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;valor_5_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="valor_5" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="valor_5-label">
-<label class="control-label" id="valor_5-label" for="valor_5"><p>Las pensiones deberían ser más igualitarias, aunque eso signifique que yo reciba una pensión similar a quienes aportaron menos que yo</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="valor_5" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_5" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_5" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_5" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_5" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_5" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="valor_5" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="sd-nav-marker" style="display: none;"></div>
 <div data-next-page="decomodifica" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
 <button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
 <button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
@@ -7203,6 +6256,27 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
+<div class="cell-output-display">
+<div id="dec_3_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="container-dec_3_nr" data-question-id="dec_3_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;dec_3_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;dec_3_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div id="dec_3_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="dec_3_nr-label">
+<label class="control-label" id="dec_3_nr-label" for="dec_3_nr"></label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="dec_3_nr" value="99">
+<span>Prefiero no responder</span>
+</label>
+</div>
+</div>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<p id="dec_3_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="educación" class="level3">
@@ -7246,6 +6320,27 @@ setInterval(function() {
     </script>
 </div>
 <span class="hidden-asterisk">*</span>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="dec_1_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="container-dec_1_nr" data-question-id="dec_1_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;dec_1_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;dec_1_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div id="dec_1_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="dec_1_nr-label">
+<label class="control-label" id="dec_1_nr-label" for="dec_1_nr"></label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="dec_1_nr" value="99">
+<span>Prefiero no responder</span>
+</label>
+</div>
+</div>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<p id="dec_1_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
 </div>
 </div>
 </div>
@@ -7298,6 +6393,27 @@ setInterval(function() {
     </script>
 </div>
 <span class="hidden-asterisk">*</span>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="dec_2_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="container-dec_2_nr" data-question-id="dec_2_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;dec_2_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;dec_2_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div id="dec_2_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="dec_2_nr-label">
+<label class="control-label" id="dec_2_nr-label" for="dec_2_nr"></label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="dec_2_nr" value="99">
+<span>Prefiero no responder</span>
+</label>
+</div>
+</div>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<p id="dec_2_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
 </div>
 </div>
 <div class="cell-output-display">
@@ -7468,842 +6584,6 @@ setInterval(function() {
 <div class="radio">
 <label>
 <input type="radio" name="lucro_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="participa" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
-<button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
-<button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
-<div style="clear: both;"></div>
-</div>
-</div>
-</div>
-</div>
-<div id="participa" class="sd_page">
-<p>En Chile, algunos ámbitos de prestaciones y beneficios sociales están más a cargo del estado, mientras que otros más a cargo de los privados.</p>
-<p><br></p>
-<p><strong>En Chile, ¿quién participa más en la provisión de los siguientes servicios?</strong></p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-cargo_1" data-question-id="cargo_1" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="cargo_1-label" for="cargo_1"><p>Salud</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="cargo_1">
-<script>
-        $(document).ready(function() {
-          $("#cargo_1").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'cargo_1';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-cargo_2" data-question-id="cargo_2" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="cargo_2-label" for="cargo_2"><p>Educación</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="cargo_2">
-<script>
-        $(document).ready(function() {
-          $("#cargo_2").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'cargo_2';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-cargo_3" data-question-id="cargo_3" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="cargo_3-label" for="cargo_3"><p>Pensiones</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="cargo_3">
-<script>
-        $(document).ready(function() {
-          $("#cargo_3").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'cargo_3';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-cargo_4" data-question-id="cargo_4" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="cargo_4-label" for="cargo_4"><p>Salas cuna</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="cargo_4">
-<script>
-        $(document).ready(function() {
-          $("#cargo_4").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'cargo_4';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-cargo_5" data-question-id="cargo_5" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="cargo_5-label" for="cargo_5"><p>Carreteras</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="cargo_5">
-<script>
-        $(document).ready(function() {
-          $("#cargo_5").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'cargo_5';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-</div>
-<p><br></p>
-<p><strong>¿Quién es más eficiente en la provisión de los siguientes servicios?</strong></p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-efic_1" data-question-id="efic_1" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="efic_1-label" for="efic_1"><p>Salud</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="efic_1">
-<script>
-        $(document).ready(function() {
-          $("#efic_1").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'efic_1';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-efic_2" data-question-id="efic_2" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="efic_2-label" for="efic_2"><p>Educación</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="efic_2">
-<script>
-        $(document).ready(function() {
-          $("#efic_2").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'efic_2';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-efic_3" data-question-id="efic_3" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="efic_3-label" for="efic_3"><p>Pensiones</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="efic_3">
-<script>
-        $(document).ready(function() {
-          $("#efic_3").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'efic_3';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-efic_4" data-question-id="efic_4" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="efic_4-label" for="efic_4"><p>Salas cuna</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="efic_4">
-<script>
-        $(document).ready(function() {
-          $("#efic_4").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'efic_4';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-efic_5" data-question-id="efic_5" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="efic_5-label" for="efic_5"><p>Carreteras</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="efic_5">
-<script>
-        $(document).ready(function() {
-          $("#efic_5").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'efic_5';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-</div>
-<p><br></p>
-<p><strong>Considerando la realidad chilena, ¿quién debería participar más en la provisión de los siguientes servicios?</strong></p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-part_1" data-question-id="part_1" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="part_1-label" for="part_1"><p>Salud</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="part_1">
-<script>
-        $(document).ready(function() {
-          $("#part_1").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'part_1';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-part_2" data-question-id="part_2" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="part_2-label" for="part_2"><p>Educación</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="part_2">
-<script>
-        $(document).ready(function() {
-          $("#part_2").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'part_2';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-part_3" data-question-id="part_3" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="part_3-label" for="part_3"><p>Pensiones</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="part_3">
-<script>
-        $(document).ready(function() {
-          $("#part_3").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'part_3';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-part_4" data-question-id="part_4" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="part_4-label" for="part_4"><p>Salas cuna</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="part_4">
-<script>
-        $(document).ready(function() {
-          $("#part_4").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'part_4';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-part_5" data-question-id="part_5" class="question-container" style="width: 100%;">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="part_5-label" for="part_5"><p>Carreteras</p>
-</label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="3" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Estado&quot;,&quot; &quot;,&quot;  &quot;,&quot;Ambos por igual&quot;,&quot;   &quot;,&quot;    &quot;,&quot;Privados&quot;]" data-to-fixed="false" data-to-shadow="false" id="part_5">
-<script>
-        $(document).ready(function() {
-          $("#part_5").attr("data-values", ["1","2","3","4","5","6","7"]);
-        });
-      </script>
-<script>
-      $(document).ready(function() {
-        var sliderId = 'part_5';
-        var valueMap = {"Estado":["1"]," ":["2"],"  ":["3"],"Ambos por igual":["4"],"   ":["5"],"    ":["6"],"Privados":["7"]};
-
-        // Track value changes and map display label to internal value
-        $('#' + sliderId).on('change', function(e) {
-          var currentLabel = $(this).val();
-          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-        });
-
-        // On page load, ensure the current value is mapped (for cookie restoration)
-        // Use a short delay to ensure the slider is fully initialized
-        setTimeout(function() {
-          var currentLabel = $('#' + sliderId).val();
-          if (currentLabel && valueMap[currentLabel]) {
-            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
-          }
-        }, 100);
-
-        // Initialize interaction tracking (from interaction.js)
-        initInteractionTracking(sliderId, 'slider');
-      });
-    </script>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-</div>
-<p><br></p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="neoliberal" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
-<button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
-<button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
-<div style="clear: both;"></div>
-</div>
-</div>
-</div>
-</div>
-<div id="neoliberal" class="sd_page">
-<p>¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="container-neolib_1" data-question-id="neolib_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;neolib_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;neolib_1_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="neolib_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="neolib_1-label">
-<label class="control-label" id="neolib_1-label" for="neolib_1"><p>El Gobierno debería proporcionar a toda la población servicios básicos como la asistencia sanitaria y la asistencia jurídica de forma gratuita</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="neolib_1" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_1" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_1" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_1" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_1" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_1" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_1" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-neolib_2" data-question-id="neolib_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;neolib_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;neolib_2_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="neolib_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="neolib_2-label">
-<label class="control-label" id="neolib_2-label" for="neolib_2"><p>Si el Gobierno tiene que aumentar su deuda para ayudar a la gente, debería hacerlo</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="neolib_2" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_2" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_2" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_2" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_2" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_2" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_2" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-neolib_3" data-question-id="neolib_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;neolib_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;neolib_3_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="neolib_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="neolib_3-label">
-<label class="control-label" id="neolib_3-label" for="neolib_3"><p>La sociedad debería proporcionar recursos y servicios gratuitos a las personas que no pueden permitírselos</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="neolib_3" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_3" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_3" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_3" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_3" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_3" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-neolib_4" data-question-id="neolib_4" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;neolib_4_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;neolib_4_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="neolib_4" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="neolib_4-label">
-<label class="control-label" id="neolib_4-label" for="neolib_4"><p>Las personas con ingresos más elevados deberían pagar más impuestos que las que tienen ingresos más bajos</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="neolib_4" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_4" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_4" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_4" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_4" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_4" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="neolib_4" value="99">
 <span>Prefiero no responder</span>
 </label>
 </div>
@@ -10144,7 +8424,7 @@ setInterval(function() {
 </div>
 </div>
 <div id="id-final" class="sd_page">
-<p>A continuación se presentan algunas preguntas sociodemográficas adicionales:</p>
+<p>Para finalizar, se presentan algunas preguntas sociodemográficas adicionales:</p>
 <div style="width:500px; margin: 0 auto;">
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
@@ -10192,19 +8472,19 @@ setInterval(function() {
 </div>
 </div>
 <div class="cell-output-display">
-<div id="container-income" data-question-id="income" class="question-container" style="width: 100%;">
+<div id="container-estatus_subjetivo" data-question-id="estatus_subjetivo" class="question-container" style="width: 100%;">
 <div class="form-group shiny-input-container">
-<label class="control-label" id="income-label" for="income"><p>En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad. Usando la escala presentada, donde 0 es el nivel más bajo y 10 el nivel más alto,  ¿Dónde se ubicaría usted en la sociedad chilena?</p>
+<label class="control-label" id="estatus_subjetivo-label" for="estatus_subjetivo"><p>En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad. Usando la escala presentada, donde 0 es el nivel más bajo y 10 el nivel más alto,  ¿Dónde se ubicaría usted en la sociedad chilena?</p>
 </label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;]" data-to-fixed="false" data-to-shadow="false" id="income">
+<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;]" data-to-fixed="false" data-to-shadow="false" id="estatus_subjetivo">
 <script>
         $(document).ready(function() {
-          $("#income").attr("data-values", ["0","1","2","3","4","5","6","7","8","9","10"]);
+          $("#estatus_subjetivo").attr("data-values", ["0","1","2","3","4","5","6","7","8","9","10"]);
         });
       </script>
 <script>
       $(document).ready(function() {
-        var sliderId = 'income';
+        var sliderId = 'estatus_subjetivo';
         var valueMap = {"0":["0"],"1":["1"],"2":["2"],"3":["3"],"4":["4"],"5":["5"],"6":["6"],"7":["7"],"8":["8"],"9":["9"],"10":["10"]};
 
         // Track value changes and map display label to internal value
@@ -10228,6 +8508,87 @@ setInterval(function() {
     </script>
 </div>
 <span class="hidden-asterisk">*</span>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="estatus_subjetivo_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="container-estatus_subjetivo_nr" data-question-id="estatus_subjetivo_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;estatus_subjetivo_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;estatus_subjetivo_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div id="estatus_subjetivo_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="estatus_subjetivo_nr-label">
+<label class="control-label" id="estatus_subjetivo_nr-label" for="estatus_subjetivo_nr"></label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="estatus_subjetivo_nr" value="99">
+<span>Prefiero no responder</span>
+</label>
+</div>
+</div>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<p id="estatus_subjetivo_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="container-posicion_politica" data-question-id="posicion_politica" class="question-container" style="width: 100%;">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="posicion_politica-label" for="posicion_politica"><p>Cambiando de tema, tradicionalmente en nuestro país la gente define las posiciones políticas como más cercanas a la izquierda, al centro o a la derecha. Usando una escala de 0 a 10, donde 0 es ser de ‘izquierda’, 5 es ser de ‘centro’ y 10 es ser de ‘derecha’, ¿Dónde se ubicaría usted en esta escala?</p>
+</label>
+<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Izquierda&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;Centro&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;Derecha&quot;]" data-to-fixed="false" data-to-shadow="false" id="posicion_politica">
+<script>
+        $(document).ready(function() {
+          $("#posicion_politica").attr("data-values", ["0","1","2","3","4","5","6","7","8","9","10"]);
+        });
+      </script>
+<script>
+      $(document).ready(function() {
+        var sliderId = 'posicion_politica';
+        var valueMap = {"Izquierda":["0"],"1":["1"],"2":["2"],"3":["3"],"4":["4"],"Centro":["5"],"6":["6"],"7":["7"],"8":["8"],"9":["9"],"Derecha":["10"]};
+
+        // Track value changes and map display label to internal value
+        $('#' + sliderId).on('change', function(e) {
+          var currentLabel = $(this).val();
+          Shiny.setInputValue(sliderId, valueMap[currentLabel]);
+        });
+
+        // On page load, ensure the current value is mapped (for cookie restoration)
+        // Use a short delay to ensure the slider is fully initialized
+        setTimeout(function() {
+          var currentLabel = $('#' + sliderId).val();
+          if (currentLabel && valueMap[currentLabel]) {
+            Shiny.setInputValue(sliderId, valueMap[currentLabel]);
+          }
+        }, 100);
+
+        // Initialize interaction tracking (from interaction.js)
+        initInteractionTracking(sliderId, 'slider');
+      });
+    </script>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="posicion_politica_nr_block">
+<div class="slider-nr" style="display: flex; justify-content: center; margin-top: 10px;">
+<div id="container-posicion_politica_nr" data-question-id="posicion_politica_nr" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;posicion_politica_nr_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;posicion_politica_nr_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div id="posicion_politica_nr" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="posicion_politica_nr-label">
+<label class="control-label" id="posicion_politica_nr-label" for="posicion_politica_nr"></label>
+<div class="shiny-options-group">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="posicion_politica_nr" value="99">
+<span>Prefiero no responder</span>
+</label>
+</div>
+</div>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<p id="posicion_politica_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
 </div>
 </div>
 <div class="cell-output-display">
