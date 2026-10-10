@@ -820,8 +820,16 @@ sd_nav(page_next = "transicion",
 A continuación, le haremos una serie de preguntas sobre distintos temas. Recuerde que no hay respuestas correctas ni incorrectas; solo nos interesa su opinión.
 
 ```{r}
+# Oculta: ancla la regla de sd_skip_if() de esta página (forma B ->
+# deserve-1; ver version_encuesta en app.R). Como está citada en
+# sd_skip_if(), surveydown la vuelve obligatoria: app.R la llena sola con
+# "visto" al mostrar la página.
+sd_question(type = "text", id = "transicion_ancla", label = "")
+
+# Siguiente página de la forma A; la forma B va a "deserve-1" vía
+# sd_skip_if() en app.R
 sd_nav(
-  page_next = "clasicos",
+  page_next = "merit-1",
   show_previous = FALSE,
   label_next = "Continuar"
 )
@@ -1125,6 +1133,8 @@ sd_question(
   )
 )
 
+# Siguiente página de la forma A; la forma B va a "merit-1" vía
+# sd_skip_if() en app.R (ver version_encuesta)
 sd_nav(page_next = "deserve-1",
   label_next = "Siguiente")
 ```
@@ -1401,7 +1411,9 @@ sd_question(
   )
 )
 
-sd_nav(page_next = "merit-1",
+# Siguiente página de la forma B; la forma A va a "id-final" vía
+# sd_skip_if() en app.R (ver version_encuesta)
+sd_nav(page_next = "clasicos",
   label_next = "Siguiente")
 ```
 
@@ -1480,8 +1492,9 @@ sd_question(
   option = escala_acuerdo_nsnr
 )
 
-
-sd_nav(page_next = "id-final",
+# Siguiente página de la forma A; la forma B va a "id-final" vía
+# sd_skip_if() en app.R (ver version_encuesta)
+sd_nav(page_next = "clasicos",
   label_next = "Siguiente")
 ```
 
