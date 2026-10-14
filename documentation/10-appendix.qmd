@@ -1,0 +1,185 @@
+---
+execute:
+  eval: false
+format:
+  html:
+    toc: true
+    css: justify.css
+---
+
+## Appendix: D-efficient estimation
+
+### Estimation in SAS
+
+The estimation of D-efficient was applied in [SAS](https://www.sas.com/es_mx/learn/academic-programs/software.html), a academic software for data analysis.
+
+```{sas}
+
+/* Candidatos: factorial completo (288 perfiles) */
+%mktex(2 3 2 3 2 2 2, n=288, seed=2026);
+
+data cand;
+   set design;
+run;
+
+/* Diseño de elección D-eficiente: 18 tareas, 2 alternativas */
+%choiceff(data=cand,
+          model=class(x1-x7 / sta),
+          nsets=18, flags=2,
+          beta=zero, seed=2026, maxiter=20,
+          options=relative);
+
+/* Dividir en 2 bloques de 9 tareas por encuestado */
+%mktblock(data=best, nalts=2, nblocks=2, factors=x1-x7, seed=2026);
+```
+
+
+```{sas}
+%macro probar;
+   %do n = 12 %to 36 %by 6;
+      title "nsets = &n";
+      %choiceff(data=cand, model=class(x1-x7 / sta),
+                nsets=&n, flags=2, beta=zero,
+                seed=2026, maxiter=20, options=relative);
+   %end;
+%mend;
+%probar;
+```
+
+```{sas}
+%choiceff(data=cand, model=class(x1-x7 / sta),
+          nsets=30, flags=2, beta=zero,
+          seed=2026, maxiter=20, options=relative);
+
+%mktblock(data=best, nalts=2, nblocks=6, factors=x1-x7, seed=2026);
+```
+
+
+```{sas}
+set.seed(2026)
+niv <- c(2, 3, 2, 3, 2, 2, 2); vars <- paste0("x", 1:7)
+N <- 1300; t <- 5; a <- 2
+
+sim_random <- function() {
+  d <- as.data.frame(lapply(niv, \(k) factor(sample(k, N * t * a, TRUE))))
+  setNames(d, vars)
+}
+
+max_canon <- function(d) {
+  M <- lapply(d[vars], \(f) model.matrix(~ f)[, -1, drop = FALSE])
+  max(combn(7, 2, \(p) cancor(M[[p[1]]], M[[p[2]]])$cor[1]))
+}
+
+d_eff <- function(d) {   # filas ordenadas: alternativa 1 y 2 de cada tarea
+  X <- model.matrix(~ ., d[vars],
+         contrasts.arg = lapply(d[vars], \(f) contr.sum(nlevels(f))))[, -1]
+  Dif <- X[seq(1, nrow(X), 2), ] - X[seq(2, nrow(X), 2), ]
+  det(crossprod(Dif) / 4)^(1 / ncol(X)) / nrow(Dif)
+}
+
+res <- replicate(200, { d <- sim_random(); c(max_r = max_canon(d), deff = d_eff(d)) })
+apply(res, 1, quantile, c(.05, .5, .95))
+```
+
+
+```{sas}
+proc contents data=blocked; run;        /* ver nombres de variables */
+proc print data=blocked(obs=10); run;   /* primeras filas */
+
+proc export data=blocked
+            outfile="~/diseno_conjoint.csv"
+            dbms=csv replace;
+run;
+```
+
+```{sas}
+proc contents data=blocked; run;        /* ver nombres de variables */
+proc print data=blocked(obs=10); run;   /* primeras filas */
+
+proc export data=blocked
+            outfile="~/diseno_conjoint.csv"
+            dbms=csv replace;
+run;
+```
+
+### Estimation in R
+
+Afterwards, in order to guarantee reproducibility, we applied a alternative estimation of the D-efficient on R
+
+```{r}
+library(idefix)
+set.seed(2026)
+niv  <- c(2, 3, 2, 3, 2, 2, 2)
+vars <- paste0("x", 1:7)
+p    <- sum(niv - 1)                                   # 9 parámetros
+
+# 1. Candidatos: factorial completo (288 perfiles), codificación de efectos
+cand <- Profiles(lvls = niv, coding = rep("E", 7))
+
+# 2. Diseño D-eficiente: 30 tareas, 2 alternativas, beta = 0
+des <- Modfed(cand.set = cand, n.sets = 30, n.alts = 2,
+              par.draws = matrix(0, nrow = 1, ncol = p),
+              alt.cte = c(0, 0), n.start = 10, parallel = FALSE)
+X <- des$BestDesign$design                             # 60 x 9
+
+# 3. Decodificar a niveles (1, 2, 3)
+decode <- function(X, niv) {
+  idx <- split(seq_len(ncol(X)), rep(seq_along(niv), niv - 1))
+  out <- sapply(seq_along(niv), \(j) {
+    m <- X[, idx[[j]], drop = FALSE]
+    apply(m, 1, \(r) if (all(r == -1)) niv[j] else which(r == 1))
+  })
+  setNames(as.data.frame(lapply(as.data.frame(out), factor)), vars)
+}
+d <- decode(X, niv)
+d$set <- rep(1:30, each = 2)
+
+# 4. Bloquear en 6 decks de 5 tareas, minimizando la correlación deck-atributos
+bloquear <- function(d, nblocks = 6, iter = 3000) {
+  S <- max(d$set); mejor <- Inf
+  for (i in seq_len(iter)) {
+    b  <- sample(rep(seq_len(nblocks), length.out = S))
+    bb <- model.matrix(~ factor(b[d$set]))[, -1]
+    crit <- max(sapply(d[vars], \(f)
+              cancor(model.matrix(~ f)[, -1, drop = FALSE], bb)$cor[1]))
+    if (crit < mejor) { mejor <- crit; best_b <- b }
+  }
+  d$block <- best_b[d$set]
+  attr(d, "crit") <- mejor
+  d[order(d$block, d$set), ]
+}
+d <- bloquear(d)
+
+# 5. Evaluar con las mismas funciones que antes
+attr(d, "crit")    # correlación máxima entre deck y atributos
+max_canon(d)
+d_eff(d)
+```
+
+
+```{r}
+info_total <- function(d, w = NULL) {
+  X <- model.matrix(~ ., d[vars],
+         contrasts.arg = lapply(d[vars], \(f) contr.treatment(nlevels(f))))[, -1]
+  Dif <- X[seq(1, nrow(X), 2), ] - X[seq(2, nrow(X), 2), ]
+  if (is.null(w)) w <- rep(1, nrow(Dif))
+  crossprod(Dif * sqrt(w)) / 4
+}
+
+resumen <- function(I, beta = 0.2) {
+  V  <- solve(I)
+  se <- sqrt(diag(V))
+  list(D_error = det(V)^(1 / ncol(V)),
+       tabla   = round(cbind(se, poder = pnorm(abs(beta) / se - qnorm(.975))), 3))
+}
+
+# Diseño D-eficiente con N = 1300
+n_deck <- c(217, 217, 217, 217, 216, 216)
+bloque_tarea <- d$block[seq(1, nrow(d), 2)]
+I_fijo <- info_total(d, w = n_deck[bloque_tarea])
+resumen(I_fijo)
+
+# Diseño aleatorio con N = 1300 (6500 tareas)
+I_rand <- info_total(sim_random())
+resumen(I_rand)
+```

@@ -25,6 +25,7 @@ book:
     - 07-etichs.qmd
     - 08-codebook.qmd
     - 09-appendix.qmd
+    - 10-appendix.qmd
     
   search:
     location: sidebar

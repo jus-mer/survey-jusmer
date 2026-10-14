@@ -37,7 +37,7 @@ source(file = here("processing/cjpow.R"))
 
 ```
 
-# Questionnaire design A: Distributive Conjoint Survey Experiment {#sec-conjoint}
+# Questionnaire design A: Distributive Conjoint Survey Experiment
 
 ## Overview
 

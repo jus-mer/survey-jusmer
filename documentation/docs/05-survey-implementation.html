@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Survey implementation – JUSMER Survey Methodological Manual</title>
+<title>4&nbsp; Survey implementation – JUSMER Survey Methodological Manual</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./06-database.html" rel="next">
-<link href="./04-instrument-desing.html" rel="prev">
+<link href="./03-questionnaire-desing.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-survey-implementation.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survey implementation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-survey-implementation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Survey implementation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -138,44 +138,44 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-conjoint-desing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Questionnaire design A: Distributive Conjoint Survey Experiment</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04-instrument-desing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Questionnaire design B: Items</span></span></a>
+  <a href="./03-questionnaire-desing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Questionnaire design</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-survey-implementation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survey implementation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Survey implementation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06-database.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data base</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data base</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07-etichs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Ethics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Ethics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./08-codebook.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Codebook</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Codebook</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./09-appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Appendix: D-efficient estimation</span></span></a>
   </div>
 </li>
     </ul>
@@ -183,15 +183,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#survey-programming-and-technical-aspects" id="toc-survey-programming-and-technical-aspects" class="nav-link active" data-scroll-target="#survey-programming-and-technical-aspects"><span class="header-section-number">4.1</span> Survey Programming and technical aspects</a></li>
+  <li><a href="#fieldwork" id="toc-fieldwork" class="nav-link" data-scroll-target="#fieldwork"><span class="header-section-number">4.2</span> Fieldwork</a></li>
+  <li><a href="#quality-control" id="toc-quality-control" class="nav-link" data-scroll-target="#quality-control"><span class="header-section-number">4.3</span> Quality Control</a></li>
+  <li><a href="#fieldwork-performance-indicators" id="toc-fieldwork-performance-indicators" class="nav-link" data-scroll-target="#fieldwork-performance-indicators"><span class="header-section-number">4.4</span> Fieldwork Performance Indicators</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="imp-instrument" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Survey implementation</span></span></h1>
+<h1 class="title"><span id="imp-instrument" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Survey implementation</span></span></h1>
 </div>
 
 
@@ -208,12 +217,107 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>##&nbsp;Survey Programming and Technical Integration</p>
-<p>##&nbsp;Fieldwork</p>
-<p>##&nbsp;Quality Control</p>
-<p>##&nbsp;Fieldwork Performance Indicators</p>
+<p>This section is divided in two parts: the first part describes the survey programming and technical integration, while the second part focuses on fieldwork, quality control, and fieldwork performance indicators.</p>
+<section id="survey-programming-and-technical-aspects" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="survey-programming-and-technical-aspects"><span class="header-section-number">4.1</span> Survey Programming and technical aspects</h2>
+<ul>
+<li>Survey:
+<ul>
+<li>Surveydown</li>
+<li>Conjoint:
+<ul>
+<li><p>Randomization attributes</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th style="text-align: center;">Letter</th>
+<th>Levels</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sex</td>
+<td style="text-align: center;">S</td>
+<td>1. Hombre<br>2. Mujer</td>
+</tr>
+<tr class="even">
+<td>Need</td>
+<td style="text-align: center;">N</td>
+<td>1. Dificultad<br>2. Holgura</td>
+</tr>
+<tr class="odd">
+<td>Identity</td>
+<td style="text-align: center;">I</td>
+<td>1. Chile<br>2. Venezuela<br>3. Perú</td>
+</tr>
+<tr class="even">
+<td>Control</td>
+<td style="text-align: center;">C</td>
+<td>1. Postuló a otras becas pero no obtuvo financiamiento<br>2. No alcanzó a postular a tiempo a otras becas</td>
+</tr>
+<tr class="odd">
+<td>Effort</td>
+<td style="text-align: center;">E</td>
+<td>1. Más que sus compañeros<br>2. Igual que sus compañeros<br>3. Menos que sus compañeros</td>
+</tr>
+<tr class="even">
+<td>Reciprocity</td>
+<td style="text-align: center;">R</td>
+<td>1. Ha hecho voluntariado<br>2. No ha hecho voluntariado</td>
+</tr>
+<tr class="odd">
+<td>Attitude</td>
+<td style="text-align: center;">A</td>
+<td>1. Una ayuda que agradece<br>2. Algo que se merece</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>cbc_attr_order</code>: order in which the 7 attribute rows were displayed to the respondent (fixed across all their tasks), one letter per attribute, e.g.&nbsp;<code>RAIESNC</code>.</li>
+<li><code>cbc_attr_order_levels</code>: every profile shown (practice task and tasks 1–6, applicants A and B: 14 profiles), separated by <code>|</code>. Each profile lists its attributes in display order, each letter followed by its level number, e.g.&nbsp;<code>q1_A:R2A1I3E2S1N2C2</code> (task 1, applicant A: did not volunteer, sees the scholarship as help they are grateful for, born in Peru, studies as much as classmates, man, household makes ends meet comfortably, did not apply in time to other scholarships).</li>
+</ul></li>
+<li><p>names constraint randomization</p></li>
+<li><p>intra respondent reliability</p></li>
+</ul></li>
+<li>Questionnaire:
+<ul>
+<li>Randomization</li>
+</ul></li>
+</ul></li>
+<li>Deployment:
+<ul>
+<li>Posit Cloud</li>
+<li>waiter</li>
+</ul></li>
+<li>Data:
+<ul>
+<li>Supabase</li>
+<li>Server:
+<ul>
+<li>On October 6, 2026, the server hosting the survey was switched to Supabase’s Ohio data center to improve the survey’s loading speed</li>
+</ul></li>
+<li>data connection</li>
+<li>conjoint attributes registration</li>
+</ul></li>
+</ul>
+</section>
+<section id="fieldwork" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="fieldwork"><span class="header-section-number">4.2</span> Fieldwork</h2>
+</section>
+<section id="quality-control" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="quality-control"><span class="header-section-number">4.3</span> Quality Control</h2>
+</section>
+<section id="fieldwork-performance-indicators" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="fieldwork-performance-indicators"><span class="header-section-number">4.4</span> Fieldwork Performance Indicators</h2>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -618,13 +722,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-instrument-desing.html" class="pagination-link" aria-label="Questionnaire design B: Items">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Questionnaire design B: Items</span></span>
+      <a href="./03-questionnaire-desing.html" class="pagination-link" aria-label="Questionnaire design">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Questionnaire design</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./06-database.html" class="pagination-link" aria-label="Data base">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data base</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data base</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
