@@ -1,5 +1,6 @@
 ---
-title: Análisis Encuesta Pre-piloto JUSMER
+title: Análisis de encuesta pre-piloto
+subtitle: Documento de trabajo JUSMER
 author: Tomás Urzúa - Asistente de investigación
 date: today
 lang: es
@@ -28,7 +29,25 @@ El pre-piloto de la Encuesta JUSMER se realizó en dos etapas:
 
 2) Posteriormente, se aplicó un segundo pre-piloto con las mismas preguntas la primera versión, pero la diferencia fue que se eliminaron las cajas de comentarios, ya que esta versión buscaba recabar información sobre los tiempos de respuesta de cada pregunta y batería temática. El segundo pre-piloto estuvo activo desde 15 de julio hasta el 20 de ese mismo mes. 
 
+Debido a la extensión del pre-piloto, se decidió generar 3 módulos de aproximadamente 25 preguntas cada uno, con el objetivo de asegurar que los respondentes pudieran completar la encuesta en los tiempos estimados. 
+
 Ambas versiones del pre-piloto fueron construidas con [surveydown](https://surveydown.org/), una plataforma de código abierto para la generación de encuestas, la cual se basa mayoritariamente en las lógicas de Quarto y Shinyapp. Para el despliegue de la encuesta recurrimos a dos plataformas: El primer pre-piloto se alojó en [HuggingFace](https://huggingface.co/), mientras que el segundo se alojó en [Posit Cloud](https://posit.cloud/). Esto se debió al intento de explorar plataformas que fueran más eficientes para el despliegue de la encuesta, ya que shinyapp.io presentaba problemas de lentitud y límites de almacenamiento por parte del servidor. Por último, para el almacenamiento de datos se utilizó [Supabase](https://supabase.com/), una plataforma gratuita que permite conectar las encuestas con bases de datos alojadas en la nube, las cuales se actualizan automáticamente.
+
+En la siguiente @tbl-general se pueden observar los principales módulos del cuestionario, los cuales se desagregan en la cantidad de tareas/items acompañado de una breve descripción de lo que buscan medir. Cabe mencionar que los primeros módulos se componen de items actitudinales medidos en escalas likert, mientras que desde el módulo de conjoint hasta el último módulo de la tabla se responden mediante un slider interactivo. Para mayores detalles sobre la composición de los módulos, su origen y medición atienda el [manual metodológico](https://jus-mer.github.io/survey-jusmer/documentation/docs/03-questionnaire-desing.html#attitudinal-items) de la encuesta.
+
+```{r}
+#| label: tbl-general
+#| tbl-cap: "Módulos del cuestionario JUSMER"
+
+tbl_general <- read.csv(
+  here::here("input", "tbl", "tbl-general.csv"),
+  stringsAsFactors = FALSE,
+  check.names = FALSE,
+  encoding = "UTF-8"
+)
+
+knitr::kable(tbl_general, align = "lcll")
+```
 
 # Análisis
 
@@ -613,6 +632,7 @@ tabla_completa_bateria <- function(nm) {
   tab <- merge(tiempos, desc, by.x = "pregunta", by.y = "variable", all = TRUE)
   tab <- tab[order(match(tab$pregunta, ids)), ]
   tab <- tab[, c("pregunta", "label", "n", "duracion_mediana_seg", "media", "mediana", "sd")]
+  tab$label <- gsub("*", "", tab$label, fixed = TRUE)
 
   tab |>
     datatable(
@@ -710,7 +730,7 @@ La @tbl-descriptivos-generales muestra los descriptivos generales de todas las b
 tabla_completa_bateria("Market Justice Preferences")
 ```
 
-Para la batería de Market Justice Preferences (ver @tbl-completo-mjp), se observa que la pregunta 1 es la que más tiempo demanda en responder con una mediana de 44 segundos, mientras que las preguntas 2 y 3 tienen una mediana de respuesta de 9 y 7 segundos respectivamente. Respecto a los resultados descriptivos, la pregunta asociada a pensiones es la que presenta mayor dispersión en sus respuestas con una desviación estándar de 1.36, mientras que la pregunta asociada a educación es que tiene sus respuestas más concentradas con una desviación estándar de 0.5. 
+Para la batería de Market Justice Preferences (ver @tbl-completo-mjp), se observa que la pregunta 1 es la que más tiempo demanda en responder con una mediana de 44 segundos, lo que puede deberse a la suma del tiempo de lectura del encabezado, mientras que las preguntas 2 y 3 tienen una mediana de respuesta de 9 y 7 segundos respectivamente. Respecto a los resultados descriptivos, la pregunta asociada a pensiones es la que presenta mayor dispersión en sus respuestas con una desviación estándar de 1.36, mientras que la pregunta asociada a educación es que tiene sus respuestas más concentradas con una desviación estándar de 0.5. 
 
 
 #### Market Justice Reflexive {.unnumbered}
@@ -728,7 +748,6 @@ tabla_completa_bateria("Market Justice Reflexive")
 Para la batería de Market Justice Reflexive (ver @tbl-completo-mjp-new), se observa que la pregunta ref_1, asociada a salud, es la que más tiempo demanda en responder con una mediana de 16 segundos, mientras que el resto de las preguntas tienen una mediana de entre 5 y 7 segundos. Respecto a los resultados descriptivos, la pregunta proy_2, asociada a la educación de los hijos/as, es la que presenta mayor dispersión en sus respuestas con una desviación estándar de 1.06 (la única sobre 1), mientras que la pregunta ref_1, asociada a salud, tiene sus respuestas más concentradas con una desviación estándar de 0.71. Las demás preguntas presentan una desviación estándar de 0.83.
 
 
-
 #### Market Justice en el tiempo {.unnumbered}
 
 > Fraseo 16-18: ¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
@@ -743,7 +762,7 @@ Para la batería de Market Justice Reflexive (ver @tbl-completo-mjp-new), se obs
 tabla_completa_bateria("Market Justice en el tiempo")
 ```
 
-Para la batería de Market Justice en el tiempo (ver @tbl-completo-mjp-tiempo), se observa que la pregunta pres_1, asociada a la desigualdad en salud, es la que más tiempo demanda en responder con una mediana de 20 segundos, seguida por pres_4 con 12 segundos; las demás preguntas tienen una mediana de entre 3 y 4 segundos. Respecto a los resultados descriptivos, las preguntas pres_5 (educación) y pres_6 (pensiones) presentan una desviación estándar de 1.25 y 1.07 respectivamente, superando el umbral de 1, siendo pres_5 la que presenta mayor dispersión, mientras que la pregunta pres_3, asociada a pensiones, tiene sus respuestas más concentradas con una desviación estándar de 0.38.
+Para la batería de Market Justice en el tiempo (ver @tbl-completo-mjp-tiempo), se observa que la pregunta pres_1 es la que más tiempo demanda en responder con una mediana de 20 segundos, seguida por pres_4 con 12 segundos; las demás preguntas tienen una mediana de entre 3 y 4 segundos. Respecto a los resultados descriptivos, las preguntas pres_5 (educación) y pres_6 (pensiones) presentan una desviación estándar de 1.25 y 1.07 respectivamente, superando el umbral de 1, siendo pres_5 la que presenta mayor dispersión, mientras que la pregunta pres_3, asociada a pensiones, tiene sus respuestas más concentradas con una desviación estándar de 0.38.
 
 #### Comodificación de servicios {.unnumbered}
 
