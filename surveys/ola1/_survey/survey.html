@@ -4486,7 +4486,7 @@ setInterval(function() {
 <div class="cell-output-display no-overflow-x">
 <div id="container-education" data-question-id="education" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;education_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;education_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div class="form-group shiny-input-container">
-<label class="control-label" id="education-label" for="education"><p>¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está estudiando, use el grado más alto que haya obtenido.</p>
+<label class="control-label" id="education-label" for="education"><p>¿Cuál es el nivel educativo más alto que ha alcanzado?</p>
 </label>
 <div>
 <select id="education" class="shiny-input-select"><option value>Elija una opción...</option>
@@ -5826,7 +5826,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-ref_3" data-question-id="ref_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;ref_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;ref_3_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="ref_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="ref_3-label">
-<label class="control-label" id="ref_3-label" for="ref_3"><p>Es justo que <strong>yo</strong> tenga acceso a mejor pensión si puedo pagar por ello</p>
+<label class="control-label" id="ref_3-label" for="ref_3"><p>Es justo que <strong>yo</strong> tenga acceso a mejor pensión si es que mis cotizaciones han sido mayores</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -6207,6 +6207,15 @@ setInterval(function() {
 </div>
 </div>
 <div class="cell-output-display">
+<div id="container-ranking_ancla" data-question-id="ranking_ancla" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;ranking_ancla_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;ranking_ancla_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="ranking_ancla-label" for="ranking_ancla"></label>
+<input id="ranking_ancla" type="text" class="shiny-input-text form-control" value>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<div class="cell-output-display">
 <div id="sd-nav-marker" style="display: none;"></div>
 <div data-next-page="decomodifica" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
 <button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
@@ -6231,16 +6240,16 @@ setInterval(function() {
 <div class="form-group shiny-input-container">
 <label class="control-label" id="dec_3-label" for="dec_3"><p>Imagine que usted está en un plan de Isapre que está evaluando dar acceso a un 10% de personas en su mismo plan que no pueden pagarlo. Para ello, usted debería pagar un monto adicional a su cotización. En tal situación, ¿cuánto más estaría dispuesto a pagar?</p>
 </label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;10%&quot;,&quot;20%&quot;,&quot;30%&quot;,&quot;40%&quot;,&quot;50%&quot;,&quot;60%&quot;,&quot;70%&quot;,&quot;80%&quot;,&quot;90%&quot;,&quot;100%&quot;]" data-to-fixed="false" data-to-shadow="false" id="dec_3">
+<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;5%&quot;,&quot;10%&quot;,&quot;15%&quot;,&quot;20%&quot;,&quot;25%&quot;,&quot;30%&quot;,&quot;35%&quot;,&quot;40%&quot;,&quot;45%&quot;,&quot;50%&quot;,&quot;55%&quot;,&quot;60%&quot;,&quot;65%&quot;,&quot;70%&quot;,&quot;75%&quot;,&quot;80%&quot;,&quot;85%&quot;,&quot;90%&quot;,&quot;95%&quot;,&quot;100%&quot;]" data-to-fixed="false" data-to-shadow="false" id="dec_3">
 <script>
         $(document).ready(function() {
-          $("#dec_3").attr("data-values", ["0","10","20","30","40","50","60","70","80","90","100"]);
+          $("#dec_3").attr("data-values", ["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"]);
         });
       </script>
 <script>
       $(document).ready(function() {
         var sliderId = 'dec_3';
-        var valueMap = {"0":["0"],"10%":["10"],"20%":["20"],"30%":["30"],"40%":["40"],"50%":["50"],"60%":["60"],"70%":["70"],"80%":["80"],"90%":["90"],"100%":["100"]};
+        var valueMap = {"0":["0"],"5%":["5"],"10%":["10"],"15%":["15"],"20%":["20"],"25%":["25"],"30%":["30"],"35%":["35"],"40%":["40"],"45%":["45"],"50%":["50"],"55%":["55"],"60%":["60"],"65%":["65"],"70%":["70"],"75%":["75"],"80%":["80"],"85%":["85"],"90%":["90"],"95%":["95"],"100%":["100"]};
 
         // Track value changes and map display label to internal value
         $('#' + sliderId).on('change', function(e) {
@@ -6297,16 +6306,16 @@ setInterval(function() {
 <div class="form-group shiny-input-container">
 <label class="control-label" id="dec_1-label" for="dec_1"><p>Imagine que su hijo/a asiste a un colegio privado que tiene una matrícula de 100 alumnos. ¿Cuántos alumnos cree Ud. que se deberían admitir sin pagar en este colegio?</p>
 </label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;10&quot;,&quot;20&quot;,&quot;30&quot;,&quot;40&quot;,&quot;50&quot;,&quot;60&quot;,&quot;70&quot;,&quot;80&quot;,&quot;90&quot;,&quot;100&quot;]" data-to-fixed="false" data-to-shadow="false" id="dec_1">
+<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;5&quot;,&quot;10&quot;,&quot;15&quot;,&quot;20&quot;,&quot;25&quot;,&quot;30&quot;,&quot;35&quot;,&quot;40&quot;,&quot;45&quot;,&quot;50&quot;,&quot;55&quot;,&quot;60&quot;,&quot;65&quot;,&quot;70&quot;,&quot;75&quot;,&quot;80&quot;,&quot;85&quot;,&quot;90&quot;,&quot;95&quot;,&quot;100&quot;]" data-to-fixed="false" data-to-shadow="false" id="dec_1">
 <script>
         $(document).ready(function() {
-          $("#dec_1").attr("data-values", ["0","10","20","30","40","50","60","70","80","90","100"]);
+          $("#dec_1").attr("data-values", ["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"]);
         });
       </script>
 <script>
       $(document).ready(function() {
         var sliderId = 'dec_1';
-        var valueMap = {"0":["0"],"10":["10"],"20":["20"],"30":["30"],"40":["40"],"50":["50"],"60":["60"],"70":["70"],"80":["80"],"90":["90"],"100":["100"]};
+        var valueMap = {"0":["0"],"5":["5"],"10":["10"],"15":["15"],"20":["20"],"25":["25"],"30":["30"],"35":["35"],"40":["40"],"45":["45"],"50":["50"],"55":["55"],"60":["60"],"65":["65"],"70":["70"],"75":["75"],"80":["80"],"85":["85"],"90":["90"],"95":["95"],"100":["100"]};
 
         // Track value changes and map display label to internal value
         $('#' + sliderId).on('change', function(e) {
@@ -6370,16 +6379,16 @@ setInterval(function() {
 <div class="form-group shiny-input-container">
 <label class="control-label" id="dec_2-label" for="dec_2"><p>Para que esos alumnos puedan ser admitidos en el colegio, ¿cuánto más estaría dispuesto a pagar de la mensualidad para poder apoyar a estudiantes que no pagan?</p>
 </label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;10%&quot;,&quot;20%&quot;,&quot;30%&quot;,&quot;40%&quot;,&quot;50%&quot;,&quot;60%&quot;,&quot;70%&quot;,&quot;80%&quot;,&quot;90%&quot;,&quot;100%&quot;]" data-to-fixed="false" data-to-shadow="false" id="dec_2">
+<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;0&quot;,&quot;5%&quot;,&quot;10%&quot;,&quot;15%&quot;,&quot;20%&quot;,&quot;25%&quot;,&quot;30%&quot;,&quot;35%&quot;,&quot;40%&quot;,&quot;45%&quot;,&quot;50%&quot;,&quot;55%&quot;,&quot;60%&quot;,&quot;65%&quot;,&quot;70%&quot;,&quot;75%&quot;,&quot;80%&quot;,&quot;85%&quot;,&quot;90%&quot;,&quot;95%&quot;,&quot;100%&quot;]" data-to-fixed="false" data-to-shadow="false" id="dec_2">
 <script>
         $(document).ready(function() {
-          $("#dec_2").attr("data-values", ["0","10","20","30","40","50","60","70","80","90","100"]);
+          $("#dec_2").attr("data-values", ["0","5","10","15","20","25","30","35","40","45","50","55","60","65","70","75","80","85","90","95","100"]);
         });
       </script>
 <script>
       $(document).ready(function() {
         var sliderId = 'dec_2';
-        var valueMap = {"0":["0"],"10%":["10"],"20%":["20"],"30%":["30"],"40%":["40"],"50%":["50"],"60%":["60"],"70%":["70"],"80%":["80"],"90%":["90"],"100%":["100"]};
+        var valueMap = {"0":["0"],"5%":["5"],"10%":["10"],"15%":["15"],"20%":["20"],"25%":["25"],"30%":["30"],"35%":["35"],"40%":["40"],"45%":["45"],"50%":["50"],"55%":["55"],"60%":["60"],"65%":["65"],"70%":["70"],"75%":["75"],"80%":["80"],"85%":["85"],"90%":["90"],"95%":["95"],"100%":["100"]};
 
         // Track value changes and map display label to internal value
         $('#' + sliderId).on('change', function(e) {
@@ -6603,7 +6612,7 @@ setInterval(function() {
 </div>
 <div class="cell-output-display">
 <div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="deserve-1" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
+<div data-next-page="clasicos" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
 <button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
 <button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
 <div style="clear: both;"></div>
@@ -6674,7 +6683,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-control_2" data-question-id="control_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;control_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;control_2_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="control_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="control_2-label">
-<label class="control-label" id="control_2-label" for="control_2"><p>Quienes son responsables de sus propios problemas igualmente merecen recibir beneficios sociales.</p>
+<label class="control-label" id="control_2-label" for="control_2"><p>Quienes son responsables de sus propios problemas no merecen recibir ningún beneficio social</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -6725,59 +6734,6 @@ setInterval(function() {
 </div>
 </div>
 <div class="cell-output-display">
-<div id="container-control_3" data-question-id="control_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;control_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;control_3_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="control_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="control_3-label">
-<label class="control-label" id="control_3-label" for="control_3"><p>El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos.</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="control_3" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="control_3" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="control_3" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="control_3" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="control_3" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="control_3" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="control_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
 <div id="sd-nav-marker" style="display: none;"></div>
 <div data-next-page="deserve-2" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
 <button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
@@ -6794,7 +6750,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-actitud_1" data-question-id="actitud_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;actitud_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;actitud_1_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="actitud_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="actitud_1-label">
-<label class="control-label" id="actitud_1-label" for="actitud_1"><p>Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben</p>
+<label class="control-label" id="actitud_1-label" for="actitud_1"><p>Las personas que reciben beneficios sociales deberían ser más agradecidas</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -6847,7 +6803,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-actitud_2" data-question-id="actitud_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;actitud_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;actitud_2_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="actitud_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="actitud_2-label">
-<label class="control-label" id="actitud_2-label" for="actitud_2"><p>Está bien que las personas que reciben apoyo del Estado puedan expresar su descontento con las condiciones de los beneficios.</p>
+<label class="control-label" id="actitud_2-label" for="actitud_2"><p>Las personas que reciben un subsidio económico deberían estar satisfechas y no tener ningún derecho a quejarse</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -6913,7 +6869,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-reciproc_1" data-question-id="reciproc_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;reciproc_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;reciproc_1_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="reciproc_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="reciproc_1-label">
-<label class="control-label" id="reciproc_1-label" for="reciproc_1"><p>Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos</p>
+<label class="control-label" id="reciproc_1-label" for="reciproc_1"><p>Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema (por ejemplo cotizando o pagando impuestos)</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -6966,7 +6922,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-reciproc_2" data-question-id="reciproc_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;reciproc_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;reciproc_2_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="reciproc_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="reciproc_2-label">
-<label class="control-label" id="reciproc_2-label" for="reciproc_2"><p>No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho.</p>
+<label class="control-label" id="reciproc_2-label" for="reciproc_2"><p>No es justo que las personas reciban beneficios sociales para los que no han contribuido</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7019,7 +6975,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-reciproc_3" data-question-id="reciproc_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;reciproc_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;reciproc_3_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="reciproc_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="reciproc_3-label">
-<label class="control-label" id="reciproc_3-label" for="reciproc_3"><p>Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada</p>
+<label class="control-label" id="reciproc_3-label" for="reciproc_3"><p>Las personas que han trabajado y contribuido en el pasado merecen mejores servicios sociales que las personas que han contribuido poco o nada</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7070,59 +7026,6 @@ setInterval(function() {
 </div>
 </div>
 <div class="cell-output-display">
-<div id="container-actitud_4" data-question-id="actitud_4" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;actitud_4_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;actitud_4_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="actitud_4" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="actitud_4-label">
-<label class="control-label" id="actitud_4-label" for="actitud_4"><p>El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado.</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="actitud_4" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="actitud_4" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="actitud_4" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="actitud_4" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="actitud_4" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="actitud_4" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="actitud_4" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
 <div id="sd-nav-marker" style="display: none;"></div>
 <div data-next-page="deserve-4" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
 <button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
@@ -7138,7 +7041,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-id_1" data-question-id="id_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;id_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;id_1_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="id_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="id_1-label">
-<label class="control-label" id="id_1-label" for="id_1"><p>Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países.</p>
+<label class="control-label" id="id_1-label" for="id_1"><p>Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7191,7 +7094,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-id_2" data-question-id="id_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;id_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;id_2_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="id_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="id_2-label">
-<label class="control-label" id="id_2-label" for="id_2"><p>Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos.</p>
+<label class="control-label" id="id_2-label" for="id_2"><p>Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7244,7 +7147,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-id_3" data-question-id="id_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;id_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;id_3_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="id_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="id_3-label">
-<label class="control-label" id="id_3-label" for="id_3"><p>Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado.</p>
+<label class="control-label" id="id_3-label" for="id_3"><p>Sólo quienes tienen padres chilenos tienen derecho a servicios y beneficios sociales</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7310,7 +7213,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-nec_1" data-question-id="nec_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;nec_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;nec_1_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="nec_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="nec_1-label">
-<label class="control-label" id="nec_1-label" for="nec_1"><p>Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real.</p>
+<label class="control-label" id="nec_1-label" for="nec_1"><p>Los beneficios sociales deberían solamente estar disponibles para quienes realmente viven en la pobreza</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7363,7 +7266,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-nec_2" data-question-id="nec_2" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;nec_2_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;nec_2_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="nec_2" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="nec_2-label">
-<label class="control-label" id="nec_2-label" for="nec_2"><p>Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado.</p>
+<label class="control-label" id="nec_2-label" for="nec_2"><p>Las personas que tienen suficientes recursos económicos no deberían recibir beneficios sociales</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7416,7 +7319,7 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-nec_3" data-question-id="nec_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;nec_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;nec_3_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="nec_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="nec_3-label">
-<label class="control-label" id="nec_3-label" for="nec_3"><p>Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales.</p>
+<label class="control-label" id="nec_3-label" for="nec_3"><p>Sólo personas con necesidades urgentes deberían recibir beneficios sociales</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
@@ -7586,165 +7489,6 @@ setInterval(function() {
 </div>
 </div>
 <div class="cell-output-display">
-<div id="container-esf_3" data-question-id="esf_3" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;esf_3_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;esf_3_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="esf_3" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="esf_3-label">
-<label class="control-label" id="esf_3-label" for="esf_3"><p>El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="esf_3" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_3" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_3" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_3" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_3" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_3" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_3" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-esf_4" data-question-id="esf_4" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;esf_4_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;esf_4_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="esf_4" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="esf_4-label">
-<label class="control-label" id="esf_4-label" for="esf_4"><p>Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="esf_4" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_4" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_4" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_4" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_4" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_4" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_4" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="container-esf_5" data-question-id="esf_5" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;esf_5_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;esf_5_interacted&#39;, true, {priority: &#39;event&#39;});">
-<div id="esf_5" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="esf_5-label">
-<label class="control-label" id="esf_5-label" for="esf_5"><p>No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual</p>
-</label>
-<div class="shiny-options-group">
-<div class="radio">
-<label>
-<input type="radio" name="esf_5" value="5">
-<span>Muy de acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_5" value="4">
-<span>De acuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_5" value="3">
-<span>Ni de acuerdo ni en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_5" value="2">
-<span>En desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_5" value="1">
-<span>Muy en desacuerdo</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_5" value="98">
-<span>No sé</span>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="esf_5" value="99">
-<span>Prefiero no responder</span>
-</label>
-</div>
-</div>
-</div>
-<span class="hidden-asterisk">*</span>
-</div>
-</div>
-<div class="cell-output-display">
 <div id="sd-nav-marker" style="display: none;"></div>
 <div data-next-page="deserve-7" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
 <button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
@@ -7811,19 +7555,19 @@ setInterval(function() {
 <div class="cell-output-display">
 <div id="container-adc_5" data-question-id="adc_5" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;adc_5_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;adc_5_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="adc_5" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="adc_5-label">
-<label class="control-label" id="adc_5-label" for="adc_5"><p>Que mi situación financiera empeore los próximos años.</p>
+<label class="control-label" id="adc_5-label" for="adc_5"><p>Que mi situación financiera empeore los próximos años</p>
 </label>
 <div class="shiny-options-group">
 <div class="radio">
 <label>
 <input type="radio" name="adc_5" value="5">
-<span>A menudo</span>
+<span>Siempre</span>
 </label>
 </div>
 <div class="radio">
 <label>
 <input type="radio" name="adc_5" value="4">
-<span>Regularmente</span>
+<span>Casi siempre</span>
 </label>
 </div>
 <div class="radio">
@@ -7835,7 +7579,7 @@ setInterval(function() {
 <div class="radio">
 <label>
 <input type="radio" name="adc_5" value="2">
-<span>Raramente</span>
+<span>Casi nunca</span>
 </label>
 </div>
 <div class="radio">
@@ -7870,13 +7614,13 @@ setInterval(function() {
 <div class="radio">
 <label>
 <input type="radio" name="adc_6" value="5">
-<span>A menudo</span>
+<span>Siempre</span>
 </label>
 </div>
 <div class="radio">
 <label>
 <input type="radio" name="adc_6" value="4">
-<span>Regularmente</span>
+<span>Casi siempre</span>
 </label>
 </div>
 <div class="radio">
@@ -7888,7 +7632,7 @@ setInterval(function() {
 <div class="radio">
 <label>
 <input type="radio" name="adc_6" value="2">
-<span>Raramente</span>
+<span>Casi nunca</span>
 </label>
 </div>
 <div class="radio">
@@ -7923,13 +7667,13 @@ setInterval(function() {
 <div class="radio">
 <label>
 <input type="radio" name="adc_7" value="5">
-<span>A menudo</span>
+<span>Siempre</span>
 </label>
 </div>
 <div class="radio">
 <label>
 <input type="radio" name="adc_7" value="4">
-<span>Regularmente</span>
+<span>Casi siempre</span>
 </label>
 </div>
 <div class="radio">
@@ -7941,7 +7685,7 @@ setInterval(function() {
 <div class="radio">
 <label>
 <input type="radio" name="adc_7" value="2">
-<span>Raramente</span>
+<span>Casi nunca</span>
 </label>
 </div>
 <div class="radio">
@@ -7969,7 +7713,7 @@ setInterval(function() {
 </div>
 <div class="cell-output-display">
 <div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="clasicos" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
+<div data-next-page="decomodifica" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
 <button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
 <button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
 <div style="clear: both;"></div>
@@ -8433,7 +8177,7 @@ setInterval(function() {
 </div>
 </div>
 <div id="id-final" class="sd_page">
-<p>Para finalizar, se presentan algunas preguntas sociodemográficas adicionales:</p>
+<p>Para finalizar, se presentan algunas preguntas de caracterización adicionales:</p>
 <div style="width:500px; margin: 0 auto;">
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
@@ -8458,23 +8202,47 @@ setInterval(function() {
 <div class="cell-output-display no-overflow-x">
 <div id="container-income" data-question-id="income" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;income_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;income_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div class="form-group shiny-input-container">
-<label class="control-label" id="income-label" for="income"><p>¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?</p>
+<label class="control-label" id="income-label" for="income"><p>¿Cuál es su ingreso mensual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?</p>
 </label>
 <div>
 <select id="income" class="shiny-input-select"><option value>Elija una opción...</option>
-<option value="10">$3.100.000 o más mensuales</option>
-<option value="9">De $2.100.000 a $3.099.999 mensuales</option>
-<option value="8">De $1.600.000 a $2.099.999 mensuales</option>
-<option value="7">De $1.300.000 a $1.599.999 mensuales</option>
-<option value="6">De $1.050.000 a $1.299.999 mensuales</option>
-<option value="5">De $850.000 a $1.049.999 mensuales</option>
-<option value="4">De $680.000 a $849.999 mensuales</option>
-<option value="3">De $520.000 a $679.999 mensuales</option>
-<option value="2">De $345.000 a $519.999 mensuales</option>
 <option value="1">Hasta $344.999 mensuales</option>
+<option value="2">De $345.000 a $519.999 mensuales</option>
+<option value="3">De $520.000 a $679.999 mensuales</option>
+<option value="4">De $680.000 a $849.999 mensuales</option>
+<option value="5">De $850.000 a $1.049.999 mensuales</option>
+<option value="6">De $1.050.000 a $1.299.999 mensuales</option>
+<option value="7">De $1.300.000 a $1.599.999 mensuales</option>
+<option value="8">De $1.600.000 a $2.099.999 mensuales</option>
+<option value="9">De $2.100.000 a $3.099.999 mensuales</option>
+<option value="10">$3.100.000 o más mensuales</option>
 <option value="98">No sé</option>
 <option value="99">Prefiero no responder</option></select>
 <script type="application/json" data-for="income">{"plugins":["selectize-plugin-a11y"]}</script>
+</div>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<div class="cell-output-display no-overflow-x">
+<div id="container-household_size" data-question-id="household_size" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;household_size_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;household_size_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="household_size-label" for="household_size"><p>Incluyéndose a usted, ¿cuántas personas viven habitualmente en su hogar?</p>
+</label>
+<div>
+<select id="household_size" class="shiny-input-select"><option value>Elija una opción...</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10 o más</option>
+<option value="99">Prefiero no responder</option></select>
+<script type="application/json" data-for="household_size">{"plugins":["selectize-plugin-a11y"]}</script>
 </div>
 </div>
 <span class="hidden-asterisk">*</span>
@@ -8545,16 +8313,16 @@ setInterval(function() {
 <div class="form-group shiny-input-container">
 <label class="control-label" id="posicion_politica-label" for="posicion_politica"><p>Cambiando de tema, tradicionalmente en nuestro país la gente define las posiciones políticas como más cercanas a la izquierda, al centro o a la derecha. Usando una escala de 0 a 10, donde 0 es ser de ‘izquierda’, 5 es ser de ‘centro’ y 10 es ser de ‘derecha’, ¿Dónde se ubicaría usted en esta escala?</p>
 </label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Izquierda&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;Centro&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;Derecha&quot;]" data-to-fixed="false" data-to-shadow="false" id="posicion_politica">
+<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Izquierda&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;Centro&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;Derecha&quot;,&quot;Independiente&quot;,&quot;Ninguno&quot;]" data-to-fixed="false" data-to-shadow="false" id="posicion_politica">
 <script>
         $(document).ready(function() {
-          $("#posicion_politica").attr("data-values", ["0","1","2","3","4","5","6","7","8","9","10"]);
+          $("#posicion_politica").attr("data-values", ["0","1","2","3","4","5","6","7","8","9","10","11","12"]);
         });
       </script>
 <script>
       $(document).ready(function() {
         var sliderId = 'posicion_politica';
-        var valueMap = {"Izquierda":["0"],"1":["1"],"2":["2"],"3":["3"],"4":["4"],"Centro":["5"],"6":["6"],"7":["7"],"8":["8"],"9":["9"],"Derecha":["10"]};
+        var valueMap = {"Izquierda":["0"],"1":["1"],"2":["2"],"3":["3"],"4":["4"],"Centro":["5"],"6":["6"],"7":["7"],"8":["8"],"9":["9"],"Derecha":["10"],"Independiente":["11"],"Ninguno":["12"]};
 
         // Track value changes and map display label to internal value
         $('#' + sliderId).on('change', function(e) {
@@ -8647,6 +8415,30 @@ setInterval(function() {
 <span>Municipal</span>
 </label>
 </div>
+</div>
+</div>
+<span class="hidden-asterisk">*</span>
+</div>
+</div>
+<div class="cell-output-display no-overflow-x">
+<div id="container-educ_padres" data-question-id="educ_padres" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;educ_padres_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;educ_padres_interacted&#39;, true, {priority: &#39;event&#39;});">
+<div class="form-group shiny-input-container">
+<label class="control-label" id="educ_padres-label" for="educ_padres"><p>¿Cuál es el mayor nivel educacional alcanzado por alguno de sus padres?</p>
+</label>
+<div>
+<select id="educ_padres" class="shiny-input-select"><option value>Elija una opción...</option>
+<option value="0">Sin estudios</option>
+<option value="1">Educación básica incompleta</option>
+<option value="2">Educación básica completa</option>
+<option value="3">Educación media incompleta</option>
+<option value="4">Educación media completa</option>
+<option value="5">Técnica superior incompleta (instituto o CFT)</option>
+<option value="6">Técnica superior completa (instituto o CFT)</option>
+<option value="7">Universitaria incompleta</option>
+<option value="8">Universitaria completa</option>
+<option value="9">Estudios de posgrado (magíster o doctorado)</option>
+<option value="prefer_not_to_say">Prefiero no decir</option></select>
+<script type="application/json" data-for="educ_padres">{"plugins":["selectize-plugin-a11y"]}</script>
 </div>
 </div>
 <span class="hidden-asterisk">*</span>

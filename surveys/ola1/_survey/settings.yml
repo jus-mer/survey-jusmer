@@ -81,10 +81,12 @@ survey-settings:
   - merit_8
   - gender
   - income
+  - household_size
   - estatus_subjetivo
   - posicion_politica
   - salud_prov
   - educ_prov
+  - educ_padres
   shuffled: ~
   all-shuffled: no
 

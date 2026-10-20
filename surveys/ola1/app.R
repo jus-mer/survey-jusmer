@@ -252,6 +252,40 @@ ui <- tagList(
           if (anchor && anchor.value === '') $(anchor).val('visto').trigger('change');
         });
       }, 200);
+
+      // surveydown's auto-scroll (auto_scroll.js) scrolls to a question on
+      // 'focusin', and on PC browsers a radio button gets focus on mousedown:
+      // the question moved away from the pointer before mouseup, so the click
+      // missed and the answer was not checked (or a neighbouring option was).
+      // While a mouse button is held, skip that scroll; the 'click' that
+      // follows scrolls as usual. Touch input is unaffected.
+      var mouseHeld = false;
+      window.addEventListener('pointerdown', function(e) {
+        if (e.pointerType === 'mouse') mouseHeld = true;
+      }, true);
+      ['pointerup', 'pointercancel'].forEach(function(type) {
+        window.addEventListener(type, function() { mouseHeld = false; }, true);
+      });
+      // Only the window itself losing focus (e.g. alt-tab mid-click): a
+      // capturing listener also gets every element's blur, and the radio
+      // answered before loses focus on this very mousedown.
+      window.addEventListener('blur', function(e) {
+        if (e.target === window) mouseHeld = false;
+      });
+      // auto_scroll.js looks autoScrollToCurrentQuestion() up as a global on
+      // every event, so wrapping the global is enough. It may load after this
+      // script, hence the retry on 'load'.
+      function wrapAutoScroll() {
+        var original = window.autoScrollToCurrentQuestion;
+        if (typeof original !== 'function' || original.mouseSafe) return;
+        var wrapped = function(questionId) {
+          if (!mouseHeld) original(questionId);
+        };
+        wrapped.mouseSafe = true;
+        window.autoScrollToCurrentQuestion = wrapped;
+      }
+      wrapAutoScroll();
+      window.addEventListener('load', wrapAutoScroll);
     ")),
     tags$style(HTML("
       /* Flatly theme renders body text at 17px (root font-size); bump it +3px.
