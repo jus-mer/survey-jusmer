@@ -242,12 +242,15 @@ ui <- tagList(
 
       setInterval(updateSliderNextButton, 200);
 
-      // Transition page: 'transicion_ancla' is referenced in sd_skip_if(),
-      // which makes surveydown treat it as required, so fill it in
-      // automatically ('visto') as soon as the page shows up.
+      // Routing anchors ('transicion_ancla' on the transition page,
+      // 'ranking_ancla' on the ranking page) are referenced in sd_skip_if(),
+      // which makes surveydown treat them as required, so fill them in
+      // automatically ('visto') as soon as their page shows up.
       setInterval(function() {
-        var anchor = document.getElementById('transicion_ancla');
-        if (anchor && anchor.value === '') $(anchor).val('visto').trigger('change');
+        ['transicion_ancla', 'ranking_ancla'].forEach(function(id) {
+          var anchor = document.getElementById(id);
+          if (anchor && anchor.value === '') $(anchor).val('visto').trigger('change');
+        });
       }, 200);
     ")),
     tags$style(HTML("
@@ -369,8 +372,10 @@ ui <- tagList(
       /* Transition slide between the conjoint and the rest of the survey
          (page 'transicion'): centered text and 'Continuar' button on the
          usual page background. Its 'transicion_ancla' question is only a
-         hidden anchor for the form A/B routing in sd_skip_if(). */
-      .question-container[data-question-id='transicion_ancla'] {
+         hidden anchor for the form A/B routing in sd_skip_if() (same for
+         'ranking_ancla' on the ranking page). */
+      .question-container[data-question-id='transicion_ancla'],
+      .question-container[data-question-id='ranking_ancla'] {
         display: none;
       }
       .transicion-slide {
@@ -582,7 +587,7 @@ make_cbc_table <- function(df, attr_order = NULL) {
       identity    = "País de nacimiento:",
       control     = "Requiere la beca porque:",
       effort      = "Estudia:",
-      reciprocity = "Fuera de sus estudios:",
+      reciprocity = "Voluntariado:",
       attitude    = "Ve la beca como:"
     )
     ordered <- if (!is.null(attr_order)) attr_order else names(attr_labels)
@@ -765,11 +770,12 @@ server <- function(input, output, session) {
   # Asignación aleatoria a una de dos formas de la encuesta. Ambas parten
   # igual (welcome -> demographics -> conjoint -> transicion) y terminan igual
   # (id-final -> end_normal); entre medio difieren en el orden de los módulos:
-  #   A: Meritocracia -> Actitudes + Percepción -> Merecimiento
-  #   B: Merecimiento -> Actitudes + Percepción -> Meritocracia
-  # donde Meritocracia = merit-1..merit-2, Actitudes + Percepción =
-  # clasicos..lucro y Merecimiento = deserve-1..deserve-7. El ruteo está en
-  # sd_skip_if() más abajo.
+  #   A: Meritocracia -> Actitudes -> Percepción -> Merecimiento
+  #   B: Merecimiento -> Percepción -> Actitudes -> Meritocracia
+  # donde Meritocracia = merit-1..merit-2, Actitudes (hacia la desigualdad) =
+  # clasicos..ranking, Percepción (de servicios) = decomodifica..lucro y
+  # Merecimiento = deserve-1..deserve-7. El ruteo está en sd_skip_if() más
+  # abajo.
   version_encuesta <- sample(c("A", "B"), 1)
   sd_store_value(version_encuesta)
   # Si la persona retoma la encuesta (cookies), sd_store_value() conserva la
@@ -843,7 +849,8 @@ server <- function(input, output, session) {
   # esa pregunta. Siempre es TRUE (el argumento ni se evalúa), así que la
   # regla se cumple aunque la pregunta quede sin responder. Ojo: surveydown
   # vuelve obligatoria toda pregunta citada en sd_skip_if(); por eso se anclan
-  # en preguntas que ya son obligatorias (y transicion_ancla se llena sola).
+  # en preguntas que ya son obligatorias (y transicion_ancla y ranking_ancla
+  # se llenan solas).
   en_pagina <- function(pregunta) TRUE
 
   # Define any conditional skip logic here (skip to page if a condition is true)
@@ -854,17 +861,19 @@ server <- function(input, output, session) {
   # Los saltos hacia atrás quedan entonces en el page_next de sd_nav() en
   # survey.qmd, y aquí solo están los saltos hacia adelante:
   #
-  #   fin de                      | forma A               | forma B
-  #   transicion                  | merit-1    (page_next)| deserve-1  (regla)
-  #   merit-2 (Meritocracia)      | clasicos   (page_next)| id-final   (regla)
-  #   lucro (Actitudes+Percepción)| deserve-1  (page_next)| merit-1    (regla)
-  #   deserve-7 (Merecimiento)    | id-final   (regla)    | clasicos   (page_next)
+  #   fin de                      | forma A                  | forma B
+  #   transicion                  | merit-1      (page_next) | deserve-1    (regla)
+  #   merit-2 (Meritocracia)      | clasicos     (page_next) | id-final     (regla)
+  #   ranking (Actitudes)         | decomodifica (page_next) | merit-1      (regla)
+  #   lucro (Percepción)          | deserve-1    (regla)     | clasicos     (page_next)
+  #   deserve-7 (Merecimiento)    | id-final     (regla)     | decomodifica (page_next)
   sd_skip_if(
     input$consent_understand == "no" ~ "end_consent",
 
     version_encuesta == "B" & en_pagina(input$transicion_ancla) ~ "deserve-1",
     version_encuesta == "B" & en_pagina(input$merit_8)          ~ "id-final",
-    version_encuesta == "B" & en_pagina(input$lucro_3)          ~ "merit-1",
+    version_encuesta == "B" & en_pagina(input$ranking_ancla)    ~ "merit-1",
+    version_encuesta == "A" & en_pagina(input$lucro_3)          ~ "deserve-1",
     version_encuesta == "A" & en_pagina(input$adc_7)            ~ "id-final"
   )
 

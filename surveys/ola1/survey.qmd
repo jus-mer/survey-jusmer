@@ -87,10 +87,12 @@ survey-settings:
     - merit_8
     - gender
     - income
+    - household_size
     - estatus_subjetivo
     - posicion_politica
     - salud_prov
     - educ_prov
+    - educ_padres
   set-mode: database
   mode: database
 
@@ -549,7 +551,7 @@ educations <- c(
 sd_question(
   type   = 'select',
   id     = 'education',
-  label  = "¿Cuál es el nivel educativo más alto que ha completado? Si actualmente está estudiando, use el grado más alto que haya obtenido.",
+  label  = "¿Cuál es el nivel educativo más alto que ha alcanzado?",
   option = educations
 )
 ```
@@ -909,7 +911,7 @@ sd_question(
 sd_question(
   type  = 'mc',
   id    = 'ref_3',
-  label = "Es justo que **yo** tenga acceso a mejor pensión si puedo pagar por ello",
+  label = "Es justo que **yo** tenga acceso a mejor pensión si es que mis cotizaciones han sido mayores",
   option = escala_acuerdo_nsnr
 )
 
@@ -977,6 +979,14 @@ sd_question(
   )
 )
 
+# Oculta: ancla la regla de sd_skip_if() de esta página (forma B ->
+# merit-1; ver version_encuesta en app.R). Como está citada en
+# sd_skip_if(), surveydown la vuelve obligatoria: app.R la llena sola con
+# "visto" al mostrar la página.
+sd_question(type = "text", id = "ranking_ancla", label = "")
+
+# Siguiente página de la forma A; la forma B va a "merit-1" vía
+# sd_skip_if() en app.R (ver version_encuesta)
 sd_nav(page_next = "decomodifica",
   label_next = "Siguiente")
 ```
@@ -996,23 +1006,16 @@ Las siguientes preguntas presentan situaciones hipotéticas sobre el acceso a se
 ### Salud
 
 ```{r}
+# Escalas de dec_1, dec_2 y dec_3: de 0 a 100, de 5 en 5
+escala_dec <- as.character(seq(0, 100, by = 5))
+escala_dec_num <- setNames(escala_dec, escala_dec)
+escala_dec_pct <- setNames(escala_dec, c("0", paste0(escala_dec[-1], "%")))
+
 sd_question(
   type  = 'slider',
   id    = 'dec_3',
   label = "Imagine que usted está en un plan de Isapre que está evaluando dar acceso a un 10% de personas en su mismo plan que no pueden pagarlo. Para ello, usted debería pagar un monto adicional a su cotización. En tal situación, ¿cuánto más estaría dispuesto a pagar?",
-  option = c(
-    "0" = "0",
-    "10%"      = "10",
-    "20%"   = "20",
-    "30%"      = "30",
-    "40%" = "40",
-    "50%" = "50",
-    "60%" = "60",
-    "70%" = "70",
-    "80%" = "80",
-    "90%" = "90",
-    "100%" = "100"
-  ),
+  option = escala_dec_pct,
   selected = '0'
 )
 
@@ -1028,19 +1031,7 @@ sd_question(
   type = "slider",
   id = "dec_1",
   label = "Imagine que su hijo/a asiste a un colegio privado que tiene una matrícula de 100 alumnos. ¿Cuántos alumnos cree Ud. que se deberían admitir sin pagar en este colegio? ",
-  option = c(
-    "0" = "0",
-    "10" = "10",
-    "20" = "20",
-    "30" = "30",
-    "40" = "40",
-    "50" = "50",
-    "60" = "60",
-    "70" = "70",
-    "80" = "80",
-    "90" = "90",
-    "100" = "100"
-  ),
+  option = escala_dec_num,
   selected = '0'
 )
 
@@ -1057,19 +1048,7 @@ sd_question(
   type  = 'slider',
   id    = 'dec_2',
   label = "Para que esos alumnos puedan ser admitidos en el colegio, ¿cuánto más estaría dispuesto a pagar de la mensualidad para poder apoyar a estudiantes que no pagan?",
-  option = c(
-    "0" = "0",
-    "10%"      = "10",
-    "20%"   = "20",
-    "30%"      = "30",
-    "40%" = "40",
-    "50%" = "50",
-    "60%" = "60",
-    "70%" = "70",
-    "80%" = "80",
-    "90%" = "90",
-    "100%" = "100"
-  ),
+  option = escala_dec_pct,
   selected = '0'
 )
 
@@ -1133,9 +1112,9 @@ sd_question(
   )
 )
 
-# Siguiente página de la forma A; la forma B va a "merit-1" vía
+# Siguiente página de la forma B; la forma A va a "deserve-1" vía
 # sd_skip_if() en app.R (ver version_encuesta)
-sd_nav(page_next = "deserve-1",
+sd_nav(page_next = "clasicos",
   label_next = "Siguiente")
 ```
 
@@ -1159,14 +1138,7 @@ sd_question(
 sd_question(
   type  = 'mc',
   id    = 'control_2',
-  label = "Quienes son responsables de sus propios problemas igualmente merecen recibir beneficios sociales.",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'control_3',
-  label = "El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos.",
+  label = "Quienes son responsables de sus propios problemas no merecen recibir ningún beneficio social",
   option = escala_acuerdo_nsnr
 )
 
@@ -1182,14 +1154,14 @@ sd_nav(page_next = "deserve-2",
 sd_question(
   type  = 'mc',
   id    = 'actitud_1',
-  label = "Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben",
+  label = "Las personas que reciben beneficios sociales deberían ser más agradecidas",
   option = escala_acuerdo_nsnr
 )
 
 sd_question(
   type  = 'mc',
   id    = 'actitud_2',
-  label = "Está bien que las personas que reciben apoyo del Estado puedan expresar su descontento con las condiciones de los beneficios.",
+  label = "Las personas que reciben un subsidio económico deberían estar satisfechas y no tener ningún derecho a quejarse",
   option = escala_acuerdo_nsnr
 )
 
@@ -1205,28 +1177,21 @@ sd_nav(page_next = "deserve-3",
 sd_question(
   type  = 'mc',
   id    = 'reciproc_1',
-  label = "Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos",
+  label = "Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema (por ejemplo cotizando o pagando impuestos)",
   option = escala_acuerdo_nsnr
 )
 
 sd_question(
   type  = 'mc',
   id    = 'reciproc_2',
-  label = "No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho.",
+  label = "No es justo que las personas reciban beneficios sociales para los que no han contribuido",
   option = escala_acuerdo_nsnr
 )
 
 sd_question(
   type  = 'mc',
   id    = 'reciproc_3',
-  label = "Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'actitud_4',
-  label = "El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado.",
+  label = "Las personas que han trabajado y contribuido en el pasado merecen mejores servicios sociales que las personas que han contribuido poco o nada",
   option = escala_acuerdo_nsnr
 )
 
@@ -1243,21 +1208,21 @@ sd_nav(page_next = "deserve-4",
 sd_question(
   type  = 'mc',
   id    = 'id_1',
-  label = "Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países.",
+  label = "Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países",
   option = escala_acuerdo_nsnr
 )
 
 sd_question(
   type  = 'mc',
   id    = 'id_2',
-  label = "Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos.",
+  label = "Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos",
   option = escala_acuerdo_nsnr
 )
 
 sd_question(
   type  = 'mc',
   id    = 'id_3',
-  label = "Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado.",
+  label = "Sólo quienes tienen padres chilenos tienen derecho a servicios y beneficios sociales",
   option = escala_acuerdo_nsnr
 )
 
@@ -1274,21 +1239,21 @@ sd_nav(page_next = "deserve-5",
 sd_question(
   type  = 'mc',
   id    = 'nec_1',
-  label = "Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real.",
+  label = "Los beneficios sociales deberían solamente estar disponibles para quienes realmente viven en la pobreza",
   option = escala_acuerdo_nsnr
 )
 
 sd_question(
   type  = 'mc',
   id    = 'nec_2',
-  label = "Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado.",
+  label = "Las personas que tienen suficientes recursos económicos no deberían recibir beneficios sociales",
   option = escala_acuerdo_nsnr
 )
 
 sd_question(
   type  = 'mc',
   id    = 'nec_3',
-  label = "Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales.",
+  label = "Sólo personas con necesidades urgentes deberían recibir beneficios sociales",
   option = escala_acuerdo_nsnr
 )
 
@@ -1312,27 +1277,6 @@ sd_question(
   type  = 'mc',
   id    = 'esf_2',
   label = "Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'esf_3',
-  label = "El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'esf_4',
-  label = "Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo",
-  option = escala_acuerdo_nsnr
-)
-
-sd_question(
-  type  = 'mc',
-  id    = 'esf_5',
-  label = "No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual",
   option = escala_acuerdo_nsnr
 )
 
@@ -1369,12 +1313,12 @@ sd_question(
 sd_question(
   type  = 'mc',
   id    = 'adc_5',
-  label = "Que mi situación financiera empeore los próximos años.",
+  label = "Que mi situación financiera empeore los próximos años",
   option = c(
-    'A menudo' = '5',
-    'Regularmente' = '4',
+    'Siempre' = '5',
+    'Casi siempre' = '4',
     'A veces' = '3',
-    'Raramente' = '2',
+    'Casi nunca' = '2',
     'Nunca' = '1',
     'No sé' = '98',
     'Prefiero no responder' = '99'
@@ -1386,10 +1330,10 @@ sd_question(
   id    = 'adc_6',
   label = "Quedar desempleado",
   option = c(
-    'A menudo' = '5',
-    'Regularmente' = '4',
+    'Siempre' = '5',
+    'Casi siempre' = '4',
     'A veces' = '3',
-    'Raramente' = '2',
+    'Casi nunca' = '2',
     'Nunca' = '1',
     'No sé' = '98',
     'Prefiero no responder' = '99'
@@ -1401,10 +1345,10 @@ sd_question(
   id    = 'adc_7',
   label = "Que mis hijos/as y las próximas generaciones lo tendrán mucho más difícil",
   option = c(
-    'A menudo' = '5',
-    'Regularmente' = '4',
+    'Siempre' = '5',
+    'Casi siempre' = '4',
     'A veces' = '3',
-    'Raramente' = '2',
+    'Casi nunca' = '2',
     'Nunca' = '1',
     'No sé' = '98',
     'Prefiero no responder' = '99'
@@ -1413,7 +1357,7 @@ sd_question(
 
 # Siguiente página de la forma B; la forma A va a "id-final" vía
 # sd_skip_if() en app.R (ver version_encuesta)
-sd_nav(page_next = "clasicos",
+sd_nav(page_next = "decomodifica",
   label_next = "Siguiente")
 ```
 
@@ -1501,7 +1445,7 @@ sd_nav(page_next = "clasicos",
 
 --- id-final
 
-Para finalizar, se presentan algunas preguntas sociodemográficas adicionales:
+Para finalizar, se presentan algunas preguntas de caracterización adicionales:
 
 ::: {style="width:500px; margin: 0 auto;"}
 
@@ -1524,16 +1468,16 @@ sd_question(
 )
 
 incomes <- c(
-  "$3.100.000 o más mensuales"          = "10",
-  "De $2.100.000 a $3.099.999 mensuales" = "9",
-  "De $1.600.000 a $2.099.999 mensuales"        = "8",
-  "De $1.300.000 a $1.599.999 mensuales"        = "7",
-  "De $1.050.000 a $1.299.999 mensuales"      = "6",
-  "De $850.000 a $1.049.999 mensuales"    = "5",
-  "De $680.000 a $849.999 mensuales"    = "4",
-  "De $520.000 a $679.999 mensuales"    = "3",
-  "De $345.000 a $519.999 mensuales"    = "2",
   "Hasta $344.999 mensuales"          = "1",
+  "De $345.000 a $519.999 mensuales"    = "2",
+  "De $520.000 a $679.999 mensuales"    = "3",
+  "De $680.000 a $849.999 mensuales"    = "4",
+  "De $850.000 a $1.049.999 mensuales"    = "5",
+  "De $1.050.000 a $1.299.999 mensuales"      = "6",
+  "De $1.300.000 a $1.599.999 mensuales"        = "7",
+  "De $1.600.000 a $2.099.999 mensuales"        = "8",
+  "De $2.100.000 a $3.099.999 mensuales" = "9",
+  "$3.100.000 o más mensuales"          = "10",
   "No sé" = '98',
   "Prefiero no responder"        = "99"
 )
@@ -1541,9 +1485,26 @@ incomes <- c(
 sd_question(
   type   = 'select',
   id     = 'income',
-  label  = "¿Cuál es su ingreso anual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?",
+  label  = "¿Cuál es su ingreso mensual del hogar (de todas las fuentes) antes de impuestos y otras deducciones?",
   option = incomes
 )
+
+household_sizes <- as.character(1:9)
+names(household_sizes) <- household_sizes
+household_sizes <- c(
+  household_sizes,
+  "10 o más"              = "10",
+  "Prefiero no responder" = "99"
+)
+
+sd_question(
+  type   = 'select',
+  id     = 'household_size',
+  label  = "Incluyéndose a usted, ¿cuántas personas viven habitualmente en su hogar?",
+  option = household_sizes
+)
+
+
 
 sd_question(
   type   = 'slider',
@@ -1582,7 +1543,9 @@ sd_question(
     "7" = "7",
     "8" = "8",
     "9" = "9",
-    "Derecha" = "10"
+    "Derecha" = "10",
+    "Independiente" = "11",
+    "Ninguno" = "12"
   ),
   selected = '0'
 )
@@ -1608,6 +1571,14 @@ sd_question(
     "Particular subvencionado" = "subvencionado",
     "Municipal" = "municipal"
   )
+)
+
+# Mismas categorías que 'education' (vector definido en la página demographics)
+sd_question(
+  type   = 'select',
+  id     = 'educ_padres',
+  label  = "¿Cuál es el mayor nivel educacional alcanzado por alguno de sus padres?",
+  option = educations
 )
 
 ```
