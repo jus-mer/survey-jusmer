@@ -30,8 +30,20 @@ This section is divided in two parts: the first part describes the survey progra
       - `cbc_attr_order_levels`: every profile shown (practice task and tasks 1–6, applicants A and B: 14 profiles), separated by `|`. Each profile lists its attributes in display order, each letter followed by its level number, e.g. `q1_A:R2A1I3E2S1N2C2` (task 1, applicant A: did not volunteer, sees the scholarship as help they are grateful for, born in Peru, studies as much as classmates, man, household makes ends meet comfortably, did not apply in time to other scholarships).
     - names constraint randomization
     - intra respondent reliability
+    - Once the respondent finishes answering the conjoint questions, a transition screen will appear, and it will no longer be possible to return to the previous questions.
   - Questionnaire:
-    - Randomization 
+    - Randomization: there are two versions of the survey (A and B). Each respondent is randomly assigned to one of them with equal probability when the session starts, and the assigned version is stored in the variable `version_encuesta`. If a respondent resumes the survey (cookies), the version already stored is kept, so they cannot switch versions halfway through.
+      - Both versions share the same beginning (consent → general information → conjoint → transition screen) and the same ending (final sociodemographic questions); they differ only in the order of the four thematic modules in between:
+
+      | Order | Version A | Version B |
+      |:-----:|-----------|-----------|
+      | 1 | Meritocracy | Deservingness |
+      | 2 | Attitudes towards inequality | Perception of public and private services |
+      | 3 | Perception of public and private services | Attitudes towards inequality |
+      | 4 | Deservingness | Meritocracy |
+
+      - Modules and their pages in `survey.qmd`: Meritocracy = `merit-1`, `merit-2`; Attitudes towards inequality = `clasicos`, `reflex`, `prospective`, `ranking`; Perception of public and private services = `decomodifica`, `lucro`; Deservingness = `deserve-1` to `deserve-7`.
+      - The routing between modules is implemented with `sd_skip_if()` in `app.R` (forward jumps) and the `page_next` of `sd_nav()` in `survey.qmd` (backward jumps), since `sd_skip_if()` can only jump to pages that come later in `survey.qmd`.
 - Deployment:
   - Posit Cloud
   - waiter
