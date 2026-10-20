@@ -494,6 +494,17 @@ ui <- tagList(
         font-size: 12px !important;
         line-height: 12px !important;
       }
+      /* posicion_politica: ionRangeSlider hides the 'Independiente' label (11)
+         because it overlaps 'Derecha' (10) and 'Ninguno' (12). Force it
+         visible one line below the others, with room for it under the
+         slider. */
+      .question-container[data-question-id='posicion_politica'] .irs-grid-text.js-grid-text-11 {
+        visibility: visible !important;
+        transform: translateY(1.3em);
+      }
+      .question-container[data-question-id='posicion_politica'] .irs {
+        margin-bottom: 1.5em;
+      }
       /* Match conjoint table option columns with option box colors */
       .cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(2),
       .cell-output-display table.table.table-condensed > thead > tr > th:nth-child(2),
