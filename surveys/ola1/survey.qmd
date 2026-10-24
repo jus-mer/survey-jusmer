@@ -1607,10 +1607,13 @@ shiny::uiOutput("redirect_complete")
 
 # Fin de la Encuesta
 
-La encuesta ha finalizado. Puedes cerrar la ventana.
+La encuesta ha finalizado.
 
 ```{r}
-sd_close()
+# Redirect "Filterout" al panel de Nicequest con id_user como ticket (quien
+# no acepta el consentimiento; ver app.R). Sin id_user muestra "Puede cerrar
+# la ventana ahora."
+shiny::uiOutput("redirect_filterout")
 ```
 
 --- end_quotafull

@@ -8473,7 +8473,6 @@ setInterval(function() {
 <section id="fin-de-la-encuesta" class="level1">
 <h1>Fin de la Encuesta</h1>
 <p>¡La encuesta ha finalizado! ¡Gracias por su participación!</p>
-<p>Tu código de finalización es: <strong><span id="completion_code_value" class="shiny-text-output"></span></strong></p>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
 <div id="redirect_complete" class="shiny-html-output"></div>
@@ -8484,37 +8483,10 @@ setInterval(function() {
 <div id="end_consent" class="sd_page">
 <section id="fin-de-la-encuesta-1" class="level1">
 <h1>Fin de la Encuesta</h1>
-<p>La encuesta ha finalizado. Puedes cerrar la ventana.</p>
+<p>La encuesta ha finalizado.</p>
 <div class="cell">
-<div class="cell-output-display">
-<div style="margin-top: 0.5rem; margin-bottom: 0.5rem; position: relative; min-height: 40px;" class="sd-nav-container">
-<div style="width: 100%; text-align: center;">
-<button class="btn btn-default action-button sd-enter-button sd-nav-button" id="close-survey-button" onclick="Shiny.setInputValue(&#39;show_exit_modal&#39;, true, {priority: &#39;event&#39;}); Shiny.setInputValue(&#39;clear_cookies_on_exit&#39;, false, {priority: &#39;event&#39;});" style="display: inline-block;" type="button">Finalizar encuesta</button>
-</div>
-</div>
-<script>
-      Shiny.addCustomMessageHandler('closeWindow', function(message) {
-        window.close();
-        if (!window.closed) {
-          alert('Please close this tab manually to exit the survey.');
-        }
-      });
-
-      Shiny.addCustomMessageHandler('clearCookies', function(message) {
-        if (typeof surveydownCookies !== 'undefined' && surveydownCookies.clear) {
-          surveydownCookies.clear();
-        }
-      });
-
-      Shiny.addCustomMessageHandler('forceRestart', function(message) {
-        if (typeof surveydownCookies !== 'undefined' && surveydownCookies.forceRestart) {
-          surveydownCookies.forceRestart();
-        } else if (typeof surveydownCookies !== 'undefined' && surveydownCookies.clear) {
-          surveydownCookies.clear();
-        }
-        window.location.reload();
-      });
-    </script>
+<div class="cell-output-display no-overflow-x">
+<div id="redirect_filterout" class="shiny-html-output"></div>
 </div>
 </div>
 </section>

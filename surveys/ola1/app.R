@@ -906,6 +906,7 @@ server <- function(input, output, session) {
     #   - "Complete" (tp=co_0): al llegar a la página final (end_normal)
     #   - "Quotafull" (tp=qf_1): al ser filtrado por cuota (end_quotafull;
     #     ver cuotas_activas más arriba)
+    #   - "Filterout" (tp=fo_0): al no aceptar el consentimiento (end_consent)
     # Sin id_user (p. ej. pruebas locales) no se redirige. Se muestran en
     # survey.qmd con uiOutput() y no con sd_output(): este último restaura su
     # contenido desde localStorage, lo que podría reejecutar un redirect con
@@ -928,6 +929,7 @@ server <- function(input, output, session) {
     }
     redirect_panel("redirect_complete", "co_0")
     redirect_panel("redirect_quotafull", "qf_1")
+    redirect_panel("redirect_filterout", "fo_0")
   })
 
   # Sample a random respondentID and store it in your data
@@ -992,13 +994,13 @@ server <- function(input, output, session) {
 
   # Orden aleatorio de las 5 filas de ranking_politicas (áreas de inversión),
   # para poder diagnosticar efectos de orden igual que con cbc_attr_order. Se
-  # guarda como un código de 5 letras en el orden mostrado (Educación, Salud,
-  # Pensiones, salas Cunas, caRreteras), p. ej. "SRECP" = Salud primero y
-  # Pensiones al final. Si la persona retoma la encuesta (cookies), se usa el
-  # orden ya guardado, igual que con version_encuesta. El orden se aplica en el
-  # navegador (ver applyRankingOrder() en la UI).
-  ranking_code <- c(educacion = "E", salud = "S", pensiones = "P",
-                    cuidado_ninos = "C", carreteras = "R")
+  # guarda como un código de 5 letras en el orden mostrado (Educación, Health
+  # = salud, Pensiones, Salas cunas, Carreteras), p. ej. "HCESP" = Salud
+  # primero y Pensiones al final. Si la persona retoma la encuesta (cookies),
+  # se usa el orden ya guardado, igual que con version_encuesta. El orden se
+  # aplica en el navegador (ver applyRankingOrder() en la UI).
+  ranking_code <- c(educacion = "E", salud = "H", pensiones = "P",
+                    cuidado_ninos = "S", carreteras = "C")
   ranking_order <- sample(names(ranking_code))
   sd_store_value(paste(ranking_code[ranking_order], collapse = ""), "ranking_order")
   ranking_guardado <- session$userData$deferred_values$ranking_order
