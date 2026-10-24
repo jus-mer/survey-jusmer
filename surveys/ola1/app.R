@@ -41,6 +41,41 @@ design <- read_csv("data/choice_questions.csv")
 ignore_db <- tolower(Sys.getenv("SD_IGNORE_DB", "false")) %in% c("1", "true", "yes")
 db <- sd_db_connect(ignore = ignore_db, gssencmode = "disable")
 
+# Cuotas (redirect "Quotafull" de Nicequest) -----------------------------------
+#
+# DESACTIVADO. Para activarlo: definir las cuotas en `cuotas` y poner
+# cuotas_activas <- TRUE.
+#
+# Cada cuota es una celda con:
+#   - nombre:    etiqueta de la celda (solo para leer el código)
+#   - meta:      número de respuestas completas esperadas en esa celda
+#   - condicion: función que recibe un data frame con las respuestas (columnas
+#                sexo, year_of_birth, education, como se guardan en la base) y
+#                devuelve TRUE/FALSE por fila: si la fila cae en la celda.
+#                Debe funcionar con varias filas (se usa para contar las
+#                completas de la base) y con una (la persona que responde).
+#
+# Al pasar la página demographics, si la persona cae en una celda que ya llegó
+# a su meta, se la envía a la página end_quotafull, que la redirige al panel
+# con el link Quotafull (ticket = id_user). Las completas se cuentan en la
+# base: filas que llegaron a la página final (time_p_end_normal no vacío).
+# Mientras cuotas_activas sea FALSE no se consulta la base ni se filtra a
+# nadie.
+cuotas_activas <- FALSE
+cuotas <- list(
+  # Ejemplo (reemplazar por las cuotas reales). Códigos en la base:
+  # sexo "0" = Masculino, "1" = Femenino, "99" = Otro; year_of_birth es el
+  # año como texto ("prefer_not_say" si no responde).
+  # list(
+  #   nombre    = "mujeres_18_34",
+  #   meta      = 150,
+  #   condicion = function(r) {
+  #     anio <- suppressWarnings(as.integer(r$year_of_birth))
+  #     r$sexo == "1" & !is.na(anio) & anio >= 1992 & anio <= 2008
+  #   }
+  # )
+)
+
 # UI setup --------------------------------------------------------------------
 
 # surveydown's Lua filter always embeds the full Font Awesome library (CSS
@@ -78,6 +113,17 @@ ui <- tagList(
   sd_ui_no_font_awesome(),
   tags$head(
     tags$script(HTML("
+      // Pruebas locales: borrar las cookies de surveydown al cargar la página,
+      // para que cada recarga parta una sesión nueva en vez de retomar la
+      // anterior (use-cookies: true). Corre antes de que cookies.js las lea
+      // (en document ready / shiny:connected). Solo en localhost, así que la
+      // versión publicada sigue retomando la sesión normalmente.
+      if (['localhost', '127.0.0.1', '[::1]'].indexOf(location.hostname) !== -1) {
+        ['surveydown_session', 'surveydown_answers'].forEach(function(name) {
+          document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict';
+        });
+      }
+
       function parsePctValue(x) {
         if (x === null || x === undefined) return null;
         var n = parseInt(String(x).replace('%', '').trim(), 10);
@@ -170,28 +216,33 @@ ui <- tagList(
       // 'Siguiente' stays disabled until the respondent touches every visible
       // one (a click on the handle counts, so the initial value can be kept)
       // or checks its 'Prefiero no responder'. Checking it greys out the
-      // slider; touching the slider unchecks it.
+      // slider; touching the slider unchecks it. A slider can have several
+      // such boxes (posicion_politica: Independiente / Ninguno / Prefiero no
+      // responder); they are mutually exclusive and any of them counts.
       window.sliderTouched = window.sliderTouched || {};
 
       function sliderNrBox(id) {
         return document.querySelector('input[name=\"' + id + '_nr\"]');
       }
 
+      function sliderNrChecked(id) {
+        return !!document.querySelector('input[name=\"' + id + '_nr\"]:checked');
+      }
+
       function sliderIsAnswered(id) {
-        var nr = sliderNrBox(id);
         // A non-empty _hist means the slider was moved before (restored when
         // going back or resuming the survey)
         var hist = document.getElementById(id + '_hist');
-        return !!window.sliderTouched[id] || (nr && nr.checked) ||
+        return !!window.sliderTouched[id] || sliderNrChecked(id) ||
           (hist && hist.value !== '');
       }
 
       function sliderTouch(id) {
         window.sliderTouched[id] = true;
-        var nr = sliderNrBox(id);
-        if (nr && nr.checked) {
-          nr.checked = false;
-          $(nr).trigger('change');
+        var checked = document.querySelectorAll('input[name=\"' + id + '_nr\"]:checked');
+        if (checked.length) {
+          checked.forEach(function(box) { box.checked = false; });
+          $(checked[0]).trigger('change');
         }
         updateSliderNextButton();
       }
@@ -216,6 +267,15 @@ ui <- tagList(
         if (id && e.keyCode >= 37 && e.keyCode <= 40) sliderTouch(id);
       }, true);
       $(document).on('change', 'input[type=\"checkbox\"][name$=\"_nr\"]', function() {
+        // Mutually exclusive boxes: checking one unchecks the others (then
+        // re-trigger so Shiny stores only the one left)
+        if (this.checked) {
+          var self = this, changed = false;
+          document.querySelectorAll('input[name=\"' + this.name + '\"]:checked').forEach(function(box) {
+            if (box !== self) { box.checked = false; changed = true; }
+          });
+          if (changed) $(this).trigger('change');
+        }
         updateSliderNextButton();
       });
 
@@ -226,9 +286,8 @@ ui <- tagList(
         var allAnswered = true;
         sliders.forEach(function(s) {
           var answered = sliderIsAnswered(s.id);
-          var nr = sliderNrBox(s.id);
           var container = document.getElementById('container-' + s.id);
-          if (container) container.classList.toggle('slider-nr-active', !!(nr && nr.checked));
+          if (container) container.classList.toggle('slider-nr-active', sliderNrChecked(s.id));
           var hint = document.getElementById(s.id + '_hint');
           if (hint) hint.style.display = answered ? 'none' : '';
           // Hidden sliders (dec_2 while it does not apply) don't block
@@ -286,6 +345,57 @@ ui <- tagList(
       }
       wrapAutoScroll();
       window.addEventListener('load', wrapAutoScroll);
+
+      // ranking_politicas: its 5 rows are shown in a random order per
+      // respondent, drawn (and stored as 'ranking_order') in the server, which
+      // sends it here via setRankingOrder(). The rows are moved in the DOM as
+      // soon as the ranking page is inserted, before it is painted, so the
+      // original order never flashes. Answers are per-row inputs
+      // (ranking_politicas_<row>), so moving the rows does not affect them.
+      window.rankingOrder = null;
+      function applyRankingOrder() {
+        var order = window.rankingOrder;
+        if (!order) return;
+        var first = document.getElementById('container-ranking_politicas_' + order[0]);
+        var tbody = first && first.closest('tbody');
+        if (!tbody || tbody.dataset.rankingOrder === order.join(',')) return;
+        order.forEach(function(row) {
+          var c = document.getElementById('container-ranking_politicas_' + row);
+          if (c) tbody.appendChild(c.closest('tr'));
+        });
+        tbody.dataset.rankingOrder = order.join(',');
+      }
+      // Sliders: keep the large current-value label (CSS 'slider-tip') shown
+      // while the slider is being dragged, even if the pointer leaves it,
+      // and briefly after release so touch users (no hover) can read it.
+      // Capture phase: ion.rangeSlider stops mousedown propagation.
+      var sliderTipTimer = null;
+      window.addEventListener('pointerdown', function(e) {
+        var irs = e.target.closest && e.target.closest('.irs');
+        if (!irs) return;
+        clearTimeout(sliderTipTimer);
+        document.querySelectorAll('.irs.slider-tip').forEach(function(el) {
+          if (el !== irs) el.classList.remove('slider-tip');
+        });
+        irs.classList.add('slider-tip');
+      }, true);
+      ['pointerup', 'pointercancel'].forEach(function(type) {
+        window.addEventListener(type, function() {
+          clearTimeout(sliderTipTimer);
+          sliderTipTimer = setTimeout(function() {
+            document.querySelectorAll('.irs.slider-tip').forEach(function(el) {
+              el.classList.remove('slider-tip');
+            });
+          }, 1200);
+        }, true);
+      });
+
+      window.setRankingOrder = function(order) {
+        window.rankingOrder = order;
+        applyRankingOrder();
+      };
+      new MutationObserver(applyRankingOrder)
+        .observe(document.documentElement, {childList: true, subtree: true});
     ")),
     tags$style(HTML("
       /* Flatly theme renders body text at 17px (root font-size); bump it +3px.
@@ -392,6 +502,32 @@ ui <- tagList(
       .irs-single, .irs-min, .irs-max {
         display: none !important;
       }
+      /* ...except the current value of the non-conjoint sliders, shown large
+         above the handle while the slider is hovered or being dragged
+         ('slider-tip', see the pointer listeners in the script above) so the
+         respondent sees exactly what they are marking. The conjoint sliders
+         already show the amounts in the Postulante A/B boxes. */
+      .question-container:not([data-question-id^='cbc_']) .irs:hover .irs-single,
+      .question-container:not([data-question-id^='cbc_']) .irs.slider-tip .irs-single {
+        display: block !important;
+        /* positioned against ion's inner 8px .irs, which sits 17px above the
+           handle: bottom 0 leaves the label 9px above the handle */
+        top: auto !important;
+        bottom: 0;
+        padding: 4px 12px !important;
+        font-size: 20px !important;
+        font-weight: 700;
+        line-height: 1.3 !important;
+        white-space: nowrap;
+        color: #ffffff !important;
+        background: #333e48 !important;
+        border-radius: 6px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        z-index: 20;
+      }
+      .question-container:not([data-question-id^='cbc_']) .irs .irs-single:before {
+        border-top-color: #333e48 !important;
+      }
       /* dec_2 (and its 'Prefiero no responder' box) hidden until dec_1 is
          answered with a value other than 0 */
       .question-container[data-question-id='dec_2'],
@@ -462,6 +598,13 @@ ui <- tagList(
       .slider-nr .shiny-options-group {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
+        column-gap: 28px;
+      }
+      /* Several boxes in a row (posicion_politica): undo Bootstrap's negative
+         top margin for stacked checkboxes so they line up */
+      .slider-nr .checkbox + .checkbox {
+        margin-top: 10px;
       }
       .slider-nr .checkbox label {
         font-size: 17px;
@@ -493,17 +636,6 @@ ui <- tagList(
       .question-container[data-question-id='dec_3'] .irs-grid-text {
         font-size: 12px !important;
         line-height: 12px !important;
-      }
-      /* posicion_politica: ionRangeSlider hides the 'Independiente' label (11)
-         because it overlaps 'Derecha' (10) and 'Ninguno' (12). Force it
-         visible one line below the others, with room for it under the
-         slider. */
-      .question-container[data-question-id='posicion_politica'] .irs-grid-text.js-grid-text-11 {
-        visibility: visible !important;
-        transform: translateY(1.3em);
-      }
-      .question-container[data-question-id='posicion_politica'] .irs {
-        margin-bottom: 1.5em;
       }
       /* Match conjoint table option columns with option box colors */
       .cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(2),
@@ -768,6 +900,34 @@ server <- function(input, output, session) {
     pars <- sd_get_url_pars("id_user")
     id_user <- if (is.null(pars$id_user)) "" else pars$id_user
     sd_store_value(id_user, "id_user")
+
+    # Redirects de Nicequest (empresa de terreno), con id_user como ticket
+    # para que el panel asigne la recompensa:
+    #   - "Complete" (tp=co_0): al llegar a la página final (end_normal)
+    #   - "Quotafull" (tp=qf_1): al ser filtrado por cuota (end_quotafull;
+    #     ver cuotas_activas más arriba)
+    # Sin id_user (p. ej. pruebas locales) no se redirige. Se muestran en
+    # survey.qmd con uiOutput() y no con sd_output(): este último restaura su
+    # contenido desde localStorage, lo que podría reejecutar un redirect con
+    # el ticket de otra persona que usó el mismo navegador.
+    redirect_panel <- function(id, tp) {
+      if (nzchar(id_user)) {
+        sd_redirect(
+          id     = id,
+          url    = paste0(
+            "https://transit.nicequest.com/transit/participation?tp=", tp,
+            "&c=ok&ticket=", utils::URLencode(id_user, reserved = TRUE)
+          ),
+          button = FALSE,
+          label  = "",
+          delay  = 3
+        )
+      } else {
+        output[[id]] <- renderUI(p("Puede cerrar la ventana ahora."))
+      }
+    }
+    redirect_panel("redirect_complete", "co_0")
+    redirect_panel("redirect_quotafull", "qf_1")
   })
 
   # Sample a random respondentID and store it in your data
@@ -829,6 +989,24 @@ server <- function(input, output, session) {
   # y saltarse o repetir módulos.
   version_guardada <- session$userData$deferred_values$version_encuesta
   if (!is.null(version_guardada)) version_encuesta <- version_guardada
+
+  # Orden aleatorio de las 5 filas de ranking_politicas (áreas de inversión),
+  # para poder diagnosticar efectos de orden igual que con cbc_attr_order. Se
+  # guarda como un código de 5 letras en el orden mostrado (Educación, Salud,
+  # Pensiones, salas Cunas, caRreteras), p. ej. "SRECP" = Salud primero y
+  # Pensiones al final. Si la persona retoma la encuesta (cookies), se usa el
+  # orden ya guardado, igual que con version_encuesta. El orden se aplica en el
+  # navegador (ver applyRankingOrder() en la UI).
+  ranking_code <- c(educacion = "E", salud = "S", pensiones = "P",
+                    cuidado_ninos = "C", carreteras = "R")
+  ranking_order <- sample(names(ranking_code))
+  sd_store_value(paste(ranking_code[ranking_order], collapse = ""), "ranking_order")
+  ranking_guardado <- session$userData$deferred_values$ranking_order
+  if (!is.null(ranking_guardado)) {
+    guardado <- names(ranking_code)[match(strsplit(ranking_guardado, "")[[1]], ranking_code)]
+    if (length(guardado) == 5 && !anyNA(guardado)) ranking_order <- guardado
+  }
+  runjs(sprintf("window.setRankingOrder(%s);", jsonlite::toJSON(ranking_order)))
 
   # Practice task: rendered here (not in survey.qmd) because its profiles are
   # drawn per respondent (see above).
@@ -898,6 +1076,35 @@ server <- function(input, output, session) {
   # se llenan solas).
   en_pagina <- function(pregunta) TRUE
 
+  # Cuotas (ver cuotas_activas más arriba): TRUE si la persona cae en una
+  # celda que ya tiene `meta` respuestas completas en la base. Se evalúa al
+  # pasar la página demographics (regla en sd_skip_if() abajo). Sin cuotas
+  # activas devuelve FALSE sin consultar la base.
+  cuota_llena <- reactive({
+    if (!cuotas_activas || length(cuotas) == 0) return(FALSE)
+    valor <- function(x) if (is.null(x) || length(x) == 0) NA_character_ else as.character(x)
+    persona <- data.frame(
+      sexo          = valor(input$sexo),
+      year_of_birth = valor(input$year_of_birth),
+      education     = valor(input$education),
+      stringsAsFactors = FALSE
+    )
+    celdas <- Filter(function(cu) isTRUE(cu$condicion(persona)), cuotas)
+    if (length(celdas) == 0) return(FALSE)
+    # Sin base de datos (pruebas locales con SD_IGNORE_DB=true) surveydown
+    # guarda en preview_data.csv, así que se cuenta desde ahí
+    datos <- if (!is.null(db)) {
+      isolate(sd_get_data(db))
+    } else if (file.exists("preview_data.csv")) {
+      utils::read.csv("preview_data.csv", colClasses = "character")
+    }
+    if (is.null(datos) || nrow(datos) == 0 || !"time_p_end_normal" %in% names(datos)) return(FALSE)
+    completas <- datos[!is.na(datos$time_p_end_normal) & nzchar(datos$time_p_end_normal), , drop = FALSE]
+    any(vapply(celdas, function(cu) {
+      sum(cu$condicion(completas), na.rm = TRUE) >= cu$meta
+    }, logical(1)))
+  })
+
   # Define any conditional skip logic here (skip to page if a condition is true)
   #
   # Ruteo de las dos formas (ver version_encuesta más arriba). Ojo:
@@ -914,6 +1121,9 @@ server <- function(input, output, session) {
   #   deserve-7 (Merecimiento)    | id-final     (regla)     | decomodifica (page_next)
   sd_skip_if(
     input$consent_understand == "no" ~ "end_consent",
+
+    # Cuotas: al pasar demographics, a end_quotafull si su celda está llena
+    cuota_llena() & en_pagina(input$education) ~ "end_quotafull",
 
     version_encuesta == "B" & en_pagina(input$transicion_ancla) ~ "deserve-1",
     version_encuesta == "B" & en_pagina(input$merit_8)          ~ "id-final",

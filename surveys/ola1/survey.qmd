@@ -11,7 +11,7 @@ survey-settings:
   auto-scroll: true
   rate-survey: false
   system-language: es
-  highlight-unanswered: true
+  highlight-unanswered: false
   highlight-color: orange
   capture-metadata: true
   all-required: false
@@ -1125,6 +1125,8 @@ sd_nav(page_next = "clasicos",
 # Módulo Merecimiento
 </center>
 
+Las preguntas que vienen a continuación se relacionan con beneficios sociales y apoyos otorgados por el estado (tales como el subsidio familiar, pensión garantizada universal, subsidio a la vivienda). Al respecto, ¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
+
 ¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
 
 ```{r}
@@ -1142,15 +1144,7 @@ sd_question(
   option = escala_acuerdo_nsnr
 )
 
-sd_nav(page_next = "deserve-2",
-  label_next = "Siguiente")
-```
 
---- deserve-2
-
-¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?
-
-```{r}
 sd_question(
   type  = 'mc',
   id    = 'actitud_1',
@@ -1543,14 +1537,18 @@ sd_question(
     "7" = "7",
     "8" = "8",
     "9" = "9",
-    "Derecha" = "10",
-    "Independiente" = "11",
-    "Ninguno" = "12"
+    "Derecha" = "10"
   ),
-  selected = '0'
+  selected = '5'
 )
 
-slider_nr("posicion_politica")
+# Independiente (11) y Ninguno (12) van junto a "Prefiero no responder" bajo
+# el slider (se guardan en posicion_politica_nr)
+slider_nr("posicion_politica", option = c(
+  "Independiente"         = "11",
+  "Ninguno"               = "12",
+  "Prefiero no responder" = "99"
+))
 
 sd_question(
   type   = 'mc',
@@ -1558,7 +1556,8 @@ sd_question(
   label  = "¿Qué plan de salud tiene?",
   option = c(
     "FONASA" = "fonasa",
-    "ISAPRE" = "isapre"
+    "ISAPRE" = "isapre",
+    "Prefiero no responder" = "99"
   )
 )
 
@@ -1569,7 +1568,8 @@ sd_question(
   option = c(
     "Particular privado" = "privado",
     "Particular subvencionado" = "subvencionado",
-    "Municipal" = "municipal"
+    "Municipal/Público" = "municipal",
+    "Prefiero no responder" = "99"
   )
 )
 
@@ -1596,12 +1596,11 @@ sd_nav(page_next = "end_normal",
 
 ¡La encuesta ha finalizado! ¡Gracias por su participación!
 
-Tu código de finalización es: **`r sd_output('completion_code', type = 'value')`**
-
-Puede cerrar la ventana ahora.
 
 ```{r}
-sd_close()
+# Redirect "Complete" al panel de Nicequest con id_user como ticket (ver
+# app.R). Sin id_user muestra "Puede cerrar la ventana ahora."
+shiny::uiOutput("redirect_complete")
 ```
 
 --- end_consent
@@ -1612,4 +1611,17 @@ La encuesta ha finalizado. Puedes cerrar la ventana.
 
 ```{r}
 sd_close()
+```
+
+--- end_quotafull
+
+# Fin de la Encuesta
+
+Muchas gracias por su interés en participar. En este momento ya contamos con todas las respuestas que necesitábamos de personas con su perfil.
+
+```{r}
+# Redirect "Quotafull" al panel de Nicequest con id_user como ticket. Solo se
+# llega aquí con las cuotas activas (ver cuotas_activas en app.R). Sin
+# id_user muestra "Puede cerrar la ventana ahora."
+shiny::uiOutput("redirect_quotafull")
 ```

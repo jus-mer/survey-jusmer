@@ -17,7 +17,7 @@ survey-settings:
   all-required: no
   start-page: ~
   system-language: es
-  highlight-unanswered: yes
+  highlight-unanswered: no
   highlight-color: orange
   capture-metadata: yes
   required:

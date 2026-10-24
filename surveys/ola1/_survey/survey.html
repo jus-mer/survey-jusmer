@@ -6625,6 +6625,7 @@ setInterval(function() {
 <section id="módulo-merecimiento" class="level1">
 <h1>Módulo Merecimiento</h1>
 </section></center>
+<p>Las preguntas que vienen a continuación se relacionan con beneficios sociales y apoyos otorgados por el estado (tales como el subsidio familiar, pensión garantizada universal, subsidio a la vivienda). Al respecto, ¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?</p>
 <p>¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -6733,20 +6734,6 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<div class="cell-output-display">
-<div id="sd-nav-marker" style="display: none;"></div>
-<div data-next-page="deserve-2" style="margin-top: 1rem; margin-bottom: 0.5rem;" class="sd-nav-container">
-<button class="btn btn-default action-button sd-nav-button sd-nav-prev" id="page_id_prev" onclick="Shiny.setInputValue(&#39;prev_page&#39;, true, {priority: &#39;event&#39;});" style="float: left;" type="button">← Anterior</button>
-<button class="btn btn-default action-button sd-enter-button sd-nav-button sd-nav-next" id="page_id_next" onclick="Shiny.setInputValue(&#39;next_page&#39;, this.parentElement.getAttribute(&#39;data-next-page&#39;));" style="float: right;" type="button">Siguiente</button>
-<div style="clear: both;"></div>
-</div>
-</div>
-</div>
-
-</div>
-<div id="deserve-2" class="sd_page">
-<p>¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?</p>
-<div class="cell">
 <div class="cell-output-display">
 <div id="container-actitud_1" data-question-id="actitud_1" class="question-container" style="width: 100%;" oninput="Shiny.setInputValue(&#39;actitud_1_interacted&#39;, true, {priority: &#39;event&#39;});" onclick="Shiny.setInputValue(&#39;actitud_1_interacted&#39;, true, {priority: &#39;event&#39;});">
 <div id="actitud_1" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="actitud_1-label">
@@ -6862,6 +6849,7 @@ setInterval(function() {
 </div>
 </div>
 </div>
+
 </div>
 <div id="deserve-3" class="sd_page">
 <p>¿En qué medida está de acuerdo o en desacuerdo con las siguientes afirmaciones?</p>
@@ -8313,16 +8301,16 @@ setInterval(function() {
 <div class="form-group shiny-input-container">
 <label class="control-label" id="posicion_politica-label" for="posicion_politica"><p>Cambiando de tema, tradicionalmente en nuestro país la gente define las posiciones políticas como más cercanas a la izquierda, al centro o a la derecha. Usando una escala de 0 a 10, donde 0 es ser de ‘izquierda’, 5 es ser de ‘centro’ y 10 es ser de ‘derecha’, ¿Dónde se ubicaría usted en esta escala?</p>
 </label>
-<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="0" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Izquierda&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;Centro&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;Derecha&quot;,&quot;Independiente&quot;,&quot;Ninguno&quot;]" data-to-fixed="false" data-to-shadow="false" id="posicion_politica">
+<input class="js-range-slider sw-slider-text" data-data-type="text" data-force-edges="true" data-from="5" data-from-fixed="false" data-from-shadow="false" data-grid="true" data-hide-min-max="false" data-keyboard="true" data-prettify-enabled="false" data-skin="shiny" data-swvalues="[&quot;Izquierda&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;Centro&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;Derecha&quot;]" data-to-fixed="false" data-to-shadow="false" id="posicion_politica">
 <script>
         $(document).ready(function() {
-          $("#posicion_politica").attr("data-values", ["0","1","2","3","4","5","6","7","8","9","10","11","12"]);
+          $("#posicion_politica").attr("data-values", ["0","1","2","3","4","5","6","7","8","9","10"]);
         });
       </script>
 <script>
       $(document).ready(function() {
         var sliderId = 'posicion_politica';
-        var valueMap = {"Izquierda":["0"],"1":["1"],"2":["2"],"3":["3"],"4":["4"],"Centro":["5"],"6":["6"],"7":["7"],"8":["8"],"9":["9"],"Derecha":["10"],"Independiente":["11"],"Ninguno":["12"]};
+        var valueMap = {"Izquierda":["0"],"1":["1"],"2":["2"],"3":["3"],"4":["4"],"Centro":["5"],"6":["6"],"7":["7"],"8":["8"],"9":["9"],"Derecha":["10"]};
 
         // Track value changes and map display label to internal value
         $('#' + sliderId).on('change', function(e) {
@@ -8356,6 +8344,18 @@ setInterval(function() {
 <div class="shiny-options-group">
 <div class="checkbox">
 <label>
+<input type="checkbox" name="posicion_politica_nr" value="11">
+<span>Independiente</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
+<input type="checkbox" name="posicion_politica_nr" value="12">
+<span>Ninguno</span>
+</label>
+</div>
+<div class="checkbox">
+<label>
 <input type="checkbox" name="posicion_politica_nr" value="99">
 <span>Prefiero no responder</span>
 </label>
@@ -8365,7 +8365,7 @@ setInterval(function() {
 <span class="hidden-asterisk">*</span>
 </div>
 </div>
-<p id="posicion_politica_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar.</p>
+<p id="posicion_politica_hint" class="slider-next-hint">Mueva el control deslizante (o haga clic sobre él) o marque una de las opciones de abajo para continuar.</p>
 </div>
 </div>
 <div class="cell-output-display">
@@ -8384,6 +8384,12 @@ setInterval(function() {
 <label>
 <input type="radio" name="salud_prov" value="isapre">
 <span>ISAPRE</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="salud_prov" value="99">
+<span>Prefiero no responder</span>
 </label>
 </div>
 </div>
@@ -8412,7 +8418,13 @@ setInterval(function() {
 <div class="radio">
 <label>
 <input type="radio" name="educ_prov" value="municipal">
-<span>Municipal</span>
+<span>Municipal/Público</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="educ_prov" value="99">
+<span>Prefiero no responder</span>
 </label>
 </div>
 </div>
@@ -8462,37 +8474,9 @@ setInterval(function() {
 <h1>Fin de la Encuesta</h1>
 <p>¡La encuesta ha finalizado! ¡Gracias por su participación!</p>
 <p>Tu código de finalización es: <strong><span id="completion_code_value" class="shiny-text-output"></span></strong></p>
-<p>Puede cerrar la ventana ahora.</p>
 <div class="cell">
-<div class="cell-output-display">
-<div style="margin-top: 0.5rem; margin-bottom: 0.5rem; position: relative; min-height: 40px;" class="sd-nav-container">
-<div style="width: 100%; text-align: center;">
-<button class="btn btn-default action-button sd-enter-button sd-nav-button" id="close-survey-button" onclick="Shiny.setInputValue(&#39;show_exit_modal&#39;, true, {priority: &#39;event&#39;}); Shiny.setInputValue(&#39;clear_cookies_on_exit&#39;, false, {priority: &#39;event&#39;});" style="display: inline-block;" type="button">Finalizar encuesta</button>
-</div>
-</div>
-<script>
-      Shiny.addCustomMessageHandler('closeWindow', function(message) {
-        window.close();
-        if (!window.closed) {
-          alert('Please close this tab manually to exit the survey.');
-        }
-      });
-
-      Shiny.addCustomMessageHandler('clearCookies', function(message) {
-        if (typeof surveydownCookies !== 'undefined' && surveydownCookies.clear) {
-          surveydownCookies.clear();
-        }
-      });
-
-      Shiny.addCustomMessageHandler('forceRestart', function(message) {
-        if (typeof surveydownCookies !== 'undefined' && surveydownCookies.forceRestart) {
-          surveydownCookies.forceRestart();
-        } else if (typeof surveydownCookies !== 'undefined' && surveydownCookies.clear) {
-          surveydownCookies.clear();
-        }
-        window.location.reload();
-      });
-    </script>
+<div class="cell-output-display no-overflow-x">
+<div id="redirect_complete" class="shiny-html-output"></div>
 </div>
 </div>
 </section>
@@ -8531,6 +8515,17 @@ setInterval(function() {
         window.location.reload();
       });
     </script>
+</div>
+</div>
+</section>
+</div>
+<div id="end_quotafull" class="sd_page">
+<section id="fin-de-la-encuesta-2" class="level1">
+<h1>Fin de la Encuesta</h1>
+<p>Muchas gracias por su interés en participar. En este momento ya contamos con todas las respuestas que necesitábamos de personas con su perfil.</p>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<div id="redirect_quotafull" class="shiny-html-output"></div>
 </div>
 </div>
 </section>

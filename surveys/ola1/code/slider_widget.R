@@ -4,7 +4,15 @@
 # until every visible slider with this box is touched or has it checked (see
 # updateSliderNextButton() in app.R). Wrapped in <id>_nr_block so it can be
 # hidden together with its slider (dec_2).
-slider_nr <- function(id) {
+# 'option' can add other answers outside the scale (e.g. posicion_politica:
+# Independiente / Ninguno); the boxes are mutually exclusive (see app.R) and
+# behave like 'Prefiero no responder'.
+slider_nr <- function(id, option = c("Prefiero no responder" = "99")) {
+  hint <- if (length(option) == 1) {
+    "Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar."
+  } else {
+    "Mueva el control deslizante (o haga clic sobre él) o marque una de las opciones de abajo para continuar."
+  }
   shiny::div(
     id = paste0(id, "_nr_block"),
     shiny::div(
@@ -14,13 +22,10 @@ slider_nr <- function(id) {
         type   = "mc_multiple",
         id     = paste0(id, "_nr"),
         label  = "",
-        option = c("Prefiero no responder" = "99")
+        option = option
       )
     ),
-    shiny::p(
-      id = paste0(id, "_hint"), class = "slider-next-hint",
-      "Mueva el control deslizante (o haga clic sobre él) o marque «Prefiero no responder» para continuar."
-    )
+    shiny::p(id = paste0(id, "_hint"), class = "slider-next-hint", hint)
   )
 }
 

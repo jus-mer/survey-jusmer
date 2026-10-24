@@ -44,6 +44,8 @@ This section is divided in two parts: the first part describes the survey progra
 
       - Modules and their pages in `survey.qmd`: Meritocracy = `merit-1`, `merit-2`; Attitudes towards inequality = `clasicos`, `reflex`, `prospective`, `ranking`; Perception of public and private services = `decomodifica`, `lucro`; Deservingness = `deserve-1` to `deserve-7`.
       - The routing between modules is implemented with `sd_skip_if()` in `app.R` (forward jumps) and the `page_next` of `sd_nav()` in `survey.qmd` (backward jumps), since `sd_skip_if()` can only jump to pages that come later in `survey.qmd`.
+    - Ranking of public investment areas (`ranking_politicas`): the order in which its 5 items are displayed is randomized for each respondent, and kept if the respondent resumes the survey (cookies). Answers are stored one variable per area (`ranking_politicas_educacion`, `ranking_politicas_salud`, etc.), regardless of the order shown.
+      - `ranking_order`: order in which the 5 rows were displayed, one letter per area: E = Educación, S = Salud, P = Pensiones, C = Salas cunas, R = Carreteras. E.g. `SRECP` means Salud was shown first and Pensiones last.
 - Deployment:
   - Posit Cloud
   - waiter
