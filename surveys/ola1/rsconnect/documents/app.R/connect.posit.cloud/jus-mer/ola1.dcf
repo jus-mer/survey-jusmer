@@ -3,7 +3,7 @@ title: Encuesta JUSMER - Ola 1
 username: jus-mer
 account: jus-mer
 server: connect.posit.cloud
-envVars: SD_HOST, SD_PORT, SD_DBNAME, SD_USER, SD_TABLE, SD_PASSWORD
+envVars: SD_HOST, SD_PORT, SD_DBNAME, SD_USER, SD_TABLE, SD_PASSWORD, RECAPTCHA_SECRET
 hostUrl: https://api.connect.posit.cloud/v1
 appId: 01a1136c-df1f-c125-dbbc-30faed92627b
 bundleId:

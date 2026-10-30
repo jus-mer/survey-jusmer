@@ -1441,8 +1441,6 @@ sd_nav(page_next = "clasicos",
 
 Para finalizar, se presentan algunas preguntas de caracterización adicionales:
 
-::: {style="width:500px; margin: 0 auto;"}
-
 ```{r}
 
 genders <- c(
@@ -1526,18 +1524,21 @@ sd_question(
   type   = 'slider',
   id     = 'posicion_politica',
   label  = "Cambiando de tema, tradicionalmente en nuestro país la gente define las posiciones políticas como más cercanas a la izquierda, al centro o a la derecha. Usando una escala de 0 a 10, donde 0 es ser de 'izquierda', 5 es ser de 'centro' y 10 es ser de 'derecha', ¿Dónde se ubicaría usted en esta escala?",
+  # Números 0-10 (la etiqueta grande del valor muestra el número); bajo la
+  # barra, 0, 5 y 10 se rotulan Izquierda, Centro y Derecha (ver
+  # rotularPosicionPolitica() en app.R)
   option = c(
-    "Izquierda" = "0",
+    "0" = "0",
     "1" = "1",
     "2" = "2",
     "3" = "3",
     "4" = "4",
-    "Centro" = "5",
+    "5" = "5",
     "6" = "6",
     "7" = "7",
     "8" = "8",
     "9" = "9",
-    "Derecha" = "10"
+    "10" = "10"
   ),
   selected = '5'
 )
@@ -1582,8 +1583,6 @@ sd_question(
 )
 
 ```
-
-:::
 
 ```{r}
 sd_nav(page_next = "end_normal",

@@ -62,6 +62,41 @@ db <- sd_db_connect(ignore = ignore_db, gssencmode = "disable")
 # Mientras cuotas_activas sea FALSE no se consulta la base ni se filtra a
 # nadie.
 cuotas_activas <- FALSE
+
+# reCAPTCHA v3 ------------------------------------------------------------------
+#
+# Invisible para quien responde: Google entrega un puntaje de 0 (probable bot)
+# a 1 (probable persona). Solo se registra, no se bloquea a nadie: se guardan
+# recaptcha_score_inicio (al responder el consentimiento) y
+# recaptcha_score_fin (al llegar a la última página de preguntas). Vacío si
+# no se pudo verificar.
+# La clave de sitio es pública. La clave secreta va en la variable
+# RECAPTCHA_SECRET: en local en .env (no se sube a git ni al deploy) y en
+# Connect Cloud como variable del contenido.
+recaptcha_site_key <- "6LejHAcuAAAAAJnJ4I3LL4lS-aGqAFE-5-QX4OLo"
+if (!nzchar(Sys.getenv("RECAPTCHA_SECRET")) && file.exists(".env")) readRenviron(".env")
+recaptcha_secret <- Sys.getenv("RECAPTCHA_SECRET")
+
+# Verifica un token con Google; devuelve el puntaje como texto, o "" si no se
+# pudo verificar (sin clave secreta, token inválido/expirado, acción distinta
+# o error de red).
+verificar_recaptcha <- function(token, accion) {
+  if (!nzchar(recaptcha_secret) || is.null(token) || !nzchar(token)) return("")
+  h <- curl::new_handle(timeout = 10)
+  curl::handle_setopt(h, postfields = paste0(
+    "secret=", utils::URLencode(recaptcha_secret, reserved = TRUE),
+    "&response=", utils::URLencode(token, reserved = TRUE)
+  ))
+  r <- tryCatch(
+    curl::curl_fetch_memory("https://www.google.com/recaptcha/api/siteverify", handle = h),
+    error = function(e) NULL
+  )
+  if (is.null(r) || r$status_code != 200) return("")
+  res <- tryCatch(jsonlite::fromJSON(rawToChar(r$content)), error = function(e) NULL)
+  if (is.null(res) || !isTRUE(res$success) || !identical(res$action, accion) ||
+      is.null(res$score)) return("")
+  as.character(res$score)
+}
 cuotas <- list(
   # Ejemplo (reemplazar por las cuotas reales). Códigos en la base:
   # sexo "0" = Masculino, "1" = Femenino, "99" = Otro; year_of_birth es el
@@ -111,6 +146,12 @@ ui <- tagList(
     color = "#333e48"
   ),
   sd_ui_no_font_awesome(),
+  # reCAPTCHA v3 (ver recaptcha_site_key arriba)
+  tags$head(
+    tags$script(HTML(sprintf("window.RECAPTCHA_SITE_KEY = '%s';", recaptcha_site_key))),
+    tags$script(src = paste0("https://www.google.com/recaptcha/api.js?render=", recaptcha_site_key),
+                async = NA, defer = NA)
+  ),
   tags$head(
     tags$script(HTML("
       // Pruebas locales: borrar las cookies de surveydown al cargar la página,
@@ -242,7 +283,9 @@ ui <- tagList(
         var checked = document.querySelectorAll('input[name=\"' + id + '_nr\"]:checked');
         if (checked.length) {
           checked.forEach(function(box) { box.checked = false; });
-          $(checked[0]).trigger('change');
+          // Evento nativo (no jQuery trigger): así lo detiene el bloque de
+          // casillas movido al recuadro del slider (moverCasillasSlider())
+          checked[0].dispatchEvent(new Event('change', {bubbles: true}));
         }
         updateSliderNextButton();
       }
@@ -266,17 +309,22 @@ ui <- tagList(
         var id = sliderFromEvent(e);
         if (id && e.keyCode >= 37 && e.keyCode <= 40) sliderTouch(id);
       }, true);
-      $(document).on('change', 'input[type=\"checkbox\"][name$=\"_nr\"]', function() {
-        // Mutually exclusive boxes: checking one unchecks the others (then
-        // re-trigger so Shiny stores only the one left)
-        if (this.checked) {
-          var self = this, changed = false;
-          document.querySelectorAll('input[name=\"' + this.name + '\"]:checked').forEach(function(box) {
-            if (box !== self) { box.checked = false; changed = true; }
+      // Mutually exclusive boxes: checking one unchecks the others (then
+      // re-dispatch so Shiny stores only the one left). Called from the
+      // document for the conjoint's boxes and from the box block itself for
+      // the boxes moved into their slider's card (moverCasillasSlider()).
+      function cambioCasillaNr(box) {
+        if (box.checked) {
+          var changed = false;
+          document.querySelectorAll('input[name=\"' + box.name + '\"]:checked').forEach(function(other) {
+            if (other !== box) { other.checked = false; changed = true; }
           });
-          if (changed) $(this).trigger('change');
+          if (changed) box.dispatchEvent(new Event('change', {bubbles: true}));
         }
         updateSliderNextButton();
+      }
+      $(document).on('change', 'input[type=\"checkbox\"][name$=\"_nr\"]', function() {
+        cambioCasillaNr(this);
       });
 
       function updateSliderNextButton() {
@@ -389,6 +437,107 @@ ui <- tagList(
           }, 1200);
         }, true);
       });
+
+      // reCAPTCHA v3: pide un token a Google una vez por acción y se lo pasa
+      // al servidor (input recaptcha_token_<acción>), que lo verifica y guarda
+      // el puntaje. 'inicio': al responder el consentimiento; 'fin': cuando
+      // aparece la última página de preguntas (id-final). Si el script de
+      // Google aún no cargó, reintenta (hasta ~30 s).
+      var recaptchaPedido = {};
+      function pedirRecaptcha(accion, intento) {
+        intento = intento || 0;
+        if (recaptchaPedido[accion]) return;
+        if (!window.grecaptcha || !window.grecaptcha.execute) {
+          if (intento < 60) setTimeout(function() { pedirRecaptcha(accion, intento + 1); }, 500);
+          return;
+        }
+        recaptchaPedido[accion] = true;
+        grecaptcha.ready(function() {
+          grecaptcha.execute(window.RECAPTCHA_SITE_KEY, {action: accion}).then(function(token) {
+            Shiny.setInputValue('recaptcha_token_' + accion, token, {priority: 'event'});
+          }, function() { recaptchaPedido[accion] = false; });
+        });
+      }
+      $(document).on('change', 'input[name=\"consent_understand\"]', function() {
+        pedirRecaptcha('inicio');
+      });
+      setInterval(function() {
+        if (document.getElementById('container-educ_padres')) pedirRecaptcha('fin');
+      }, 500);
+
+      // Casillas bajo los sliders (<id>_nr_block, ver slider_nr()):
+      // surveydown las dibuja después del recuadro de la pregunta; se mueven
+      // dentro del recuadro del slider, bajo la barra. Solo en sliders con
+      // recuadro (no en el conjoint, cuyo slider va sin recuadro y sobre los
+      // cuadros de Postulante A/B). Los eventos de las casillas no siguen
+      // hasta el recuadro del slider: surveydown (interaction.js) los
+      // registraría como interacción con el slider (<id>_interacted). Shiny
+      // ya los recibió más adentro, y la exclusión entre casillas se maneja
+      // aquí mismo (cambioCasillaNr()).
+      function moverCasillasSlider() {
+        document.querySelectorAll('[id$=\"_nr_block\"]').forEach(function(bloque) {
+          var id = bloque.id.replace(/_nr_block$/, '');
+          if (id.indexOf('cbc_') === 0) return;
+          var contenedor = document.getElementById('container-' + id);
+          if (!contenedor) return;
+          // El recuadro (borde y fondo) lo dibuja el .form-group del slider,
+          // no el contenedor de la pregunta
+          var recuadro = contenedor.querySelector('.form-group.shiny-input-container') || contenedor;
+          if (bloque.parentElement === recuadro) return;
+          recuadro.appendChild(bloque);
+          ['click', 'input'].forEach(function(tipo) {
+            bloque.addEventListener(tipo, function(e) { e.stopPropagation(); });
+          });
+          bloque.addEventListener('change', function(e) {
+            if (e.target.matches && e.target.matches('input[type=\"checkbox\"]')) cambioCasillaNr(e.target);
+            e.stopPropagation();
+          });
+        });
+      }
+      new MutationObserver(moverCasillasSlider)
+        .observe(document.documentElement, {childList: true, subtree: true});
+
+      // posicion_politica: el slider va de 0 a 10 en números (así la etiqueta
+      // grande del valor muestra el número), pero bajo la barra 0, 5 y 10 se
+      // rotulan Izquierda, Centro y Derecha, en letra más grande que los
+      // números (CSS .pospol-rotulo). ion.rangeSlider centró cada rótulo
+      // según el ancho del número, así que se recentran bajo su marca (los
+      // extremos, alineados al borde para no salirse). Se reaplica cuando ion
+      // redibuja la grilla (al cargar y al cambiar el tamaño de la ventana).
+      var ROTULOS_POSPOL = {'0': 'Izquierda', '5': 'Centro', '10': 'Derecha'};
+      function rotularPosicionPolitica() {
+        var grilla = document.querySelector('#container-posicion_politica .irs-grid');
+        if (!grilla || !grilla.offsetWidth) return;
+        grilla.querySelectorAll('.irs-grid-text').forEach(function(t) {
+          var rotulo = ROTULOS_POSPOL[t.textContent.trim()];
+          if (rotulo && !t.classList.contains('pospol-rotulo')) {
+            t.textContent = rotulo;
+            t.classList.add('pospol-rotulo');
+          }
+        });
+        var anchoGrilla = grilla.offsetWidth, desde = -grilla.offsetLeft,
+            hasta = grilla.parentElement.offsetWidth - grilla.offsetLeft;
+        grilla.querySelectorAll('.pospol-rotulo').forEach(function(t) {
+          var marca = parseFloat(t.style.left) / 100 * anchoGrilla;
+          var izq = Math.min(Math.max(marca - t.offsetWidth / 2, desde), hasta - t.offsetWidth);
+          var margen = Math.round(izq - marca) + 'px';
+          if (t.style.marginLeft !== margen) t.style.marginLeft = margen;
+        });
+        // Números que chocan con un rótulo (pantallas angostas, p. ej. el 1 y
+        // el 9 en celular): se ocultan; la marca de la grilla se mantiene
+        var rotulos = Array.from(grilla.querySelectorAll('.pospol-rotulo')).map(function(t) {
+          return t.getBoundingClientRect();
+        });
+        grilla.querySelectorAll('.irs-grid-text:not(.pospol-rotulo)').forEach(function(t) {
+          var r = t.getBoundingClientRect();
+          var choca = rotulos.some(function(q) { return r.left < q.right + 2 && r.right > q.left - 2; });
+          var vis = choca ? 'hidden' : 'visible';
+          if (t.style.visibility !== vis) t.style.visibility = vis;
+        });
+      }
+      new MutationObserver(rotularPosicionPolitica)
+        .observe(document.documentElement, {childList: true, subtree: true});
+      window.addEventListener('resize', function() { setTimeout(rotularPosicionPolitica, 50); });
 
       window.setRankingOrder = function(order) {
         window.rankingOrder = order;
@@ -636,6 +785,16 @@ ui <- tagList(
       .question-container[data-question-id='dec_3'] .irs-grid-text {
         font-size: 12px !important;
         line-height: 12px !important;
+      }
+      /* posicion_politica: rótulos Izquierda / Centro / Derecha en lugar de
+         0, 5 y 10 bajo la barra (ver rotularPosicionPolitica()), más grandes
+         que los números (9px). En pantallas angostas, los números que
+         chocan con un rótulo se ocultan (ver rotularPosicionPolitica()) */
+      .question-container[data-question-id='posicion_politica'] .irs-grid-text.pospol-rotulo {
+        font-size: 11px !important;
+        letter-spacing: -0.1px;
+        color: #333e48 !important;
+        white-space: nowrap;
       }
       /* Match conjoint table option columns with option box colors */
       .cell-output-display table.table.table-condensed > tbody > tr > td:nth-child(2),
@@ -896,28 +1055,37 @@ server <- function(input, output, session) {
   # (ej. https://.../?id_user=1). sd_get_url_pars() es un reactive, asi que
   # solo puede leerse dentro de un contexto reactivo: observe() corre una vez
   # que el clientData de la sesion (la URL) esta disponible.
+  # Segunda variable del enlace: ticket (ej. ?id_user=1&ticket=abc), guardada
+  # igual que id_user ("" si no viene).
   observe({
-    pars <- sd_get_url_pars("id_user")
+    pars <- sd_get_url_pars("id_user", "ticket")
     id_user <- if (is.null(pars$id_user)) "" else pars$id_user
     sd_store_value(id_user, "id_user")
+    ticket <- if (is.null(pars$ticket)) "" else pars$ticket
+    sd_store_value(ticket, "ticket")
 
-    # Redirects de Nicequest (empresa de terreno), con id_user como ticket
-    # para que el panel asigne la recompensa:
+    # Redirects de Nicequest (empresa de terreno), para que el panel asigne la
+    # recompensa:
     #   - "Complete" (tp=co_0): al llegar a la página final (end_normal)
     #   - "Quotafull" (tp=qf_1): al ser filtrado por cuota (end_quotafull;
     #     ver cuotas_activas más arriba)
     #   - "Filterout" (tp=fo_0): al no aceptar el consentimiento (end_consent)
-    # Sin id_user (p. ej. pruebas locales) no se redirige. Se muestran en
-    # survey.qmd con uiOutput() y no con sd_output(): este último restaura su
-    # contenido desde localStorage, lo que podría reejecutar un redirect con
-    # el ticket de otra persona que usó el mismo navegador.
+    # Se envían ticket=<ticket> (o <id_user> si el enlace no trae ticket) e
+    # id_user=<id_user> aparte. Sin ninguno de los dos (p. ej. pruebas
+    # locales) no se redirige. Se muestran en survey.qmd con uiOutput() y no
+    # con sd_output(): este último restaura su contenido desde localStorage,
+    # lo que podría reejecutar un redirect con el ticket de otra persona que
+    # usó el mismo navegador.
+    enc <- function(x) utils::URLencode(x, reserved = TRUE)
+    ticket_panel <- if (nzchar(ticket)) ticket else id_user
     redirect_panel <- function(id, tp) {
-      if (nzchar(id_user)) {
+      if (nzchar(ticket_panel)) {
         sd_redirect(
           id     = id,
           url    = paste0(
             "https://transit.nicequest.com/transit/participation?tp=", tp,
-            "&c=ok&ticket=", utils::URLencode(id_user, reserved = TRUE)
+            "&c=ok&ticket=", enc(ticket_panel),
+            if (nzchar(id_user)) paste0("&id_user=", enc(id_user))
           ),
           button = FALSE,
           label  = "",
@@ -930,6 +1098,19 @@ server <- function(input, output, session) {
     redirect_panel("redirect_complete", "co_0")
     redirect_panel("redirect_quotafull", "qf_1")
     redirect_panel("redirect_filterout", "fo_0")
+  })
+
+  # reCAPTCHA v3 (ver recaptcha_site_key más arriba): cada token que manda el
+  # navegador se verifica con Google y se guarda el puntaje una sola vez por
+  # acción. Se guardan vacíos al inicio para que las columnas existan aunque
+  # no llegue el token (p. ej. quien no termina la encuesta no tiene _fin).
+  for (accion in c("inicio", "fin")) local({
+    accion <- accion
+    id <- paste0("recaptcha_score_", accion)
+    sd_store_value("", id)
+    observeEvent(input[[paste0("recaptcha_token_", accion)]], {
+      sd_store_value(verificar_recaptcha(input[[paste0("recaptcha_token_", accion)]], accion), id)
+    }, once = TRUE)
   })
 
   # Sample a random respondentID and store it in your data
@@ -1183,6 +1364,53 @@ server <- function(input, output, session) {
       }
     });
   ")
+
+  # surveydown no escribe valores vacíos en la base (update_data() solo guarda
+  # campos no vacíos), así que al desmarcar una fila del ranking su prioridad
+  # anterior quedaba guardada: p. ej. salud = 2 y salas cuna = 2 tras pasar el
+  # 2 de salud a salas cuna. Cuando una fila queda sin prioridad se borra su
+  # valor guardado directamente (NULL en la base, vacío en preview_data.csv en
+  # pruebas locales), en la misma fila de la sesión que usa surveydown.
+  borrar_valor_guardado <- function(campo) {
+    sid <- isolate(session$userData$all_data$session_id)
+    if (is.null(sid) || !nzchar(sid)) return(invisible())
+    tryCatch({
+      if (!is.null(db)) {
+        pool::poolWithTransaction(db$db, function(conn) {
+          if (!campo %in% DBI::dbListFields(conn, db$table)) return()
+          DBI::dbExecute(conn, DBI::sqlInterpolate(conn,
+            "UPDATE ?tabla SET ?campo = NULL WHERE session_id = ?sid",
+            tabla = DBI::dbQuoteIdentifier(conn, db$table),
+            campo = DBI::dbQuoteIdentifier(conn, campo),
+            sid   = sid
+          ))
+        })
+      } else if (file.exists("preview_data.csv")) {
+        datos <- utils::read.csv("preview_data.csv", stringsAsFactors = FALSE)
+        fila <- which(datos$session_id == sid)
+        if (length(fila) && campo %in% names(datos)) {
+          datos[fila, campo] <- NA
+          utils::write.csv(datos, "preview_data.csv", row.names = FALSE, na = "")
+        }
+      }
+    }, error = function(e) warning("No se pudo borrar ", campo, ": ", conditionMessage(e)))
+  }
+  # Lo mismo para las casillas bajo los sliders (<id>_nr: "Prefiero no
+  # responder", y en posicion_politica también Independiente / Ninguno): si
+  # se desmarcan (al mover el slider o a mano) se borra su valor guardado. Al
+  # revés no: si se marca una casilla después de mover el slider, el valor del
+  # slider se conserva (en el análisis, <id>_nr con valor prevalece).
+  ids_nr <- paste0(c("cbc_practice", paste0("cbc_q", 1:6), "dec_1", "dec_2", "dec_3",
+                     "estatus_subjetivo", "posicion_politica"), "_nr")
+  for (id in c(paste0("ranking_politicas_", c("educacion", "salud", "pensiones",
+                                              "cuidado_ninos", "carreteras")),
+               ids_nr)) local({
+    id <- id
+    observeEvent(input[[id]], {
+      valor <- input[[id]]
+      if (is.null(valor) || length(valor) == 0 || all(!nzchar(valor))) borrar_valor_guardado(id)
+    }, ignoreNULL = FALSE, ignoreInit = TRUE)
+  })
 
   # Enforce unique priority selection across the ranking matrix rows.
   # When a priority is chosen in one row, that same value is disabled
