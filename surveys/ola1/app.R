@@ -159,11 +159,35 @@ ui <- tagList(
       // anterior (use-cookies: true). Corre antes de que cookies.js las lea
       // (en document ready / shiny:connected). Solo en localhost, así que la
       // versión publicada sigue retomando la sesión normalmente.
-      if (['localhost', '127.0.0.1', '[::1]'].indexOf(location.hostname) !== -1) {
+      function borrarCookiesSurveydown() {
         ['surveydown_session', 'surveydown_answers'].forEach(function(name) {
           document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict';
         });
       }
+      if (['localhost', '127.0.0.1', '[::1]'].indexOf(location.hostname) !== -1) {
+        borrarCookiesSurveydown();
+      }
+
+      // Retomar la sesión solo si es del mismo panelista: se guarda el id_user
+      // del enlace en la cookie jusmer_id_user y, si un enlace trae un id_user
+      // distinto (otra persona en el mismo navegador, o alguien con varias
+      // cuentas del panel), se borran las cookies de surveydown antes de que
+      // las lea, para que parta una sesión nueva. Si no, surveydown retomaba
+      // la sesión anterior (aunque ya estuviera terminada, directo en
+      // end_normal) y el redirect salía con los datos de esa otra sesión.
+      // Enlaces sin id_user no cambian nada.
+      (function() {
+        var idEnlace = new URLSearchParams(location.search).get('id_user');
+        if (!idEnlace) return;
+        var idGuardado = null;
+        document.cookie.split(';').forEach(function(c) {
+          c = c.trim();
+          if (c.indexOf('jusmer_id_user=') === 0) idGuardado = decodeURIComponent(c.substring(15));
+        });
+        if (idGuardado !== idEnlace) borrarCookiesSurveydown();
+        document.cookie = 'jusmer_id_user=' + encodeURIComponent(idEnlace) +
+          '; max-age=' + (30 * 24 * 60 * 60) + '; path=/; SameSite=Strict';
+      })();
 
       function parsePctValue(x) {
         if (x === null || x === undefined) return null;

@@ -65,6 +65,72 @@ This section is divided in two parts: the first part describes the survey progra
 
 ## Fieldwork
 
+### Soft launch 1
+
+The first soft launch was fielded by Netquest on October 30, 2026 (from 16:52, Chile time) and October 31 (a second invitation wave between 10:00 and 12:30), with a target of 500 complete responses.
+
+| | Netquest | In our database |
+|---|:---:|:---:|
+| Complete responses | 518 | 469 |
+| Completes missing from our database | | 57 (50 with partial answers, 7 with no record at all) |
+| Incomplete responses (dropouts) | 564 | 165 |
+| Dropouts missing from our database | | 399 (no record at all) |
+
+The two counts of complete responses do not refer to exactly the same people:
+
+
+- **What happened:** the survey connected to Supabase through the transaction pooler (port 6543). In this mode, queries sent at the same time by different sessions can get mixed up. At 17:14 on October 30, one of these mix-ups left the database connection of an R process stuck. From then on, that process could no longer write to the database, while the survey kept working for the respondents:
+  - Respondents already answering stopped being saved without any visible error, because surveydown catches failed writes and discards them without retrying. That is why 50 respondents finished the survey (and Netquest counts them as complete) but only part of their answers was stored. 7 more have no record at all.
+  - New respondents assigned to a stuck process could not start the survey: the Connect Cloud log records 2,673 failed session starts. These are the 399 dropouts with no record in our database, many of whom tried several times.
+  - Connect Cloud kept starting new R processes as more people arrived (17 between 16:52 and 20:34), and each one worked until it hit its own mix-up. The stuck processes were only stopped at 09:49 on October 31, and the second wave ran without problems.
+
+- **Data:** answers that were not written at the time cannot be recovered. The 50 partial responses are kept and flagged as interrupted by a technical failure, not as dropouts.
+- **Solution, before the next wave:**
+  - Upgrade Supabase to the paid Pro plan, and adjust the instance and the pool size to the expected number of simultaneous connections.
+  - Switch the survey to the session pooler (port 5432). Each R connection then keeps its own Postgres connection, so queries can no longer get mixed up.
+  - Resume a session from cookies only when the `id_user` in the link matches the one stored in the browser. Otherwise a new session is started.
+  - Monitor the Connect Cloud log during the first hour of each wave, and restart the app if errors appear. Ask Netquest to send invitations in smaller batches.
+  - A second soft launch with a new target of 500 complete responses to evaluate the changes.
+
 ## Quality Control
+
+The indicators below are computed on the 469 complete responses stored in the database since October 29, 2026, as of october 31 (245 in version A and 224 in version B).
+
+### Monitor indicators
+
+The survey tracks five quality indicators for complete responses:
+
+| Indicator | Definition | Result |
+|---|---|:---:|
+| Attention check | Leaves `attention_check` blank, as the question asks | 79.3% pass |
+| Manipulation check | Correctly identifies the conjoint task (`manip_check` = split a scholarship between two applicants) | 80.4% pass |
+| Speeders | Duration below one third of the median (16.6 min, so below 5.5 min) | 3.4% |
+| Straightlining | Same answer in all valid items of the Deservingness battery (at least 10 items) | 1.7% |
+| High NS/NR | More than 25% of the scale items answered "No sabe" or "Prefiero no responder" | 1.3% |
+
+### Response patterns
+
+Careless response patterns in the Likert items (straight lines, zigzags or any repeated sequence) are detected with the R package `responsePatterns`. It combines two methods: the auto-correlations of each person's answers across items (`rp.acors()`) and the search for repeated sequences (`rp.patterns()`). Three analyses are run:
+
+- All 37 Likert items in the order they were presented, separately for version A and version B.
+- The 15-item Deservingness battery on its own.
+
+A case is flagged when it is at or above the 95th percentile of either method in at least one analysis. 52 cases are flagged (11.1%): 38 in one analysis and 14 in two. Since the cut-off is a percentile, about 5% of cases are always above it in each analysis. The flag identifies cases to review, not cases to exclude automatically.
+
+### Combined assessment
+
+Flagged response patterns are related to the other indicators. Among flagged cases, 42.3% fail the attention check and 9.6% are speeders, compared with 18.0% and 2.6% among the rest.
+
+Each complete response is classified by the number of careless-responding indicators it meets: failing the attention check, speeding, a flagged response pattern, straightlining and high NS/NR. The manipulation check is not counted, because it measures understanding of the conjoint task rather than careless responding; it is reported separately.
+
+| Classification | Criterion | Cases | % | Fail manipulation check |
+|---|---|:---:|:---:|:---:|
+| Valid | No indicator | 336 | 71.6% | 58 |
+| Possible problem | One indicator | 97 | 20.7% | 24 |
+| Problem | Two or more indicators | 36 | 7.7% | 10 |
+| **Total** | | **469** | **100%** | **92** |
+
+- **Possible problem:** most cases only fail the attention check (64) or only have a flagged response pattern (27). The rest are 3 with high NS/NR, 2 speeders and 1 straightliner.
+- **Problem:** the most frequent combinations are attention check + response pattern (14), attention check + speeder (9), attention check + response pattern + straightlining (4) and attention check + speeder + response pattern (3).
 
 ## Fieldwork Performance Indicators

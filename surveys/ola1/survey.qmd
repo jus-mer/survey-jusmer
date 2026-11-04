@@ -1600,6 +1600,12 @@ sd_nav(page_next = "end_normal",
 # Redirect "Complete" al panel de Nicequest con id_user como ticket (ver
 # app.R). Sin id_user muestra "Puede cerrar la ventana ahora."
 shiny::uiOutput("redirect_complete")
+
+# Sin botones de navegación: surveydown agrega "Anterior"/"Siguiente" a toda
+# página sin sd_nav() (salvo la última), y con ellos se pasaba de una página
+# final a la siguiente (end_normal -> end_consent -> end_quotafull) mientras
+# corría el redirect, que podía terminar llegando a Nicequest con otro estado.
+sd_nav(show_previous = FALSE, show_next = FALSE)
 ```
 
 --- end_consent
@@ -1613,6 +1619,9 @@ La encuesta ha finalizado.
 # no acepta el consentimiento; ver app.R). Sin id_user muestra "Puede cerrar
 # la ventana ahora."
 shiny::uiOutput("redirect_filterout")
+
+# Sin botones de navegación (ver end_normal)
+sd_nav(show_previous = FALSE, show_next = FALSE)
 ```
 
 --- end_quotafull
@@ -1626,4 +1635,8 @@ Muchas gracias por su interés en participar. En este momento ya contamos con to
 # llega aquí con las cuotas activas (ver cuotas_activas en app.R). Sin
 # id_user muestra "Puede cerrar la ventana ahora."
 shiny::uiOutput("redirect_quotafull")
+
+# Sin botones de navegación (ver end_normal), por si se agrega otra página
+# después de esta
+sd_nav(show_previous = FALSE, show_next = FALSE)
 ```
