@@ -72,19 +72,32 @@ The first soft launch was fielded by Netquest on October 30, 2026 (from 16:52, C
 | | Netquest | In our database |
 |---|:---:|:---:|
 | Complete responses | 518 | 469 |
-| Completes missing from our database | | 57 (50 with partial answers, 7 with no record at all) |
+| Completes missing from our database | | 59 (52 with partial answers, 7 with no record at all) |
 | Incomplete responses (dropouts) | 564 | 165 |
 | Dropouts missing from our database | | 399 (no record at all) |
 
-The two counts of complete responses do not refer to exactly the same people:
-
-
 - **What happened:** the survey connected to Supabase through the transaction pooler (port 6543). In this mode, queries sent at the same time by different sessions can get mixed up. At 17:14 on October 30, one of these mix-ups left the database connection of an R process stuck. From then on, that process could no longer write to the database, while the survey kept working for the respondents:
-  - Respondents already answering stopped being saved without any visible error, because surveydown catches failed writes and discards them without retrying. That is why 50 respondents finished the survey (and Netquest counts them as complete) but only part of their answers was stored. 7 more have no record at all.
+  - Respondents already answering stopped being saved without any visible error, because surveydown catches failed writes and discards them without retrying. That is why 52 respondents finished the survey (and Netquest counts them as complete) but only part of their answers was stored. 7 more have no record at all.
   - New respondents assigned to a stuck process could not start the survey: the Connect Cloud log records 2,673 failed session starts. These are the 399 dropouts with no record in our database, many of whom tried several times.
   - Connect Cloud kept starting new R processes as more people arrived (17 between 16:52 and 20:34), and each one worked until it hit its own mix-up. The stuck processes were only stopped at 09:49 on October 31, and the second wave ran without problems.
 
-- **Data:** answers that were not written at the time cannot be recovered. The 50 partial responses are kept and flagged as interrupted by a technical failure, not as dropouts.
+- **How far the 52 partial responses were saved:** all of them started on October 30, most of them (45) between 17:00 and 20:00, and all of them finished the survey according to Netquest. The table shows the last block of the survey with saved answers, that is, where the database stopped saving them, not where they dropped out. Thematic modules are listed by their position in the survey, and each row names the module shown in that position in each version.
+
+  | Last block with saved answers | Version A | Version B | Total |
+  |---|:---:|:---:|:---:|
+  | Consent (nothing saved afterwards) | 0 | 2 | 2 |
+  | General information | 2 | 1 | 3 |
+  | Conjoint | 4 | 9 | 13 |
+  | 1st thematic module (A: Meritocracy; B: Deservingness) | 3 | 6 | 9 |
+  | 2nd thematic module (A: Attitudes; B: Perception of services) | 4 | 1 | 5 |
+  | 3rd thematic module (A: Perception of services; B: Attitudes) | 1 | 3 | 4 |
+  | 4th thematic module (A: Deservingness; B: Meritocracy) | 8 | 7 | 15 |
+  | Final sociodemographic questions | 0 | 1 | 1 |
+  | **Total** | **22** | **30** | **52** |
+
+  - 35 of the 52 have the full conjoint (all six tasks), but only 1 has the final sociodemographic questions.
+  - That last case has all its answers except the consent, which was not saved, so it does not count as a complete response.
+- **Data:** answers that were not written at the time cannot be recovered. The 52 partial responses are kept and flagged as interrupted by a technical failure, not as dropouts.
 - **Solution, before the next wave:**
   - Upgrade Supabase to the paid Pro plan, and adjust the instance and the pool size to the expected number of simultaneous connections.
   - Switch the survey to the session pooler (port 5432). Each R connection then keeps its own Postgres connection, so queries can no longer get mixed up.

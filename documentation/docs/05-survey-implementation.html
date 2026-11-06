@@ -401,7 +401,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td>Completes missing from our database</td>
 <td style="text-align: center;"></td>
-<td style="text-align: center;">57 (50 with partial answers, 7 with no record at all)</td>
+<td style="text-align: center;">59 (52 with partial answers, 7 with no record at all)</td>
 </tr>
 <tr class="odd">
 <td>Incomplete responses (dropouts)</td>
@@ -415,16 +415,92 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>The two counts of complete responses do not refer to exactly the same people:</p>
 <ul>
-<li><strong>What happened:</strong> the survey connected to Supabase through the transaction pooler (port 6543). In this mode, queries sent at the same time by different sessions can get mixed up. At 17:14 on October 30, one of these mix-ups left the database connection of an R process stuck. From then on, that process could no longer write to the database, while the survey kept working for the respondents:
+<li><p><strong>What happened:</strong> the survey connected to Supabase through the transaction pooler (port 6543). In this mode, queries sent at the same time by different sessions can get mixed up. At 17:14 on October 30, one of these mix-ups left the database connection of an R process stuck. From then on, that process could no longer write to the database, while the survey kept working for the respondents:</p>
 <ul>
-<li>Respondents already answering stopped being saved without any visible error, because surveydown catches failed writes and discards them without retrying. That is why 50 respondents finished the survey (and Netquest counts them as complete) but only part of their answers was stored. 7 more have no record at all.</li>
+<li>Respondents already answering stopped being saved without any visible error, because surveydown catches failed writes and discards them without retrying. That is why 52 respondents finished the survey (and Netquest counts them as complete) but only part of their answers was stored. 7 more have no record at all.</li>
 <li>New respondents assigned to a stuck process could not start the survey: the Connect Cloud log records 2,673 failed session starts. These are the 399 dropouts with no record in our database, many of whom tried several times.</li>
 <li>Connect Cloud kept starting new R processes as more people arrived (17 between 16:52 and 20:34), and each one worked until it hit its own mix-up. The stuck processes were only stopped at 09:49 on October 31, and the second wave ran without problems.</li>
 </ul></li>
-<li><strong>Data:</strong> answers that were not written at the time cannot be recovered. The 50 partial responses are kept and flagged as interrupted by a technical failure, not as dropouts.</li>
-<li><strong>Solution, before the next wave:</strong>
+<li><p><strong>How far the 52 partial responses were saved:</strong> all of them started on October 30, most of them (45) between 17:00 and 20:00, and all of them finished the survey according to Netquest. The table shows the last block of the survey with saved answers, that is, where the database stopped saving them, not where they dropped out. Thematic modules are listed by their position in the survey, and each row names the module shown in that position in each version.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Last block with saved answers</th>
+<th style="text-align: center;">Version A</th>
+<th style="text-align: center;">Version B</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Consent (nothing saved afterwards)</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td>General information</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td>Conjoint</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">13</td>
+</tr>
+<tr class="even">
+<td>1st thematic module (A: Meritocracy; B: Deservingness)</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="odd">
+<td>2nd thematic module (A: Attitudes; B: Perception of services)</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>3rd thematic module (A: Perception of services; B: Attitudes)</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td>4th thematic module (A: Deservingness; B: Meritocracy)</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="even">
+<td>Final sociodemographic questions</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><strong>22</strong></td>
+<td style="text-align: center;"><strong>30</strong></td>
+<td style="text-align: center;"><strong>52</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>35 of the 52 have the full conjoint (all six tasks), but only 1 has the final sociodemographic questions.</li>
+<li>That last case has all its answers except the consent, which was not saved, so it does not count as a complete response.</li>
+</ul></li>
+<li><p><strong>Data:</strong> answers that were not written at the time cannot be recovered. The 52 partial responses are kept and flagged as interrupted by a technical failure, not as dropouts.</p></li>
+<li><p><strong>Solution, before the next wave:</strong></p>
 <ul>
 <li>Upgrade Supabase to the paid Pro plan, and adjust the instance and the pool size to the expected number of simultaneous connections.</li>
 <li>Switch the survey to the session pooler (port 5432). Each R connection then keeps its own Postgres connection, so queries can no longer get mixed up.</li>
