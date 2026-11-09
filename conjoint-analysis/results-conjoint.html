@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-11-09">
+
+<title>Análisis del conjoint</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="results-conjoint_files/libs/clipboard/clipboard.min.js"></script>
+<script src="results-conjoint_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="results-conjoint_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="results-conjoint_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="results-conjoint_files/libs/quarto-html/popper.min.js"></script>
+<script src="results-conjoint_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="results-conjoint_files/libs/quarto-html/anchor.min.js"></script>
+<link href="results-conjoint_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="results-conjoint_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="results-conjoint_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="results-conjoint_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="results-conjoint_files/libs/bootstrap/bootstrap-167f2573dfa0e1af6223d5b36672558a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: white;
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: white;
+background: #8c0c0c;
+      }
+</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Análisis del conjoint</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 9, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Este documento contiene los análisis preliminares del experimento conjoint aplicado en la encuesta del proyecto JUSMER. Los datos fueron recabados en el soft-launch aplicado en conjunto con Netquest entre los días 30 de octubre y 03 de noviembre. El objetivo de estos análisis es poder estimar la viabilidad del análisis del experimento en dos ámbitos: 1) si <strong>la manera en que se almacenan los datos</strong> permite operar las variables de tal manera para que sean analizadas 2) si las respuestas pueden considerarse <strong>válidas en términos de calidad</strong> para que sean analizables. En última instancia, este insumo puede servir como respaldo para la toma de contramedidas en la aplicación de la encuesta, y así re-negociar términos de acuerdo con Netquest para asegurar una muestra que contenga los casos válidos acordados en el módulo de conjoint.</p>
+<p>El documento se encarga de realizar el procesamiento de la base, configurando una muestra analítica mediante una serie de criterios que buscan asegurar la calidad de las respuestas. Con ello, al final se propone una sección de análisis de resultados.</p>
+<section id="datos" class="level2">
+<h2 class="anchored" data-anchor-id="datos">Datos</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readr, here, dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ola1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"conjoint-analysis"</span>, <span class="st">"ola1-jusmer.csv"</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ola1)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ola1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>conjoint_df <span class="ot">&lt;-</span> ola1 <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(session_id, cbc_attr_order, cbc_profiles, consent_understand,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         cbc_practice, cbc_q1, cbc_q2, cbc_q3, cbc_q4, cbc_q5, cbc_q6,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         cbc_attr_order_levels,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         cbc_q1_hist, cbc_q2_hist, cbc_q3_hist, cbc_q4_hist, cbc_q5_hist,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         cbc_q6_hist,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         cbc_practice_nr, cbc_q1_nr, cbc_q2_nr, cbc_q3_nr, cbc_q4_nr,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         cbc_q5_nr, cbc_q6_nr,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         time_p_cbc_intro, time_p_cbc_q1_page, time_p_cbc_q2_page,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         time_p_cbc_q3_page, time_p_cbc_q4_page, time_p_cbc_q5_page,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         time_p_cbc_q6_page, time_q_cbc_q1, time_q_cbc_q2, time_q_cbc_q3,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         time_q_cbc_q4, time_q_cbc_q5, time_q_cbc_q6)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>conjoint_df <span class="ot">&lt;-</span> conjoint_df <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(consent_understand <span class="sc">==</span> <span class="st">"yes"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="casos-válidos" class="level2">
+<h2 class="anchored" data-anchor-id="casos-válidos">Casos válidos</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cbc_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"cbc_practice"</span>, <span class="fu">paste0</span>(<span class="st">"cbc_q"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>casos_validos <span class="ot">&lt;-</span> conjoint_df <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(cbc_vars), <span class="fu">list</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">validos  =</span> <span class="sc">~</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(.x)),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">perdidos =</span> <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">.names =</span> <span class="st">"{.col}__{.fn}"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"pregunta"</span>, <span class="st">".value"</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_sep =</span> <span class="st">"__"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_total =</span> validos <span class="sc">+</span> perdidos,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">pct_validos =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> validos <span class="sc">/</span> n_total, <span class="dv">1</span>))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  casos_validos,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Casos válidos por pregunta del CBC.. Se consideran válidos todos los casos con respuesta registrada (no NA), incluidos los que tienen valor 0; perdidos son los casos sin respuesta (NA)."</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-casos-validos" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-casos-validos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Casos válidos por pregunta del CBC.. Se consideran válidos todos los casos con respuesta registrada (no NA), incluidos los que tienen valor 0; perdidos son los casos sin respuesta (NA).
+</figcaption>
+<div aria-describedby="tbl-casos-validos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">pregunta</th>
+<th style="text-align: right;">validos</th>
+<th style="text-align: right;">perdidos</th>
+<th style="text-align: right;">n_total</th>
+<th style="text-align: right;">pct_validos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">cbc_practice</td>
+<td style="text-align: right;">664</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">97.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cbc_q1</td>
+<td style="text-align: right;">605</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">88.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cbc_q2</td>
+<td style="text-align: right;">601</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">88.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cbc_q3</td>
+<td style="text-align: right;">587</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">85.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cbc_q4</td>
+<td style="text-align: right;">583</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">85.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cbc_q5</td>
+<td style="text-align: right;">578</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">84.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cbc_q6</td>
+<td style="text-align: right;">576</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">84.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Podemos observar que en la <a href="#tbl-casos-validos" class="quarto-xref">Table&nbsp;1</a> los casos válidos van aumentando conforme el paso de las tareas del conjoint. Esto puede deberse a la pérdida de interes en la participación de los encuestados, aun así cuando es sección de la encuesta a nivel transversal</p>
+</section>
+<section id="descriptivos" class="level2">
+<h2 class="anchored" data-anchor-id="descriptivos">Descriptivos</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Monto asignado al perfil B en cada tarea (el de A es 2.000.000 menos ese valor).</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Base wide (conjoint_df), antes de aplicar las exclusiones por hist y nr.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>descriptivos_montos <span class="ot">&lt;-</span> conjoint_df <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(cbc_vars), <span class="fu">list</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n        =</span> <span class="sc">~</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(.x)),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">media    =</span> <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">de       =</span> <span class="sc">~</span> <span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">min      =</span> <span class="sc">~</span> <span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">p25      =</span> <span class="sc">~</span> <span class="fu">quantile</span>(.x, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana  =</span> <span class="sc">~</span> <span class="fu">median</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">p75      =</span> <span class="sc">~</span> <span class="fu">quantile</span>(.x, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">max      =</span> <span class="sc">~</span> <span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_cero =</span> <span class="sc">~</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(.x[<span class="sc">!</span><span class="fu">is.na</span>(.x)] <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_mitad =</span> <span class="sc">~</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(.x[<span class="sc">!</span><span class="fu">is.na</span>(.x)] <span class="sc">==</span> <span class="dv">1000000</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">pct_todo =</span> <span class="sc">~</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(.x[<span class="sc">!</span><span class="fu">is.na</span>(.x)] <span class="sc">==</span> <span class="dv">2000000</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">.names =</span> <span class="st">"{.col}__{.fn}"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="fu">everything</span>(),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"tarea"</span>, <span class="st">".value"</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_sep =</span> <span class="st">"__"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tarea =</span> <span class="fu">sub</span>(<span class="st">"^cbc_"</span>, <span class="st">""</span>, tarea))</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Formato: montos con separador de miles, porcentajes con una decimal</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>fmt_monto <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">format</span>(<span class="fu">round</span>(x), <span class="at">big.mark =</span> <span class="st">"."</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                                <span class="at">scientific =</span> <span class="cn">FALSE</span>, <span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>fmt_pct   <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">format</span>(<span class="fu">round</span>(x, <span class="dv">1</span>), <span class="at">decimal.mark =</span> <span class="st">","</span>, <span class="at">nsmall =</span> <span class="dv">1</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                                <span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>descriptivos_fmt <span class="ot">&lt;-</span> descriptivos_montos <span class="sc">%&gt;%</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(media, de, min, p25, mediana, p75, max), fmt_monto),</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>         <span class="fu">across</span>(<span class="fu">c</span>(pct_cero, pct_mitad, pct_todo), fmt_pct))</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  descriptivos_fmt,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="fu">rep</span>(<span class="st">"r"</span>, <span class="dv">11</span>)),</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Tarea"</span>, <span class="st">"N"</span>, <span class="st">"Media"</span>, <span class="st">"DE"</span>, <span class="st">"Mín."</span>, <span class="st">"P25"</span>, <span class="st">"Mediana"</span>, <span class="st">"P75"</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Máx."</span>, <span class="st">"% = 0"</span>, <span class="st">"% = 1.000.000"</span>, <span class="st">"% = 2.000.000"</span>),</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Descriptivos del monto asignado al perfil B en cada tarea (el monto asignado al perfil A es 2.000.000 menos este valor). Base wide, antes de las exclusiones por interacción (hist) y no respuesta (nr). Las últimas tres columnas muestran el porcentaje de respuestas con todo el monto para A (0), reparto igualitario (1.000.000) y todo el monto para B (2.000.000)."</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-descriptivos-montos" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-descriptivos-montos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Descriptivos del monto asignado al perfil B en cada tarea (el monto asignado al perfil A es 2.000.000 menos este valor). Base wide, antes de las exclusiones por interacción (hist) y no respuesta (nr). Las últimas tres columnas muestran el porcentaje de respuestas con todo el monto para A (0), reparto igualitario (1.000.000) y todo el monto para B (2.000.000).
+</figcaption>
+<div aria-describedby="tbl-descriptivos-montos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tarea</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Media</th>
+<th style="text-align: right;">DE</th>
+<th style="text-align: right;">Mín.</th>
+<th style="text-align: right;">P25</th>
+<th style="text-align: right;">Mediana</th>
+<th style="text-align: right;">P75</th>
+<th style="text-align: right;">Máx.</th>
+<th style="text-align: right;">% = 0</th>
+<th style="text-align: right;">% = 1.000.000</th>
+<th style="text-align: right;">% = 2.000.000</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">practice</td>
+<td style="text-align: right;">664</td>
+<td style="text-align: right;">1.050.452</td>
+<td style="text-align: right;">411.303</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.200.000</td>
+<td style="text-align: right;">2.000.000</td>
+<td style="text-align: right;">3,8</td>
+<td style="text-align: right;">39,6</td>
+<td style="text-align: right;">4,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">q1</td>
+<td style="text-align: right;">605</td>
+<td style="text-align: right;">1.016.033</td>
+<td style="text-align: right;">408.224</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">800.000</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.200.000</td>
+<td style="text-align: right;">2.000.000</td>
+<td style="text-align: right;">3,6</td>
+<td style="text-align: right;">35,0</td>
+<td style="text-align: right;">3,5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">q2</td>
+<td style="text-align: right;">601</td>
+<td style="text-align: right;">986.356</td>
+<td style="text-align: right;">396.039</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">800.000</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.200.000</td>
+<td style="text-align: right;">2.000.000</td>
+<td style="text-align: right;">4,2</td>
+<td style="text-align: right;">33,9</td>
+<td style="text-align: right;">2,3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">q3</td>
+<td style="text-align: right;">587</td>
+<td style="text-align: right;">1.026.917</td>
+<td style="text-align: right;">403.133</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">800.000</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.200.000</td>
+<td style="text-align: right;">2.000.000</td>
+<td style="text-align: right;">3,2</td>
+<td style="text-align: right;">33,2</td>
+<td style="text-align: right;">2,9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">q4</td>
+<td style="text-align: right;">583</td>
+<td style="text-align: right;">984.563</td>
+<td style="text-align: right;">406.902</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">800.000</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.200.000</td>
+<td style="text-align: right;">2.000.000</td>
+<td style="text-align: right;">2,6</td>
+<td style="text-align: right;">37,0</td>
+<td style="text-align: right;">3,9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">q5</td>
+<td style="text-align: right;">578</td>
+<td style="text-align: right;">1.029.758</td>
+<td style="text-align: right;">405.483</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">800.000</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.200.000</td>
+<td style="text-align: right;">2.000.000</td>
+<td style="text-align: right;">2,9</td>
+<td style="text-align: right;">33,7</td>
+<td style="text-align: right;">4,2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">q6</td>
+<td style="text-align: right;">576</td>
+<td style="text-align: right;">1.020.833</td>
+<td style="text-align: right;">387.478</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">800.000</td>
+<td style="text-align: right;">1.000.000</td>
+<td style="text-align: right;">1.200.000</td>
+<td style="text-align: right;">2.000.000</td>
+<td style="text-align: right;">2,8</td>
+<td style="text-align: right;">34,5</td>
+<td style="text-align: right;">3,5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>La <a href="#tbl-descriptivos-montos" class="quarto-xref">Table&nbsp;2</a> nos muestra que la gran mayoría de las respuestas se encuentra en torno a $1.000.000, que es el monto en donde el slider comienza. Esto se respalda con la similitud que presenta la media con la mediana. Además, se puede observar en la penúltima columna que, a lo largo de las 7 tareas, más de un tercio de los respondentes marcaron la repartición de la beca en $1.000.000. Estas personas pueden ser quienes no interactuaron con la tarea, quienes no se inclinaron por ninguno de los dos perfiles o ambas.</p>
+</section>
+<section id="tiempos-por-tarea" class="level2">
+<h2 class="anchored" data-anchor-id="tiempos-por-tarea">Tiempos por tarea</h2>
+<p>Para el cálculo del tiempo por tarea se aplicó una lógica similar al del análisis del pre-piloto: momento de la respuestade una tarea (time_q_cbc_qX) menos el momento en que se llegó a la página de la tarea (time_p_cbc_qX_page). La página de practice no registra hora de llegada (time_p_cbc_practice-page es todo NA), por lo que no se calcula su tiempo. Las diferencias negativas (inconsistencias de los registros) se dejan como NA.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>a_hora <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.POSIXct</span>(x, <span class="at">tz =</span> <span class="st">"UTC"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  conjoint_df[[<span class="fu">paste0</span>(<span class="st">"tiempo_q"</span>, i)]] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">difftime</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">a_hora</span>(conjoint_df[[<span class="fu">paste0</span>(<span class="st">"time_q_cbc_q"</span>, i)]]),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">a_hora</span>(conjoint_df[[<span class="fu">paste0</span>(<span class="st">"time_p_cbc_q"</span>, i, <span class="st">"_page"</span>)]]),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">units =</span> <span class="st">"secs"</span>))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  conjoint_df[[<span class="fu">paste0</span>(<span class="st">"tiempo_q"</span>, i)]][conjoint_df[[<span class="fu">paste0</span>(<span class="st">"tiempo_q"</span>, i)]] <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>tiempo_vars <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"tiempo_q"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>tiempos_desc <span class="ot">&lt;-</span> conjoint_df <span class="sc">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(tiempo_vars), <span class="fu">list</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">n       =</span> <span class="sc">~</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(.x)),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">media   =</span> <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">de      =</span> <span class="sc">~</span> <span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">min     =</span> <span class="sc">~</span> <span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">p25     =</span> <span class="sc">~</span> <span class="fu">quantile</span>(.x, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="sc">~</span> <span class="fu">median</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">p75     =</span> <span class="sc">~</span> <span class="fu">quantile</span>(.x, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">max     =</span> <span class="sc">~</span> <span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">.names =</span> <span class="st">"{.col}__{.fn}"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"tarea"</span>, <span class="st">".value"</span>),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_sep =</span> <span class="st">"__"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tarea =</span> <span class="fu">sub</span>(<span class="st">"^tiempo_"</span>, <span class="st">""</span>, tarea))</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tiempos_desc, <span class="at">digits =</span> <span class="dv">1</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Tarea"</span>, <span class="st">"N"</span>, <span class="st">"Media"</span>, <span class="st">"DE"</span>, <span class="st">"Mín."</span>, <span class="st">"P25"</span>, <span class="st">"Mediana"</span>, <span class="st">"P75"</span>, <span class="st">"Máx."</span>),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Tiempo en segundos por tarea del CBC (llegada a la página hasta la respuesta). Se omiten diferencias negativas."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-tiempos-tarea" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tiempos-tarea-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Tiempo en segundos por tarea del CBC (llegada a la página hasta la respuesta). Se omiten diferencias negativas.
+</figcaption>
+<div aria-describedby="tbl-tiempos-tarea-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tarea</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">Media</th>
+<th style="text-align: right;">DE</th>
+<th style="text-align: right;">Mín.</th>
+<th style="text-align: right;">P25</th>
+<th style="text-align: right;">Mediana</th>
+<th style="text-align: right;">P75</th>
+<th style="text-align: right;">Máx.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">q1</td>
+<td style="text-align: right;">447</td>
+<td style="text-align: right;">427.6</td>
+<td style="text-align: right;">6306.5</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">27.0</td>
+<td style="text-align: right;">43.0</td>
+<td style="text-align: right;">121237</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">q2</td>
+<td style="text-align: right;">436</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">29.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">22.0</td>
+<td style="text-align: right;">33.0</td>
+<td style="text-align: right;">453</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">q3</td>
+<td style="text-align: right;">435</td>
+<td style="text-align: right;">23.3</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">29.5</td>
+<td style="text-align: right;">172</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">q4</td>
+<td style="text-align: right;">416</td>
+<td style="text-align: right;">20.8</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">27.0</td>
+<td style="text-align: right;">174</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">q5</td>
+<td style="text-align: right;">426</td>
+<td style="text-align: right;">24.1</td>
+<td style="text-align: right;">86.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">16.5</td>
+<td style="text-align: right;">25.8</td>
+<td style="text-align: right;">1750</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">q6</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">32.2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">23.0</td>
+<td style="text-align: right;">562</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>La <a href="#tbl-tiempos-tarea" class="quarto-xref">Table&nbsp;3</a> presenta los descriptivos de los tiempos estimados por tarea. Al igual que en el análisis del pre-piloto, un estadístico confiable para la estimación de tiempos es la mediana, ya que no se ve afectaba por casos extremos. Considerando esto, se observa que los tiempos de respuesta disminuyen a medida que las personas avanzan en las tareas del conjoint. Esto podría sugerir que especialmente las últimas tareas no sean decididas cuidadosamente, por lo que debemos tomar precaución de ello.</p>
+</section>
+<section id="de-wide-a-long" class="level1">
+<h1>De wide a long</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una fila por respondente x ejercicio. Además de la respuesta se traen:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   hist: historial de interacción con el control (NA = no interactuó);</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         cbc_practice no tiene variable hist.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   nr:   99 = la persona prefirió no responder.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>conjoint_long <span class="ot">&lt;-</span> conjoint_df <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste0</span>(.x, <span class="st">"_resp"</span>), <span class="fu">all_of</span>(cbc_vars)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"^cbc_(practice|q[1-6])_(resp|hist|nr)$"</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"ejercicio"</span>, <span class="st">".value"</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^cbc_(practice|q[1-6])_(resp|hist|nr)$"</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">respuesta =</span> resp) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">orden =</span> <span class="fu">match</span>(ejercicio, <span class="fu">c</span>(<span class="st">"practice"</span>, <span class="fu">paste0</span>(<span class="st">"q"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))) <span class="sc">-</span> <span class="dv">1</span>  <span class="co"># 0 = practice</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(session_id, orden)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Para la construcción de la base analítica se proponen los siguientes criterios para la exclusión:</p>
+<ol type="1">
+<li><p>Por persona: se cuentan las tareas q1-q6 sin interacción registrada (hist = NA). Si son 5 o más, se excluye a la persona completa del análisis (incluido practice). Las tareas sin interacción de quienes quedan se mantienen.</p></li>
+<li><p>Por respuesta: se eliminan las respuestas donde la persona prefirió no responder (nr = 99) y las sin respuesta (NA).</p></li>
+<li><p>Por persona: se excluye a quienes se demoraron menos de 10 segundos en responder al menos 5 de las 6 tareas (q1-q6), pues podría sugerir que no respondieron a conciencia. El tiempo por tarea es el calculado en la sección anterior; las tareas sin tiempo no se cuentan como rápidas.</p></li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>conjoint_long <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(session_id) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_tareas_sin_inter =</span> <span class="fu">sum</span>(ejercicio <span class="sc">!=</span> <span class="st">"practice"</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(hist)),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">n_tareas_rapidas   =</span> <span class="fu">sum</span>(<span class="fu">c</span>(<span class="fu">first</span>(tiempo_q1), <span class="fu">first</span>(tiempo_q2),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">first</span>(tiempo_q3), <span class="fu">first</span>(tiempo_q4),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">first</span>(tiempo_q5), <span class="fu">first</span>(tiempo_q6)) <span class="sc">&lt;</span> <span class="dv">10</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">excl_sin_inter     =</span> n_tareas_sin_inter <span class="sc">&gt;=</span> <span class="dv">5</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">excl_rapidas       =</span> <span class="sc">!</span>excl_sin_inter <span class="sc">&amp;</span> n_tareas_rapidas <span class="sc">&gt;=</span> <span class="dv">5</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">excluir_persona    =</span> excl_sin_inter <span class="sc">|</span> excl_rapidas) <span class="sc">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>personas <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(session_id, excl_sin_inter, excl_rapidas, excluir_persona)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>exclusiones <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_personas              =</span> <span class="fu">nrow</span>(personas),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_excl_sin_interaccion  =</span> <span class="fu">sum</span>(personas<span class="sc">$</span>excl_sin_inter),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_excl_rapidas          =</span> <span class="fu">sum</span>(personas<span class="sc">$</span>excl_rapidas),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_personas_final        =</span> n_personas <span class="sc">-</span> n_excl_sin_interaccion <span class="sc">-</span> n_excl_rapidas,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_resp_personas_validas =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(conjoint_long<span class="sc">$</span>respuesta) <span class="sc">&amp;</span> <span class="sc">!</span>conjoint_long<span class="sc">$</span>excluir_persona),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_prefirio_no_resp      =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(conjoint_long<span class="sc">$</span>respuesta) <span class="sc">&amp;</span> <span class="sc">!</span>conjoint_long<span class="sc">$</span>excluir_persona <span class="sc">&amp;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                                  conjoint_long<span class="sc">$</span>nr <span class="sc">%in%</span> <span class="dv">99</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_resp_final            =</span> n_resp_personas_validas <span class="sc">-</span> n_prefirio_no_resp,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># personas con al menos una respuesta válida tras aplicar todas las exclusiones</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_personas_disponibles  =</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>excluir_persona, <span class="sc">!</span><span class="fu">is.na</span>(respuesta), <span class="sc">!</span>(nr <span class="sc">%in%</span> <span class="dv">99</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n_distinct</span>(session_id)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(n)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(exclusiones,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Personas en la base"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Excluidas por falta de interacción"</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Excluidas por respuestas rápidas"</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Personas en la muestra analítica"</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Respuestas de personas no excluidas"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Respuestas 'prefiero no responder'"</span>,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Respuestas en la muestra analítica"</span>,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Personas disponibles tras las exclusiones"</span>),</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Exclusiones del CBC. Se excluye a las personas sin interacción registrada (hist) en al menos 5 de sus 6 tareas (q1-q6) y, de las restantes, a quienes respondieron en menos de 10 segundos al menos 5 de las tareas; luego se eliminan las respuestas donde prefirió no responder (nr = 99). Cada exclusión se cuenta una sola vez, en el orden indicado."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-muestra-analitica" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-muestra-analitica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Exclusiones del CBC. Se excluye a las personas sin interacción registrada (hist) en al menos 5 de sus 6 tareas (q1-q6) y, de las restantes, a quienes respondieron en menos de 10 segundos al menos 5 de las tareas; luego se eliminan las respuestas donde prefirió no responder (nr = 99). Cada exclusión se cuenta una sola vez, en el orden indicado.
+</figcaption>
+<div aria-describedby="tbl-muestra-analitica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Personas en la base</th>
+<th style="text-align: right;">Excluidas por falta de interacción</th>
+<th style="text-align: right;">Excluidas por respuestas rápidas</th>
+<th style="text-align: right;">Personas en la muestra analítica</th>
+<th style="text-align: right;">Respuestas de personas no excluidas</th>
+<th style="text-align: right;">Respuestas ‘prefiero no responder’</th>
+<th style="text-align: right;">Respuestas en la muestra analítica</th>
+<th style="text-align: right;">Personas disponibles tras las exclusiones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">683</td>
+<td style="text-align: right;">189</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">454</td>
+<td style="text-align: right;">3136</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">3035</td>
+<td style="text-align: right;">454</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>La <a href="#tbl-muestra-analitica" class="quarto-xref">Table&nbsp;4</a> muestra los N que contiene cada criterio de exclusión, y además todos los casos disponibles junto a las tareas. En síntesis, las últimas dos columnas de la tabla representan la muestra analítica.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>conjoint_long <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>excluir_persona,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(respuesta),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span>(nr <span class="sc">%in%</span> <span class="dv">99</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>hist, <span class="sc">-</span>nr, <span class="sc">-</span>n_tareas_sin_inter, <span class="sc">-</span>n_tareas_rapidas,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>         <span class="sc">-</span>excl_sin_inter, <span class="sc">-</span>excl_rapidas, <span class="sc">-</span>excluir_persona)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(conjoint_long)   # una fila por respondente x ejercicio válido</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># conjoint_long %&gt;% select(session_id, ejercicio, orden, respuesta)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Etiquetas de los niveles (letra del atributo -&gt; nombre y niveles)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>atributos <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>letra, <span class="sc">~</span>atributo,     <span class="sc">~</span>niveles,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"S"</span>, <span class="st">"sex"</span>,         <span class="fu">c</span>(<span class="st">"Hombre"</span>, <span class="st">"Mujer"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"N"</span>, <span class="st">"need"</span>,        <span class="fu">c</span>(<span class="st">"Dificultad"</span>, <span class="st">"Holgura"</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"I"</span>, <span class="st">"identity"</span>,    <span class="fu">c</span>(<span class="st">"Chile"</span>, <span class="st">"Venezuela"</span>, <span class="st">"Perú"</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"C"</span>, <span class="st">"control"</span>,     <span class="fu">c</span>(<span class="st">"Postuló a otras becas pero no obtuvo financiamiento"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"No alcanzó a postular a tiempo a otras becas"</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"E"</span>, <span class="st">"effort"</span>,      <span class="fu">c</span>(<span class="st">"Más que sus compañeros"</span>, <span class="st">"Igual que sus compañeros"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Menos que sus compañeros"</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R"</span>, <span class="st">"reciprocity"</span>, <span class="fu">c</span>(<span class="st">"Ha hecho voluntariado"</span>, <span class="st">"No ha hecho voluntariado"</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A"</span>, <span class="st">"attitude"</span>,    <span class="fu">c</span>(<span class="st">"Una ayuda que agradece"</span>, <span class="st">"Algo que se merece"</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># session_id identifica a cada respondente</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># cbc_attr_order_levels: "practice_A:A1N2...|practice_B:...|q1_A:...|..."</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>perfiles <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(session_id, cbc_attr_order_levels) <span class="sc">%&gt;%</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(cbc_attr_order_levels)) <span class="sc">%&gt;%</span>   <span class="co"># respondentes sin ejercicios asignados</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate_rows</span>(cbc_attr_order_levels, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">|"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(cbc_attr_order_levels, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"clave"</span>, <span class="st">"codigo"</span>), <span class="at">sep =</span> <span class="st">":"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate</span>(clave, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"ejercicio"</span>, <span class="st">"perfil"</span>), <span class="at">sep =</span> <span class="st">"_"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># una fila por respondente x ejercicio x perfil x atributo</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">par =</span> stringr<span class="sc">::</span><span class="fu">str_extract_all</span>(codigo, <span class="st">"[A-Z][0-9]"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unnest</span>(par) <span class="sc">%&gt;%</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">letra =</span> <span class="fu">substr</span>(par, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">nivel =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(par, <span class="dv">2</span>, <span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(atributos, <span class="at">by =</span> <span class="st">"letra"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">etiqueta =</span> purrr<span class="sc">::</span><span class="fu">map2_chr</span>(niveles, nivel, <span class="sc">~</span> .x[.y]),</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">columna =</span> <span class="fu">paste</span>(perfil, atributo, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(session_id, ejercicio, columna, etiqueta) <span class="sc">%&gt;%</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> columna, <span class="at">values_from =</span> etiqueta)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Se agregan a conjoint_long las características de los perfiles A y B</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>conjoint_long <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">any_of</span>(<span class="fu">setdiff</span>(<span class="fu">names</span>(perfiles), <span class="fu">c</span>(<span class="st">"session_id"</span>, <span class="st">"ejercicio"</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(perfiles, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"session_id"</span>, <span class="st">"ejercicio"</span>))</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(conjoint_long)  # mismas filas que antes de unir perfiles</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># conjoint_long %&gt;%</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(session_id, ejercicio, respuesta, starts_with("A_"), starts_with("B_"))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En cada ejercicio se reparten 2.000.000 entre los perfiles A y B.</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># El valor de cbc_* es el monto asignado al perfil B.</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>monto_total <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>conjoint_long <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">monto_B =</span> respuesta,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">monto_A =</span> monto_total <span class="sc">-</span> respuesta,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_B  =</span> monto_B <span class="sc">/</span> monto_total   <span class="co"># proporción del monto asignada a B</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(conjoint_long<span class="sc">$</span>monto_B <span class="sc">&gt;=</span> <span class="dv">0</span> <span class="sc">&amp;</span> conjoint_long<span class="sc">$</span>monto_B <span class="sc">&lt;=</span> monto_total,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formato por perfil: una fila por respondente x ejercicio x perfil (A o B).</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Incluye cbc_practice.</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>perfil_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"need"</span>, <span class="st">"identity"</span>, <span class="st">"control"</span>, <span class="st">"effort"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"reciprocity"</span>, <span class="st">"attitude"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>conjoint_perfil <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(session_id, ejercicio, orden, monto_A, monto_B, prop_B,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>         <span class="fu">starts_with</span>(<span class="st">"A_"</span>), <span class="fu">starts_with</span>(<span class="st">"B_"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="fu">starts_with</span>(<span class="st">"A_"</span>), <span class="fu">starts_with</span>(<span class="st">"B_"</span>)),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"perfil"</span>, <span class="st">".value"</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^([AB])_(.*)$"</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">monto =</span> <span class="fu">if_else</span>(perfil <span class="sc">==</span> <span class="st">"A"</span>, monto_A, monto_B),</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">share =</span> monto <span class="sc">/</span> monto_total,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">mas_recibe =</span> monto <span class="sc">&gt;</span> monto_total <span class="sc">/</span> <span class="dv">2</span>          <span class="co"># recibe más de la mitad</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(session_id, ejercicio, orden, perfil, monto, share,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>         <span class="fu">all_of</span>(perfil_cols)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(session_id, orden, perfil)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(conjoint_perfil)   # 2 filas por cada fila de conjoint_long</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(conjoint_perfil) <span class="sc">==</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">nrow</span>(conjoint_long))</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="co"># En cada ejercicio los dos shares suman 1</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(<span class="fu">abs</span>(<span class="fu">tapply</span>(conjoint_perfil<span class="sc">$</span>share,</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">list</span>(conjoint_perfil<span class="sc">$</span>session_id,</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>                              conjoint_perfil<span class="sc">$</span>ejercicio), sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">&lt;</span> <span class="fl">1e-9</span>,</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="co"># head(conjoint_perfil, 8)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<!-- Hay 23 filas de 11 sesiones donde cbc_attr_order_levels está vacío, así que sus atributos quedan en NA. Esas sesiones sí tienen cbc_profiles (el JSON con los perfiles), por lo que se podrían recuperar de ahí. -->
+</section>
+<section id="modelamiento" class="level1">
+<h1>Modelamiento</h1>
+<p>Siguiendo el punto 4 de las estrategias analíticas propuestas por Gilgen (pp.&nbsp;97–99), se estima un modelo lineal multinivel <span class="math inline">\(y_{it} = \mu_t + \beta x_{it} + \gamma z_i + \alpha_i + \varepsilon_{it}\)</span>, donde el nivel 1 son las tareas (<span class="math inline">\(t\)</span>, hasta 7 por persona) y el nivel 2 son los respondentes (<span class="math inline">\(i\)</span>). Como la unidad de nivel 1 es la tarea, cada fila corresponde a un ejercicio: la variable dependiente es el share del monto asignado al perfil B (<code>prop_B</code>; el del perfil A es <code>1 - prop_B</code>) y los predictores son la diferencia entre B y A en cada nivel de atributo, <code>1{B tiene el nivel} - 1{A tiene el nivel}</code>. Así, cada coeficiente es el cambio en el share de un perfil cuando pasa del nivel de referencia al nivel indicado . <span class="math inline">\(\mu_t\)</span> se incluye como un efecto fijo por ejercicio (<code>practice</code>, <code>q1</code>, …, <code>q6</code>) y <span class="math inline">\(\alpha_i\)</span> es un intercepto aleatorio por respondente.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Etiquetas: cada panel es un atributo e indica su categoría de referencia</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>ref_attr <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">atributo =</span> atributos<span class="sc">$</span>atributo,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel =</span> <span class="fu">paste0</span>(<span class="fu">c</span>(<span class="st">"Sexo"</span>, <span class="st">"Necesidad"</span>, <span class="st">"Identidad"</span>, <span class="st">"Control"</span>, <span class="st">"Esfuerzo"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Reciprocidad"</span>, <span class="st">"Actitud"</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"</span><span class="sc">\n</span><span class="st">(ref.: "</span>, purrr<span class="sc">::</span><span class="fu">map_chr</span>(atributos<span class="sc">$</span>niveles, <span class="dv">1</span>), <span class="st">")"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    stringr<span class="sc">::</span><span class="fu">str_wrap</span>(<span class="at">width =</span> <span class="dv">38</span>),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">niveles =</span> atributos<span class="sc">$</span>niveles</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Una fila por tarea (respondente x ejercicio), con los predictores como</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># diferencia B - A en cada nivel no referencial de cada atributo</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>niveles_ref <span class="ot">&lt;-</span> <span class="fu">setNames</span>(atributos<span class="sc">$</span>niveles, atributos<span class="sc">$</span>atributo)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>dif_cols <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">imap</span>(niveles_ref, <span class="cf">function</span>(niv, atr) {</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map</span>(niv[<span class="sc">-</span><span class="dv">1</span>], <span class="cf">function</span>(nv) {</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    nombre <span class="ot">&lt;-</span> <span class="fu">paste</span>(atr, nv, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="sc">!!</span><span class="at">nombre :=</span> <span class="fu">as.numeric</span>(conjoint_long[[<span class="fu">paste0</span>(<span class="st">"B_"</span>, atr)]] <span class="sc">==</span> nv) <span class="sc">-</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">as.numeric</span>(conjoint_long[[<span class="fu">paste0</span>(<span class="st">"A_"</span>, atr)]] <span class="sc">==</span> nv))</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">bind_cols</span>()</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">bind_cols</span>()</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Nombres sintácticos para la fórmula; se guarda la etiqueta original</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>dif_etiquetas <span class="ot">&lt;-</span> <span class="fu">names</span>(dif_cols)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dif_cols) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"x"</span>, <span class="fu">seq_along</span>(dif_cols))</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>dif_vars <span class="ot">&lt;-</span> <span class="fu">names</span>(dif_cols)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>datos_ml <span class="ot">&lt;-</span> conjoint_long <span class="sc">%&gt;%</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(session_id, ejercicio, prop_B) <span class="sc">%&gt;%</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(dif_cols) <span class="sc">%&gt;%</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"prop_B"</span>, dif_vars)), <span class="sc">~</span> <span class="sc">!</span><span class="fu">is.na</span>(.x))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ejercicio =</span> <span class="fu">factor</span>(ejercicio,</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"practice"</span>, <span class="fu">paste0</span>(<span class="st">"q"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># descomposición within-between (modelo híbrido, Allison 2009)</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(session_id) <span class="sc">%&gt;%</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(dif_vars),</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>                <span class="fu">list</span>(<span class="at">w =</span> <span class="sc">~</span> .x <span class="sc">-</span> <span class="fu">mean</span>(.x), <span class="at">b =</span> <span class="sc">~</span> <span class="fu">mean</span>(.x)),</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>                <span class="at">.names =</span> <span class="st">"{.col}_{.fn}"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="co"># c(n_tareas = nrow(datos_ml), n_respondentes = n_distinct(datos_ml$session_id))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modelo de efectos aleatorios: intercepto aleatorio por respondente</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>f_re <span class="ot">&lt;-</span> <span class="fu">reformulate</span>(<span class="fu">c</span>(dif_vars, <span class="st">"ejercicio"</span>, <span class="st">"(1 | session_id)"</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">response =</span> <span class="st">"prop_B"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>m_ml <span class="ot">&lt;-</span> <span class="fu">lmer</span>(f_re, <span class="at">data =</span> datos_ml, <span class="at">REML =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficientes de los atributos (x1..x9 = diferencia B - A), con IC 95% (Wald)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>datos_plot_ml <span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(m_ml, <span class="at">effects =</span> <span class="st">"fixed"</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">conf.method =</span> <span class="st">"Wald"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">%in%</span> dif_vars) <span class="sc">%&gt;%</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">etiqueta =</span> dif_etiquetas[<span class="fu">match</span>(term, dif_vars)],</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">atributo =</span> <span class="fu">sub</span>(<span class="st">"_.*$"</span>, <span class="st">""</span>, etiqueta),      <span class="co"># "identity_Perú" -&gt; "identity"</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">nivel    =</span> <span class="fu">sub</span>(<span class="st">"^[^_]+_"</span>, <span class="st">""</span>, etiqueta)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">select</span>(ref_attr, atributo, panel), <span class="at">by =</span> <span class="st">"atributo"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">panel =</span> <span class="fu">factor</span>(panel, <span class="at">levels =</span> ref_attr<span class="sc">$</span>panel),</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">nivel =</span> <span class="fu">factor</span>(nivel, <span class="at">levels =</span> <span class="fu">rev</span>(<span class="fu">unique</span>(nivel))))</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_plot_ml, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> nivel)) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> conf.low, <span class="at">xmax =</span> conf.high)) <span class="sc">+</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(panel <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">space =</span> <span class="st">"free_y"</span>, <span class="at">switch =</span> <span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cambio en el share (vs. categoría de referencia)"</span>, <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Modelo multinivel: efectos de los atributos sobre el share"</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"IC 95%. La categoría de referencia de cada atributo</span><span class="sc">\n</span><span class="st">se indica en el panel (efecto = 0). Controla por ejercicio; intercepto aleatorio por respondente."</span>) <span class="sc">+</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title.position =</span> <span class="st">"plot"</span>, <span class="at">plot.caption.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.placement =</span> <span class="st">"outside"</span>,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text.y.left =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="fl">0.6</span>, <span class="st">"lines"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="results-conjoint_files/figure-html/modelo-multinivel-1.png" class="img-fluid figure-img" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Componentes de varianza y correlación intraclase</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">VarCorr</span>(m_ml), <span class="at">comp =</span> <span class="fu">c</span>(<span class="st">"Variance"</span>, <span class="st">"Std.Dev."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups     Name        Variance  Std.Dev.
+ session_id (Intercept) 0.0013931 0.037324
+ Residual               0.0400558 0.200139</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">icc</span>(m_ml)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># Intraclass Correlation Coefficient
+
+    Adjusted ICC: 0.034
+  Unadjusted ICC: 0.027</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

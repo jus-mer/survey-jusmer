@@ -1,0 +1,460 @@
+---
+title: "Análisis del conjoint"
+date: today
+format:
+  html:
+    theme: cosmo
+    title-block-banner: "#8c0c0c"
+    title-block-banner-color: white
+code-fold: true
+execute:
+  warning: false
+  message: false
+---
+
+Este documento contiene los análisis preliminares del experimento conjoint aplicado en la encuesta del proyecto JUSMER. Los datos fueron recabados en el soft-launch aplicado en conjunto con Netquest entre los días 30 de octubre y 03 de noviembre. El objetivo de estos análisis es poder estimar la viabilidad del análisis del experimento en dos ámbitos: 1) si **la manera en que se almacenan los datos** permite operar las variables de tal manera para que sean analizadas 2) si las respuestas pueden considerarse **válidas en términos de calidad** para que sean analizables. En última instancia, este insumo puede servir como respaldo para la toma de contramedidas en la aplicación de la encuesta, y así re-negociar términos de acuerdo con Netquest para asegurar una muestra que contenga los casos válidos acordados en el módulo de conjoint.
+
+El documento se encarga de realizar el procesamiento de la base, configurando una muestra analítica mediante una serie de criterios que buscan asegurar la calidad de las respuestas. Con ello, al final se propone una sección de análisis de resultados.
+
+## Datos 
+```{r}
+#| label: carga-datos
+#| output: false
+library(readr)
+library(here)
+pacman::p_load(readr, here, dplyr)
+
+ola1 <- read_csv(here("conjoint-analysis", "ola1-jusmer.csv"))
+
+dim(ola1)
+head(ola1)
+```
+
+
+```{r}
+conjoint_df <- ola1 %>%
+  select(session_id, cbc_attr_order, cbc_profiles, consent_understand,
+         cbc_practice, cbc_q1, cbc_q2, cbc_q3, cbc_q4, cbc_q5, cbc_q6,
+         cbc_attr_order_levels,
+         cbc_q1_hist, cbc_q2_hist, cbc_q3_hist, cbc_q4_hist, cbc_q5_hist,
+         cbc_q6_hist,
+         cbc_practice_nr, cbc_q1_nr, cbc_q2_nr, cbc_q3_nr, cbc_q4_nr,
+         cbc_q5_nr, cbc_q6_nr,
+         time_p_cbc_intro, time_p_cbc_q1_page, time_p_cbc_q2_page,
+         time_p_cbc_q3_page, time_p_cbc_q4_page, time_p_cbc_q5_page,
+         time_p_cbc_q6_page, time_q_cbc_q1, time_q_cbc_q2, time_q_cbc_q3,
+         time_q_cbc_q4, time_q_cbc_q5, time_q_cbc_q6)
+
+conjoint_df <- conjoint_df %>%
+  filter(consent_understand == "yes")
+```
+
+## Casos válidos
+```{r}
+#| label: tbl-casos-validos
+cbc_vars <- c("cbc_practice", paste0("cbc_q", 1:6))
+
+casos_validos <- conjoint_df %>%
+  summarise(across(all_of(cbc_vars), list(
+    validos  = ~ sum(!is.na(.x)),
+    perdidos = ~ sum(is.na(.x))
+  ), .names = "{.col}__{.fn}")) %>%
+  tidyr::pivot_longer(everything(),
+                      names_to = c("pregunta", ".value"),
+                      names_sep = "__") %>%
+  mutate(n_total = validos + perdidos,
+         pct_validos = round(100 * validos / n_total, 1))
+
+knitr::kable(
+  casos_validos,
+  caption = "Casos válidos por pregunta del CBC.. Se consideran válidos todos los casos con respuesta registrada (no NA), incluidos los que tienen valor 0; perdidos son los casos sin respuesta (NA)."
+)
+```
+
+Podemos observar que en la @tbl-casos-validos los casos válidos van aumentando conforme el paso de las tareas del conjoint. Esto puede deberse a la pérdida de interes en la participación de los encuestados, aun así cuando es sección de la encuesta a nivel transversal
+
+## Descriptivos
+
+```{r}
+#| label: tbl-descriptivos-montos
+# Monto asignado al perfil B en cada tarea (el de A es 2.000.000 menos ese valor).
+# Base wide (conjoint_df), antes de aplicar las exclusiones por hist y nr.
+descriptivos_montos <- conjoint_df %>%
+  summarise(across(all_of(cbc_vars), list(
+    n        = ~ sum(!is.na(.x)),
+    media    = ~ mean(.x, na.rm = TRUE),
+    de       = ~ sd(.x, na.rm = TRUE),
+    min      = ~ min(.x, na.rm = TRUE),
+    p25      = ~ quantile(.x, 0.25, na.rm = TRUE),
+    mediana  = ~ median(.x, na.rm = TRUE),
+    p75      = ~ quantile(.x, 0.75, na.rm = TRUE),
+    max      = ~ max(.x, na.rm = TRUE),
+    pct_cero = ~ 100 * mean(.x[!is.na(.x)] == 0),
+    pct_mitad = ~ 100 * mean(.x[!is.na(.x)] == 1000000),
+    pct_todo = ~ 100 * mean(.x[!is.na(.x)] == 2000000)
+  ), .names = "{.col}__{.fn}")) %>%
+  tidyr::pivot_longer(everything(),
+                      names_to = c("tarea", ".value"),
+                      names_sep = "__") %>%
+  mutate(tarea = sub("^cbc_", "", tarea))
+
+# Formato: montos con separador de miles, porcentajes con una decimal
+fmt_monto <- function(x) format(round(x), big.mark = ".", decimal.mark = ",",
+                                scientific = FALSE, trim = TRUE)
+fmt_pct   <- function(x) format(round(x, 1), decimal.mark = ",", nsmall = 1,
+                                trim = TRUE)
+
+descriptivos_fmt <- descriptivos_montos %>%
+  mutate(across(c(media, de, min, p25, mediana, p75, max), fmt_monto),
+         across(c(pct_cero, pct_mitad, pct_todo), fmt_pct))
+
+knitr::kable(
+  descriptivos_fmt,
+  align = c("l", rep("r", 11)),
+  col.names = c("Tarea", "N", "Media", "DE", "Mín.", "P25", "Mediana", "P75",
+                "Máx.", "% = 0", "% = 1.000.000", "% = 2.000.000"),
+  caption = "Descriptivos del monto asignado al perfil B en cada tarea (el monto asignado al perfil A es 2.000.000 menos este valor). Base wide, antes de las exclusiones por interacción (hist) y no respuesta (nr). Las últimas tres columnas muestran el porcentaje de respuestas con todo el monto para A (0), reparto igualitario (1.000.000) y todo el monto para B (2.000.000)."
+)
+```
+
+La @tbl-descriptivos-montos nos muestra que la gran mayoría de las respuestas se encuentra en torno a $1.000.000, que es el monto en donde el slider comienza. Esto se respalda con la similitud que presenta la media con la mediana. Además, se puede observar en la penúltima columna que, a lo largo de las 7 tareas, más de un tercio de los respondentes marcaron la repartición de la beca en $1.000.000. Estas personas pueden ser quienes no interactuaron con la tarea, quienes no se inclinaron por ninguno de los dos perfiles o ambas.
+
+## Tiempos por tarea
+
+Para el cálculo del tiempo por tarea se aplicó una lógica similar al del análisis del pre-piloto: momento de la respuestade una tarea (time_q_cbc_qX) menos el momento en que se llegó a la página de la tarea (time_p_cbc_qX_page). La página de practice no registra hora de llegada (time_p_cbc_practice-page es todo NA), por lo que no se calcula su tiempo. Las diferencias negativas (inconsistencias de los registros) se dejan como NA.
+
+```{r}
+#| label: tbl-tiempos-tarea
+
+a_hora <- function(x) as.POSIXct(x, tz = "UTC")
+for (i in 1:6) {
+  conjoint_df[[paste0("tiempo_q", i)]] <- as.numeric(difftime(
+    a_hora(conjoint_df[[paste0("time_q_cbc_q", i)]]),
+    a_hora(conjoint_df[[paste0("time_p_cbc_q", i, "_page")]]),
+    units = "secs"))
+  conjoint_df[[paste0("tiempo_q", i)]][conjoint_df[[paste0("tiempo_q", i)]] < 0] <- NA
+}
+tiempo_vars <- paste0("tiempo_q", 1:6)
+
+tiempos_desc <- conjoint_df %>%
+  summarise(across(all_of(tiempo_vars), list(
+    n       = ~ sum(!is.na(.x)),
+    media   = ~ mean(.x, na.rm = TRUE),
+    de      = ~ sd(.x, na.rm = TRUE),
+    min     = ~ min(.x, na.rm = TRUE),
+    p25     = ~ quantile(.x, 0.25, na.rm = TRUE),
+    mediana = ~ median(.x, na.rm = TRUE),
+    p75     = ~ quantile(.x, 0.75, na.rm = TRUE),
+    max     = ~ max(.x, na.rm = TRUE)
+  ), .names = "{.col}__{.fn}")) %>%
+  tidyr::pivot_longer(everything(), names_to = c("tarea", ".value"),
+                      names_sep = "__") %>%
+  mutate(tarea = sub("^tiempo_", "", tarea))
+
+knitr::kable(tiempos_desc, digits = 1,
+  col.names = c("Tarea", "N", "Media", "DE", "Mín.", "P25", "Mediana", "P75", "Máx."),
+  caption = "Tiempo en segundos por tarea del CBC (llegada a la página hasta la respuesta). Se omiten diferencias negativas.")
+```
+
+La @tbl-tiempos-tarea presenta los descriptivos de los tiempos estimados por tarea. Al igual que en el análisis del pre-piloto, un estadístico confiable para la estimación de tiempos es la mediana, ya que no se ve afectaba por casos extremos. Considerando esto, se observa que los tiempos de respuesta disminuyen a medida que las personas avanzan en las tareas del conjoint. Esto podría sugerir que especialmente las últimas tareas no sean decididas cuidadosamente, por lo que debemos tomar precaución de ello.
+
+# De wide a long
+
+```{r}
+#| label: formato-long
+# Una fila por respondente x ejercicio. Además de la respuesta se traen:
+#   hist: historial de interacción con el control (NA = no interactuó);
+#         cbc_practice no tiene variable hist.
+#   nr:   99 = la persona prefirió no responder.
+conjoint_long <- conjoint_df %>%
+  rename_with(~ paste0(.x, "_resp"), all_of(cbc_vars)) %>%
+  tidyr::pivot_longer(
+    cols = matches("^cbc_(practice|q[1-6])_(resp|hist|nr)$"),
+    names_to = c("ejercicio", ".value"),
+    names_pattern = "^cbc_(practice|q[1-6])_(resp|hist|nr)$"
+  ) %>%
+  rename(respuesta = resp) %>%
+  mutate(
+    orden = match(ejercicio, c("practice", paste0("q", 1:6))) - 1  # 0 = practice
+  ) %>%
+  arrange(session_id, orden)
+```
+
+Para la construcción de la base analítica se proponen los siguientes criterios para la exclusión:
+
+1) Por persona: se cuentan las tareas q1-q6 sin interacción registrada
+  (hist = NA). Si son 5 o más, se excluye a la persona completa del análisis
+  (incluido practice). Las tareas sin interacción de quienes quedan se mantienen.
+
+2) Por respuesta: se eliminan las respuestas donde la persona prefirió no
+  responder (nr = 99) y las sin respuesta (NA).
+
+3) Por persona: se excluye a quienes se demoraron menos de 10 segundos en responder al menos 5 de las 6 tareas (q1-q6), pues podría sugerir que no respondieron a conciencia. El tiempo por tarea es el calculado en la sección anterior; las tareas sin tiempo no se cuentan como rápidas.
+
+```{r}
+
+conjoint_long <- conjoint_long %>%
+  group_by(session_id) %>%
+  mutate(n_tareas_sin_inter = sum(ejercicio != "practice" & is.na(hist)),
+         n_tareas_rapidas   = sum(c(first(tiempo_q1), first(tiempo_q2),
+                                    first(tiempo_q3), first(tiempo_q4),
+                                    first(tiempo_q5), first(tiempo_q6)) < 10,
+                                  na.rm = TRUE),
+         excl_sin_inter     = n_tareas_sin_inter >= 5,
+         excl_rapidas       = !excl_sin_inter & n_tareas_rapidas >= 5,
+         excluir_persona    = excl_sin_inter | excl_rapidas) %>%
+  ungroup()
+
+personas <- conjoint_long %>% distinct(session_id, excl_sin_inter, excl_rapidas, excluir_persona)
+
+```
+
+```{r}
+#| label: tbl-muestra-analitica
+
+exclusiones <- tibble::tibble(
+  n_personas              = nrow(personas),
+  n_excl_sin_interaccion  = sum(personas$excl_sin_inter),
+  n_excl_rapidas          = sum(personas$excl_rapidas),
+  n_personas_final        = n_personas - n_excl_sin_interaccion - n_excl_rapidas,
+  n_resp_personas_validas = sum(!is.na(conjoint_long$respuesta) & !conjoint_long$excluir_persona),
+  n_prefirio_no_resp      = sum(!is.na(conjoint_long$respuesta) & !conjoint_long$excluir_persona &
+                                  conjoint_long$nr %in% 99),
+  n_resp_final            = n_resp_personas_validas - n_prefirio_no_resp,
+  # personas con al menos una respuesta válida tras aplicar todas las exclusiones
+  n_personas_disponibles  = conjoint_long %>%
+    filter(!excluir_persona, !is.na(respuesta), !(nr %in% 99)) %>%
+    summarise(n = n_distinct(session_id)) %>% pull(n)
+)
+knitr::kable(exclusiones,
+  col.names = c("Personas en la base",
+                "Excluidas por falta de interacción",
+                "Excluidas por respuestas rápidas",
+                "Personas en la muestra analítica",
+                "Respuestas de personas no excluidas",
+                "Respuestas 'prefiero no responder'",
+                "Respuestas en la muestra analítica",
+                "Personas disponibles tras las exclusiones"),
+  caption = "Exclusiones del CBC. Se excluye a las personas sin interacción registrada (hist) en al menos 5 de sus 6 tareas (q1-q6) y, de las restantes, a quienes respondieron en menos de 10 segundos al menos 5 de las tareas; luego se eliminan las respuestas donde prefirió no responder (nr = 99). Cada exclusión se cuenta una sola vez, en el orden indicado.")
+```
+
+La @tbl-muestra-analitica muestra los N que contiene cada criterio de exclusión, y además todos los casos disponibles junto a las tareas. En síntesis, las últimas dos columnas de la tabla representan la muestra analítica.
+
+
+```{r}
+
+conjoint_long <- conjoint_long %>%
+  filter(!excluir_persona,
+         !is.na(respuesta),
+         !(nr %in% 99)) %>%
+  select(-hist, -nr, -n_tareas_sin_inter, -n_tareas_rapidas,
+         -excl_sin_inter, -excl_rapidas, -excluir_persona)
+
+# dim(conjoint_long)   # una fila por respondente x ejercicio válido
+# conjoint_long %>% select(session_id, ejercicio, orden, respuesta)
+```
+
+
+```{r}
+#| label: perfiles-por-ejercicio
+# Etiquetas de los niveles (letra del atributo -> nombre y niveles)
+atributos <- tibble::tribble(
+  ~letra, ~atributo,     ~niveles,
+  "S", "sex",         c("Hombre", "Mujer"),
+  "N", "need",        c("Dificultad", "Holgura"),
+  "I", "identity",    c("Chile", "Venezuela", "Perú"),
+  "C", "control",     c("Postuló a otras becas pero no obtuvo financiamiento",
+                        "No alcanzó a postular a tiempo a otras becas"),
+  "E", "effort",      c("Más que sus compañeros", "Igual que sus compañeros",
+                        "Menos que sus compañeros"),
+  "R", "reciprocity", c("Ha hecho voluntariado", "No ha hecho voluntariado"),
+  "A", "attitude",    c("Una ayuda que agradece", "Algo que se merece")
+)
+
+# session_id identifica a cada respondente
+# cbc_attr_order_levels: "practice_A:A1N2...|practice_B:...|q1_A:...|..."
+perfiles <- conjoint_long %>%
+  distinct(session_id, cbc_attr_order_levels) %>%
+  filter(!is.na(cbc_attr_order_levels)) %>%   # respondentes sin ejercicios asignados
+  tidyr::separate_rows(cbc_attr_order_levels, sep = "\\|") %>%
+  tidyr::separate(cbc_attr_order_levels, into = c("clave", "codigo"), sep = ":") %>%
+  tidyr::separate(clave, into = c("ejercicio", "perfil"), sep = "_") %>%
+  # una fila por respondente x ejercicio x perfil x atributo
+  mutate(par = stringr::str_extract_all(codigo, "[A-Z][0-9]")) %>%
+  tidyr::unnest(par) %>%
+  mutate(letra = substr(par, 1, 1), nivel = as.integer(substr(par, 2, 2))) %>%
+  left_join(atributos, by = "letra") %>%
+  mutate(etiqueta = purrr::map2_chr(niveles, nivel, ~ .x[.y]),
+         columna = paste(perfil, atributo, sep = "_")) %>%
+  select(session_id, ejercicio, columna, etiqueta) %>%
+  tidyr::pivot_wider(names_from = columna, values_from = etiqueta)
+
+# Se agregan a conjoint_long las características de los perfiles A y B
+conjoint_long <- conjoint_long %>%
+  select(-any_of(setdiff(names(perfiles), c("session_id", "ejercicio")))) %>%
+  left_join(perfiles, by = c("session_id", "ejercicio"))
+
+# dim(conjoint_long)  # mismas filas que antes de unir perfiles
+# conjoint_long %>%
+#   select(session_id, ejercicio, respuesta, starts_with("A_"), starts_with("B_"))
+```
+
+
+```{r}
+#| label: montos-asignados
+# En cada ejercicio se reparten 2.000.000 entre los perfiles A y B.
+# El valor de cbc_* es el monto asignado al perfil B.
+monto_total <- 2000000
+
+conjoint_long <- conjoint_long %>%
+  mutate(
+    monto_B = respuesta,
+    monto_A = monto_total - respuesta,
+    prop_B  = monto_B / monto_total   # proporción del monto asignada a B
+  )
+
+
+stopifnot(all(conjoint_long$monto_B >= 0 & conjoint_long$monto_B <= monto_total,
+              na.rm = TRUE))
+
+```
+
+
+```{r}
+#| label: formato-perfil
+# Formato por perfil: una fila por respondente x ejercicio x perfil (A o B).
+# Incluye cbc_practice.
+perfil_cols <- c("sex", "need", "identity", "control", "effort",
+                 "reciprocity", "attitude")
+
+conjoint_perfil <- conjoint_long %>%
+  select(session_id, ejercicio, orden, monto_A, monto_B, prop_B,
+         starts_with("A_"), starts_with("B_")) %>%
+  tidyr::pivot_longer(
+    cols = c(starts_with("A_"), starts_with("B_")),
+    names_to = c("perfil", ".value"),
+    names_pattern = "^([AB])_(.*)$"
+  ) %>%
+  mutate(
+    monto = if_else(perfil == "A", monto_A, monto_B),
+    share = monto / monto_total,
+    mas_recibe = monto > monto_total / 2          # recibe más de la mitad
+  ) %>%
+  select(session_id, ejercicio, orden, perfil, monto, share,
+         all_of(perfil_cols)) %>%
+  arrange(session_id, orden, perfil)
+
+# dim(conjoint_perfil)   # 2 filas por cada fila de conjoint_long
+stopifnot(nrow(conjoint_perfil) == 2 * nrow(conjoint_long))
+# En cada ejercicio los dos shares suman 1
+stopifnot(all(abs(tapply(conjoint_perfil$share,
+                         list(conjoint_perfil$session_id,
+                              conjoint_perfil$ejercicio), sum, na.rm = TRUE) - 1) < 1e-9,
+              na.rm = TRUE))
+# head(conjoint_perfil, 8)
+```
+
+<!-- Hay 23 filas de 11 sesiones donde cbc_attr_order_levels está vacío, así que sus atributos quedan en NA. Esas sesiones sí tienen cbc_profiles (el JSON con los perfiles), por lo que se podrían recuperar de ahí. -->
+
+# Modelamiento
+
+
+Siguiendo el punto 4 de las estrategias analíticas propuestas por Gilgen (pp. 97–99), se estima un modelo lineal
+multinivel $y_{it} = \mu_t + \beta x_{it} + \gamma z_i + \alpha_i + \varepsilon_{it}$,
+donde el nivel 1 son las tareas ($t$, hasta 7 por persona) y el nivel 2 son los
+respondentes ($i$). Como la unidad de nivel 1 es la tarea, cada fila corresponde
+a un ejercicio: la variable dependiente es el share del monto asignado al perfil
+B (`prop_B`; el del perfil A es `1 - prop_B`) y los predictores son la
+diferencia entre B y A en cada nivel de atributo, `1{B tiene el nivel} - 1{A
+tiene el nivel}`. Así, cada coeficiente es el cambio en el share de un perfil
+cuando pasa del nivel de referencia al nivel indicado . $\mu_t$ se incluye como un efecto fijo por ejercicio (`practice`, `q1`, ..., `q6`) y $\alpha_i$ es un intercepto aleatorio por respondente.
+
+```{r}
+#| label: datos-multinivel
+library(lme4)
+library(ggplot2)
+
+# Etiquetas: cada panel es un atributo e indica su categoría de referencia
+ref_attr <- tibble::tibble(
+  atributo = atributos$atributo,
+  panel = paste0(c("Sexo", "Necesidad", "Identidad", "Control", "Esfuerzo",
+                   "Reciprocidad", "Actitud"),
+                 "\n(ref.: ", purrr::map_chr(atributos$niveles, 1), ")") %>%
+    stringr::str_wrap(width = 38),
+  niveles = atributos$niveles
+)
+
+# Una fila por tarea (respondente x ejercicio), con los predictores como
+# diferencia B - A en cada nivel no referencial de cada atributo
+niveles_ref <- setNames(atributos$niveles, atributos$atributo)
+
+dif_cols <- purrr::imap(niveles_ref, function(niv, atr) {
+  purrr::map(niv[-1], function(nv) {
+    nombre <- paste(atr, nv, sep = "_")
+    tibble::tibble(!!nombre := as.numeric(conjoint_long[[paste0("B_", atr)]] == nv) -
+                     as.numeric(conjoint_long[[paste0("A_", atr)]] == nv))
+  }) %>% dplyr::bind_cols()
+}) %>% dplyr::bind_cols()
+
+# Nombres sintácticos para la fórmula; se guarda la etiqueta original
+dif_etiquetas <- names(dif_cols)
+names(dif_cols) <- paste0("x", seq_along(dif_cols))
+dif_vars <- names(dif_cols)
+
+datos_ml <- conjoint_long %>%
+  select(session_id, ejercicio, prop_B) %>%
+  bind_cols(dif_cols) %>%
+  filter(if_all(all_of(c("prop_B", dif_vars)), ~ !is.na(.x))) %>%
+  mutate(ejercicio = factor(ejercicio,
+                            levels = c("practice", paste0("q", 1:6)))) %>%
+  # descomposición within-between (modelo híbrido, Allison 2009)
+  group_by(session_id) %>%
+  mutate(across(all_of(dif_vars),
+                list(w = ~ .x - mean(.x), b = ~ mean(.x)),
+                .names = "{.col}_{.fn}")) %>%
+  ungroup()
+
+# c(n_tareas = nrow(datos_ml), n_respondentes = n_distinct(datos_ml$session_id))
+```
+
+
+```{r}
+#| label: modelo-multinivel
+#| fig-height: 7
+#| fig-width: 9
+# Modelo de efectos aleatorios: intercepto aleatorio por respondente
+f_re <- reformulate(c(dif_vars, "ejercicio", "(1 | session_id)"),
+                    response = "prop_B")
+m_ml <- lmer(f_re, data = datos_ml, REML = TRUE)
+
+# Coeficientes de los atributos (x1..x9 = diferencia B - A), con IC 95% (Wald)
+datos_plot_ml <- broom.mixed::tidy(m_ml, effects = "fixed", conf.int = TRUE,
+                                   conf.method = "Wald") %>%
+  filter(term %in% dif_vars) %>%
+  mutate(etiqueta = dif_etiquetas[match(term, dif_vars)],
+         atributo = sub("_.*$", "", etiqueta),      # "identity_Perú" -> "identity"
+         nivel    = sub("^[^_]+_", "", etiqueta)) %>%
+  left_join(select(ref_attr, atributo, panel), by = "atributo") %>%
+  mutate(panel = factor(panel, levels = ref_attr$panel),
+         nivel = factor(nivel, levels = rev(unique(nivel))))
+
+ggplot(datos_plot_ml, aes(x = estimate, y = nivel)) +
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
+  geom_pointrange(aes(xmin = conf.low, xmax = conf.high)) +
+  facet_grid(panel ~ ., scales = "free_y", space = "free_y", switch = "y") +
+  labs(x = "Cambio en el share (vs. categoría de referencia)", y = NULL,
+       title = "Modelo multinivel: efectos de los atributos sobre el share",
+       caption = "IC 95%. La categoría de referencia de cada atributo\nse indica en el panel (efecto = 0). Controla por ejercicio; intercepto aleatorio por respondente.") +
+  theme_minimal() +
+  theme(plot.title.position = "plot", plot.caption.position = "plot",
+        strip.placement = "outside",
+        strip.text.y.left = element_text(angle = 0, hjust = 1, face = "bold"),
+        panel.spacing.y = unit(0.6, "lines"))
+```
+
+```{r}
+#| label: varianza-multinivel
+# Componentes de varianza y correlación intraclase
+print(VarCorr(m_ml), comp = c("Variance", "Std.Dev."))
+performance::icc(m_ml)
+```
