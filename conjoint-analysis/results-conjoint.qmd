@@ -4,6 +4,7 @@ date: today
 format:
   html:
     theme: cosmo
+    embed-resources: true
     title-block-banner: "#8c0c0c"
     title-block-banner-color: white
 code-fold: true
