@@ -17,6 +17,11 @@ Este documento contiene los análisis preliminares del experimento conjoint apli
 
 El documento se encarga de realizar el procesamiento de la base, configurando una muestra analítica mediante una serie de criterios que buscan asegurar la calidad de las respuestas. Con ello, al final se propone una sección de análisis de resultados.
 
+
+<!-- -> solo para nosotros: varianza within de los tiempos de respuesta
+-> plot de varianza: distribución -->
+
+
 ## Datos 
 ```{r}
 #| label: carga-datos
@@ -31,10 +36,11 @@ dim(ola1)
 head(ola1)
 ```
 
+La base descargada directamente desde Supabase contiene 849 casos
 
 ```{r}
 conjoint_df <- ola1 %>%
-  select(session_id, cbc_attr_order, cbc_profiles, consent_understand,
+  select(session_id, manip_check, cbc_attr_order, cbc_profiles, consent_understand,
          cbc_practice, cbc_q1, cbc_q2, cbc_q3, cbc_q4, cbc_q5, cbc_q6,
          cbc_attr_order_levels,
          cbc_q1_hist, cbc_q2_hist, cbc_q3_hist, cbc_q4_hist, cbc_q5_hist,
@@ -50,31 +56,235 @@ conjoint_df <- conjoint_df %>%
   filter(consent_understand == "yes")
 ```
 
-## Casos válidos
-```{r}
-#| label: tbl-casos-validos
-cbc_vars <- c("cbc_practice", paste0("cbc_q", 1:6))
+Después de aplicar la selección de las variables asociadas al conjoint y el filtro del consentimiento, los casos disminuyen a 683. Es a partir de esta base que trabajaremos en las siguientes secciones
 
-casos_validos <- conjoint_df %>%
-  summarise(across(all_of(cbc_vars), list(
-    validos  = ~ sum(!is.na(.x)),
-    perdidos = ~ sum(is.na(.x))
-  ), .names = "{.col}__{.fn}")) %>%
-  tidyr::pivot_longer(everything(),
-                      names_to = c("pregunta", ".value"),
-                      names_sep = "__") %>%
-  mutate(n_total = validos + perdidos,
-         pct_validos = round(100 * validos / n_total, 1))
+# Casos válidos - sección para elaboración de reporte para Netquest
+```{r}
+# #| label: tbl-casos-validos
+# cbc_vars <- c("cbc_practice", paste0("cbc_q", 1:6))
+
+# casos_validos <- conjoint_df %>%
+#   summarise(across(all_of(cbc_vars), list(
+#     validos  = ~ sum(!is.na(.x)),
+#     perdidos = ~ sum(is.na(.x))
+#   ), .names = "{.col}__{.fn}")) %>%
+#   tidyr::pivot_longer(everything(),
+#                       names_to = c("pregunta", ".value"),
+#                       names_sep = "__") %>%
+#   mutate(n_total = validos + perdidos,
+#          pct_validos = round(100 * validos / n_total, 1))
+
+# knitr::kable(
+#   casos_validos,
+#   caption = "Casos válidos por pregunta del CBC. Se consideran válidos todos los casos con respuesta registrada (no NA), incluidos los que tienen valor 0; perdidos son los casos sin respuesta (NA)."
+# )
+```
+
+
+
+```{r}
+#| label: tbl-nr-abandono
+# Base: personas que llegaron a cbc-practice-page. La página de practice no
+# registra hora de llegada, por lo que se considera que llegó quien tiene
+# registro de la página de intro del CBC o de cualquier tarea (respuesta o nr).
+# Una tarea queda "registrada" si hay respuesta (no NA) o marcó nr = 99.
+cbc_vars <- c("cbc_practice", paste0("cbc_q", 1:6))
+registrada <- sapply(cbc_vars, function(v)
+  !is.na(conjoint_df[[v]]) | conjoint_df[[paste0(v, "_nr")]] %in% 99)
+llego <- !is.na(conjoint_df$time_p_cbc_intro) | rowSums(registrada) > 0
+
+# Abandono en la tarea k: sin registro en k ni en ninguna tarea posterior
+# (acumulado); "nuevos" = abandonan justo en esa tarea.
+sin_registro_posterior <- t(apply(registrada[llego, , drop = FALSE], 1,
+                                  function(z) rev(cumsum(rev(z))) == 0))
+n_base <- sum(llego)
+
+nr_abandono <- tibble::tibble(
+  tarea = sub("^cbc_", "", cbc_vars),
+  n_base = n_base,
+  n_nr = sapply(cbc_vars, function(v)
+    sum(conjoint_df[[paste0(v, "_nr")]][llego] %in% 99)),
+  # válidos: respuesta registrada sin marcar nr (se incluyen los valores 0)
+  n_validos = sapply(cbc_vars, function(v)
+    sum(!is.na(conjoint_df[[v]][llego]) & !(conjoint_df[[paste0(v, "_nr")]][llego] %in% 99))),
+  n_perdidos = n_base - n_validos - n_nr,
+  n_abandono = colSums(sin_registro_posterior),
+  n_salto = n_perdidos - n_abandono
+) %>%
+  mutate(across(c(n_validos, n_nr, n_perdidos),
+                ~ round(100 * .x / n_base, 1), .names = "pct_{.col}"))
+
+stopifnot(all(nr_abandono$n_salto >= 0))
+
+nr_abandono <- nr_abandono %>%
+  select(tarea, n_base, n_validos, pct_n_validos, n_nr, pct_n_nr,
+         n_perdidos, pct_n_perdidos, n_abandono, n_salto)
 
 knitr::kable(
-  casos_validos,
-  caption = "Casos válidos por pregunta del CBC.. Se consideran válidos todos los casos con respuesta registrada (no NA), incluidos los que tienen valor 0; perdidos son los casos sin respuesta (NA)."
+  nr_abandono,
+  col.names = c("Tarea", "N que comienza", "N Válido", "% válidos",
+                "Prefiere no responder", "% no responder",
+                "Perdidos", "% perdidos", "Perdidos por abandono",
+                "Perdidos sin abandono"),
+  caption = "Casos por tarea del CBC entre las personas que llegaron a cbc-practice-page. Válidos: respuesta registrada sin marcar 'Prefiero no responder' (incluye valor 0); No responder: nr = 99; Perdidos: sin respuesta (NA). Los perdidos se desagregan en quienes abandonan (sin registro en la tarea ni en ninguna posterior) y quienes se saltan la tarea pero siguen. Válidos + no responder + perdidos = N que comienza."
 )
 ```
 
-Podemos observar que en la @tbl-casos-validos los casos válidos van aumentando conforme el paso de las tareas del conjoint. Esto puede deberse a la pérdida de interes en la participación de los encuestados, aun así cuando es sección de la encuesta a nivel transversal
+Podemos observar que en la @tbl-nr-abandono son 667 las personas que inician la tarea del conjoint, lo cual difiere del total de la base que son 683. Aquí podemos asumir que estos 16 casos de diferencia son personas que abandonaron la encuesta antes de llegar a la sección del conjoint. Respecto a los resultados, los casos válidos van aumentando conforme el paso de las tareas del conjoint. Desde la tarea 1 hasta la tarea 7 el % casos válidos baja un 11,4% (de 91% a 79,6%), donde la gran mayoría de la disminución de casos se debe al abandono de la encuesta por parte de los respondentes. 
 
-## Descriptivos
+
+## Tiempos por tarea
+
+Para el cálculo del tiempo por tarea se aplicó una lógica similar al del análisis del pre-piloto: momento de la respuesta de una tarea (time_q_cbc_qX) menos el momento en que se llegó a la página de la tarea (time_p_cbc_qX_page). La página de practice no registra hora de llegada (time_p_cbc_practice-page es todo NA), por lo que no se calcula su tiempo. Las diferencias negativas (inconsistencias de los registros) se dejan como NA.
+
+```{r}
+#| label: tbl-tiempos-tarea
+
+a_hora <- function(x) as.POSIXct(x, tz = "UTC")
+for (i in 1:6) {
+  conjoint_df[[paste0("tiempo_q", i)]] <- as.numeric(difftime(
+    a_hora(conjoint_df[[paste0("time_q_cbc_q", i)]]),
+    a_hora(conjoint_df[[paste0("time_p_cbc_q", i, "_page")]]),
+    units = "secs"))
+  conjoint_df[[paste0("tiempo_q", i)]][conjoint_df[[paste0("tiempo_q", i)]] < 0] <- NA
+}
+tiempo_vars <- paste0("tiempo_q", 1:6)
+
+tiempos_desc <- conjoint_df %>%
+  summarise(across(all_of(tiempo_vars), list(
+    n       = ~ sum(!is.na(.x)),
+    media   = ~ mean(.x, na.rm = TRUE),
+    de      = ~ sd(.x, na.rm = TRUE),
+    min     = ~ min(.x, na.rm = TRUE),
+    p25     = ~ quantile(.x, 0.25, na.rm = TRUE),
+    mediana = ~ median(.x, na.rm = TRUE),
+    p75     = ~ quantile(.x, 0.75, na.rm = TRUE),
+    max     = ~ max(.x, na.rm = TRUE)
+  ), .names = "{.col}__{.fn}")) %>%
+  tidyr::pivot_longer(everything(), names_to = c("tarea", ".value"),
+                      names_sep = "__") %>%
+  mutate(tarea = sub("^tiempo_", "", tarea))
+
+knitr::kable(tiempos_desc, digits = 1,
+  col.names = c("Tarea", "N", "Media", "DE", "Mín.", "P25", "Mediana", "P75", "Máx."),
+  caption = "Tiempo en segundos por tarea del CBC (llegada a la página hasta la respuesta). Se omiten diferencias negativas.")
+```
+
+La @tbl-tiempos-tarea presenta los descriptivos de los tiempos estimados por tarea. Al igual que en el análisis del pre-piloto, un estadístico confiable para la estimación de tiempos es la mediana, ya que no se ve afectaba por casos extremos. Considerando esto, se observa que los tiempos de respuesta disminuyen a medida que las personas avanzan en las tareas del conjoint. Esto podría sugerir que especialmente las últimas tareas no sean decididas cuidadosamente, por lo que debemos tomar precaución de ello.
+
+## Criterios para decidir la muestra analítica
+
+1) Interacción con tarea: Se cuentan las tareas q1-q6 sin interacción registrada
+  (hist = NA). Si son 3 o más, se considera como caso potencialmente eliminable. Las tareas sin interacción de quienes quedan se mantienen.
+
+2) Respondentes rápidos: Quienes se demoraron menos de 10 segundos en responder 3 o más de las 6 tareas (q1-q6), se consideran como caso potencialmente eliminable, pues podría sugerir que no respondieron a conciencia. El tiempo por tarea es el calculado en la sección anterior; las tareas sin tiempo no se cuentan como rápidas.
+
+3) Comprensión de la tarea: Quienes no aciertan el check de manipulación se consideran como casos potencialmente eliminables, ya que son personas que están ejecutando una tarea que no entienden a cabalidad
+
+```{r}
+#| label: criterios-calidad
+#| output: false
+
+# Indicadores de calidad por persona (1 = sí, 0 = no), sobre conjoint_df.
+hist_vars <- paste0("cbc_q", 1:6, "_hist")
+
+conjoint_df <- conjoint_df %>%
+  mutate(
+    # 1) Interacción: 3 o más tareas (q1-q6) sin interacción con el slider
+    #    (hist = NA)
+    n_tareas_sin_inter = rowSums(across(all_of(hist_vars), is.na)),
+    sin_interaccion    = as.integer(n_tareas_sin_inter >= 3),
+    # 2) Rapidez: 3 o más tareas respondidas en menos de 11 segundos
+    #    (tareas sin tiempo no se cuentan como rápidas)
+    n_tareas_rapidas = rowSums(across(all_of(tiempo_vars), ~ .x < 11), na.rm = TRUE),
+    respuesta_rapida = as.integer(n_tareas_rapidas >= 3),
+    # 3) Comprensión: respuesta correcta en manip_check ("reparto");
+    #    NA si no respondió
+    comprension = as.integer(manip_check == "reparto")
+  )
+
+conjoint_df %>%
+  summarise(across(c(sin_interaccion, respuesta_rapida, comprension),
+                   list(si = ~ sum(.x == 1, na.rm = TRUE),
+                        no = ~ sum(.x == 0, na.rm = TRUE),
+                        na = ~ sum(is.na(.x)))))
+```
+
+```{r}
+#| label: cruces-criterios
+
+
+pacman::p_load(sjPlot)
+
+criterios_f <- conjoint_df %>%
+  transmute(
+    `Sin interacción (3+ tareas)` = factor(sin_interaccion, 0:1, c("No", "Sí")),
+    `Respuesta rápida (3+ tareas)` = factor(respuesta_rapida, 0:1, c("No", "Sí")),
+    `Comprensión (manip_check correcto)` = factor(comprension, 0:1, c("No", "Sí"))
+  )
+
+```
+
+```{r}
+#| label: tbl-inter-rap
+
+tab_xtab(criterios_f[[1]], criterios_f[[2]],
+         var.labels = names(criterios_f)[1:2],
+         show.row.prc = TRUE, title = "Interacción x rapidez")
+```
+
+```{r}
+#| label: tbl-inter-com
+
+tab_xtab(criterios_f[[1]], criterios_f[[3]],
+         var.labels = names(criterios_f)[c(1, 3)],
+         show.row.prc = TRUE, title = "Interacción x comprensión")
+```
+
+```{r}
+#| label: tbl-rap-com
+
+tab_xtab(criterios_f[[2]], criterios_f[[3]],
+         var.labels = names(criterios_f)[2:3],
+         show.row.prc = TRUE, title = "Rapidez x comprensión")
+```
+
+```{r}
+#| label: tbl-n-criterios
+# Un caso "cumple" un criterio de exclusión potencial si: no interactúa en 3+
+# tareas, responde rápido en 3+ tareas o falla el manip_check. Quienes no
+# respondieron el manip_check (NA) no se cuentan como falla de comprensión.
+criterios_n <- conjoint_df %>%
+  mutate(c_inter = sin_interaccion == 1,
+         c_rapida = respuesta_rapida == 1,
+         c_compr = comprension %in% 0,
+         n_criterios = c_inter + c_rapida + c_compr,
+         combinacion = if_else(
+           n_criterios == 0, "Ninguno",
+           sub("^ \\+ ", "",
+               paste0(if_else(c_inter, " + Sin interacción", ""),
+                      if_else(c_rapida, " + Respuesta rápida", ""),
+                      if_else(c_compr, " + No comprende", "")))))
+
+tabla_criterios <- criterios_n %>%
+  count(n_criterios, combinacion) %>%
+  mutate(pct = round(100 * n / sum(n), 1),
+         n_criterios = ifelse(n_criterios == 0, "0 criterios",
+                       ifelse(n_criterios == 1, "Solo 1 criterio",
+                       paste(n_criterios, "criterios simultáneos"))))
+
+knitr::kable(
+  tabla_criterios,
+  col.names = c("Criterios cumplidos", "Combinación", "N", "%"),
+  caption = "Casos según cuántos de los tres criterios potenciales de exclusión cumplen (sin interacción en 3+ tareas, respuesta rápida en 3+ tareas, falla en manip_check). Quienes no respondieron manip_check no se cuentan como falla de comprensión."
+)
+```
+
+
+A partir de la @tbl-n-criterios se observa que, al establecer estos tres criterios de potencial exclusión para el análisis, solamente un 42% no cuenta con ninguno de estos criterios, por lo que podríamos hablar de casos analizables en cuanto a la calidad de la respuesta. Por otro lado, al combinar 2 de cualquiera de los criterios establecidos, un 10% de las personas que **respondieron el conjoint** se encuentra en este grupo, quienes podrían excluirse de manera fundamentada ya que no cumplen con 2 de los 3 umbrales fijados para garantizar una respuesta de calidad.
+
+
+# Descriptivos
 
 ```{r}
 #| label: tbl-descriptivos-montos
@@ -120,46 +330,15 @@ knitr::kable(
 
 La @tbl-descriptivos-montos nos muestra que la gran mayoría de las respuestas se encuentra en torno a $1.000.000, que es el monto en donde el slider comienza. Esto se respalda con la similitud que presenta la media con la mediana. Además, se puede observar en la penúltima columna que, a lo largo de las 7 tareas, más de un tercio de los respondentes marcaron la repartición de la beca en $1.000.000. Estas personas pueden ser quienes no interactuaron con la tarea, quienes no se inclinaron por ninguno de los dos perfiles o ambas.
 
-## Tiempos por tarea
-
-Para el cálculo del tiempo por tarea se aplicó una lógica similar al del análisis del pre-piloto: momento de la respuestade una tarea (time_q_cbc_qX) menos el momento en que se llegó a la página de la tarea (time_p_cbc_qX_page). La página de practice no registra hora de llegada (time_p_cbc_practice-page es todo NA), por lo que no se calcula su tiempo. Las diferencias negativas (inconsistencias de los registros) se dejan como NA.
-
-```{r}
-#| label: tbl-tiempos-tarea
-
-a_hora <- function(x) as.POSIXct(x, tz = "UTC")
-for (i in 1:6) {
-  conjoint_df[[paste0("tiempo_q", i)]] <- as.numeric(difftime(
-    a_hora(conjoint_df[[paste0("time_q_cbc_q", i)]]),
-    a_hora(conjoint_df[[paste0("time_p_cbc_q", i, "_page")]]),
-    units = "secs"))
-  conjoint_df[[paste0("tiempo_q", i)]][conjoint_df[[paste0("tiempo_q", i)]] < 0] <- NA
-}
-tiempo_vars <- paste0("tiempo_q", 1:6)
-
-tiempos_desc <- conjoint_df %>%
-  summarise(across(all_of(tiempo_vars), list(
-    n       = ~ sum(!is.na(.x)),
-    media   = ~ mean(.x, na.rm = TRUE),
-    de      = ~ sd(.x, na.rm = TRUE),
-    min     = ~ min(.x, na.rm = TRUE),
-    p25     = ~ quantile(.x, 0.25, na.rm = TRUE),
-    mediana = ~ median(.x, na.rm = TRUE),
-    p75     = ~ quantile(.x, 0.75, na.rm = TRUE),
-    max     = ~ max(.x, na.rm = TRUE)
-  ), .names = "{.col}__{.fn}")) %>%
-  tidyr::pivot_longer(everything(), names_to = c("tarea", ".value"),
-                      names_sep = "__") %>%
-  mutate(tarea = sub("^tiempo_", "", tarea))
-
-knitr::kable(tiempos_desc, digits = 1,
-  col.names = c("Tarea", "N", "Media", "DE", "Mín.", "P25", "Mediana", "P75", "Máx."),
-  caption = "Tiempo en segundos por tarea del CBC (llegada a la página hasta la respuesta). Se omiten diferencias negativas.")
-```
-
-La @tbl-tiempos-tarea presenta los descriptivos de los tiempos estimados por tarea. Al igual que en el análisis del pre-piloto, un estadístico confiable para la estimación de tiempos es la mediana, ya que no se ve afectaba por casos extremos. Considerando esto, se observa que los tiempos de respuesta disminuyen a medida que las personas avanzan en las tareas del conjoint. Esto podría sugerir que especialmente las últimas tareas no sean decididas cuidadosamente, por lo que debemos tomar precaución de ello.
-
 # De wide a long
+
+Parae este análisis preliminar, se consideraron los siguientes criterios de exclusión para la construcción de la muestra analítica, los cuales difieren levemente de los criterios de la sección anterior:
+
+Por persona: se cuentan las tareas q1-q6 sin interacción registrada (hist = NA). Si son 5 o más, se excluye a la persona completa del análisis (incluido practice). Las tareas sin interacción de quienes quedan se mantienen.
+
+Por respuesta: se eliminan las respuestas donde la persona prefirió no responder (nr = 99) y las sin respuesta (NA).
+
+Por persona: se excluye a quienes se demoraron menos de 10 segundos en responder al menos 5 de las 6 tareas (q1-q6), pues podría sugerir que no respondieron a conciencia. El tiempo por tarea es el calculado en la sección anterior; las tareas sin tiempo no se cuentan como rápidas.
 
 ```{r}
 #| label: formato-long
@@ -181,16 +360,7 @@ conjoint_long <- conjoint_df %>%
   arrange(session_id, orden)
 ```
 
-Para la construcción de la base analítica se proponen los siguientes criterios para la exclusión:
 
-1) Por persona: se cuentan las tareas q1-q6 sin interacción registrada
-  (hist = NA). Si son 5 o más, se excluye a la persona completa del análisis
-  (incluido practice). Las tareas sin interacción de quienes quedan se mantienen.
-
-2) Por respuesta: se eliminan las respuestas donde la persona prefirió no
-  responder (nr = 99) y las sin respuesta (NA).
-
-3) Por persona: se excluye a quienes se demoraron menos de 10 segundos en responder al menos 5 de las 6 tareas (q1-q6), pues podría sugerir que no respondieron a conciencia. El tiempo por tarea es el calculado en la sección anterior; las tareas sin tiempo no se cuentan como rápidas.
 
 ```{r}
 
