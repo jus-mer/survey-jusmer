@@ -30,13 +30,19 @@ library(readr)
 library(here)
 pacman::p_load(readr, here, dplyr)
 
-ola1 <- read_csv(here("conjoint-analysis", "ola1-jusmer.csv"))
+ola1_raw <- read_csv(here("conjoint-analysis", "ola1-jusmer.csv"))
 
+# Filtro: solo respuestas iniciadas desde el 30 de octubre en adelante
+# (time_start viene como texto, p. ej. "2026-10-30 22:46:23 UTC"; los NA se excluyen)
+ola1 <- ola1_raw %>%
+  filter(as.Date(substr(time_start, 1, 10)) >= as.Date("2026-10-30"))
+
+dim(ola1_raw)
 dim(ola1)
 head(ola1)
 ```
 
-La base descargada directamente desde Supabase contiene 849 casos
+La base descargada directamente desde Supabase contiene 849 casos. Tras filtrar las respuestas iniciadas desde el 30 de octubre en adelante (excluyendo las anteriores y 4 casos sin fecha de inicio), la base inicial queda en 781 casos
 
 ```{r}
 conjoint_df <- ola1 %>%
@@ -56,7 +62,7 @@ conjoint_df <- conjoint_df %>%
   filter(consent_understand == "yes")
 ```
 
-Después de aplicar la selección de las variables asociadas al conjoint y el filtro del consentimiento, los casos disminuyen a 683. Es a partir de esta base que trabajaremos en las siguientes secciones
+Después de aplicar la selección de las variables asociadas al conjoint y el filtro del consentimiento, los casos disminuyen a 636. Es a partir de esta base que trabajaremos en las siguientes secciones
 
 # Casos válidos - sección para elaboración de reporte para Netquest
 ```{r}
@@ -130,7 +136,7 @@ knitr::kable(
 )
 ```
 
-Podemos observar que en la @tbl-nr-abandono son 667 las personas que inician la tarea del conjoint, lo cual difiere del total de la base que son 683. Aquí podemos asumir que estos 16 casos de diferencia son personas que abandonaron la encuesta antes de llegar a la sección del conjoint. Respecto a los resultados, los casos válidos van aumentando conforme el paso de las tareas del conjoint. Desde la tarea 1 hasta la tarea 7 el % casos válidos baja un 11,4% (de 91% a 79,6%), donde la gran mayoría de la disminución de casos se debe al abandono de la encuesta por parte de los respondentes. 
+Podemos observar que en la @tbl-nr-abandono son 620 las personas que inician la tarea del conjoint, lo cual difiere del total de la base que son 636. Aquí podemos asumir que estos 16 casos de diferencia son personas que abandonaron la encuesta antes de llegar a la sección del conjoint. Respecto a los resultados, los casos válidos van aumentando conforme el paso de las tareas del conjoint. Desde la tarea 1 hasta la tarea 7 el % casos válidos baja un 11% (de 93% a 82%), donde la gran mayoría de la disminución de casos se debe al abandono de la encuesta por parte de los respondentes. 
 
 
 ## Tiempos por tarea
@@ -281,7 +287,7 @@ knitr::kable(
 ```
 
 
-A partir de la @tbl-n-criterios se observa que, al establecer estos tres criterios de potencial exclusión para el análisis, solamente un 42% no cuenta con ninguno de estos criterios, por lo que podríamos hablar de casos analizables en cuanto a la calidad de la respuesta. Por otro lado, al combinar 2 de cualquiera de los criterios establecidos, un 10% de las personas que **respondieron el conjoint** se encuentra en este grupo, quienes podrían excluirse de manera fundamentada ya que no cumplen con 2 de los 3 umbrales fijados para garantizar una respuesta de calidad.
+A partir de la @tbl-n-criterios se observa que, al establecer estos tres criterios de potencial exclusión para el análisis, solamente un 44% no cuenta con ninguno de estos criterios, por lo que podríamos hablar de casos analizables en cuanto a la calidad de la respuesta. Por otro lado, al combinar 2 de cualquiera de los criterios establecidos, un 10% de las personas que **respondieron el conjoint** se encuentra en este grupo, quienes podrían excluirse de manera fundamentada ya que no cumplen con 2 de los 3 umbrales fijados para garantizar una respuesta de calidad.
 
 
 # Descriptivos
