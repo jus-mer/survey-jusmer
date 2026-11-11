@@ -1094,6 +1094,8 @@ server <- function(input, output, session) {
     #   - "Quotafull" (tp=qf_1): al ser filtrado por cuota (end_quotafull;
     #     ver cuotas_activas más arriba)
     #   - "Filterout" (tp=fo_0): al no aceptar el consentimiento (end_consent)
+    #   - "Calidad" (tp=dr_0): al no pasar el filtro de calidad (end_calidad;
+    #     ver falla_calidad() más abajo)
     # Se envían ticket=<ticket> (o <id_user> si el enlace no trae ticket) e
     # id_user=<id_user> aparte. Sin ninguno de los dos (p. ej. pruebas
     # locales) no se redirige. Se muestran en survey.qmd con uiOutput() y no
@@ -1122,6 +1124,7 @@ server <- function(input, output, session) {
     redirect_panel("redirect_complete", "co_0")
     redirect_panel("redirect_quotafull", "qf_1")
     redirect_panel("redirect_filterout", "fo_0")
+    redirect_panel("redirect_calidad", "dr_0")
   })
 
   # reCAPTCHA v3 (ver recaptcha_site_key más arriba): cada token que manda el
@@ -1312,6 +1315,72 @@ server <- function(input, output, session) {
     }, logical(1)))
   })
 
+  # Filtro de calidad: quien no lo pasa va a end_calidad (redirect "Calidad" de
+  # Nicequest, tp=dr_0). Cada condición se evalúa apenas se puede saber (reglas
+  # en sd_skip_if() abajo), para no hacer seguir a quien ya quedó fuera:
+  #   - manip_tareas:   al terminar el conjoint (cbc_q6_page). Falla el chequeo
+  #                     de manipulación (manip_check distinto de "reparto") y
+  #                     marca "Prefiero no responder" en 3 o más de las 6
+  #                     tareas (cbc_q1_nr..cbc_q6_nr; la de práctica no cuenta)
+  #   - manip_atencion: al pasar la página del chequeo de atención
+  #                     (prospective). Falla el chequeo de manipulación y el de
+  #                     atención (responde attention_check, que debía quedar en
+  #                     blanco)
+  #   - tiempo:         al terminar la última página (id-final). Tarda menos de
+  #                     MIN_MINUTOS_CALIDAD minutos desde el inicio de la sesión.
+  #                     En id-final se vuelven a revisar las tres condiciones,
+  #                     por si alguien cambió una respuesta volviendo atrás
+  # El resultado se guarda en filtro_calidad: las condiciones que cumplió
+  # separadas por ";" (p. ej. "manip_atencion;tiempo"), u "ok" si pasa todo al
+  # terminar id-final (queda vacío si abandona antes).
+  #
+  # Las respuestas se leen de session$userData$all_data (no de input), que
+  # también tiene las de páginas anteriores aunque la persona haya retomado la
+  # encuesta con cookies; time_start también se restaura desde la base, así
+  # que retomar no reinicia el tiempo. Las preguntas no se citan como input$x
+  # en la regla porque surveydown volvería obligatoria toda pregunta citada en
+  # sd_skip_if(), y attention_check debe poder quedar en blanco.
+  # (la variable de entorno solo sirve para probar en local; en Connect Cloud
+  # no está definida y vale 5)
+  MIN_MINUTOS_CALIDAD <- as.numeric(Sys.getenv("MIN_MINUTOS_CALIDAD", "5"))
+  sd_store_value("", "filtro_calidad")
+  valor_guardado <- function(id) {
+    v <- isolate(session$userData$all_data[[id]])
+    if (is.null(v) || length(v) == 0 || is.na(v[1])) "" else as.character(v[1])
+  }
+  # `revisar`: condiciones a evaluar en esa página. final = TRUE (id-final)
+  # guarda "ok" si pasa; en las demás páginas solo se guarda si falla.
+  falla_calidad <- function(revisar, final = FALSE) {
+    falla_manip <- !identical(valor_guardado("manip_check"), "reparto")
+    motivos <- c(
+      manip_tareas = if ("manip_tareas" %in% revisar) {
+        tareas_nr <- sum(vapply(paste0("cbc_q", 1:6, "_nr"),
+                                function(id) grepl("99", valor_guardado(id), fixed = TRUE), logical(1)))
+        falla_manip && tareas_nr >= 3
+      } else FALSE,
+      manip_atencion = if ("manip_atencion" %in% revisar) {
+        falla_manip && nzchar(valor_guardado("attention_check"))
+      } else FALSE,
+      tiempo = if ("tiempo" %in% revisar) {
+        inicio <- as.POSIXct(sub(" UTC$", "", valor_guardado("time_start")),
+                             tz = "UTC", format = "%Y-%m-%d %H:%M:%S")
+        minutos <- as.numeric(difftime(Sys.time(), inicio, units = "mins"))
+        !is.na(minutos) && minutos < MIN_MINUTOS_CALIDAD
+      } else FALSE
+    )
+    if (any(motivos) || final) {
+      resultado <- if (any(motivos)) paste(names(motivos)[motivos], collapse = ";") else "ok"
+      # Escritura directa (no sd_store_value(), que no reemplaza un valor ya
+      # guardado): si la persona vuelve a apretar "Siguiente", se guarda el
+      # resultado de la última evaluación.
+      isolate({
+        session$userData$all_data[["filtro_calidad"]] <- resultado
+        session$userData$changed_fields(c(session$userData$changed_fields(), "filtro_calidad"))
+      })
+    }
+    any(motivos)
+  }
+
   # Define any conditional skip logic here (skip to page if a condition is true)
   #
   # Ruteo de las dos formas (ver version_encuesta más arriba). Ojo:
@@ -1336,7 +1405,15 @@ server <- function(input, output, session) {
     version_encuesta == "B" & en_pagina(input$merit_8)          ~ "id-final",
     version_encuesta == "B" & en_pagina(input$ranking_ancla)    ~ "merit-1",
     version_encuesta == "A" & en_pagina(input$lucro_3)          ~ "deserve-1",
-    version_encuesta == "A" & en_pagina(input$adc_7)            ~ "id-final"
+    version_encuesta == "A" & en_pagina(input$adc_7)            ~ "id-final",
+
+    # Filtro de calidad (ver falla_calidad() más arriba), anclado a preguntas
+    # obligatorias de cada página: cbc_q6 (fin del conjoint), proy_1 (página
+    # del chequeo de atención) y educ_padres (id-final)
+    falla_calidad("manip_tareas") & en_pagina(input$cbc_q6)     ~ "end_calidad",
+    falla_calidad("manip_atencion") & en_pagina(input$proy_1)   ~ "end_calidad",
+    falla_calidad(c("manip_tareas", "manip_atencion", "tiempo"), final = TRUE) &
+      en_pagina(input$educ_padres) ~ "end_calidad"
   )
 
   # Block advancing past the ranking page until at least 3 of the 5 rows
@@ -1432,7 +1509,12 @@ server <- function(input, output, session) {
     id <- id
     observeEvent(input[[id]], {
       valor <- input[[id]]
-      if (is.null(valor) || length(valor) == 0 || all(!nzchar(valor))) borrar_valor_guardado(id)
+      if (is.null(valor) || length(valor) == 0 || all(!nzchar(valor))) {
+        borrar_valor_guardado(id)
+        # surveydown tampoco actualiza all_data al desmarcar (su observador
+        # ignora NULL), y falla_calidad() lee de ahí las tareas del conjoint
+        session$userData$all_data[[id]] <- ""
+      }
     }, ignoreNULL = FALSE, ignoreInit = TRUE)
   })
 

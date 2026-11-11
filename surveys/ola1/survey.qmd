@@ -1636,6 +1636,22 @@ Muchas gracias por su interés en participar. En este momento ya contamos con to
 # id_user muestra "Puede cerrar la ventana ahora."
 shiny::uiOutput("redirect_quotafull")
 
+# Sin botones de navegación (ver end_normal)
+sd_nav(show_previous = FALSE, show_next = FALSE)
+```
+
+--- end_calidad
+
+# Fin de la Encuesta
+
+¡La encuesta ha finalizado! ¡Gracias por su participación!
+
+```{r}
+# Redirect "Calidad" al panel de Nicequest (tp=dr_0): quien no pasa el
+# filtro de calidad al terminar id-final (ver falla_calidad() en app.R). Sin
+# id_user muestra "Puede cerrar la ventana ahora."
+shiny::uiOutput("redirect_calidad")
+
 # Sin botones de navegación (ver end_normal), por si se agrega otra página
 # después de esta
 sd_nav(show_previous = FALSE, show_next = FALSE)
