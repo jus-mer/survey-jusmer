@@ -1,0 +1,250 @@
+---
+title: "Deservingness criteria in educational opportunities: A distributive conjoint experiment on scholarship allocation."
+subtitle: "OSF Preregistration — DRAFT"
+date: today
+author: 
+  - JUSMER Team
+date-format: "DD MMMM, YYYY"
+format:
+  html:
+    toc: true
+    number-sections: true
+    html-math-method: katex
+    embed-resources: true
+    theme: cosmo
+editor: source
+bibliography: "../input/bib/jusmer.bib"
+csl: "../input/bib/apa6.csl"
+---
+
+# Study information
+
+## Title
+
+Deservingness criteria in educational opportunities: A distributive conjoint experiment on scholarship allocation.
+
+## Description
+
+Most research on welfare deservingness asks respondents to judge one claimant at a time. In that format a respondent can endorse every criterion at once and never has to trade one against another. This study uses a format that forces the trade-off. Respondents divide a fixed scholarship fund between two applicants, so whatever they give one applicant is taken from the other. The design adapts the Distributional Survey Experiment [@gilgen_disentangling_2022] to a paired-profile conjoint with full randomization [@hainmueller_causal_2014]. Applicant profiles vary the deservingness criteria of the CARIN and recast NICER frameworks (need, control, effort, reciprocity, attitude, identity) plus applicant sex [@oorschot_who_2000; @meuleman_welfare_2020; @knotz_recast_2022].
+
+We test six sets of claims:
+
+1. Each deservingness criterion shifts allocations in its theoretically expected direction (hypothesis below).
+2. Effort outweighs the other criteria, need included.
+3. How strongly respondents weigh the criteria depends sets on their education, gender and political orientation. This includes homophily effects: respondents favour applicants who resemble them, or who embody the traits their own position leads them to value.
+4. Education, gender and political orientation also predict how *unequally* respondents divide the fund, regardless of which applicant receives more.
+5. The deservingness orientations of respondents, as measured by the CARIN/NICER criteria in the survey scale, predict how they weigh the criteria in the allocation task. In particular, respondents who endorse a criterion in the survey give more weight to the corresponding attribute in the conjoint.
+6. The perceptions and preferences for meritocracy and privilege of respondents, as measured by the Castillo et al. (2023) scale, predict how respondents weigh the criteria in the allocation task. In particular, respondents who perceive more meritocracy give more weight to effort, and respondents who perceive more privilege give more weight to need.
+
+Chile is a strong test case for these claims. Its higher education system has one of the highest shares of private household spending in the OECD and is sharply stratified by social origin [@valenzuela_socioeconomic_2013]. Its population also holds unusually strong meritocratic beliefs relative to its level of inequality [@castillo_meritocracia_2019; @castillo_multidimensional_2023].
+
+## Hypotheses
+
+**Notation.** $\text{AMCE}_l(a \rightarrow b)$ is the change in the percentage of the fund given to an applicant when attribute $l$ moves from level $a$ to level $b$, averaged over the randomized distribution of all other attributes. All hypotheses refer to the share of the fund (0–100%) allocated to a profile.
+
+**Why respondent-level hypotheses are interactions.** Each task splits a fixed sum between two applicants. As a result, every respondent's mean allocation is exactly 50%. No respondent characteristic can predict that mean, so "main effects" of education, gender or political orientation on the outcome are null by construction. Respondent-level (level-2) hypotheses on the share are therefore stated as cross-level interactions: they predict differences in how much weight respondents give to each applicant attribute (Block C). Respondent characteristics can still have main effects on a different outcome: how far each split departs from 50/50, regardless of which applicant receives more (Block D).
+
+### Block A: Deservingness criteria (main effects; directional)
+
+| | Criterion | Contrast (reference → comparison) | Expected sign |
+|---|---|---|---|
+| **H1** | Need | Makes ends meet with comfort → with hardship | $> 0$ |
+| **H2** | Effort | Studies less than peers → the same → more than peers | $> 0$, monotonic: less < same < more |
+| **H3** | Control | Did not apply to other scholarships in time → applied but received no funding | $> 0$ |
+| **H4** | Reciprocity | Has not done volunteer work → has done volunteer work | $> 0$ |
+| **H5** | Attitude | Sees the scholarship as something they deserve → as help they are grateful for | $> 0$ |
+| **H6** | Identity | Born in Peru → born in Chile; born in Venezuela → born in Chile | $> 0$ for both |
+
+- **H1 (Need).** Applicants whose households struggle to make ends meet receive a larger share than applicants whose households live comfortably.
+- **H2 (Effort).** The share increases with the applicant's reported study effort relative to peers.
+- **H3 (Control).** Applicants who applied to other scholarships without success receive a larger share than applicants who did not apply in time. In the first case the lack of funding is beyond the applicant's control; in the second it is not.
+- **H4 (Reciprocity).** Applicants who have done volunteer work receive a larger share than those who have not.
+- **H5 (Attitude).** Applicants who see the scholarship as help they are grateful for receive a larger share than applicants who see it as something they are owed.
+- **H6 (Identity).** Applicants born in Chile receive a larger share than applicants born in Peru and than applicants born in Venezuela, reflecting in-group (national) favouritism [@oorschot_who_2000; @kootstra_deserving_2016].
+
+Applicant **sex** is not a deservingness criterion and has no directional main-effect hypothesis. In Gilgen's scholarship experiment the applicant's gender had no effect on allocations [@gilgen_disentangling_2022, pp. 113–114]. The sex main effect is estimated and reported as exploratory; it is the basis of the homophily hypothesis H10.
+
+### Block B: Effort primacy
+
+- **H7 (Effort outweighs the other criteria).** The effort contrast (less → more) is larger than each of the other criterion contrasts: control, reciprocity, attitude, and identity (Peru → Chile, Venezuela → Chile).
+
+*Rationale.* The scholarship is framed as a university award to admitted students, which casts the decision as an investment that should go to those who will make good use of it. Combined with Chile's strong meritocratic beliefs [@castillo_meritocracia_2019; @castillo_multidimensional_2023], this leads us to expect effort to dominate. This is a strong claim, taking into account that in Gilgen's Swiss scholarship experiment, need outweighed merit[@gilgen_disentangling_2022, pp. 113–115]. In her workplace setting, by contrast, merit dominated [@gilgen_principles_2025]. H7 therefore tests whether Chile's commodified higher education system and meritocratic culture move the scholarship decision toward the workplace pattern. A result showing need ≥ effort would replicate the Swiss pattern and is just as informative.
+
+### Block C: Respondent characteristics and homophily (cross-level interactions)
+
+$\delta$ denotes the interaction coefficient: the change in the attribute's AMCE per unit of the moderator (see Analysis plan).
+
+**Education**
+
+- **H8 (Education × effort).** The more educated the respondent, the larger the effort premium: $\delta_{\text{effort} \times \text{educ}} > 0$. Highly educated respondents have succeeded in the same credential-based system the scenario describes. They are expected to see educational success as earned and to reward the applicant who signals the effort they attribute to themselves (status legitimation and self-referential homophily). Gilgen found no class × merit interaction in the scholarship setting [@gilgen_disentangling_2022, pp. 123–124], so a null result is plausible.
+
+**Gender**
+
+- **H9 (Gender × need).** Women give more weight to need than men: $\delta_{\text{need} \times \text{female}} > 0$. This follows from the expectation that women hold more egalitarian and need-oriented justice preferences [@gilgen_disentangling_2022, hypothesis 2].
+- **H10 (Gender homophily).** Women give a larger premium to female applicants than men do: $\delta_{\text{female applicant} \times \text{female respondent}} > 0$. Respondents are expected to favour claimants who share their gender.
+
+**Political orientation** (left–right self-placement, 0 = left, 10 = right)
+
+- **H11 (Ideology × effort).** Respondents further to the right give more weight to effort: $\delta_{\text{effort} \times \text{right}} > 0$.
+- **H12 (Ideology × need).** Respondents further to the right give less weight to need: $\delta_{\text{need} \times \text{right}} < 0$.
+- **H13 (Ideology × identity; national in-group).** Respondents further to the right give a larger premium to Chilean-born applicants: $\delta_{\text{identity} \times \text{right}} > 0$ for both contrasts (Peru → Chile, Venezuela → Chile).
+
+### Block D: Inequality of allocations (respondent-level main effects)
+
+The outcome in this block is the **allocation inequality** of a task, $D_{it} = |\text{share}_{i1t} - 50|$. It equals the distance of the split from an equal division: 0 means the respondent split the fund 50/50, and 50 means one applicant received everything. Unlike the share, $D_{it}$ is not fixed by design, so it can differ between respondents. It measures how strongly a respondent applies the equality principle relative to the differentiating principles (need and merit), whatever the direction of the differentiation [@gilgen_disentangling_2022; @gilgen_principles_2025].
+
+- **H14 (Gender).** Women divide the fund more equally than men: $\gamma_{\text{female}} < 0$. This follows from the expectation that women hold more egalitarian justice preferences [@gilgen_disentangling_2022, hypothesis 2]. The prior evidence for this setting is weak: Gilgen found more equal splits among women in three of her four settings, but not in the scholarship setting [@gilgen_disentangling_2022, pp. 116–117], and male and female respondents did not differ in the inequality their allocations produced in the workplace setting [@gilgen_principles_2025].
+- **H15 (Education).** More educated respondents divide the fund less equally: $\gamma_{\text{educ}} > 0$. Higher-status respondents are expected to accept larger differences between claimants. In Gilgen's data, respondents who placed themselves in a lower class split equally more often, and this difference was significant in the scholarship setting [@gilgen_disentangling_2022, pp. 117–118]. Respondents with higher subjective class produced more unequal distributions in the workplace setting [@gilgen_principles_2025].
+- **H16 (Political orientation).** Respondents further to the right divide the fund less equally: $\gamma_{\text{right}} > 0$. Left–right self-placement captures, among other things, support for equality as a distributive goal.
+
+### Block E: Deservingness orientations (cross-level interactions)
+
+Respondents who endorse a deservingness criterion in the survey scale are expected to apply it in the allocation task, giving more weight to the corresponding applicant attribute: $\delta_{\text{attribute} \times \text{orientation}} > 0$. Each orientation is scored so that higher values mean stronger endorsement of the criterion (see Indices).
+
+| | Survey orientation | Conjoint contrast |
+|---|---|---|
+| **H17** | Need (`nec_1`–`nec_3`) | Comfort → hardship |
+| **H18** | Effort (`esf_1`–`esf_5`) | Less → more than peers |
+| **H19** | Control (`control_1`–`control_3`) | Did not apply in time → applied but not funded |
+| **H20** | Reciprocity (`reciproc_1`–`reciproc_3`, `actitud_4`) | No volunteer work → volunteer work |
+| **H21** | Attitude (`actitud_1`–`actitud_2`) | Deserves it → grateful for it |
+| **H22** | Identity (`id_1`–`id_3`) | Peru → Chile; Venezuela → Chile |
+
+### Block F: Meritocracy and privilege perceptions (cross-level interactions)
+
+Perceptions are measured with the scale of @castillo_multidimensional_2023. Meritocracy perception is the mean of `merit_1`–`merit_2` (in Chile people are rewarded for their effort / talent). Privilege perception is the mean of `merit_3`–`merit_4` (in Chile those with rich parents / good contacts do better in life). Both are standardized.
+
+- **H23 (Meritocracy perception × effort).** Respondents who perceive more meritocracy give more weight to effort: $\delta_{\text{effort} \times \text{merit}} > 0$. Those who believe effort is rewarded in society are expected to apply the same principle when allocating.
+- **H24 (Privilege perception × need).** Respondents who perceive more privilege give more weight to need: $\delta_{\text{need} \times \text{privilege}} > 0$. Those who see outcomes as driven by family background are expected to compensate applicants facing economic hardship.
+
+# Design plan
+
+## Study type
+
+Experiment: a randomized conjoint (factorial) distributive survey experiment embedded in an online survey.
+
+## Blinding
+
+No blinding is involved in this study. Respondents are not told that applicant attributes are randomized or which hypotheses are tested.
+
+## Study design
+
+Within-subject paired-profile distributive conjoint. Respondents imagine they sit on a university committee that awards a first-year scholarship. In each task they see two applicants, admitted to the same paid program at the same institution, whose information was verified by their secondary school. They divide a fund of CLP 2,000,000 between the two applicants with a slider that starts at an even split. Each respondent completes seven allocation screens:
+
+| Task | Stored as | Content |
+|---|---|---|
+| Practice | `cbc_practice` | Randomized pair, presented as a practice task and followed by the comprehension check |
+| 1–5 | `cbc_q1`–`cbc_q5` | Randomized pairs |
+| Repeat | `cbc_q6` | The practice pair again, with the two profiles' sides swapped |
+
+The five analysis tasks (1–5) give 10 profile evaluations per respondent. The practice task and its repeat are used to measure intra-respondent reliability.
+
+**Repeated task for intra-respondent reliability (IRR).** Following @clayton_correcting_2026, the last screen repeats the practice pair with the two profiles' sides swapped (left ↔ right). The practice task is not used for modelling, only for the IRR. Comparing the respondent's two allocations to the same profile measures how consistently they answer the conjoint, independently of which side of the screen each profile appears on.
+
+Each profile varies seven attributes. Levels are listed with their Spanish wording; the first level listed is the reference category.
+
+| Attribute | Levels (reference first) |
+|---|---|
+| Need | Comfort *(Holgura)*; Hardship *(Dificultad)* |
+| Effort | Less than peers *(Menos que sus compañeros)*; The same *(Igual)*; More *(Más)* |
+| Control | Did not apply to other scholarships in time; Applied but received no funding |
+| Reciprocity | Has not done volunteer work; Has done volunteer work |
+| Attitude | Something they deserve *(Algo que se merece)*; Help they are grateful for *(Una ayuda que agradece)* |
+| Identity | Peru; Venezuela; Chile (both foreign-born levels are contrasted with Chile; see Transformations) |
+| Sex | Male / Female |
+
+This gives 288 unique profiles.
+
+## Randomization
+
+Attribute levels are drawn independently and uniformly for every profile ($1/2$ per level for two-level attributes, $1/3$ for Effort and Identity), anew for each respondent and task. The only restriction applies to the pair: the two profiles in a task must differ on at least two of the six CARIN/NICER attributes, and a pair that does not is redrawn. Sex is excluded from this check. The restriction leaves every attribute's marginal distribution unchanged.
+
+The left/right position of each profile is randomized. The order of the attribute rows is randomized once per respondent and then held constant across that respondent's tasks. Randomization is performed by the survey software (`surveydown`) at run time.
+
+The practice task and tasks 1–5 are drawn as described above. The repeat is not a separate draw: it copies the practice pair with the sides swapped.
+
+# Sampling plan
+
+## Existing data
+
+This registration prior to creation of the dataset and after a soft-launch of the survey with few cases in order to address some final implementation and viability issues.  
+
+## Data collection procedures
+
+Online survey programmed in `surveydown`, administered to a Chilean adult sample target of 4,500 cases by a commercial panel provider (Netquest). The survey was deployed in Posit Cloud and the data was collected and saved in a Supabase database. The survey is in Spanish and takes approximately 20 minutes to complete. The data collection is planned to be completed in mid-december 2026, and a second and third waves follow in 2027. Hypothesis that involve longitudinal data will be registered in a separate preregistration.
+
+## Sample size
+
+4.500 respondents in the first wave.
+
+## Sample size rationale
+
+The power analysis was conducted by using as a reference the criteria and the effect sizes reported in @gilgen_disentangling_2022, and calculated using cjpowR by Schuesser & Freitag [-@schuessler_power_2020]. Given power=0.8, alpha=0.05, levels=3, tasks=5, profiles=2  and AMCE 0.03, the proposed sample size is 1.309 respondents. This size is our target in wave three, which accounting for attrition according to the panel provider, is expected to yield 4.500 respondents in wave one.
+
+## Stopping rule
+
+Data collection stops when the panel provider delivers the target number of completed interviews within the quota cells.
+
+# Variables
+
+## Manipulated variables
+
+The seven applicant attributes listed under Study design, with the reference categories stated there.
+
+## Measured variables
+
+**Outcome.** The share of the fund (0–100%) allocated to each profile. The slider records the peso amount given to the right-hand applicant; the left-hand applicant receives the complement. Amounts are converted to percentages, and the two shares in a task sum to 100.
+
+**Allocation inequality (Block D).** $D_{it} = |\text{share}_{i1t} - 50|$, ranging from 0 (equal split) to 50 (all to one applicant). It is one value per task; using either applicant's share gives the same value. Secondary measure: an indicator for an exact equal split ($D_{it} = 0$).
+
+**Respondent moderators** (all measured after the conjoint module):
+
+| Moderator | Survey item | Coding for confirmatory tests |
+|---|---|---|
+| Education | `education`, 0–9 ("Sin estudios" … "Posgrado") | Primary: completed tertiary education (codes 6, 8, 9) = 1, otherwise 0. Robustness: 0–9 treated as continuous and standardized. "Prefiero no decir" is set to missing. |
+| Gender | `sexo` (0 = male, 1 = female) | Female = 1. Category "Otro" (99) is excluded from H9–H10 models. |
+| Political orientation | `posicion_politica`, 0–10 (left–right) | Continuous, standardized. "Independiente", "Ninguno" and "Prefiero no responder" (`posicion_politica_nr`) are excluded from H11–H13 models; see Exploratory analysis. |
+
+**Intra-respondent reliability.** For each respondent, the shares given to the same profile in the practice task and in its repeat are compared. Two measures are computed:
+
+- **Directional consistency:** whether the same profile receives more than 50% in both tasks (or exactly 50% in both). This is the analogue of the agreement rate that @clayton_correcting_2026 define for binary choices.
+- **Continuous discrepancy:** the absolute difference between the two shares given to the same profile (0–100 pp).
+
+At the sample level we report the proportion of respondents who are directionally consistent, the mean and median discrepancy, and the correlation between the two shares.
+
+**Quality-control measures:** comprehension check (`manip_check`), attention check (instructed-response item), completion time overall and on the conjoint module, slider movement in each task, careless response patterns, and the "Prefiero no responder" option in each task (`cbc_qX_nr`).
+
+## Indices
+
+**Deservingness orientations (H17–H22).** Each is the mean of its items, after reverse-coding so that higher values mean stronger endorsement of the criterion: `control_1`–`control_3`, `actitud_2`, `actitud_4`, `id_2`, `esf_3` and `esf_5` are reversed. Scores are standardized.
+
+**Meritocracy and privilege perceptions (H23–H24).** Meritocracy perception (mean of `merit_1`–`merit_2`) and privilege perception (mean of `merit_3`–`merit_4`) [@castillo_multidimensional_2023], standardized.
+
+For all indices, "No sabe / No responde" is set to missing, and the index is computed if at least half of its items are answered. The preference items (`merit_5`–`merit_8`) are used only in exploratory analysis.
+
+# Analysis plan
+
+## Statistical models
+
+The quantity of interest is the average marginal component effect (AMCE) [@hainmueller_causal_2014], estimated with linear mixed models with respondent random effects (one row per task, since the two shares sum to 100). H8–H13 and H17–H24 are tested as cross-level interactions between the respondent characteristic and the focal attribute. H14–H16 use the distance of each split from 50/50 as the outcome. Subgroup results are also reported as marginal means [@leeper_measuring_2020]. As a robustness check, all models are re-estimated with OLS and respondent-clustered standard errors.
+
+## Transformations
+
+Peso amounts are converted to percentages of the fund.
+
+## Inference criteria
+
+One-sided tests at $\alpha = .05$, Holm-corrected within each hypothesis block.
+
+## Data exclusion
+
+Respondents who fail the comprehension check are excluded. Results are also reported excluding speeders and inconsistent respondents in the repeated task.
+
+## Missing data
+
+Unanswered tasks are dropped; no imputation.
+
+# References
+
+::: {#refs}
+:::
