@@ -1,5 +1,6 @@
 ---
-title: "Análisis del conjoint"
+title: "Análisis de factibilidad del módulo experimental: Encuesta JUSMER"
+author: Equipo JUSMER
 date: today
 format:
   html:
@@ -13,9 +14,9 @@ execute:
   message: false
 ---
 
-Este documento contiene los análisis preliminares del experimento conjoint aplicado en la encuesta del proyecto JUSMER. Los datos fueron recabados en el soft-launch aplicado en conjunto con Netquest entre los días 30 de octubre y 03 de noviembre. El objetivo de estos análisis es poder estimar la viabilidad del análisis del experimento en dos ámbitos: 1) si **la manera en que se almacenan los datos** permite operar las variables de tal manera para que sean analizadas 2) si las respuestas pueden considerarse **válidas en términos de calidad** para que sean analizables. En última instancia, este insumo puede servir como respaldo para la toma de contramedidas en la aplicación de la encuesta, y así re-negociar términos de acuerdo con Netquest para asegurar una muestra que contenga los casos válidos acordados en el módulo de conjoint.
+Este documento contiene el análisis de la tarea de asignación aplicada en la encuesta del proyecto JUSMER. Los datos fueron recabados en el soft-launch aplicado en conjunto con Netquest entre los días 30 de octubre y 03 de noviembre. El objetivo de estos análisis es poder estimar la viabilidad del análisis del experimento en dos ámbitos: 1) si **el formato de almacenamiento de los datos** permite operar las variables de tal manera para que sean analizadas 2) si las respuestas pueden considerarse **válidas en términos de calidad** para que sean analizables. En última instancia, este insumo puede servir como respaldo para la toma de contramedidas en la aplicación de la encuesta, y así re-negociar términos de acuerdo con Netquest para asegurar una muestra que contenga los casos válidos acordados en el módulo de conjoint.
 
-El documento se encarga de realizar el procesamiento de la base, configurando una muestra analítica mediante una serie de criterios que buscan asegurar la calidad de las respuestas. Con ello, al final se propone una sección de análisis de resultados.
+El documento se encarga de realizar el procesamiento de la base, configurando una muestra analítica mediante una serie de criterios que buscan asegurar la calidad de las respuestas
 
 
 <!-- -> solo para nosotros: varianza within de los tiempos de respuesta
@@ -338,7 +339,7 @@ La @tbl-descriptivos-montos nos muestra que la gran mayoría de las respuestas s
 
 # De wide a long
 
-Parae este análisis preliminar, se consideraron los siguientes criterios de exclusión para la construcción de la muestra analítica, los cuales difieren levemente de los criterios de la sección anterior:
+Para la construcción de la base, se consideraron los siguientes criterios de exclusión para la construcción de la muestra analítica, los cuales difieren levemente de los criterios de la sección anterior:
 
 Por persona: se cuentan las tareas q1-q6 sin interacción registrada (hist = NA). Si son 5 o más, se excluye a la persona completa del análisis (incluido practice). Las tareas sin interacción de quienes quedan se mantienen.
 
@@ -533,105 +534,6 @@ stopifnot(all(abs(tapply(conjoint_perfil$share,
 
 <!-- Hay 23 filas de 11 sesiones donde cbc_attr_order_levels está vacío, así que sus atributos quedan en NA. Esas sesiones sí tienen cbc_profiles (el JSON con los perfiles), por lo que se podrían recuperar de ahí. -->
 
-# Modelamiento
+# Viabilidad de estimación
 
-
-Siguiendo el punto 4 de las estrategias analíticas propuestas por Gilgen (pp. 97–99), se estima un modelo lineal
-multinivel $y_{it} = \mu_t + \beta x_{it} + \gamma z_i + \alpha_i + \varepsilon_{it}$,
-donde el nivel 1 son las tareas ($t$, hasta 7 por persona) y el nivel 2 son los
-respondentes ($i$). Como la unidad de nivel 1 es la tarea, cada fila corresponde
-a un ejercicio: la variable dependiente es el share del monto asignado al perfil
-B (`prop_B`; el del perfil A es `1 - prop_B`) y los predictores son la
-diferencia entre B y A en cada nivel de atributo, `1{B tiene el nivel} - 1{A
-tiene el nivel}`. Así, cada coeficiente es el cambio en el share de un perfil
-cuando pasa del nivel de referencia al nivel indicado . $\mu_t$ se incluye como un efecto fijo por ejercicio (`practice`, `q1`, ..., `q6`) y $\alpha_i$ es un intercepto aleatorio por respondente.
-
-```{r}
-#| label: datos-multinivel
-library(lme4)
-library(ggplot2)
-
-# Etiquetas: cada panel es un atributo e indica su categoría de referencia
-ref_attr <- tibble::tibble(
-  atributo = atributos$atributo,
-  panel = paste0(c("Sexo", "Necesidad", "Identidad", "Control", "Esfuerzo",
-                   "Reciprocidad", "Actitud"),
-                 "\n(ref.: ", purrr::map_chr(atributos$niveles, 1), ")") %>%
-    stringr::str_wrap(width = 38),
-  niveles = atributos$niveles
-)
-
-# Una fila por tarea (respondente x ejercicio), con los predictores como
-# diferencia B - A en cada nivel no referencial de cada atributo
-niveles_ref <- setNames(atributos$niveles, atributos$atributo)
-
-dif_cols <- purrr::imap(niveles_ref, function(niv, atr) {
-  purrr::map(niv[-1], function(nv) {
-    nombre <- paste(atr, nv, sep = "_")
-    tibble::tibble(!!nombre := as.numeric(conjoint_long[[paste0("B_", atr)]] == nv) -
-                     as.numeric(conjoint_long[[paste0("A_", atr)]] == nv))
-  }) %>% dplyr::bind_cols()
-}) %>% dplyr::bind_cols()
-
-# Nombres sintácticos para la fórmula; se guarda la etiqueta original
-dif_etiquetas <- names(dif_cols)
-names(dif_cols) <- paste0("x", seq_along(dif_cols))
-dif_vars <- names(dif_cols)
-
-datos_ml <- conjoint_long %>%
-  select(session_id, ejercicio, prop_B) %>%
-  bind_cols(dif_cols) %>%
-  filter(if_all(all_of(c("prop_B", dif_vars)), ~ !is.na(.x))) %>%
-  mutate(ejercicio = factor(ejercicio,
-                            levels = c("practice", paste0("q", 1:6)))) %>%
-  # descomposición within-between (modelo híbrido, Allison 2009)
-  group_by(session_id) %>%
-  mutate(across(all_of(dif_vars),
-                list(w = ~ .x - mean(.x), b = ~ mean(.x)),
-                .names = "{.col}_{.fn}")) %>%
-  ungroup()
-
-# c(n_tareas = nrow(datos_ml), n_respondentes = n_distinct(datos_ml$session_id))
-```
-
-
-```{r}
-#| label: modelo-multinivel
-#| fig-height: 7
-#| fig-width: 9
-# Modelo de efectos aleatorios: intercepto aleatorio por respondente
-f_re <- reformulate(c(dif_vars, "ejercicio", "(1 | session_id)"),
-                    response = "prop_B")
-m_ml <- lmer(f_re, data = datos_ml, REML = TRUE)
-
-# Coeficientes de los atributos (x1..x9 = diferencia B - A), con IC 95% (Wald)
-datos_plot_ml <- broom.mixed::tidy(m_ml, effects = "fixed", conf.int = TRUE,
-                                   conf.method = "Wald") %>%
-  filter(term %in% dif_vars) %>%
-  mutate(etiqueta = dif_etiquetas[match(term, dif_vars)],
-         atributo = sub("_.*$", "", etiqueta),      # "identity_Perú" -> "identity"
-         nivel    = sub("^[^_]+_", "", etiqueta)) %>%
-  left_join(select(ref_attr, atributo, panel), by = "atributo") %>%
-  mutate(panel = factor(panel, levels = ref_attr$panel),
-         nivel = factor(nivel, levels = rev(unique(nivel))))
-
-ggplot(datos_plot_ml, aes(x = estimate, y = nivel)) +
-  geom_vline(xintercept = 0, linetype = "dashed", colour = "grey50") +
-  geom_pointrange(aes(xmin = conf.low, xmax = conf.high)) +
-  facet_grid(panel ~ ., scales = "free_y", space = "free_y", switch = "y") +
-  labs(x = "Cambio en el share (vs. categoría de referencia)", y = NULL,
-       title = "Modelo multinivel: efectos de los atributos sobre el share",
-       caption = "IC 95%. La categoría de referencia de cada atributo\nse indica en el panel (efecto = 0). Controla por ejercicio; intercepto aleatorio por respondente.") +
-  theme_minimal() +
-  theme(plot.title.position = "plot", plot.caption.position = "plot",
-        strip.placement = "outside",
-        strip.text.y.left = element_text(angle = 0, hjust = 1, face = "bold"),
-        panel.spacing.y = unit(0.6, "lines"))
-```
-
-```{r}
-#| label: varianza-multinivel
-# Componentes de varianza y correlación intraclase
-print(VarCorr(m_ml), comp = c("Variance", "Std.Dev."))
-performance::icc(m_ml)
-```
+A partir de la base de datos construida, se realizó un procedimiento que permitió verificar la viabilidad de la estimación de modelos con efectos aleatorios
