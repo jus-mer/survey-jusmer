@@ -87,6 +87,7 @@ survey-settings:
   - salud_prov
   - educ_prov
   - educ_padres
+  - pais_madre
   shuffled: ~
   all-shuffled: no
 

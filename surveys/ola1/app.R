@@ -465,7 +465,7 @@ ui <- tagList(
       // reCAPTCHA v3: pide un token a Google una vez por acción y se lo pasa
       // al servidor (input recaptcha_token_<acción>), que lo verifica y guarda
       // el puntaje. 'inicio': al responder el consentimiento; 'fin': cuando
-      // aparece la última página de preguntas (id-final). Si el script de
+      // aparece la última página de preguntas (id_final). Si el script de
       // Google aún no cargó, reintenta (hasta ~30 s).
       var recaptchaPedido = {};
       function pedirRecaptcha(accion, intento) {
@@ -591,7 +591,7 @@ ui <- tagList(
       .cell-output-display table.table-condensed th {
         font-size: 20px !important;
       }
-      /* Quarto callouts (e.g. cbc_practice-page) render their body at a
+      /* Quarto callouts (e.g. cbc_practice_page) render their body at a
          smaller, em-based font-size; pin it to match body-font (20px). */
       .callout-body-container,
       .callout-body-container p,
@@ -1184,12 +1184,12 @@ server <- function(input, output, session) {
 
   # Asignación aleatoria a una de dos formas de la encuesta. Ambas parten
   # igual (welcome -> demographics -> conjoint -> transicion) y terminan igual
-  # (id-final -> end_normal); entre medio difieren en el orden de los módulos:
+  # (id_final -> end_normal); entre medio difieren en el orden de los módulos:
   #   A: Meritocracia -> Actitudes -> Percepción -> Merecimiento
   #   B: Merecimiento -> Percepción -> Actitudes -> Meritocracia
-  # donde Meritocracia = merit-1..merit-2, Actitudes (hacia la desigualdad) =
+  # donde Meritocracia = merit_page_1..merit_page_2, Actitudes (hacia la desigualdad) =
   # clasicos..ranking, Percepción (de servicios) = decomodifica..lucro y
-  # Merecimiento = deserve-1..deserve-7. El ruteo está en sd_skip_if() más
+  # Merecimiento = deserve_1..deserve_7. El ruteo está en sd_skip_if() más
   # abajo.
   version_encuesta <- sample(c("A", "B"), 1)
   sd_store_value(version_encuesta)
@@ -1326,13 +1326,13 @@ server <- function(input, output, session) {
   #                     (prospective). Falla el chequeo de manipulación y el de
   #                     atención (responde attention_check, que debía quedar en
   #                     blanco)
-  #   - tiempo:         al terminar la última página (id-final). Tarda menos de
+  #   - tiempo:         al terminar la última página (id_final). Tarda menos de
   #                     MIN_MINUTOS_CALIDAD minutos desde el inicio de la sesión.
-  #                     En id-final se vuelven a revisar las tres condiciones,
+  #                     En id_final se vuelven a revisar las tres condiciones,
   #                     por si alguien cambió una respuesta volviendo atrás
   # El resultado se guarda en filtro_calidad: las condiciones que cumplió
   # separadas por ";" (p. ej. "manip_atencion;tiempo"), u "ok" si pasa todo al
-  # terminar id-final (queda vacío si abandona antes).
+  # terminar id_final (queda vacío si abandona antes).
   #
   # Las respuestas se leen de session$userData$all_data (no de input), que
   # también tiene las de páginas anteriores aunque la persona haya retomado la
@@ -1348,7 +1348,7 @@ server <- function(input, output, session) {
     v <- isolate(session$userData$all_data[[id]])
     if (is.null(v) || length(v) == 0 || is.na(v[1])) "" else as.character(v[1])
   }
-  # `revisar`: condiciones a evaluar en esa página. final = TRUE (id-final)
+  # `revisar`: condiciones a evaluar en esa página. final = TRUE (id_final)
   # guarda "ok" si pasa; en las demás páginas solo se guarda si falla.
   falla_calidad <- function(revisar, final = FALSE) {
     falla_manip <- !identical(valor_guardado("manip_check"), "reparto")
@@ -1390,26 +1390,26 @@ server <- function(input, output, session) {
   # survey.qmd, y aquí solo están los saltos hacia adelante:
   #
   #   fin de                      | forma A                  | forma B
-  #   transicion                  | merit-1      (page_next) | deserve-1    (regla)
-  #   merit-2 (Meritocracia)      | clasicos     (page_next) | id-final     (regla)
-  #   ranking (Actitudes)         | decomodifica (page_next) | merit-1      (regla)
-  #   lucro (Percepción)          | deserve-1    (regla)     | clasicos     (page_next)
-  #   deserve-7 (Merecimiento)    | id-final     (regla)     | decomodifica (page_next)
+  #   transicion                  | merit_page_1      (page_next) | deserve_1    (regla)
+  #   merit_page_2 (Meritocracia)      | clasicos     (page_next) | id_final     (regla)
+  #   ranking (Actitudes)         | decomodifica (page_next) | merit_page_1      (regla)
+  #   lucro (Percepción)          | deserve_1    (regla)     | clasicos     (page_next)
+  #   deserve_7 (Merecimiento)    | id_final     (regla)     | decomodifica (page_next)
   sd_skip_if(
     input$consent_understand == "no" ~ "end_consent",
 
     # Cuotas: al pasar demographics, a end_quotafull si su celda está llena
     cuota_llena() & en_pagina(input$education) ~ "end_quotafull",
 
-    version_encuesta == "B" & en_pagina(input$transicion_ancla) ~ "deserve-1",
-    version_encuesta == "B" & en_pagina(input$merit_8)          ~ "id-final",
-    version_encuesta == "B" & en_pagina(input$ranking_ancla)    ~ "merit-1",
-    version_encuesta == "A" & en_pagina(input$lucro_3)          ~ "deserve-1",
-    version_encuesta == "A" & en_pagina(input$adc_7)            ~ "id-final",
+    version_encuesta == "B" & en_pagina(input$transicion_ancla) ~ "deserve_1",
+    version_encuesta == "B" & en_pagina(input$merit_8)          ~ "id_final",
+    version_encuesta == "B" & en_pagina(input$ranking_ancla)    ~ "merit_page_1",
+    version_encuesta == "A" & en_pagina(input$lucro_3)          ~ "deserve_1",
+    version_encuesta == "A" & en_pagina(input$adc_7)            ~ "id_final",
 
     # Filtro de calidad (ver falla_calidad() más arriba), anclado a preguntas
     # obligatorias de cada página: cbc_q6 (fin del conjoint), proy_1 (página
-    # del chequeo de atención) y educ_padres (id-final)
+    # del chequeo de atención) y educ_padres (id_final)
     falla_calidad("manip_tareas") & en_pagina(input$cbc_q6)     ~ "end_calidad",
     falla_calidad("manip_atencion") & en_pagina(input$proy_1)   ~ "end_calidad",
     falla_calidad(c("manip_tareas", "manip_atencion", "tiempo"), final = TRUE) &
@@ -1449,7 +1449,10 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
 
   # Define any conditional display logic here (show a question if a condition is true)
-  sd_show_if()
+  # pais_madre_otro (opcional) solo aparece si el país de la madre es "Otro"
+  sd_show_if(
+    input$pais_madre == "14" ~ "pais_madre_otro"
+  )
 
   # Allow deselecting a ranking radio by clicking it again.
   # mousedown captures the pre-click checked state; click uses that snapshot
