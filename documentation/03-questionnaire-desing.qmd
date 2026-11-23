@@ -402,3 +402,7 @@ Each question has a set of answer categories related to the topic. For instance,
 charac_scale <- read.csv(here::here("..", "input", "tbl", "characterization.csv"))
 knitr::kable(charac_scale, col.names = c("Model", "Item english", "Item spanish"))
 ```
+
+::: {.callout-note appearance="minimal"}
+*Note:* The mother's country of residence at the respondent's birth (`pais_madre`) was added on November 23, 2026, during fieldwork. Its categories are Chile, Venezuela, Bolivia, Perú, Colombia, Haití, Ecuador, Argentina, República Dominicana, España, Brasil, Cuba, Paraguay and Other; respondents who choose "Other" can optionally specify the country in a text box (`pais_madre_otro`). Respondents who completed the survey before that date have no information on these variables.
+:::
