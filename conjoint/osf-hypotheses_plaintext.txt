@@ -1,0 +1,111 @@
+NOTATION
+
+AMCE_l(a -> b) is the change in the percentage of the fund given to an applicant when attribute l moves from level a to level b, averaged over the randomized distribution of all other attributes. All hypotheses refer to the share of the fund (0-100%) allocated to a profile. In Blocks C, E and F, "delta" denotes the cross-level interaction coefficient: the change in the attribute's AMCE per unit of the respondent-level moderator.
+
+WHY RESPONDENT-LEVEL HYPOTHESES ARE INTERACTIONS
+Each task splits a fixed sum between two applicants. As a result, every respondent's mean allocation is exactly 50%. No respondent characteristic can predict that mean, so "main effects" of education, gender or political orientation on the outcome are null by construction. Respondent-level (level-2) hypotheses on the share are therefore stated as cross-level interactions: they predict differences in how much weight respondents give to each applicant attribute (Blocks C, E, F). Respondent characteristics can still have main effects on a different outcome: how far each split departs from 50/50, regardless of which applicant receives more (Block D).
+
+
+BLOCK A: DESERVINGNESS CRITERIA (MAIN EFFECTS; DIRECTIONAL)
+
+H1 (Need). Applicants whose households struggle to make ends meet receive a larger share than applicants whose households live comfortably. Contrast: makes ends meet with comfort -> with hardship. Expected AMCE > 0.
+
+H2 (Effort). The share increases with the applicant's reported study effort relative to peers. Contrast: studies less than peers -> the same -> more than peers. Expected AMCE > 0 and monotonic (less < same < more).
+
+H3 (Control). Applicants who applied to other scholarships without success receive a larger share than applicants who did not apply in time. In the first case the lack of funding is beyond the applicant's control; in the second it is not. Contrast: did not apply to other scholarships in time -> applied but received no funding. Expected AMCE > 0.
+
+H4 (Reciprocity). Applicants who have done volunteer work receive a larger share than those who have not. Contrast: has not done volunteer work -> has done volunteer work. Expected AMCE > 0.
+
+H5 (Attitude). Applicants who see the scholarship as help they are grateful for receive a larger share than applicants who see it as something they are owed. Contrast: sees the scholarship as something they deserve -> as help they are grateful for. Expected AMCE > 0.
+
+H6 (Identity). Applicants born in Chile receive a larger share than applicants born in Peru and than applicants born in Venezuela, reflecting in-group (national) favouritism (van Oorschot, 2000; Kootstra, 2016). Contrasts: born in Peru -> born in Chile; born in Venezuela -> born in Chile. Expected AMCE > 0 for both.
+
+Applicant sex is not a deservingness criterion and has no directional main-effect hypothesis. In Gilgen's scholarship experiment the applicant's gender had no effect on allocations (Gilgen, 2022, pp. 113-114). The sex main effect is estimated and reported as exploratory; it is the basis of the homophily hypothesis H10.
+
+
+BLOCK B: EFFORT PRIMACY
+
+H7 (Effort outweighs the other criteria). The effort contrast (less -> more) is larger than each of the other criterion contrasts: control, reciprocity, attitude, need, and identity (Peru -> Chile, Venezuela -> Chile).
+
+Rationale. The scholarship is framed as a university award to admitted students, which casts the decision as an investment that should go to those who will make good use of it. Combined with Chile's strong meritocratic beliefs (Castillo et al., 2019; Castillo et al., 2023), this leads us to expect effort to dominate. This is a strong claim, taking into account that in Gilgen's Swiss scholarship experiment need outweighed merit (Gilgen, 2022, pp. 113-115). In her workplace setting, by contrast, merit dominated (Gilgen & Zangger, 2025). H7 therefore tests whether Chile's commodified higher education system and meritocratic culture move the scholarship decision toward the workplace pattern. A result showing need >= effort would replicate the Swiss pattern and is just as informative.
+
+
+BLOCK C: RESPONDENT CHARACTERISTICS AND HOMOPHILY (CROSS-LEVEL INTERACTIONS)
+
+Education
+H8 (Education x effort). The more educated the respondent, the larger the effort premium: delta(effort x education) > 0. Highly educated respondents have succeeded in the same credential-based system the scenario describes. They are expected to see educational success as earned and to reward the applicant who signals the effort they attribute to themselves (status legitimation and self-referential homophily). Gilgen found no class x merit interaction in the scholarship setting (Gilgen, 2022, pp. 123-124), so a null result is plausible.
+
+Gender
+H9 (Gender x need). Women give more weight to need than men: delta(need x female respondent) > 0. This follows from the expectation that women hold more egalitarian and need-oriented justice preferences (Gilgen, 2022, hypothesis 2).
+
+H10 (Gender homophily). Women give a larger premium to female applicants than men do: delta(female applicant x female respondent) > 0. Respondents are expected to favour claimants who share their gender.
+
+Political orientation (left-right self-placement, 0 = left, 10 = right)
+H11 (Ideology x effort). Respondents further to the right give more weight to effort: delta(effort x right) > 0.
+
+H12 (Ideology x need). Respondents further to the right give less weight to need: delta(need x right) < 0.
+
+H13 (Ideology x identity; national in-group). Respondents further to the right give a larger premium to Chilean-born applicants: delta(identity x right) > 0 for both contrasts (Peru -> Chile, Venezuela -> Chile).
+
+
+BLOCK D: INEQUALITY OF ALLOCATIONS (RESPONDENT-LEVEL MAIN EFFECTS)
+
+The outcome in this block is the allocation inequality of a task, D_it = |share_i1t - 50|. It equals the distance of the split from an equal division: 0 means the respondent split the fund 50/50, and 50 means one applicant received everything. Unlike the share, D_it is not fixed by design, so it can differ between and within respondents. It measures how strongly a respondent applies the equality principle relative to the differentiating principles (need and merit), whatever the direction of the differentiation (Gilgen, 2022; Gilgen & Zangger, 2025). "gamma" denotes the respondent-level main-effect coefficient on D_it.
+
+H14 (Gender). Women divide the fund more equally than men: gamma(female) < 0. This follows from the expectation that women hold more egalitarian justice preferences (Gilgen, 2022, hypothesis 2). The prior evidence for this setting is weak: Gilgen found more equal splits among women in three of her four settings, but not in the scholarship setting (Gilgen, 2022, pp. 116-117), and male and female respondents did not differ in the inequality their allocations produced in the workplace setting (Gilgen & Zangger, 2025).
+
+H15 (Education). More educated respondents divide the fund less equally: gamma(education) > 0. Higher-status respondents are expected to accept larger differences between claimants. In Gilgen's data, respondents who placed themselves in a lower class split equally more often, and this difference was significant in the scholarship setting (Gilgen, 2022, pp. 117-118). Respondents with higher subjective class produced more unequal distributions in the workplace setting (Gilgen & Zangger, 2025).
+
+H16 (Political orientation). Respondents further to the right divide the fund less equally: gamma(right) > 0. Left-right self-placement captures, among other things, support for equality as a distributive goal.
+
+
+BLOCK E: DESERVINGNESS ORIENTATIONS (CROSS-LEVEL INTERACTIONS)
+
+Respondents who endorse a deservingness criterion in the survey scale are expected to apply it in the allocation task, giving more weight to the corresponding applicant attribute: delta(attribute x orientation) > 0. Each orientation is scored so that higher values mean stronger endorsement of the criterion (see Indices). Survey items are shown in English translation (the original wording, in Spanish, is in the wave 2 questionnaire). (R) = reverse-coded.
+
+H17 (Need orientation x need). Conjoint contrast: comfort -> hardship. delta > 0.
+- nec_1: Social benefits should be reserved exclusively for those who live in real poverty.
+- nec_2: People who have sufficient economic resources of their own should not receive support from the State.
+- nec_3: Only those in situations of extreme need should be able to access social benefits.
+
+H18 (Effort orientation x effort). Conjoint contrast: less -> more than peers. delta > 0.
+- esf_1: People who receive social benefits should be actively doing something to improve their situation, such as looking for work or getting training.
+- esf_2: Those who receive help from the State but make no effort to get ahead deserve less support than those who do try.
+- esf_3 (R): The State should support people even if they are not making any visible effort to change their situation.
+- esf_4: It is reasonable for the duration of a social benefit to depend on the effort the person is making to stop needing it.
+- esf_5 (R): It does not matter whether someone is looking for work or not: if they need help, the State should give it to them anyway.
+
+H19 (Control orientation x control). Conjoint contrast: did not apply in time -> applied but not funded. delta > 0.
+- control_1 (R): People who fall into poverty through their own mistakes should still have the right to receive support from the State.
+- control_2 (R): Those who are responsible for their own problems still deserve to receive social benefits.
+- control_3 (R): The State should help people regardless of whether their situation was caused by their own decisions or by external factors.
+
+H20 (Reciprocity orientation x reciprocity). Conjoint contrast: no volunteer work -> volunteer work. delta > 0.
+- reciproc_1: Social benefits should be reserved for those who have previously contributed to the system, for example by paying social security contributions or taxes.
+- reciproc_2: It is not fair that people who have never contributed to the system receive the same benefits as those who have.
+- reciproc_3: Those who have worked and contributed to the system for longer deserve better social benefits than those who have contributed little or nothing.
+- actitud_4 (R): Access to social benefits should be the same for everyone, regardless of whether or not they have paid contributions in the past.
+
+H21 (Attitude orientation x attitude). Conjoint contrast: deserves it -> grateful for it. delta > 0.
+- actitud_1: People who receive benefits from the State should show more gratitude for the help they receive.
+- actitud_2 (R): It is fine for people who receive support from the State to express their dissatisfaction with the conditions of the benefits.
+
+H22 (Identity orientation x identity). Conjoint contrasts: Peru -> Chile; Venezuela -> Chile. delta > 0 for both.
+- id_1: When allocating social benefits, people born in Chile should have priority over those who came from other countries.
+- id_2 (R): Migrants should have access to the same social benefits as Chileans.
+- id_3: Only those who have been living in Chile for several years should be able to access the State's social protection programs.
+
+
+BLOCK F: MERITOCRACY AND PRIVILEGE DIMENSIONS (CROSS-LEVEL INTERACTIONS)
+
+Perceptions are measured with the scale of Castillo et al. (2023). Meritocracy perception is the mean of merit_1-merit_2 (in Chile people are rewarded for their effort / talent). Privilege perception is the mean of merit_3-merit_4 (in Chile those with rich parents / good contacts do better in life).
+
+H23 (Meritocracy perception x effort). Respondents who perceive more meritocracy give more weight to effort: delta(effort x meritocracy perception) > 0. Those who believe effort is rewarded in society are expected to apply the same principle when allocating.
+
+H24 (Privilege perception x need). Respondents who perceive more privilege give more weight to need: delta(need x privilege perception) > 0. Those who see outcomes as driven by family background are expected to compensate applicants facing economic hardship.
+
+Preferences are measured with the same scale. Meritocracy preference is the mean of merit_5-merit_6 (those who make more effort / have more talent should get greater rewards). Privilege preference is the mean of merit_7-merit_8 (it is fine that those with rich parents / good contacts do better in life). Both are standardized.
+
+H25 (Meritocracy preference x effort). Respondents who prefer more meritocracy give more weight to effort: delta(effort x meritocracy preference) > 0. Those who endorse merit as the preferred distributive criterion are expected to apply a similar principle when allocating.
+
+H26 (Privilege preference x effort). Respondents who prefer more privilege give less weight to effort: delta(effort x privilege preference) < 0. Those who accept outcomes driven by family background are expected to downplay effort when allocating.

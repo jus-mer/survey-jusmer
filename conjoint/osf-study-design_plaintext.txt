@@ -1,0 +1,23 @@
+Within-subject paired-profile distributive conjoint. Respondents imagine they sit on a university committee that awards a first-year scholarship. In each task they see two applicants, admitted to the same paid program at the same institution, whose information was verified by their secondary school. They divide a fund of CLP 2,000,000 between the two applicants with a slider that starts at an even split. Each respondent completes seven allocation screens:
+
+- Practice (stored as cbc_practice): randomized pair, presented as a practice task and followed by the comprehension check.
+- Tasks 1-5 (stored as cbc_q1 to cbc_q5): randomized pairs.
+- Repeat (stored as cbc_q6): the practice pair again, with the two profiles' sides swapped.
+
+The five analysis tasks (1-5) give 10 profile evaluations per respondent. The practice task and its repeat are used to measure intra-respondent reliability.
+
+REPEATED TASK FOR INTRA-RESPONDENT RELIABILITY (IRR)
+Following Clayton et al. (2026), the last screen repeats the practice pair with the two profiles' sides swapped (left <-> right). The practice task is not used for modelling, only for the IRR. Comparing the respondent's two allocations to the same profile measures how consistently they answer the conjoint, independently of which side of the screen each profile appears on.
+
+ATTRIBUTES AND LEVELS
+Each profile varies seven attributes. Levels are listed with their Spanish wording; the first level listed is the reference category.
+
+- Need: Comfort (Holgura); Hardship (Dificultad).
+- Effort: Less than peers (Menos que sus compañeros); The same (Igual); More (Más).
+- Control: Did not apply to other scholarships in time; Applied but received no funding.
+- Reciprocity: Has not done volunteer work; Has done volunteer work.
+- Attitude: Something they deserve (Algo que se merece); Help they are grateful for (Una ayuda que agradece).
+- Identity: Peru; Venezuela; Chile (both foreign-born levels are contrasted with Chile; see Transformations).
+- Sex: Male; Female.
+
+This gives 288 unique profiles.

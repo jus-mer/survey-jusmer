@@ -1,9 +1,11 @@
 ---
 title: "Deservingness criteria in educational opportunities: A distributive conjoint experiment on scholarship allocation."
-subtitle: "OSF Preregistration — DRAFT"
+subtitle: "OSF Preregistration"
 date: today
 author: 
-  - JUSMER Team
+  - Juan Carlos Castillo
+  - Andreas Laffert
+  - Tomás Urzúa
 date-format: "DD MMMM, YYYY"
 format:
   html:
@@ -12,10 +14,19 @@ format:
     html-math-method: katex
     embed-resources: true
     theme: cosmo
+  pdf:
+    toc: true
+    number-sections: true
+    geometry: margin=2.5cm
+    filters:
+      - br2newline.lua   # turns <br> in table cells into LaTeX line breaks
 editor: source
 bibliography: "../input/bib/jusmer.bib"
 csl: "../input/bib/apa6.csl"
 ---
+
+This document contains the preregistration of the study "Deservingness criteria in educational opportunities: A distributive conjoint experiment on scholarship allocation.", submitted to OSF on November 24th, 2026. 
+
 
 # Study information
 
@@ -25,16 +36,16 @@ Deservingness criteria in educational opportunities: A distributive conjoint exp
 
 ## Description
 
-Most research on welfare deservingness asks respondents to judge one claimant at a time. In that format a respondent can endorse every criterion at once and never has to trade one against another. This study uses a format that forces the trade-off. Respondents divide a fixed scholarship fund between two applicants, so whatever they give one applicant is taken from the other. The design adapts the Distributional Survey Experiment [@gilgen_disentangling_2022] to a paired-profile conjoint with full randomization [@hainmueller_causal_2014]. Applicant profiles vary the deservingness criteria of the CARIN and recast NICER frameworks (need, control, effort, reciprocity, attitude, identity) plus applicant sex [@oorschot_who_2000; @meuleman_welfare_2020; @knotz_recast_2022].
+Most research on welfare deservingness asks respondents to judge one statement or item at a time. In that format a respondent can endorse every deservingness criterion at once and never has to trade one against another. This study uses a format that forces the trade-off. Respondents divide a fixed scholarship fund between two applicants, so whatever they give one applicant is taken from the other. The design adapts the Distributional Survey Experiment [@gilgen_disentangling_2022] to a paired-profile conjoint with full randomization [@hainmueller_causal_2014]. Applicant profiles vary the deservingness criteria of the CARIN and recast NICER frameworks (need, control, effort, reciprocity, attitude, identity) [@oorschot_who_2000; @meuleman_welfare_2020; @knotz_recast_2022] plus applicant sex.
 
 We test six sets of claims:
 
-1. Each deservingness criterion shifts allocations in its theoretically expected direction (hypothesis below).
+1. Each deservingness criterion shifts allocations in its theoretically expected direction (hypotheses below).
 2. Effort outweighs the other criteria, need included.
 3. How strongly respondents weigh the criteria depends sets on their education, gender and political orientation. This includes homophily effects: respondents favour applicants who resemble them, or who embody the traits their own position leads them to value.
 4. Education, gender and political orientation also predict how *unequally* respondents divide the fund, regardless of which applicant receives more.
 5. The deservingness orientations of respondents, as measured by the CARIN/NICER criteria in the survey scale, predict how they weigh the criteria in the allocation task. In particular, respondents who endorse a criterion in the survey give more weight to the corresponding attribute in the conjoint.
-6. The perceptions and preferences for meritocracy and privilege of respondents, as measured by the Castillo et al. (2023) scale, predict how respondents weigh the criteria in the allocation task. In particular, respondents who perceive more meritocracy give more weight to effort, and respondents who perceive more privilege give more weight to need.
+6. The perceptions and preferences for meritocracy and privilege of respondents, as measured by the Castillo et al. (2023) scale, predict how respondents weigh the criteria in the allocation task.
 
 Chile is a strong test case for these claims. Its higher education system has one of the highest shares of private household spending in the OECD and is sharply stratified by social origin [@valenzuela_socioeconomic_2013]. Its population also holds unusually strong meritocratic beliefs relative to its level of inequality [@castillo_meritocracia_2019; @castillo_multidimensional_2023].
 
@@ -66,7 +77,7 @@ Applicant **sex** is not a deservingness criterion and has no directional main-e
 
 ### Block B: Effort primacy
 
-- **H7 (Effort outweighs the other criteria).** The effort contrast (less → more) is larger than each of the other criterion contrasts: control, reciprocity, attitude, and identity (Peru → Chile, Venezuela → Chile).
+- **H7 (Effort outweighs the other criteria).** The effort contrast (less → more) is larger than each of the other criterion contrasts: control, reciprocity, attitude, need, and identity (Peru → Chile, Venezuela → Chile).
 
 *Rationale.* The scholarship is framed as a university award to admitted students, which casts the decision as an investment that should go to those who will make good use of it. Combined with Chile's strong meritocratic beliefs [@castillo_meritocracia_2019; @castillo_multidimensional_2023], this leads us to expect effort to dominate. This is a strong claim, taking into account that in Gilgen's Swiss scholarship experiment, need outweighed merit[@gilgen_disentangling_2022, pp. 113–115]. In her workplace setting, by contrast, merit dominated [@gilgen_principles_2025]. H7 therefore tests whether Chile's commodified higher education system and meritocratic culture move the scholarship decision toward the workplace pattern. A result showing need ≥ effort would replicate the Swiss pattern and is just as informative.
 
@@ -91,7 +102,7 @@ $\delta$ denotes the interaction coefficient: the change in the attribute's AMCE
 
 ### Block D: Inequality of allocations (respondent-level main effects)
 
-The outcome in this block is the **allocation inequality** of a task, $D_{it} = |\text{share}_{i1t} - 50|$. It equals the distance of the split from an equal division: 0 means the respondent split the fund 50/50, and 50 means one applicant received everything. Unlike the share, $D_{it}$ is not fixed by design, so it can differ between respondents. It measures how strongly a respondent applies the equality principle relative to the differentiating principles (need and merit), whatever the direction of the differentiation [@gilgen_disentangling_2022; @gilgen_principles_2025].
+The outcome in this block is the **allocation inequality** of a task, $D_{it} = |\text{share}_{i1t} - 50|$. It equals the distance of the split from an equal division: 0 means the respondent split the fund 50/50, and 50 means one applicant received everything. Unlike the share, $D_{it}$ is not fixed by design, so it can differ between and within respondents. It measures how strongly a respondent applies the equality principle relative to the differentiating principles (need and merit), whatever the direction of the differentiation [@gilgen_disentangling_2022; @gilgen_principles_2025].
 
 - **H14 (Gender).** Women divide the fund more equally than men: $\gamma_{\text{female}} < 0$. This follows from the expectation that women hold more egalitarian justice preferences [@gilgen_disentangling_2022, hypothesis 2]. The prior evidence for this setting is weak: Gilgen found more equal splits among women in three of her four settings, but not in the scholarship setting [@gilgen_disentangling_2022, pp. 116–117], and male and female respondents did not differ in the inequality their allocations produced in the workplace setting [@gilgen_principles_2025].
 - **H15 (Education).** More educated respondents divide the fund less equally: $\gamma_{\text{educ}} > 0$. Higher-status respondents are expected to accept larger differences between claimants. In Gilgen's data, respondents who placed themselves in a lower class split equally more often, and this difference was significant in the scholarship setting [@gilgen_disentangling_2022, pp. 117–118]. Respondents with higher subjective class produced more unequal distributions in the workplace setting [@gilgen_principles_2025].
@@ -101,21 +112,32 @@ The outcome in this block is the **allocation inequality** of a task, $D_{it} = 
 
 Respondents who endorse a deservingness criterion in the survey scale are expected to apply it in the allocation task, giving more weight to the corresponding applicant attribute: $\delta_{\text{attribute} \times \text{orientation}} > 0$. Each orientation is scored so that higher values mean stronger endorsement of the criterion (see Indices).
 
-| | Survey orientation | Conjoint contrast |
-|---|---|---|
-| **H17** | Need (`nec_1`–`nec_3`) | Comfort → hardship |
-| **H18** | Effort (`esf_1`–`esf_5`) | Less → more than peers |
-| **H19** | Control (`control_1`–`control_3`) | Did not apply in time → applied but not funded |
-| **H20** | Reciprocity (`reciproc_1`–`reciproc_3`, `actitud_4`) | No volunteer work → volunteer work |
-| **H21** | Attitude (`actitud_1`–`actitud_2`) | Deserves it → grateful for it |
-| **H22** | Identity (`id_1`–`id_3`) | Peru → Chile; Venezuela → Chile |
+::: {style="font-size: 80%;"}
 
-### Block F: Meritocracy and privilege perceptions (cross-level interactions)
+| Hypothesis | Deservingness criteria | Survey items | Conjoint contrast |
+|:---------|:------------|:----------------------------------------------------|:-------------------------|
+| **H17** | Need | •&nbsp;`nec_1` Los beneficios sociales deberían estar reservados exclusivamente para quienes viven en situación de pobreza real.<br>•&nbsp;`nec_2` Las personas que tienen suficientes recursos económicos propios no deberían recibir apoyo del Estado.<br>•&nbsp;`nec_3` Solo quienes se encuentran en situación de extrema necesidad deberían poder acceder a los beneficios sociales. | Comfort → hardship |
+| **H18** | Effort | •&nbsp;`esf_1` Las personas que reciben beneficios sociales deberían estar haciendo algo activamente para mejorar su situación, como buscar trabajo o capacitarse.<br>•&nbsp;`esf_2` Quienes reciben ayuda del Estado pero no hacen ningún esfuerzo por salir adelante merecen menos apoyo que quienes sí lo intentan.<br>•&nbsp;`esf_3` (R) El Estado debería apoyar a las personas aunque no estén haciendo ningún esfuerzo visible por cambiar su situación.<br>•&nbsp;`esf_4` Es razonable que la duración de un beneficio social dependa del esfuerzo que está haciendo la persona para dejar de necesitarlo.<br>•&nbsp;`esf_5` (R) No importa si alguien está buscando trabajo o no: si necesita ayuda, el Estado debería dársela igual. | Less → more than peers |
+| **H19** | Control | •&nbsp;`control_1` (R) Las personas que caen en la pobreza por sus propios errores deberían igualmente tener derecho a recibir apoyo del Estado.<br>•&nbsp;`control_2` (R) Quienes son responsables de sus propios problemas igualmente merecen recibir beneficios sociales.<br>•&nbsp;`control_3` (R) El Estado debería ayudar a las personas independientemente de si su situación fue causada por decisiones propias o por factores externos. | Did not apply in time → applied but not funded |
+| **H20** | Reciprocity | •&nbsp;`reciproc_1` Los beneficios sociales deberían estar reservados para quienes han contribuido previamente al sistema, por ejemplo cotizando o pagando impuestos.<br>•&nbsp;`reciproc_2` No es justo que personas que nunca han contribuido al sistema reciban los mismos beneficios que quienes sí lo han hecho.<br>•&nbsp;`reciproc_3` Quienes han trabajado y aportado al sistema durante más tiempo merecen mejores beneficios sociales que quienes han contribuido poco o nada.<br>•&nbsp;`actitud_4` (R) El acceso a los beneficios sociales debería ser el mismo para todos, independientemente de si han cotizado o no en el pasado. | No volunteer work → volunteer work |
+| **H21** | Attitude | •&nbsp;`actitud_1` Las personas que reciben beneficios del Estado deberían mostrar más gratitud por la ayuda que reciben.<br>•&nbsp;`actitud_2` (R) Está bien que las personas que reciben apoyo del Estado puedan expresar su descontento con las condiciones de los beneficios. | Deserves it → grateful for it |
+| **H22** | Identity | •&nbsp;`id_1` Al momento de asignar beneficios sociales, las personas nacidas en Chile deberían tener prioridad por sobre quienes llegaron de otros países.<br>•&nbsp;`id_2` (R) Los migrantes deberían tener acceso a los mismos beneficios sociales que los chilenos.<br>•&nbsp;`id_3` Solo quienes llevan varios años viviendo en Chile deberían poder acceder a los programas de protección social del Estado. | Peru → Chile; Venezuela → Chile |
 
-Perceptions are measured with the scale of @castillo_multidimensional_2023. Meritocracy perception is the mean of `merit_1`–`merit_2` (in Chile people are rewarded for their effort / talent). Privilege perception is the mean of `merit_3`–`merit_4` (in Chile those with rich parents / good contacts do better in life). Both are standardized.
+: Survey items are shown in their original Spanish wording (wave 2 questionnaire). (R) = reverse-coded. {#tbl-deservingness}
+
+:::
+
+### Block F: Meritocracy and privilege dimensions (cross-level interactions)
+
+Perceptions are measured with the scale of @castillo_multidimensional_2023. Meritocracy perception is the mean of `merit_1`–`merit_2` (in Chile people are rewarded for their effort / talent). Privilege perception is the mean of `merit_3`–`merit_4` (in Chile those with rich parents / good contacts do better in life).
 
 - **H23 (Meritocracy perception × effort).** Respondents who perceive more meritocracy give more weight to effort: $\delta_{\text{effort} \times \text{merit}} > 0$. Those who believe effort is rewarded in society are expected to apply the same principle when allocating.
 - **H24 (Privilege perception × need).** Respondents who perceive more privilege give more weight to need: $\delta_{\text{need} \times \text{privilege}} > 0$. Those who see outcomes as driven by family background are expected to compensate applicants facing economic hardship.
+
+Preferences are measured with the same scale. Meritocracy preference is the mean of `merit_5`–`merit_6` (those who make more effort / have more talent should get greater rewards). Privilege preference is the mean of `merit_7`–`merit_8` (it is fine that those with rich parents / good contacts do better in life). Both are standardized.
+
+- **H25 (Meritocracy preference × effort).** Respondents who prefer more meritocracy give more weight to effort: $\delta_{\text{effort} \times \text{merit pref}} > 0$. Those who endorse merit as the preferred distributive criterion are expected to apply a similar principle when allocating.
+- **H26 (Privilege preference × effort).** Respondents who prefer more privilege give less weight to effort: $\delta_{\text{effort} \times \text{privilege pref}} < 0$. Those who accept outcomes driven by family background are expected to downplay effort when allocating.
 
 # Design plan
 
@@ -179,7 +201,7 @@ Online survey programmed in `surveydown`, administered to a Chilean adult sample
 
 ## Sample size rationale
 
-The power analysis was conducted by using as a reference the criteria and the effect sizes reported in @gilgen_disentangling_2022, and calculated using cjpowR by Schuesser & Freitag [-@schuessler_power_2020]. Given power=0.8, alpha=0.05, levels=3, tasks=5, profiles=2  and AMCE 0.03, the proposed sample size is 1.309 respondents. This size is our target in wave three, which accounting for attrition according to the panel provider, is expected to yield 4.500 respondents in wave one.
+The power analysis was conducted by using as a reference the criteria and the effect sizes reported in @gilgen_disentangling_2022, and calculated using cjpowR by Schuesser & Freitag [-@schuessler_power_2020], a power analysis tool for conjoint experiments. Given power=0.8, alpha=0.05, levels=3, tasks=5, profiles=2  and AMCE 0.03, the proposed sample size is 1.309 respondents. This size is our target in wave three, which accounting for attrition according to the panel provider, is expected to yield 4.500 respondents in wave one.
 
 ## Stopping rule
 
@@ -201,7 +223,7 @@ The seven applicant attributes listed under Study design, with the reference cat
 
 | Moderator | Survey item | Coding for confirmatory tests |
 |---|---|---|
-| Education | `education`, 0–9 ("Sin estudios" … "Posgrado") | Primary: completed tertiary education (codes 6, 8, 9) = 1, otherwise 0. Robustness: 0–9 treated as continuous and standardized. "Prefiero no decir" is set to missing. |
+| Education | `education`, 0–9 ("Sin estudios" … "Posgrado") | Primary: completed tertiary education (codes 6, 7, 8, 9) = 1, otherwise 0. Robustness: 0–9 treated as continuous and standardized. "Prefiero no decir" is set to missing. |
 | Gender | `sexo` (0 = male, 1 = female) | Female = 1. Category "Otro" (99) is excluded from H9–H10 models. |
 | Political orientation | `posicion_politica`, 0–10 (left–right) | Continuous, standardized. "Independiente", "Ninguno" and "Prefiero no responder" (`posicion_politica_nr`) are excluded from H11–H13 models; see Exploratory analysis. |
 
@@ -218,15 +240,15 @@ At the sample level we report the proportion of respondents who are directionall
 
 **Deservingness orientations (H17–H22).** Each is the mean of its items, after reverse-coding so that higher values mean stronger endorsement of the criterion: `control_1`–`control_3`, `actitud_2`, `actitud_4`, `id_2`, `esf_3` and `esf_5` are reversed. Scores are standardized.
 
-**Meritocracy and privilege perceptions (H23–H24).** Meritocracy perception (mean of `merit_1`–`merit_2`) and privilege perception (mean of `merit_3`–`merit_4`) [@castillo_multidimensional_2023], standardized.
+**Meritocracy and privilege perceptions (H23–H24) and preferences (H25–H26).** Meritocracy perception (mean of `merit_1`–`merit_2`), privilege perception (mean of `merit_3`–`merit_4`), meritocracy preference (mean of `merit_5`–`merit_6`) and privilege preference (mean of `merit_7`–`merit_8`) [@castillo_multidimensional_2023], standardized.
 
-For all indices, "No sabe / No responde" is set to missing, and the index is computed if at least half of its items are answered. The preference items (`merit_5`–`merit_8`) are used only in exploratory analysis.
+For all indices, "No sabe / No responde" is set to missing, and the index is computed if at least half of its items are answered.
 
 # Analysis plan
 
 ## Statistical models
 
-The quantity of interest is the average marginal component effect (AMCE) [@hainmueller_causal_2014], estimated with linear mixed models with respondent random effects (one row per task, since the two shares sum to 100). H8–H13 and H17–H24 are tested as cross-level interactions between the respondent characteristic and the focal attribute. H14–H16 use the distance of each split from 50/50 as the outcome. Subgroup results are also reported as marginal means [@leeper_measuring_2020]. As a robustness check, all models are re-estimated with OLS and respondent-clustered standard errors.
+The quantity of interest is the average marginal component effect (AMCE) [@hainmueller_causal_2014], estimated with linear mixed models with respondent random effects (one row per task, since the two shares sum to 100). H8–H13 and H17–H26 are tested as cross-level interactions between the respondent characteristic and the focal attribute. H14–H16 use the distance of each split from 50/50 as the outcome. Subgroup results are also reported as marginal means [@leeper_measuring_2020]. As a robustness check, all models are re-estimated with OLS and respondent-clustered standard errors.
 
 ## Transformations
 
@@ -234,7 +256,7 @@ Peso amounts are converted to percentages of the fund.
 
 ## Inference criteria
 
-One-sided tests at $\alpha = .05$, Holm-corrected within each hypothesis block.
+One-sided tests at $\alpha = .05$.
 
 ## Data exclusion
 
